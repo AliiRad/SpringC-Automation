@@ -2,7 +2,7 @@ package com.home.SpringBootAutomation.Model;
 
 import java.time.LocalDate;
 
-import com.mft.spring.Enum.MilitaryExemption;
+import com.home.SpringBootAutomation.Enum.MilitaryExemption;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
