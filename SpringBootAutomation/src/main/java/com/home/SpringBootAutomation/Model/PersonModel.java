@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import com.mft.spring.Enum.Gender;
-import com.mft.spring.Enum.IsMarried;
+import com.home.SpringBootAutomation.Enum.Gender;
+import com.home.SpringBootAutomation.Enum.IsMarried;
 
 @Entity
 @SuperBuilder
