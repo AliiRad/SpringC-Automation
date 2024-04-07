@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.model.Response;
+import com.home.SpringBootAutomation.Model.Response;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
