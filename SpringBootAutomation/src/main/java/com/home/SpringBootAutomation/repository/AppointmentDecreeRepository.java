@@ -1,6 +1,6 @@
-package com.home.SpringBootAutomation.model.repository;
+package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.model.entity.AppointmentDecree;
+import com.home.SpringBootAutomation.Model.AppointmentDecree;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,15 +1,13 @@
-package com.home.SpringBootAutomation.model.service;
+package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Ticket;
-import com.home.SpringBootAutomation.model.repository.TicketRepository;
+import com.home.SpringBootAutomation.repository.TicketRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

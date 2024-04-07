@@ -1,9 +1,6 @@
-package com.home.SpringBootAutomation.model.entity;
+package com.home.SpringBootAutomation.Model;
 
-import java.time.LocalDate;
-
-import com.home.SpringBootAutomation.Enum.TypeOfCertification;
-
+import com.home.SpringBootAutomation.Enum.MilitaryExemption;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -11,12 +8,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+
+
 @Entity
 @SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
-public class DrivingLicenceModel {
+public class MilitaryServiceModel {
+	
+	//پایان خدمت سربازی
+		
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -27,10 +30,13 @@ public class DrivingLicenceModel {
 	
 	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Last Name")
 	private String lastname;
+	
+	private String certificateID; //شماره شنانس نامه
+	private String nationalID; // شماره ملی (جفت باید استرینگ باشد! زیرا شماره شناس نامه دارای حروف است)
 	private String fathersName;
-	private String nationalID; // شماره ملی
 	private LocalDate birthdate;
-	private TypeOfCertification typeOfCertification; //نوع گواهی نامه
+	private MilitaryExemption exemption; //نوع معافیت
 	private LocalDate issuance;//تاریخ صدور
-	private String serialnumber; // شماره گواهی نامه
+	private String serialnumber;
+	
 }

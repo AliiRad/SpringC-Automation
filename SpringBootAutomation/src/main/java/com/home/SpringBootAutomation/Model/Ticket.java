@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.model;
+package com.home.SpringBootAutomation.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;

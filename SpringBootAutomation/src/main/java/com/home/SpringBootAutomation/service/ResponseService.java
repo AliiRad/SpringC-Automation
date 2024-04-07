@@ -1,7 +1,6 @@
-package com.home.SpringBootAutomation.model.service;
+package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Response;
-
 
 import java.time.LocalDate;
 import java.util.List;

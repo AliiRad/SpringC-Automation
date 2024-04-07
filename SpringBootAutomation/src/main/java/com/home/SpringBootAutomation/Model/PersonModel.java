@@ -1,7 +1,7 @@
-package com.home.SpringBootAutomation.model.entity;
+package com.home.SpringBootAutomation.Model;
 
-import java.time.LocalDate;
-
+import com.home.SpringBootAutomation.Enum.Gender;
+import com.home.SpringBootAutomation.Enum.IsMarried;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import com.home.SpringBootAutomation.Enum.Gender;
-import com.home.SpringBootAutomation.Enum.IsMarried;
+import java.time.LocalDate;
 
 @Entity
 @SuperBuilder

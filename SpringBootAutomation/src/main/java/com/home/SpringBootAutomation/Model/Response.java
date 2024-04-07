@@ -1,11 +1,10 @@
-package com.home.SpringBootAutomation.model;
+package com.home.SpringBootAutomation.Model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 
 import java.time.LocalDate;
 import java.time.LocalTime;

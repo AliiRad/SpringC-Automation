@@ -1,10 +1,9 @@
-package com.home.SpringBootAutomation.model.repository;
+package com.home.SpringBootAutomation.repository;
 
 import com.home.SpringBootAutomation.model.Ticket;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
 
 import java.time.LocalDate;
 import java.util.List;

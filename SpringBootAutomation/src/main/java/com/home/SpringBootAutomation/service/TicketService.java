@@ -1,10 +1,8 @@
-package com.home.SpringBootAutomation.model.service;
+package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Ticket;
 
-
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public interface TicketService {
