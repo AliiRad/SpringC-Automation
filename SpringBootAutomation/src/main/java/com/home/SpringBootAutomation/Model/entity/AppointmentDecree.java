@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.Model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

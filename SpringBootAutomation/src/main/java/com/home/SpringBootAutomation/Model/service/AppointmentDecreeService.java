@@ -1,6 +1,6 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.Model.service;
 
-import com.home.SpringBootAutomation.Model.AppointmentDecree;
+import com.home.SpringBootAutomation.Model.entity.AppointmentDecree;
 
 import java.util.List;
 import java.util.Optional;

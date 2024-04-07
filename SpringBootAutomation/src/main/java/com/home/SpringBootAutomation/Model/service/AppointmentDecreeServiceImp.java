@@ -1,7 +1,7 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.Model.service;
 
-import com.home.SpringBootAutomation.Model.AppointmentDecree;
-import com.home.SpringBootAutomation.repository.AppointmentDecreeRepository;
+import com.home.SpringBootAutomation.Model.entity.AppointmentDecree;
+import com.home.SpringBootAutomation.Model.repository.AppointmentDecreeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
