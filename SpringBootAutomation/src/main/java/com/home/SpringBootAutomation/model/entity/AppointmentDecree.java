@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Model.entity;
+package com.home.SpringBootAutomation.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -26,10 +26,6 @@ public class AppointmentDecree {//حکم کارگزینی
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private PersonModel person;
-
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Employer")
-    @Column(name ="appointmentDecree_employer" ,length =20 )
-    private String employer;                                                                 //کارفرما
 
     @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Type Of Employment")
     @Column(name ="appointmentDecree_typeOfEmployment" ,length =20 )

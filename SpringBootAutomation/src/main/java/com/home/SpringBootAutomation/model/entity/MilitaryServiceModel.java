@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Model.entity;
+package com.home.SpringBootAutomation.model.entity;
 
 import java.time.LocalDate;
 

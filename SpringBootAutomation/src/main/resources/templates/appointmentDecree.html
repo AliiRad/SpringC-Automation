@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AppointmentDecree</title>
+</head>
+<body>
+<form id="appointmentDecreeForm" th:fragment="appointmentDecreeForm" th:action="@{/appointmentDecree/save}" th:object="${appointmentDecree}" method="post">
+
+    <input type="text" placeholder="Type Of Employment" th:value="${typeOfEmployment}" th:field="*{typeOfEmployment}">
+    <span class="error" th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid Type Of Employment</span>
+    <br><br>
+    <input type="text" placeholder="Organizational Unit" th:value="${organizationalUnit}" th:field="*{organizationalUnit}">
+    <span class="error" th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid Organizational Unit</span>
+    <br><br>
+    <button id="submit" type="submit">Save</button>
+</form>
+</body>
+</html>

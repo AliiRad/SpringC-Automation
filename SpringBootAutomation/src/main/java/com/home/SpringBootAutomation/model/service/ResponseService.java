@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.model.service;
 
 import com.home.SpringBootAutomation.model.Response;
 

@@ -1,7 +1,7 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.model.service;
 
 import com.home.SpringBootAutomation.model.Ticket;
-import com.home.SpringBootAutomation.repository.TicketRepository;
+import com.home.SpringBootAutomation.model.repository.TicketRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
