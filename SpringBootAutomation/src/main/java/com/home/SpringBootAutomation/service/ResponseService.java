@@ -2,8 +2,8 @@ package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Response;
 
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ResponseService {
@@ -13,6 +13,6 @@ public interface ResponseService {
     Response logicalRemove(Long id);
     List<Response> findAll();
     Response findById(Long id);
-    List<Response> findByDate(LocalDateTime timeStamp);
+    List<Response> findByDate(LocalDate responseDate);
     List<Response> findByResponder(String responder);
 }

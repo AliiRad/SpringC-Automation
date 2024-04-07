@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,8 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -28,7 +29,10 @@ public class Response {
     private String ticketResponse;
 
     @Column(name = "r_date" )
-    private LocalDateTime timeStamp;
+    private LocalDate responseDate;
+
+    @Column(name = "r_time" )
+    private LocalTime responseTime;
 
     @Column(name = "r_active")
     private Boolean active;

@@ -19,19 +19,26 @@
     <thead>
     <th>Id</th>
     <th>Response Date</th>
+    <th>Response Time</th>
     <th>Responder</th>
     <th>Response</th>
+    <th>Active</th>
     <th>Operation</th>
     </thead>
     <tbody>
     <tr th:each="r : ${responseList}">
         <td th:text="${r.id}"></td>
-        <td th:text="${r.timeStamp}"></td>
+        <td th:text="${r.responseDate}"></td>
+        <td th:text="${r.responseTime}"></td>
         <td th:text="${r.responder}"></td>
         <td th:text="${r.ticketResponse}"></td>
+        <td th:text="${r.active}"></td>
         <td>
             <button>Edit</button>
-            <button>Delete</button>
+            <form th:action="@{/response/delete}" method="post">
+                <input type="text" hidden="hidden" th:value="${r.id}" name="id">
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>

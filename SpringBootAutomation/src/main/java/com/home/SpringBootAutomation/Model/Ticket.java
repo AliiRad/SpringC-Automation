@@ -1,9 +1,6 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.model;
 
-import com.home.SpringBootAutomation.model.enums.Status;
-import com.home.SpringBootAutomation.repository.TicketRepository;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +8,7 @@ import lombok.ToString;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 @Getter
 @Setter

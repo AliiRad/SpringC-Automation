@@ -42,12 +42,25 @@
         <td th:text="${t.request}"></td>
         <td th:text="${t.group}"></td>
         <td th:text="${t.status}"></td>
+        <td th:text="${t.active}"></td>
         <td>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button th:onclick="'edit(\'' + ${t.id} + '\')'">Edit</button>
+            <form th:action="@{/ticket/delete}" method="post">
+                <input type="text" name="id" th:value="${t.id}" hidden="hidden">
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>
 </table>
+<script>
+    async function edit(id){
+        const resp =await fetch("/ticket/id/" +id , {
+            method:"get"
+        });
+        const data = resp.json();
+        console.log(data)
+    }
+</script>
 </body>
 </html>

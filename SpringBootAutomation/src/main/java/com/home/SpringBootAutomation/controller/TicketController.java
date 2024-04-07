@@ -5,10 +5,7 @@ import com.home.SpringBootAutomation.service.TicketServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,14 +28,15 @@ public class TicketController {
         return "ticket";
     }
 
-    @GetMapping(value ="/id")
-    public String showTicket(@ModelAttribute("id") Long id){
+    @GetMapping(value ="/id/{id}")
+    public String showTicket(@PathVariable("id") Long id , Model model){
         log.info("Controller-Ticket-Get-FindById");
         Ticket ticket = ticketServiceImp.findById(id);
         if (ticket != null){
+            model.addAttribute("ticket", ticket);
             return "ticket";
         }else {
-            return "error-404";
+            return "redirect:/ticket";
         }
     }
 
@@ -82,10 +80,10 @@ public class TicketController {
     }
 
     @PostMapping(value ="/delete")
-    public String deleteTicket(Ticket ticket) {
-        log.info("Controller-Ticket-Post-Delete");
-        ticketServiceImp.logicalRemove(ticket.getId());
-        return "ticket";
+    public String deleteTicket(Long id) {
+        log.info("Controller-Ticket-Post-Delete: " + id);
+        ticketServiceImp.logicalRemove(id);
+        return "redirect:/ticket";
     }
 
 

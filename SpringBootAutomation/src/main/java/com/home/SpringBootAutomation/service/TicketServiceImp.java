@@ -2,10 +2,14 @@ package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.repository.TicketRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +26,9 @@ public class TicketServiceImp implements TicketService {
     public Ticket save(Ticket ticket) {
         log.info("Service-Ticket-Save");
         ticket.setActive(true);
+        ticket.setTicketDate(LocalDate.now());
+        ticket.setTicketTime(LocalTime.now());
+        log.info(ticket.toString());
         ticketRepository.save(ticket);
         return ticket;
     }
@@ -46,11 +53,14 @@ public class TicketServiceImp implements TicketService {
     }
 
     @Override
+    @Transactional
     public Ticket logicalRemove(Long id) {
         log.info("Service-Ticket-LogicalRemove");
         Ticket ticket = findById(id);
+        log.info("Service-Ticket-LogicalRemove: " + ticket);
         if (ticket != null) {
-            ticketRepository.logicalDelete(id);
+            ticket.setActive(false);
+            ticketRepository.save(ticket);
             return ticket;
         } else return null;
     }
@@ -66,6 +76,7 @@ public class TicketServiceImp implements TicketService {
     public Ticket findById(Long id) {
         log.info("Service-Ticket-FindById");
         Optional<Ticket> ticket = ticketRepository.findById(id);
+        log.info("Service-Ticket-FindById: " + ticket.get());
         return (ticket.isPresent() ? ticket.get() : null);
     }
 
@@ -77,9 +88,9 @@ public class TicketServiceImp implements TicketService {
     }
 
     @Override
-    public List<Ticket> findByDate(LocalDate localDate) {
+    public List<Ticket> findByDate(LocalDate timeStamp) {
         log.info("Service-Ticket-FindByDate");
-        List<Ticket> ticketList = ticketRepository.findByDate(localDate);
+        List<Ticket> ticketList = ticketRepository.findByDate(timeStamp);
         return ticketList;
     }
 }

@@ -1,11 +1,12 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Response;
+import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.repository.ResponseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public class ResponseServiceImp implements ResponseService{
     public Response save(Response response) {
         log.info("Service-Response-Save");
         response.setActive(true);
+        response.setResponseDate(LocalDate.now());
+        response.setResponseTime(LocalTime.now());
         responseRepository.save(response);
         return response;
     }
@@ -52,7 +55,8 @@ public class ResponseServiceImp implements ResponseService{
         log.info("Service-Response-LogicalRemove");
         Response response = findById(id);
         if (response != null){
-            responseRepository.logicalDelete(id);
+            response.setActive(false);
+            responseRepository.save(response);
             return response;
         }
         else return null;
@@ -73,9 +77,9 @@ public class ResponseServiceImp implements ResponseService{
     }
 
     @Override
-    public List<Response> findByDate(LocalDateTime timeStamp) {
+    public List<Response> findByDate(LocalDate responseDate) {
         log.info("Service-Response-FindByDate");
-        List<Response> responseList = responseRepository.findByDate(timeStamp);
+        List<Response> responseList = responseRepository.findByDate(responseDate);
         return responseList;
     }
 
