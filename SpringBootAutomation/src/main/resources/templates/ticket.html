@@ -8,17 +8,13 @@
 <h2>Ticket Page</h2>
 
 <form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
-    <input type="date" th:value="${ticketDate}" th:field="*{ticketDate}" >
+    <input type="text" placeholder="Applicant" th:value="${applicant}" th:field="*{applicant}">
     <br>
-    <input type="time" th:value="${ticketTime}" th:field="*{ticketTime}">
+    <input type="text" placeholder="Request" th:value="${request}" th:field="*{request}">
     <br>
-    <input type="text" th:value="${applicant}" th:field="*{applicant}">
+    <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}">
     <br>
-    <input type="text" th:value="${request}" th:field="*{request}">
-    <br>
-    <input type="text" th:value="${group}" th:field="*{group}">
-    <br>
-    <input type="text" th:value="${status}" th:field="*{status}">
+    <input type="text" placeholder="Status" th:value="${status}" th:field="*{status}">
     <br>
     <input type="submit" value="Save">
 </form>

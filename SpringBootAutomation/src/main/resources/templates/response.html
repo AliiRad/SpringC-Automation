@@ -7,11 +7,9 @@
 <body>
 <h2>Response Page</h2>
 <form th:action="@{/response/save}" method="post" th:object="${response}">
-    <input type="datetime-local" placeholder="time" th:value="${timeStamp}" th:field="*{timeStamp}" >
+    <input type="text" placeholder="Responder" th:value="${responder}" th:field="*{responder}">
     <br>
-    <input type="text" placeholder="responder" th:value="${responder}" th:field="*{responder}">
-    <br>
-    <input type="text" placeholder="response" th:value="${ticketResponse}" th:field="*{ticketResponse}">
+    <input type="text" placeholder="Response" th:value="${ticketResponse}" th:field="*{ticketResponse}">
     <br>
     <input type="submit" value="Save">
 </form>
