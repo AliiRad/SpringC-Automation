@@ -10,13 +10,14 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @SuperBuilder
 @ToString
+
 @Table(name = "appointment_Decree_tbl")
 @Entity(name = "appointmentDecreeEntity")
 public class AppointmentDecree {//حکم کارگزینی
@@ -54,11 +55,11 @@ public class AppointmentDecree {//حکم کارگزینی
 
 //    @PastOrPresent(message = "Invalid Start Date")
     @Column(name ="appointmentDecree_startDate")
-    private LocalDateTime startDate;                                                         //تاریخ شروع
+    private LocalDate startDate;                                                            //تاریخ شروع
 
 //    @FutureOrPresent(message = "Invalid End Date")
     @Column(name ="appointmentDecree_endDate")
-    private LocalDateTime endDate;                                                           //تاریخ پایان
+    private LocalDate endDate;                                                              //تاریخ پایان
 
 //    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Place Of Employment")
     @Column(name ="appointmentDecree_placeOfEmployment" ,length =20 )

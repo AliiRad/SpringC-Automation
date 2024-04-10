@@ -5,98 +5,97 @@
     <title>AppointmentDecree</title>
 </head>
 <body>
-<form th:action="@{/appointmentDecree/save}" th:object="${appointmentDecree}" method="post">
-<!--    <div th:if="${#fields.hasAnyErrors()}">-->
-<!--        <ul>-->
-<!--            <li th:each="err :${#fields.allErrors()}" th:text="${err}"/>-->
-<!--        </ul>-->
-<!--    </div>-->
+<form id="appointmentDecree" th:action="@{/appointmentDecree/save}" th:object="${appointmentDecree}" method="post">
+    <!--    <div th:if="${#fields.hasAnyErrors()}">-->
+    <!--        <ul>-->
+    <!--            <li th:each="err :${#fields.allErrors()}" th:text="${err}"/>-->
+    <!--        </ul>-->
+    <!--    </div>-->
     <div>
         <label>Type Of Employment</label>
         <br>
         <input type="text" th:value="${typeOfEmployment}" th:field="*{typeOfEmployment}">
-<!--        <span th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid</span>-->
     </div>
     <div>
         <label>Organizational Unit</label>
         <br>
         <input type="text" th:value="${organizationalUnit}" th:field="*{organizationalUnit}">
-<!--        <span th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid</span>-->
     </div>
     <div>
         <label>Job Type</label>
         <br>
         <input type="text" th:value="${jobType}" th:field="*{jobType}">
-<!--        <span th:if="${#fields.hasErrors('jobType')}" th:errors="*{jobType}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('jobType')}" th:errors="*{jobType}">Invalid</span>-->
     </div>
     <div>
         <label>Professional Field</label>
         <br>
         <input type="text" th:value="${professionalField}" th:field="*{professionalField}">
-<!--        <span th:if="${#fields.hasErrors('professionalField')}" th:errors="*{professionalField}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('professionalField')}" th:errors="*{professionalField}">Invalid</span>-->
     </div>
     <div>
         <label>Job Code</label>
         <br>
         <input type="number" th:value="${jobCode}" th:field="*{jobCode}">
-<!--        <span th:if="${#fields.hasErrors('jobCode')}" th:errors="*{jobCode}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('jobCode')}" th:errors="*{jobCode}">Invalid</span>-->
     </div>
     <div>
         <label>Job Title</label>
         <br>
         <input type="text" th:value="${jobTitle}" th:field="*{jobTitle}">
-<!--        <span th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">Invalid</span>-->
     </div>
     <div>
         <label>Start Date</label>
         <br>
         <input type="date" th:value="${startDate}" th:field="*{startDate}">
-<!--        <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid</span>-->
     </div>
     <div>
         <label>End Date</label>
         <br>
         <input type="date" th:value="${endDate}" th:field="*{endDate}">
-<!--        <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid</span>-->
     </div>
     <div>
         <label>Place Of Employment</label>
         <br>
         <input type="text" th:value="${placeOfEmployment}" th:field="*{placeOfEmployment}">
-<!--        <span th:if="${#fields.hasErrors('placeOfEmployment')}" th:errors="*{placeOfEmployment}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('placeOfEmployment')}" th:errors="*{placeOfEmployment}">Invalid</span>-->
     </div>
     <div>
         <label>Working Hours</label>
         <br>
         <input type="text" th:value="${workingHours}" th:field="*{workingHours}">
-<!--        <span th:if="${#fields.hasErrors('workingHours')}" th:errors="*{workingHours}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('workingHours')}" th:errors="*{workingHours}">Invalid</span>-->
     </div>
     <div>
         <label>Working Day</label>
         <br>
         <input type="number" th:value="${workingDay}" th:field="*{workingDay}">
-<!--        <span th:if="${#fields.hasErrors('workingDay')}" th:errors="*{workingDay}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('workingDay')}" th:errors="*{workingDay}">Invalid</span>-->
     </div>
     <div>
         <label>Appointment Type</label>
         <br>
         <input type="text" th:value="${appointmentType}" th:field="*{appointmentType}">
-<!--        <span th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid</span>-->
     </div>
     <div>
         <label>Appointment Description</label>
         <br>
         <input type="text" th:value="${appointmentDescription}" th:field="*{appointmentDescription}">
-<!--        <span th:if="${#fields.hasErrors('appointmentDescription')}" th:errors="*{appointmentDescription}">Invalid</span>-->
+        <!--        <span th:if="${#fields.hasErrors('appointmentDescription')}" th:errors="*{appointmentDescription}">Invalid</span>-->
     </div>
     <button type="submit">Save</button>
+    <div class="success" th:if="${msg != null}">
+        <span th:text="${msg}"></span>
+    </div>
 </form>
 
-<h1 th:if="${#lists.size(personList) == 0}">
-    No Person
-</h1>
-
-<table th:if="${#lists.size(appointmentDecreeList)> 0}">
+<table th:if="${appointmentDecreeList}">
     <thead>
     <th>Id</th>
     <th>Type Of Employment</th>
@@ -118,18 +117,18 @@
     <tbody>
     <tr th:each="a : ${appointmentDecreeList}">
         <td th:text="${a.id}"></td>
-        <td  th:text="${a.typeOfEmployment}"></td>
-        <td  th:text="${a.organizationalUnit}"></td>
-        <td  th:text="${a.jobType}"></td>
-        <td  th:text="${a.professionalField}"></td>
-        <td  th:text="${a.jobCode}"></td>
-        <td  th:text="${a.jobTitle}"></td>
-        <td  th:text="${a.startDate}"></td>
-        <td  th:text="${a.endDate}"></td>
-        <td  th:text="${a.workingHours}"></td>
-        <td  th:text="${a.workingDay}"></td>
-        <td  th:text="${a.appointmentType}"></td>
-        <td  th:text="${a.appointmentDescription}"></td>
+        <td th:text="${a.typeOfEmployment}"></td>
+        <td th:text="${a.organizationalUnit}"></td>
+        <td th:text="${a.jobType}"></td>
+        <td th:text="${a.professionalField}"></td>
+        <td th:text="${a.jobCode}"></td>
+        <td th:text="${a.jobTitle}"></td>
+        <td th:text="${a.startDate}"></td>
+        <td th:text="${a.endDate}"></td>
+        <td th:text="${a.workingHours}"></td>
+        <td th:text="${a.workingDay}"></td>
+        <td th:text="${a.appointmentType}"></td>
+        <td th:text="${a.appointmentDescription}"></td>
         <td>
             <button th:onclick="'edit(\'' + ${a.id} + '\')'">Edit</button>
             <form th:action="@{/appointmentDecree/delete}" method="post">
@@ -141,9 +140,9 @@
     </tbody>
 </table>
 <script>
-    async function edit(id){
-        const resp =await fetch("/appointmentDecree/id/" +id , {
-            method:"get"
+    async function edit(id) {
+        const resp = await fetch("/appointmentDecree/id/" + id, {
+            method: "get"
         });
         const data = resp.json();
         console.log(data)
