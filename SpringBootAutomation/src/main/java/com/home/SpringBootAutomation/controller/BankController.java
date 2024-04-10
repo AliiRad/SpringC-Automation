@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping(value = "/bank")
+@RequestMapping("/bank")
 public class BankController {
     private final BankServiceImp serviceImp;
 

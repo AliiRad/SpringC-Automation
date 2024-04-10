@@ -13,7 +13,7 @@
     </label>
     <br>
     <label>
-        <input type="number" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
+        <input type="text" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
     </label>
     <br>
     <label>
@@ -33,7 +33,7 @@
     </label>
     <br>
     <label>
-        <input type="text" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
+        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
     </label>
     <br>
     <input type="submit" value="Save">
@@ -61,10 +61,10 @@
         <td th:text="${bank.accountStatus}"></td>
         <td th:text="${bank.balance}"></td>
         <td>
-            <button th:onclick="'edit(\'' + ${t.id} + '\')'">Edit</button>
+            <button th:onclick="'edit(\'' + ${bank.id} + '\')'">Edit</button>
             <form th:action="@{/bank/delete}" method="post">
                 <label>
-                    <input type="text" name="id" th:value="${t.id}" hidden="hidden">
+                    <input type="text" name="id" th:value="${bank.id}" hidden="hidden">
                 </label>
                 <button type="submit">Delete</button>
             </form>
