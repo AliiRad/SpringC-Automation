@@ -31,7 +31,7 @@ public class Bank {
     private String accountNumber;
 
     @Column(name = "bank-accountOwner")           //      صاحب حساب
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private String accountOwner;
 
     @Column(name = "bank-accountNumber")          //      بانک و شعبه
