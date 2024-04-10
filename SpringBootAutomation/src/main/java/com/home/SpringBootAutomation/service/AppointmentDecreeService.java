@@ -3,16 +3,17 @@ package com.home.SpringBootAutomation.service;
 import com.home.SpringBootAutomation.Model.AppointmentDecree;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface AppointmentDecreeService {
-    public void save(AppointmentDecree appointmentDecree);
+    AppointmentDecree save(AppointmentDecree appointmentDecree);
 
-    public void edit(AppointmentDecree appointmentDecree);
+    AppointmentDecree edit(AppointmentDecree appointmentDecree);
 
-    public void remove(Long id);
+    AppointmentDecree remove(AppointmentDecree appointmentDecree);
 
-    public Optional<AppointmentDecree> findById(Long id);
+    AppointmentDecree logicalRemove(Long id);
 
-    public List<AppointmentDecree> findAll();
+    AppointmentDecree findById(Long id);
+
+    List<AppointmentDecree> findAll();
 }

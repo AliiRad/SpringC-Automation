@@ -17,71 +17,66 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @SuperBuilder
 @ToString
-@Table(name = "appointmentDecree_tbl")
+@Table(name = "appointment_Decree_tbl")
 @Entity(name = "appointmentDecreeEntity")
 public class AppointmentDecree {//حکم کارگزینی
     @Id
-    @SequenceGenerator(name = "appointmentDecreeSeq", sequenceName = "appointment_decree_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "appointmentDecreeSeq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "appointmentDecree_id",length = 20)
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private PersonModel person;
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private PersonModel person;
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Employer")
-    @Column(name ="appointmentDecree_employer" ,length =20 )
-    private String employer;                                                                 //کارفرما
-
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Type Of Employment")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Type Of Employment")
     @Column(name ="appointmentDecree_typeOfEmployment" ,length =20 )
     private String typeOfEmployment;                                                         //نوع استخدام
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Organizationa lUnit")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Organizationa lUnit")
     @Column(name ="appointmentDecree_organizationalUnit" ,length =20 )
     private String organizationalUnit;                                                       //واحد سازمانی
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Job Type")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Job Type")
     @Column(name ="appointmentDecree_jobType" ,length =20 )
     private String jobType;                                                                  //نوع کار--کارشناس
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Professional Field")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Professional Field")
     @Column(name ="appointmentDecree_professionalField" ,length =20 )
     private String professionalField;                                                        //رسته شغلی--زمینه حرفه
 
-    @Pattern(regexp = "^{1,5}$",message = "Invalid Job Code")
+//    @Pattern(regexp = "^{1,5}$",message = "Invalid Job Code")
     @Column(name ="appointmentDecree_jobCode" ,length =5 )
     private int jobCode;                                                                     //کد شغل
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Job Title")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Job Title")
     @Column(name ="appointmentDecree_jobTitle" ,length =20 )
     private String jobTitle;                                                                 //عنوان شغل
 
-    @PastOrPresent(message = "Invalid Start Date")
+//    @PastOrPresent(message = "Invalid Start Date")
     @Column(name ="appointmentDecree_startDate")
     private LocalDateTime startDate;                                                         //تاریخ شروع
 
-    @FutureOrPresent(message = "Invalid End Date")
+//    @FutureOrPresent(message = "Invalid End Date")
     @Column(name ="appointmentDecree_endDate")
     private LocalDateTime endDate;                                                           //تاریخ پایان
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Place Of Employment")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Place Of Employment")
     @Column(name ="appointmentDecree_placeOfEmployment" ,length =20 )
     private String placeOfEmployment;                                                        //محل استخدام
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Working Hours")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Working Hours")
     @Column(name ="appointmentDecree_workingHours" ,length =20 )
     private String workingHours;                                                             //ساعت کاری
 
-    @Pattern(regexp = "^{1,4}$",message = "Invalid Working Day")
+//    @Pattern(regexp = "^{1,4}$",message = "Invalid Working Day")
     @Column(name ="appointmentDecree_workingDay" ,length =4 )
     private int workingDay;                                                                  //روز کارکرد
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Appointment Type")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Appointment Type")
     @Column(name ="appointmentDecree_appointmentType" ,length =20 )
     private String appointmentType;                                                          //نوع حکم
 
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Appointment Description")
+//    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Appointment Description")
     @Column(name ="appointmentDecree_appointmentDescription" ,length =20 )
     private String appointmentDescription;                                                   //شرح حکم
 }
