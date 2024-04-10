@@ -20,29 +20,28 @@ import java.time.LocalDateTime;
 
 public class Bank {
     @Id
-    @SequenceGenerator(name = "bankSeq", sequenceName = "bank_seq")
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "bankSeq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "bank-openingDate")            //      تاریخ افتتاح حساب
+    @Column(name = "bank_openingDate")            //      تاریخ افتتاح حساب
     private LocalDateTime accountOpeningDate;
 
-    @Column(name = "bank-accountNumber")          //      شماره حساب
+    @Column(name = "bank_accountNumber")          //      شماره حساب
     private String accountNumber;
 
-    @Column(name = "bank-accountOwner")           //      صاحب حساب
+    @Column(name = "bank_accountOwner")           //      صاحب حساب
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private String accountOwner;
 
-    @Column(name = "bank-accountNumber")          //      بانک و شعبه
+    @Column(name = "bank_accountNumber")          //      بانک و شعبه
     private String bankAndBranch;
 
-    @Column(name = "bank-accountNumber")          //      نوع حساب
+    @Column(name = "bank_accountNumber")          //      نوع حساب
     private String accountType;
 
-    @Column(name = "bank-AccountStatus")          //      وضعیت حساب
+    @Column(name = "bank_AccountStatus")          //      وضعیت حساب
     private String AccountStatus;
 
-    @Column(name = "bank-Balance")          //      وضعیت حساب
+    @Column(name = "bank_Balance")                //      موجودی حساب
     private int Balance;
 }
