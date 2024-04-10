@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
@@ -21,10 +21,11 @@ import java.time.LocalDateTime;
 public class Bank {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "bank_id",length = 20)
     private Long id;
 
     @Column(name = "bank_openingDate")            //      تاریخ افتتاح حساب
-    private LocalDateTime accountOpeningDate;
+    private LocalDate accountOpeningDate;
 
     @Column(name = "bank_accountNumber")          //      شماره حساب
     private String accountNumber;
@@ -33,10 +34,10 @@ public class Bank {
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private String accountOwner;
 
-    @Column(name = "bank_accountNumber")          //      بانک و شعبه
+    @Column(name = "bank_bankAndBranch")          //      بانک و شعبه
     private String bankAndBranch;
 
-    @Column(name = "bank_accountNumber")          //      نوع حساب
+    @Column(name = "bank_accountType")          //      نوع حساب
     private String accountType;
 
     @Column(name = "bank_AccountStatus")          //      وضعیت حساب
@@ -44,4 +45,7 @@ public class Bank {
 
     @Column(name = "bank_Balance")                //      موجودی حساب
     private int Balance;
+
+    @Column(name = "bank_Deleted")                //    حذف بانک
+    private Boolean deleted;
 }
