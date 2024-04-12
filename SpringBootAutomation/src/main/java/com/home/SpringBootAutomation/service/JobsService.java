@@ -15,5 +15,6 @@ public interface JobsService {
     //    Jobs findJobsByPersonId(Long id);
     List<Jobs> getJobsByPagination(int pageNo, int pageSize);
     Long getJobsCount();
+    Jobs logicalRemoveWithReturn(Long id);
 
 }

@@ -109,4 +109,16 @@ public class JobsServiceImpl implements JobsService {
     public Long getJobsCount(){
         return repository.count();
     }
+
+    //------------------------------------------------------
+    @Override
+    public Jobs logicalRemoveWithReturn(Long id){
+        Optional<Jobs> optionalJobs = repository.findById(id);
+        if (optionalJobs.isPresent()){
+            Jobs oldJobs = optionalJobs.get();
+            oldJobs.setDeleted(true);
+            return repository.save(oldJobs);
+        }
+        return null;
+    }
 }
