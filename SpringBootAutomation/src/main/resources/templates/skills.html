@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" >
+    <title>Skills CRUD Panel</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+</head>
+<body>
+
+<!--Main Container-->
+<div class="container">
+
+    <!--Add New Button-->
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalSkills">Add New Skill</button>
+    </div>
+    <!--Add New Button-->
+
+
+    <!--Table-->
+    <table class="table table-striped">
+        <thead>
+        <th>Id</th>
+        <th>Skill Title</th>
+        <th>Rate</th>
+        <th>Training</th>
+        <th>Description</th>
+        <th>Certification</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </thead>
+
+        <tbody>
+        <tr th:if="${skill.deleted == false}" th:each="skill :${skillsList}">
+            <td th:text="${skill.id}"></td>
+            <td th:text="${skill.skillTitle}"></td>
+            <td th:text="${skill.rate}"></td>
+            <td th:text="${skill.training}"></td>
+            <td th:text="${skill.description}"></td>
+            <td th:text="${skill.certification}"></td>
+            <!--            <td th:text="${skill.deleted}"></td>-->
+            <td >Active</td>
+            <td ><a class="btn btn-warning editButtonSkills">Edit</a></td>
+            <td ><a class="btn btn-danger deleteButtonSkills">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--Table-->
+
+    <!--Save Modal-->
+    <div class="modal fade" id="addModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/skills/save}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__skills">Save New Skill </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="skillTitle__add__skills" class="col-form-label">Skill Title :</label>
+                            <input type="text" class="form-control" id="skillTitle__add__skills" name="skillTitle">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="rate__add__skills" class="col-form-label">Rate :</label>
+                            <select class="form-select" aria-label="Default select example" id="rate__add__skills" name="rate">
+
+                                <option selected disabled value="-1">What Is Your Skill Rate?</option>
+                                <!--                                <option th:each="rate : ${T(com.mft.YoutueCrud.model.enums.SkillsGradeEn).values()}"-->
+                                <!--                                        th:value="${rate}" th:text="${rate}">-->
+                                <!--                                </option>-->
+                                <option value="Basic">Basic</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="training__add__skills" class="col-form-label">Training :</label>
+                            <input type="text" class="form-control" id="training__add__skills" name="training">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description__add__skills" class="col-form-label">Description :</label>
+                            <input type="text" class="form-control" id="description__add__skills" name="description">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="Certification__add__skills" class="col-form-label">Certification :</label>
+                            <input type="text" class="form-control" id="Certification__add__skills" name="Certification">
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Save Modal-->
+
+    <!--Edit Modal-->
+    <div class="modal fade" id="editModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/skills/edit}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title__skills">Edit Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="id__edit__skills" class="col-form-label">ID :</label>
+                            <input type="text" class="form-control" id="id__edit__skills" name="id" readonly>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="skillTitle__edit__skills" class="col-form-label">Skill Title :</label>
+                            <input type="text" class="form-control" id="skillTitle__edit__skills" name="skillTitle">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="rate__edit__skills" class="col-form-label">Rate :</label>
+                            <select class="form-select" aria-label="Default select example" id="rate__edit__skills" name="rate">
+
+                                <option selected disabled value="-1">What Is Your Skill Rate?</option>
+
+                                <option value="Basic">Basic</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="training__edit__skills" class="col-form-label">Training :</label>
+                            <input type="text" class="form-control" id="training__edit__skills" name="training">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description__edit__skills" class="col-form-label">Description :</label>
+                            <input type="text" class="form-control" id="description__edit__skills" name="description">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="Certification__edit__skills" class="col-form-label">Certification :</label>
+                            <input type="text" class="form-control" id="Certification__edit__skills" name="Certification">
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__skills">Save Edited</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Edit Modal-->
+
+    <!--Delete Modal -->
+    <div class="modal fade" id="deleteModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <form th:action ="@{/skills/delete}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelSkills"> Confirm The Deletion !</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="id__delete__skills" class="col-form-label">ID :</label>
+                            <input type="text" class="form-control" id="id__delete__skills" name="id" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
+                        <button type="submit" class="btn btn-danger" id="deleteConfirmButtonSkills">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Delete Modal -->
+
+
+    <!--Filters-->
+    <form id="findByIdForm__skill" th:action="@{/skills/findById}" method="get">
+
+        <!--    <div class="findById__skill">-->
+        <label for="findByIdInput__skill">Id :</label>
+        <input type="number" class="form-control" id="findByIdInput__skill" required>
+        <!--    </div>-->
+
+        <button type="submit" class="btn btn-primary" id="submitFindById__skill">Search</button>
+
+    </form>
+    <!--Filters-->
+
+
+</div>
+<!--Main Container-->
+
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/skills.js}" src="../static/js/skills.js" ></script>
+
+</body>
+</html>
+
+<!--TODO: Adding Pagination For Tables-->
