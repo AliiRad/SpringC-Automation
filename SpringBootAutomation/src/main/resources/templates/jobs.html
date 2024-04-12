@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Jobs CRUD Panel</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+</head>
+<body>
+
+
+<!--Main Container-->
+<div class="container">
+
+
+    <!--Add New Button-->
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalJobs">Add New Job</button>
+    </div>
+    <!--Add New Button-->
+
+
+    <!--Table-->
+    <table class="table table-striped">
+        <thead>
+        <th>Id</th>
+        <th>Company Name</th>
+        <th>Address</th>
+        <th>Positions</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+
+        </thead>
+
+        <tbody>
+        <tr th:if="${job.deleted == false}" th:each="job : ${jobsList}">
+            <td th:text="${job.id}"></td>
+            <td th:text="${job.companyName}"></td>
+            <td th:text="${job.address}"></td>
+            <td th:text="${job.positions}"></td>
+            <td th:text="${job.startDate}"></td>
+            <td th:text="${job.endDate}"></td>
+            <td>Active</td>
+            <td><a class="btn btn-warning editButtonJobs">Edit</a></td>
+            <td><a class="btn btn-danger deleteButtonJobs">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <!--Table-->
+
+    <!--Save Modal-->
+    <div class="modal fade" id="addModalJobs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/jobs/save}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Job </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="companyName__add__jobs" class="col-form-label">Company Name: :</label>
+                            <input type="text" class="form-control" id="companyName__add__jobs" name="companyName">
+                        </div>
+
+
+
+                        <div class="mb-3">
+                            <label for="address__add__jobs" class="col-form-label">Address :</label>
+                            <input type="text" class="form-control" id="address__add__jobs" name="address">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="positions__add__jobs" class="col-form-label">Positions :</label>
+                            <input type="text" class="form-control" id="positions__add__jobs" name="positions">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="startDate__add__jobs" class="col-form-label">Start Date :</label>
+                            <input type="date" class="form-control" id="startDate__add__jobs" name="startDate">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="endDate__add__jobs" class="col-form-label">End Date :</label>
+                            <input type="date" class="form-control" id="endDate__add__jobs" name="endDate">
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Save Modal-->
+
+    <!--Edit Modal-->
+    <div class="modal fade" id="editModalJobs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/jobs/edit}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title">Edit Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="id__edit__jobs" class="col-form-label">ID :</label>
+                            <input type="text" class="form-control" id="id__edit__jobs" name="id" readonly>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="companyName__edit__jobs" class="col-form-label">Company Name :</label>
+                            <input type="text" class="form-control" id="companyName__edit__jobs" name="companyName">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="address__edit__jobs" class="col-form-label">Address :</label>
+                            <input type="text" class="form-control" id="address__edit__jobs" name="address">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="positions__edit__jobs" class="col-form-label">Positions :</label>
+                            <input type="text" class="form-control" id="positions__edit__jobs" name="positions">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="startDate__edit__jobs" class="col-form-label">Start Date :</label>
+                            <input type="date" class="form-control" id="startDate__edit__jobs" name="startDate">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="endDate__edit__jobs" class="col-form-label">End Date :</label>
+                            <input type="date" class="form-control" id="endDate__edit__jobs" name="endDate">
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__jobs">Save Edited</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Edit Modal-->
+
+    <!--Delete Modal -->
+    <div class="modal fade" id="deleteModalJobs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+        <form th:action ="@{/jobs/delete}" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"> Confirm The Deletion !</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="id__delete__jobs" class="col-form-label">ID :</label>
+                            <input type="text" class="form-control" id="id__delete__jobs" name="id" readonly>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
+                        <button type="submit" class="btn btn-danger" id="deleteConfirmButtonJobs">Delete</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--Delete Modal -->
+
+
+</div>
+<!--Main Container-->
+
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/jobs.js}" src="../static/js/jobs.js" ></script>
+</body>
+</html>
