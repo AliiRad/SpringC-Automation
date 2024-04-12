@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface SkillsRepository extends JpaRepository<Skills, Long> {
 
-    //TODO: remove method should return the object.
+
     //TODO: contains the word of the title.
 //  @Query("select oo from skillsEntity  where oo.id =: id and update skillsEntity oo set oo.deleted=true where oo.id=:id " )
 
