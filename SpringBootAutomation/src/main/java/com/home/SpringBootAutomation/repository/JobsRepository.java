@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@SuppressWarnings("ALL")
+//@SuppressWarnings("ALL")
 @Repository
 public interface JobsRepository extends JpaRepository<Jobs, Long> {
 
