@@ -17,4 +17,6 @@ public interface SkillsService {
     //    List<Skills> findSkillsByPersonId(Long id);
     List<Skills> getSkillsByPagination(int pageNo, int pageSize);
     Long getSkillsCount();
+    Skills logicalRemoveWithReturn(Long id);
+
 }

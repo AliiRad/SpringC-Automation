@@ -125,4 +125,16 @@ public class SkillsServiceImpl implements SkillsService {
         return repository.count();
     }
 
+    //------------------------------------------------------
+    @Override
+    public Skills logicalRemoveWithReturn(Long id){
+        Optional<Skills> optionalSkills = repository.findById(id);
+        if (optionalSkills.isPresent()){
+            Skills oldSkills = optionalSkills.get();
+            oldSkills.setDeleted(true);
+            return repository.save(oldSkills);
+        }
+        return null;
+    }
+
 }
