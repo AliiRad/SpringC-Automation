@@ -28,6 +28,7 @@ public interface SkillsRepository extends JpaRepository<Skills, Long> {
 
     //TODO: how to make it a  dynamic search?
     List<Skills> findSkillsBySkillTitleContaining(String title);
+// TODO :   List<Skills> findSkillsBySkillTitleContainingIgnoreCase(String title);
 
     //TODO : SkillRate is Enum .
     List<Skills> findSkillsByRate(SkillsGradeEn rate);
