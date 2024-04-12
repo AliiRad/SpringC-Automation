@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/jobs")
 public class JobsController {
+
+
     @Autowired
     private JobsService service;
+
     //    -------------------------------------------------------------------------
+
     @PostMapping("/save")
     public String save(@Valid Jobs jobs , BindingResult result , Model model){
         if (result.hasErrors()){
