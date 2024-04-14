@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person</title>
+</head>
+<body>
+<h2>DrivingLicence Page</h2>
+<form th:action="@{/drivingLicenceModel/save}" method="post" th:object="${drivingLicenceModel}">
+    <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
+    <br>
+    <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
+    <br>
+    <input type="fathersName" placeholder="FathersName" th:value="${fathersName}" th:field="*{fathersName}">
+    <br>
+    <input type="nationalId" placeholder="NationalId" th:value="${nationalId}" th:field="*{nationalId}">
+    <br>
+    <input type="birthdate-local" placeholder="Birthdate" th:value="${birthdate}" th:field="*{birthdate}">
+    <br>
+    <input type="typeOfCertification" placeholder="TypeOfCertification" th:value="${typeOfCertification}" th:field="*{typeOfCertification}">
+    <br>
+    <input type="issuanceDate" placeholder="IssuanceDate" th:value="${issuanceDate}" th:field="*{issuanceDate}">
+    <br>
+    <input type="serialNumber" placeholder="SerialNumber" th:value="${serialNumber}" th:field="*{serialNumber}">
+    <br>
+    <input type="submit" th:value="Save">
+    </form>
+<table th:if="${#lists.size(drivingLicenceModelList)>0}">
+    <thead>
+    <th>Id</th>
+    <th>Person Name</th>
+    <th>Person Lastname</th>
+    <th>Person FathersName</th>
+    <th>Person NationalId</th>
+    <th>Person Birthdate</th>
+    <th>Person TypeOfCertification</th>
+    <th>Person IssuanceDate</th>
+    <th>Person SerialNumber</th>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${drivingLicenceModel}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.lastname}"></td>
+        <td th:text="${p.fathersName}"></td>
+        <td th:text="${p.nationalId}"></td>
+        <td th:text="${p.birthdate}"></td>
+        <td th:text="${p.typeOfCertification}"></td>
+        <td th:text="${p.issuanceDate}"></td>
+        <td th:text="${p.serialNumber}"></td>
+    <td>
+    <button>Edit</button>
+    <form th:action="@{/drivingLicenceModel/delete}" method="post">
+        <input type="text" hidden="hidden" th:value="${p.id}"name="id">
+        <button type="submit">Delete</button>
+    </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
