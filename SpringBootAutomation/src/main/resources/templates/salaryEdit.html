@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary Edit</title>
+</head>
+<body>
+<div th:insert="/salaryForm.html :: salaryForm"></div>
+</body>
+<script>
+    const submitBtn = document.getElementById("submit");
+    submitBtn.innerText = "Edit";
+
+    form = document.getElementById("salaryForm").formAction = "/salary/edit"
+
+</script>
+</html>
