@@ -6,15 +6,15 @@ import com.home.SpringBootAutomation.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {
-    private PersonModel personModel;
-    private final PersonRepository personRepository;
+    private PersonRepository personRepository;
 
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -23,7 +23,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public PersonModel save(PersonModel personModel){
         log.info("Service-PersonModel-Save");
-        personRepository.save(this.personModel);
+        personRepository.save(personModel);
         return personModel;
     }
 
@@ -78,7 +78,7 @@ public class PersonServiceImpl implements PersonService {
         return personRepository.findByNationalID(nationalId);
     }
 
-    public List<PersonModel>findByBirthDate(LocalDateTime birthdate){
+    public List<PersonModel>findByBirthDate(LocalDate birthdate){
         log.info("Service-PersonModel-findByBirthDate");
         return personRepository.findByBirthDate(birthdate);
     }

@@ -11,7 +11,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 
 @Getter
@@ -67,7 +67,7 @@ public class MilitaryServiceModel {
 
 //	@PastOrPresent(message = "Invalid issuance Date")
 	@Column(name = "military_issuanceDate")
-	private LocalDateTime issuanceDate;//تاریخ صدور
+	private LocalDate issuanceDate;//تاریخ صدور
 
 
 	@Column(name = "military_vitiation")

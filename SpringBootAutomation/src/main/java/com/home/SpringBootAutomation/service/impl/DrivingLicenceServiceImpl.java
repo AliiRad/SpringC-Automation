@@ -6,16 +6,14 @@ import com.home.SpringBootAutomation.service.DrivingLicenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Slf4j
 public class DrivingLicenceServiceImpl implements DrivingLicenceService {
-
-    private DrivingLicenceModel drivingLicenceModel;
-    private final DrivingLicenceRepository drivingLicenceRepository;
+    private DrivingLicenceRepository drivingLicenceRepository;
 
     public DrivingLicenceServiceImpl( DrivingLicenceRepository drivingLicenceRepository){
 
@@ -25,7 +23,7 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     @Override
     public DrivingLicenceModel save(DrivingLicenceModel drivingLicenceModel){
         log.info("Service-DrivingLicenceModel-Save");
-        drivingLicenceRepository.save(this.drivingLicenceModel);
+        drivingLicenceRepository.save(drivingLicenceModel);
         return drivingLicenceModel;
     }
 
@@ -92,7 +90,7 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         return drivingLicenceRepository.findBySerialNumber(serialNumber);
 
     }
-    public List<DrivingLicenceModel>findByDate(LocalDateTime issuanceDate){
+    public List<DrivingLicenceModel>findByDate(LocalDate issuanceDate){
         log.info("Service-DrivingLicenceModel-findByDate");
         return drivingLicenceRepository.findByDate(issuanceDate);
 

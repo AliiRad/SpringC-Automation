@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +53,7 @@ public class PersonController {
         }
     }
     @GetMapping(value = "/date")
-    public String showPersonFindByBirthDate(Model model, @ModelAttribute("timeStamp") LocalDateTime birthdate){
+    public String showPersonFindByBirthDate(Model model, @ModelAttribute("timeStamp") LocalDate birthdate){
         log.info("Controller-PersonController-Get-FindByBirthDate");
         List<PersonModel> personModelList =personService.findByBirthDate(birthdate);
         if (!personModelList.isEmpty()){

@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public interface MilitaryRepository extends JpaRepository<MilitaryServiceModel,L
     List<String> findAllNamesById(@Param("id") ArrayList<Long> id);
 
     @Query("SELECT oo from MilitaryEntity oo where oo.issuanceDate=:issuanceDate")
-    List<MilitaryServiceModel> findByIssuanceDate(LocalDateTime issuanceDate);
+    List<MilitaryServiceModel> findByIssuanceDate(LocalDate issuanceDate);
 
     List<MilitaryServiceModel>findByName(String name);
 

@@ -12,7 +12,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -59,7 +59,7 @@ public class DrivingLicenceModel {
 
 //	@PastOrPresent(message = "Invalid issuance Date")
 	@Column(name ="DrivingLicence_issuanceDate")
-	private LocalDateTime issuanceDate;//تاریخ صدور
+	private LocalDate issuanceDate;//تاریخ صدور
 
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
 	@Column(name ="DrivingLicence_serialNumber")
@@ -74,7 +74,7 @@ public class DrivingLicenceModel {
 
 //	@FutureOrPresent(message = "Invalid End Date")
 	@Column(name ="DrivingLicence_endDate")
-	private LocalDateTime endDate;//تاریخ پایان اعتبار
+	private LocalDate endDate;//تاریخ پایان اعتبار
 
 //	@PastOrPresent(message = "Invalid Renewal Date")
 	@Column(name ="DrivingLicence_renewal")

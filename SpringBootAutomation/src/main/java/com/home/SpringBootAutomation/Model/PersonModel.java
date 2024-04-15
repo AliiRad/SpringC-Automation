@@ -11,8 +11,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -54,7 +54,7 @@ public class PersonModel {
 
 //	@PastOrPresent(message = "Invalid birthDate ")
 	@Column(name ="person_birthdate")
-	private LocalDateTime birthdate;
+	private LocalDate birthdate;
 
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid City")
 	@Column(name ="person_city")

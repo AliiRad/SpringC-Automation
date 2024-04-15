@@ -6,7 +6,8 @@ import com.home.SpringBootAutomation.service.MilitaryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,8 +15,7 @@ import java.util.Optional;
 @Slf4j
 public class MilitaryServiceImpl implements MilitaryService {
 
-    private MilitaryServiceModel militaryServiceModel;
-    private final MilitaryRepository militaryRepository;
+    private MilitaryRepository militaryRepository;
 
     public MilitaryServiceImpl(MilitaryRepository militaryRepository) {
         this.militaryRepository = militaryRepository;
@@ -25,7 +25,7 @@ public class MilitaryServiceImpl implements MilitaryService {
     @Override
     public MilitaryServiceModel save(MilitaryServiceModel militaryServiceModel){
         log.info("Service-MilitaryServiceModel-Save");
-        militaryRepository.save(this.militaryServiceModel);
+        militaryRepository.save(militaryServiceModel);
         return militaryServiceModel;
     }
 
@@ -89,7 +89,7 @@ public class MilitaryServiceImpl implements MilitaryService {
 
     }
 
-    public List<MilitaryServiceModel>findByIssuanceDate(LocalDateTime issuanceDate){
+    public List<MilitaryServiceModel>findByIssuanceDate(LocalDate issuanceDate){
         log.info("Service-MilitaryServiceModel-FindByIssuanceDate");
         return militaryRepository.findByIssuanceDate(issuanceDate);
     }

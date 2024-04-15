@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public interface PersonRepository extends JpaRepository<PersonModel,Long> {
     List<PersonModel> findByNationalID(String nationalId);
 
     @Query("SELECT oo from PersonEntity oo where oo.birthdate=:birthdate")
-    List<PersonModel>findByBirthDate(LocalDateTime birthdate);
+    List<PersonModel>findByBirthDate(LocalDate birthdate);
 
 
     List<PersonModel> findByName(String name);

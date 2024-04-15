@@ -5,14 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 
 public interface DrivingLicenceRepository extends JpaRepository<DrivingLicenceModel, Long> {
 
     @Query("SELECT oo from DrivingLicenceEntity oo where oo.issuanceDate=:issuaceDate")
-    List<DrivingLicenceModel> findByDate(LocalDateTime issuanceDate);
+    List<DrivingLicenceModel> findByDate(LocalDate issuanceDate);
 
     @Query("SELECT oo from DrivingLicenceEntity oo where oo.serialNumber=:serialNumber")
     List<DrivingLicenceModel> findBySerialNumber(String serialNumber );

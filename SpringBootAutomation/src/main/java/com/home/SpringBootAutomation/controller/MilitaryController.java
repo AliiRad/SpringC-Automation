@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class MilitaryController {
     }
 
     @GetMapping(value = "/date")
-    public String showMilitaryFindByIssuanceDate(Model model, @ModelAttribute("timeStamp")LocalDateTime issuanceDate){
+    public String showMilitaryFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
         log.info("Controller-MilitaryController-Get-FindByIssuanceDate");
         List<MilitaryServiceModel> militaryServiceModelList =militaryService.findByIssuanceDate(issuanceDate);
         if (!militaryServiceModelList.isEmpty()){
