@@ -18,6 +18,7 @@ import java.util.Optional;
 @Slf4j
 @Controller
 @RequestMapping(value = "/military")
+
 public class MilitaryController {
     private MilitaryServiceImpl militaryService;
 

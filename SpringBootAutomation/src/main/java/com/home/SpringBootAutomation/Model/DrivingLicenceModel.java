@@ -22,14 +22,12 @@ import java.time.LocalDate;
 
 @Table(name = "DrivingLicence_tbl")
 @Entity(name ="DrivingLicenceEntity" )
-
 public class DrivingLicenceModel {
 
 	//گواهینامه رانندگی
 
 	@Id
-	@SequenceGenerator(name = "drivingLicenceSeq", sequenceName = "driving_licence_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="drivingLicenceSeq")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "drivingLicence_id")
 	private long id;
 
