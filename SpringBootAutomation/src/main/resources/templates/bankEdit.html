@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:insert="bank.html :: bankForm"
+      th:action="@{/update/{id}(id=${bankEdit.id})}"
+      th:object="${bankEdit}"
+      method="post">
+
+</form>
+</body>
+</html>

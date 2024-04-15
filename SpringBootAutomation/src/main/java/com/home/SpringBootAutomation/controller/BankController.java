@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.Model.Bank;
 import com.home.SpringBootAutomation.service.BankServiceImp;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,50 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Slf4j
 @Controller
-@RequestMapping("/bank")
+@RequestMapping
 public class BankController {
-    private final BankServiceImp serviceImp;
+    private BankServiceImp serviceImp;
 
     public BankController(BankServiceImp serviceImp) {
         this.serviceImp = serviceImp;
     }
 
-    @GetMapping
-    public String showBank(Model model) {
-        log.info("Controller-Bank-Get-FindAll");
-        model.addAttribute("bank", new Bank());
+    @GetMapping(value = "/bank")
+    public String showBankList(Model model) {
+        model.addAttribute("bank",new Bank());
         model.addAttribute("bankList", serviceImp.findAll());
         return "bank";
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping(value = "/bank/save")
     public String saveBank(Bank bank) {
-        log.info("Controller-Bank-Save: " + bank.toString());
         serviceImp.save(bank);
         return "redirect:/bank";
     }
 
-    @GetMapping(value ="/id/{id}")
-    public String showBank(@PathVariable("id") Long id , Model model){
+    @GetMapping(value = "/edit/{id}")
+    public String showEditPage(@PathVariable("id") Long id, Model model) {
         Bank bank = serviceImp.findById(id);
-        if (bank != null){
-            model.addAttribute("bank", bank);
-            return "bank";
-        }else {
+        if (bank != null) {
+            model.addAttribute("bankEdit", bank);
+            return "bankEdit";
+        }
+        return "Invalid Id";
+    }
+
+    @PostMapping(value = "/update/{id}")
+    public String editForm(@PathVariable("id") Long id, @Valid Bank bank) {
+        serviceImp.save(bank);
+        return "redirect:/bank";
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    public String deleteBank(@PathVariable("id") long id) {
+        Bank bank = serviceImp.findById(id);
+        if (bank!=null) {
+            serviceImp.remove(bank);
             return "redirect:/bank";
         }
-    }
-
-    @PostMapping(value ="/edit")
-    public String editBank(Bank bank) {
-        serviceImp.edit(bank);
-        return "bank";
-    }
-
-    @PostMapping(value ="/delete")
-    public String deleteBank(Long id) {
-        log.info("Controller-Bank-Delete: " + id);
-        serviceImp.logicalRemove(id);
-        return "redirect:/bank";
+        return "Invalid Id";
     }
 }

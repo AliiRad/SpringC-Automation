@@ -7,7 +7,7 @@
 <body>
 <h2>Bank</h2>
 
-<form th:action="@{/bank/save}" method="post" th:object="${bank}">
+<form th:fragment="bankForm" th:action="@{/bank/save}" method="post" th:object="${bank}">
     <label>
         <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}" th:field="*{accountOpeningDate}">
     </label>
@@ -60,26 +60,11 @@
         <td th:text="${bank.accountType}"></td>
         <td th:text="${bank.accountStatus}"></td>
         <td th:text="${bank.balance}"></td>
-        <td>
-            <button th:onclick="'edit(\'' + ${bank.id} + '\')'">Edit</button>
-            <form th:action="@{/bank/delete}" method="post">
-                <label>
-                    <input type="text" name="id" th:value="${bank.id}" hidden="hidden">
-                </label>
-                <button type="submit">Delete</button>
-            </form>
-        </td>
+        <td><a th:href="@{/edit/{id}(id=${bank.id})}">Edit</a></td>
+        <td><a th:href="@{/delete/{id}(id=${bank.id})}">Delete</a></td>
     </tr>
     </tbody>
 </table>
-<script>
-    async function edit(id){
-        const resp =await fetch("/bank/id/" +id , {
-            method:"get"
-        });
-        const data = resp.json();
-        console.log(data)
-    }
-</script>
+
 </body>
 </html>
