@@ -53,10 +53,13 @@ public class AppointmentDecreeController {
         return "redirect:/appointmentDecree";
     }
 
-    @PostMapping(value = "/delete")
-    public String deleteAppointmentDecree(Long id) {
-        log.info("Controller-AppointmentDecree-Delete: " + id);
-        serviceImp.logicalRemove(id);
-        return "redirect:/appointmentDecree";
+    @GetMapping(value = "/delete/{id}")
+    public String deleteAppointmentDecree(@PathVariable("id") long id) {
+        AppointmentDecree appointmentDecree = serviceImp.findById(id);
+        if (appointmentDecree!=null) {
+            serviceImp.remove(appointmentDecree);
+            return "redirect:/appointmentDecree";
+        }
+        return "Invalid Id";
     }
 }

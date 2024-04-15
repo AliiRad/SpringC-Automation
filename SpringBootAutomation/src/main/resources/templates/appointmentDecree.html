@@ -130,9 +130,7 @@
         <td th:text="${a.appointmentType}"></td>
         <td th:text="${a.appointmentDescription}"></td>
         <td><a th:href="@{/edit/{id}(id=${a.id})}">Edit</a></td>
-        <td>
-            <button th:href="@{/appointmentDecree/deleted(id=${appointmentDecree.id})}">Delete</button>
-        </td>
+        <td><a th:href="@{/delete/{id}(id=${a.id})}">Delete</a></td>
     </tr>
     </tbody>
 </table>
