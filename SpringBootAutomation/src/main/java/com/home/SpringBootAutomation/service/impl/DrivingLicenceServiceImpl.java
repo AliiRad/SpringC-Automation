@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.service.Impl;
+package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.Model.DrivingLicenceModel;
 import com.home.SpringBootAutomation.repository.DrivingLicenceRepository;

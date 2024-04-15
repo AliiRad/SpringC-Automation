@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.service.Impl;
+package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.Model.MilitaryServiceModel;
 import com.home.SpringBootAutomation.repository.MilitaryRepository;

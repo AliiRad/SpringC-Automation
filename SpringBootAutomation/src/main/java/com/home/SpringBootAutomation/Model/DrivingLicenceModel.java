@@ -30,26 +30,26 @@ public class DrivingLicenceModel {
 	@Id
 	@SequenceGenerator(name = "drivingLicenceSeq", sequenceName = "driving_licence_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="drivingLicenceSeq")
-	@Column(name = "drivingLicence_id",length = 20, nullable = false)
+	@Column(name = "drivingLicence_id")
 	private long id;
 
-	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Name")
-	@Column(name ="DrivingLicence_name" ,length =20 )
+//	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Name")
+	@Column(name ="DrivingLicence_name")
 	private String name;
 
-	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Last Name")
-	@Column(name ="DrivingLicence_lastname" ,length =20 )
+//	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Last Name")
+	@Column(name ="DrivingLicence_lastname")
 	private String lastname;
 
-	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid FathersName")
-	@Column(name ="DrivingLicence_fathersName" ,length =20 )
+//	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid FathersName")
+	@Column(name ="DrivingLicence_fathersName")
 	private String fathersName;
 
-	@Pattern(regexp = "^[0-9\\s]{10}$", message = "Invalid NationalID")
-	@Column(name ="DrivingLicence_nationalID" ,length =10 )
+//	@Pattern(regexp = "^[0-9\\s]{10}$", message = "Invalid NationalID")
+	@Column(name ="DrivingLicence_nationalID")
 	private Long nationalID; // شماره ملی
 
-	@PastOrPresent(message = "Invalid birthDate ")
+//	@PastOrPresent(message = "Invalid birthDate ")
 	@Column(name ="DrivingLicence_birthdate")
 	private LocalDate birthdate;
 
@@ -57,30 +57,30 @@ public class DrivingLicenceModel {
 	private TypeOfCertification typeOfCertification; //نوع گواهی نامه
 
 
-	@PastOrPresent(message = "Invalid issuance Date")
+//	@PastOrPresent(message = "Invalid issuance Date")
 	@Column(name ="DrivingLicence_issuanceDate")
 	private LocalDateTime issuanceDate;//تاریخ صدور
 
-	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
+//	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
 	@Column(name ="DrivingLicence_serialNumber")
 	private String serialNumber; // شماره گواهی نامه
 
 	@Column(name ="DrivingLicence_LicenseSuspension")
 	private boolean licenseSuspension;//تعلیق گواهینامه
 
-	@PastOrPresent(message = "Invalid LicenseSuspension Date")
+//	@PastOrPresent(message = "Invalid LicenseSuspension Date")
 	@Column(name ="DrivingLicence_LicenseSuspensionDate")
 	private LocalDate licenseSuspensionDate;//تاریخ تعلیق گواهینامه
 
-	@FutureOrPresent(message = "Invalid End Date")
+//	@FutureOrPresent(message = "Invalid End Date")
 	@Column(name ="DrivingLicence_endDate")
 	private LocalDateTime endDate;//تاریخ پایان اعتبار
 
-	@PastOrPresent(message = "Invalid Renewal Date")
+//	@PastOrPresent(message = "Invalid Renewal Date")
 	@Column(name ="DrivingLicence_renewal")
 	private LocalDate renewal;//تاریخ تمدید مجدد
 
-	@Column(name ="DrivingLicence_Deleted",length = 5)
+	@Column(name ="DrivingLicence_Deleted")
 	private boolean deleted;//حذف
 
 }
