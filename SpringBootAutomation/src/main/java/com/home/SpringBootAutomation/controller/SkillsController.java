@@ -19,17 +19,20 @@ public class SkillsController {
 
 
 
-//    private SkillsServiceI service;
-//
-//    @Autowired
-//    public void setService(SkillsService service) {
-//        this.service = service;
-//    }
-    //    -------------------------------------------------------------------------
+// Avoiding Field Injection With Setter Injection
 
+    private SkillsService service;
 
     @Autowired
-    private SkillsService service;
+    public void setService(SkillsService service) {
+        this.service = service;
+    }
+    //    -------------------------------------------------------------------------
+
+//  Field Injection
+
+//    @Autowired
+//    private SkillsService service;
 
     //    -------------------------------------------------------------------------
 
