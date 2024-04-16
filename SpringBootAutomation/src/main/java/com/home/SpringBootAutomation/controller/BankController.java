@@ -34,7 +34,7 @@ public class BankController {
         return "redirect:/bank";
     }
 
-    @GetMapping(value = "/edit/{id}")
+    @GetMapping(value = "bank/edit/{id}")
     public String showEditPage(@PathVariable("id") Long id, Model model) {
         Bank bank = serviceImp.findById(id);
         if (bank != null) {
@@ -44,13 +44,13 @@ public class BankController {
         return "Invalid Id";
     }
 
-    @PostMapping(value = "/update/{id}")
+    @PostMapping(value = "bank/update/{id}")
     public String editForm(@PathVariable("id") Long id, @Valid Bank bank) {
         serviceImp.save(bank);
         return "redirect:/bank";
     }
 
-    @GetMapping(value = "/delete/{id}")
+    @GetMapping(value = "bank/delete/{id}")
     public String deleteBank(@PathVariable("id") long id) {
         Bank bank = serviceImp.findById(id);
         if (bank!=null) {

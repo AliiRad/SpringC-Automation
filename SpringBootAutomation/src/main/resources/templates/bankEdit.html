@@ -5,11 +5,38 @@
     <title>Title</title>
 </head>
 <body>
-<form th:insert="bank.html :: bankForm"
-      th:action="@{/update/{id}(id=${bankEdit.id})}"
-      th:object="${bankEdit}"
-      method="post">
-
+<form th:action="@{/bank/update/{id}(id=${bankEdit.id})}" th:object="${bankEdit}" method="post">
+    <label>
+    <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}"
+           th:field="*{accountOpeningDate}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Owner" th:value="${accountOwner}" th:field="*{accountOwner}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Bank And Branch" th:value="${bankAndBranch}" th:field="*{bankAndBranch}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Type" th:value="${accountType}" th:field="*{accountType}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Status" th:value="${accountStatus}" th:field="*{accountStatus}">
+    </label>
+    <br>
+    <label>
+        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
+    </label>
+    <br>
+    <input type="submit" value="Update">
 </form>
+
 </body>
 </html>

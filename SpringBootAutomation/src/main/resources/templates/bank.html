@@ -7,7 +7,7 @@
 <body>
 <h2>Bank</h2>
 
-<form th:fragment="bankForm" th:action="@{/bank/save}" method="post" th:object="${bank}">
+<form th:action="@{/bank/save}" method="post" th:object="${bank}">
     <label>
         <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}" th:field="*{accountOpeningDate}">
     </label>
@@ -60,8 +60,8 @@
         <td th:text="${bank.accountType}"></td>
         <td th:text="${bank.accountStatus}"></td>
         <td th:text="${bank.balance}"></td>
-        <td><a th:href="@{/edit/{id}(id=${bank.id})}">Edit</a></td>
-        <td><a th:href="@{/delete/{id}(id=${bank.id})}">Delete</a></td>
+        <td><a th:href="@{/bank/edit/{id}(id=${bank.id})}">Edit</a></td>
+        <td><a th:href="@{/bank/delete/{id}(id=${bank.id})}">Delete</a></td>
     </tr>
     </tbody>
 </table>
