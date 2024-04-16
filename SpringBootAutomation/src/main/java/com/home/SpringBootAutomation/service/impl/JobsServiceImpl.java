@@ -50,8 +50,9 @@ public class JobsServiceImpl implements JobsService {
         Optional<Jobs> optionalJobs = repository.findById(id);
         if (optionalJobs.isPresent()){
             repository.logicalRemove(id);
+        }else {
+            System.out.println(" Job not found !");
         }
-        System.out.println("not found !");
 
     }
 

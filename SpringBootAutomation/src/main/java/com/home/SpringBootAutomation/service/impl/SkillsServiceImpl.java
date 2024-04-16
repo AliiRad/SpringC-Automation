@@ -53,8 +53,10 @@ public class SkillsServiceImpl implements SkillsService {
         Optional<Skills> optional = repository.findById(id);
         if (optional.isPresent()){
             repository.logicalRemove(id);
+        }else {
+            System.out.println(" Skill not found !");
         }
-        System.out.println("not found !");
+
 
     }
 
