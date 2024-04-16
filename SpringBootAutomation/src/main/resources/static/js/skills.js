@@ -111,3 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+
+
+//TODO : Putting All Methods in a Single Event Listener Block And Delete The forEach()

@@ -93,3 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
         deleteModalJobs.hide();
     });
 });
+
+
+
+//TODO : Putting All Methods in a Single Event Listener Block And Delete The forEach()
