@@ -40,12 +40,14 @@ public class SkillsController {
             log.error(result.getAllErrors().toString());
 //                model.addAttribute("error" ,result.getAllErrors().toString());
             return "skills";
-        }
-        log.info("Skill Saved - Post Method");
-        log.info(skills.toString());
-        service.save(skills);
+        }else {
+            log.info("Skill Saved - Post Method");
+            log.info(skills.toString());
+            service.save(skills);
 
-        return "redirect:/skills";
+            return "redirect:/skills";
+        }
+
     }
     //    -------------------------------------------------------------------------
 
@@ -60,9 +62,11 @@ public class SkillsController {
             model.addAttribute("skills", skills);
             model.addAttribute("message", "Skill Edited Successfully !");
             return "redirect:/skills";
+        }else {
+            model.addAttribute("message", "Skill Not Found !");
+            return "redirect:/skills";
         }
-        model.addAttribute("message", "Skill Not Found !");
-        return "redirect:/skills";
+
     }
 
 

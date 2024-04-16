@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Slf4j
 @RequestMapping("/jobs")
+@SuppressWarnings("ALL")
 public class JobsController {
 
 
@@ -26,11 +27,13 @@ public class JobsController {
         if (result.hasErrors()){
             log.error(result.getAllErrors().toString());
             return "jobs";
+        }else {
+            log.info("Job Saved - Post Method");
+            log.info(jobs.toString());
+            service.save(jobs);
+            return "redirect:/jobs";
         }
-        log.info("Job Saved - Post Method");
-        log.info(jobs.toString());
-        service.save(jobs);
-        return "redirect:/jobs";
+
 
     }
     //    -------------------------------------------------------------------------
@@ -47,10 +50,12 @@ public class JobsController {
             model.addAttribute("message" , "Job Edited Successfully !");
 
             return "redirect:/jobs";
+        }else {
+            model.addAttribute("message" ,"Job Not Found !");
+            return "redirect:/jobs";
         }
 
-        model.addAttribute("message" ,"Job Not Found !");
-        return "redirect:/jobs";
+
     }
     //    -------------------------------------------------------------------------
 
