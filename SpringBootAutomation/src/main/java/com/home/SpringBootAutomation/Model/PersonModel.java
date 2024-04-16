@@ -20,8 +20,9 @@ import java.time.LocalDate;
 @SuperBuilder
 @ToString
 
-@Table(name = "Person_tbl")
+
 @Entity(name = "PersonEntity")
+@Table(name = "Person_tbl")
 
 
 public class PersonModel {
@@ -29,8 +30,8 @@ public class PersonModel {
 	//شناس نامه
 
 	@Id
-	@SequenceGenerator(name = "personSeq", sequenceName = "person_seq")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "personSeq")
+	@SequenceGenerator(name = "personSeq", sequenceName = "person_seq" , initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator = "personSeq" )
 	@Column(name = "person_id")
 	private long id;
 
