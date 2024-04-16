@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th=http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>MedicalHistory</title>
+</head>
+<body>
+<h2>MedicalHistory Page</h2>
+<form th:action="@{/medicalHistory/save}" method="post" th:object="${medicalHistory}">
+  <input type="text" placeholder="Weight" th:value="${weight}" th:field="*{weight}">
+  <br>
+  <input type="text" placeholder="Height" th:value="${height}" th:field="*{height}">
+  <br>
+  <input type="text" placeholder="Blood Pressure" th:value="${bloodPressure}" th:field="*{bloodPressure}">
+  <br>
+  <input type="text" placeholder="Heart Rate" th:value="${heartRate}" th:field="*{heartRate}">
+  <br>
+  <input type="text" placeholder="Allergy" th:value="${allergy}" th:field="*{allergy}">
+  <br>
+  <input type="text" placeholder="Surgery" th:value="${surgery}" th:field="*{surgery}">
+  <br>
+  <input type="text" placeholder="Emergency Drug" th:value="${emergencyDrug}" th:field="*{emergencyDrug}">
+  <br>
+  <input type="text" placeholder="Disease" th:value="${disease}" th:field="*{disease}">
+  <br>
+  <input type="text" placeholder="Emergency Phone Number" th:value="${emergencyPhoneNumber}" th:field="*{emergencyPhoneNumber}">
+  <br>
+  <input type="submit" value="Save">
+</form>
+
+<table th:if="${#lists.size(medicalList) > 0}">
+  <thead>
+  <th>Id</th>
+  <th>Weight</th>
+  <th>Height</th>
+  <th>Blood Pressure</th>
+  <th>Heart Rate</th>
+  <th>Allergy</th>
+  <th>Surgery</th>
+  <th>Emergency Drug</th>
+  <th>Disease</th>
+  <th>Emergency Phone Numeber</th>
+  </thead>
+  <tbody>
+  <tr th:each="m : ${medicalList}">
+    <td th:text="${m.id}"></td>
+    <td th:text="${m.weight}"></td>
+    <td th:text="${m.height}"></td>
+    <td th:text="${m.bloodPressure}"></td>
+    <td th:text="${m.heartRate}"></td>
+    <td th:text="${m.allergy}"></td>
+    <td th:text="${m.surgery}"></td>
+    <td th:text="${m.emergencyDrug}"></td>
+    <td th:text="${m.disease}"></td>
+    <td th:text="${m.emergencyPhoneNumber}"></td>
+    <td>
+      <button th:onclick="'edit(\'' + ${t.id} + '\')'">Edit</button>
+      <form th:action="@{/medicalHistory/delete}" method="post">
+        <input type="text" name="id" th:value="${t.id}" hidden="hidden">
+        <button type="submit">Delete</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<script>
+  async function edit(id){
+    const resp =await fetch("/medicalHistory/id/" +id , {
+      method:"get"
+    });
+    const data = resp.json();
+    console.log(data)
+  }
+</script>
+</body>
+</html>
