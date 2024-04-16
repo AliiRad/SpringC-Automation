@@ -14,11 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("ALL")
+//@SuppressWarnings("ALL")
 @Service
 public class SkillsServiceImpl implements SkillsService {
-    @Autowired
+
+
+    //------------------------------------------------------
+
     private SkillsRepository repository;
+
+    @Autowired
+    public void setRepository(SkillsRepository repository){
+        this.repository = repository;
+    }
+
+    //------------------------------------------------------
+
+//    @Autowired
+//    private SkillsRepository repository;
     //------------------------------------------------------
 
 
@@ -41,8 +54,10 @@ public class SkillsServiceImpl implements SkillsService {
             oldSkills.setTraining(skills.getTraining());
 
             return repository.save(oldSkills);
+        }else {
+            return null;
         }
-        return null;
+
     }
     //------------------------------------------------------
 
@@ -135,8 +150,13 @@ public class SkillsServiceImpl implements SkillsService {
             Skills oldSkills = optionalSkills.get();
             oldSkills.setDeleted(true);
             return repository.save(oldSkills);
+        }else {
+            return null;
         }
-        return null;
+
     }
+
+    //------------------------------------------------------
+
 
 }

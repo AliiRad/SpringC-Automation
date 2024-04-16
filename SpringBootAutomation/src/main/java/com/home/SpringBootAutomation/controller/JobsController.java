@@ -11,7 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
-@SuppressWarnings("ALL")
+//@SuppressWarnings("ALL")
 @Controller
 @Slf4j
 @RequestMapping("/jobs")
@@ -39,11 +39,11 @@ public class JobsController {
     //    -------------------------------------------------------------------------
 
     @PostMapping("/save")
-    public String save(@Valid Jobs jobs , BindingResult result , Model model){
-        if (result.hasErrors()){
+    public String save(@Valid Jobs jobs, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             log.error(result.getAllErrors().toString());
             return "jobs";
-        }else {
+        } else {
             log.info("Job Saved - Post Method");
             log.info(jobs.toString());
             service.save(jobs);
@@ -55,19 +55,18 @@ public class JobsController {
     //    -------------------------------------------------------------------------
 
 
-
     @PostMapping("/edit")
-    public String edit(Long id , @Valid Jobs jobs , Model model){
+    public String edit(Long id, @Valid Jobs jobs, Model model) {
         log.info("Job Edited - Post Method");
-        if (service.findById(id) != null){
-            service.update(id , jobs);
+        if (service.findById(id) != null) {
+            service.update(id, jobs);
 
-            model.addAttribute("jobs" , jobs);
-            model.addAttribute("message" , "Job Edited Successfully !");
+            model.addAttribute("jobs", jobs);
+            model.addAttribute("message", "Job Edited Successfully !");
 
             return "redirect:/jobs";
-        }else {
-            model.addAttribute("message" ,"Job Not Found !");
+        } else {
+            model.addAttribute("message", "Job Not Found !");
             return "redirect:/jobs";
         }
 
@@ -76,10 +75,10 @@ public class JobsController {
     //    -------------------------------------------------------------------------
 
     @PostMapping("/delete")
-    public String delete(Long id , Model model){
+    public String delete(Long id, Model model) {
         log.info("Job Deleted - Post Method");
         service.logicalRemove(id);
-        model.addAttribute("message" , "Job Deleted !");
+        model.addAttribute("message", "Job Deleted !");
         return "redirect:/jobs";
 
     }
@@ -87,13 +86,12 @@ public class JobsController {
     //    -------------------------------------------------------------------------
 
 
-
     @GetMapping
-    public String findAll(Model model){
+    public String findAll(Model model) {
 
         log.info("Job Founded - Get Method");
-        model.addAttribute("jobs" , new Jobs());
-        model.addAttribute("jobsList" , service.findAll());
+        model.addAttribute("jobs", new Jobs());
+        model.addAttribute("jobsList", service.findAll());
         return "jobs";
 
     }
@@ -101,26 +99,26 @@ public class JobsController {
     //    -------------------------------------------------------------------------
 
     @GetMapping("/findById/{id}")
-    public String findById(@PathVariable("id") Long id , Model model){
+    public String findById(@PathVariable("id") Long id, Model model) {
 
         log.info("Find By Id - Get Method");
 
 
         Jobs jobs = service.findById(id);
-        model.addAttribute("jobs" , jobs);
+        model.addAttribute("jobs", jobs);
         return "jobs";
     }
 
     //    -------------------------------------------------------------------------
 
     @GetMapping("/findByCompanyName/{companyName}")
-    public String findByCompanyName(@PathVariable("companyName") String companyName , Model model){
+    public String findByCompanyName(@PathVariable("companyName") String companyName, Model model) {
 
         log.info("Find By Company Name - Get Method");
 
 
-        model.addAttribute("jobs" ,new Jobs());
-        model.addAttribute("jobsList" , service.findByCompanyName(companyName));
+        model.addAttribute("jobs", new Jobs());
+        model.addAttribute("jobsList", service.findByCompanyName(companyName));
         return "jobs";
     }
 
@@ -128,13 +126,13 @@ public class JobsController {
 
 
     @GetMapping("/findByAddress/{address}")
-    public String findByAddress(@PathVariable("address") String address , Model model){
+    public String findByAddress(@PathVariable("address") String address, Model model) {
 
         log.info("Find By Address - Get Method");
 
 
-        model.addAttribute("jobs" , new Jobs());
-        model.addAttribute("jobsList" , service.findByAddress(address));
+        model.addAttribute("jobs", new Jobs());
+        model.addAttribute("jobsList", service.findByAddress(address));
         return "jobs";
 
     }
@@ -144,15 +142,14 @@ public class JobsController {
     @GetMapping("/findALlByPagination")
     public String findJobsByPagination(@RequestParam(defaultValue = "1") Integer pageNo,
                                        @RequestParam(defaultValue = "5") Integer pageSize,
-                                       Model model){
+                                       Model model) {
 
         log.info("Find By Pagination - Get Method");
 
 
-
-        model.addAttribute("jobs" , service.getJobsByPagination(pageNo , pageSize));
-        model.addAttribute("totalPages" , ((int)(service.getJobsCount()/pageSize)) + 1);
-        model.addAttribute("currentPage" , pageNo);
+        model.addAttribute("jobs", service.getJobsByPagination(pageNo, pageSize));
+        model.addAttribute("totalPages", ((int) (service.getJobsCount() / pageSize)) + 1);
+        model.addAttribute("currentPage", pageNo);
         return "skills";
     }
     //    -------------------------------------------------------------------------
