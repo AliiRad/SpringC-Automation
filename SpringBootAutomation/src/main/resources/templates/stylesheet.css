@@ -1,0 +1,86 @@
+#right-sidebar {
+}
+
+.sidebar-btn {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.sidebar-btn i {
+    margin-right: 5px;
+}
+
+.sidebar-btn:hover {
+    text-decoration: underline;
+    color: darkmagenta;
+}
+
+
+#top-sidebar-btn {
+}
+
+.top-sidebar-btn {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.top-sidebar-btn i {
+    margin-right: 5px;
+}
+
+.top-sidebar-btn:hover {
+    text-decoration: underline;
+    color: navy;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 10fr;
+    grid-template-areas: "top top" "content sidebar";
+    height: 100vh;
+}
+
+#top-sidebar {
+    grid-area: top;
+    background-color: #669ED5;
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+
+
+}
+.top-sidebar-btn {
+
+    display: inline-block;;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #fff;
+    margin: 4px;
+    font-size: 24px; /* Set the font size to 24 pixels */
+    font-weight: bold;
+
+}
+
+#right-sidebar {
+    grid-area: sidebar;
+    background-color: #EFF2EF;
+    color: #fff;
+    padding: 10px;
+}
+
+.sidebar-btn {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #212121;
+    margin: 15px;
+}
+
+#content {
+    grid-area: content;
+    padding: 20px;
+}
