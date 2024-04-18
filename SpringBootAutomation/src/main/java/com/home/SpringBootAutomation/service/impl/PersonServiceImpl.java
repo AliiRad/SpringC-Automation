@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class PersonServiceImpl implements PersonService {
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     public PersonServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;
@@ -61,6 +61,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<PersonModel> findAll(){
         log.info("Service-PersonModel-FindAll");
+        List<PersonModel>personList=personRepository.findAll();
         return personRepository.findAll();
     }
 
