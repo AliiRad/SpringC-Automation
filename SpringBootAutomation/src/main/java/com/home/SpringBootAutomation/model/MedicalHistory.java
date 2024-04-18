@@ -41,6 +41,7 @@ public class MedicalHistory {
     @Column(name = "m_emergencyDrug")
     private String emergencyDrug;
 
+    @OneToMany
     @Column(name = "m_disease")
     private List<Disease> diseaseList;
 
