@@ -29,7 +29,8 @@ public class Person {
 
 	@Id
 	@SequenceGenerator(name = "personSeq", sequenceName = "person_seq" , initialValue = 1, allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE ,generator = "personSeq" )
+	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	@Column(name = "person_id")
 	private long id;
 
@@ -77,6 +78,9 @@ public class Person {
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid FathersName")
 	@Column(name ="person_fathersName")
 	private String fathersName;
+
+	@Column(name ="person_status")
+	private boolean status;//زنده(False) یا مرده(True)؟
 
 	@Column(name ="person_dead")
 	private boolean deleted;//زنده یا مرده؟

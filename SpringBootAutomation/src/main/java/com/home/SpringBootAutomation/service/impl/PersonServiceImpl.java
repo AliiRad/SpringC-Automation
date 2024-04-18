@@ -61,7 +61,7 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> findAll(){
         log.info("Service-Person-FindAll");
         List<Person>personList=personRepository.findAll();
-        return personRepository.findAll();
+        return personList;
     }
 
 
@@ -82,4 +82,5 @@ public class PersonServiceImpl implements PersonService {
         log.info("Service-Person-findByBirthDate");
         return personRepository.findByBirthDate(birthdate);
     }
+
 }
