@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/bank/update/{id}(id=${bankEdit.id})}" th:object="${bankEdit}" method="post">
+<form th:action="@{/account/update/{id}(id=${accountEdit.id})}" th:object="${accountEdit}" method="post">
     <label>
     <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}"
            th:field="*{accountOpeningDate}">

@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Bank</title>
+    <title>Account</title>
 </head>
 <body>
-<h2>Bank</h2>
+<h2>Account</h2>
 
-<form th:action="@{/bank/save}" method="post" th:object="${bank}">
+<form th:action="@{/account/save}" method="post" th:object="${account}">
     <label>
         <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}" th:field="*{accountOpeningDate}">
     </label>
@@ -38,7 +38,7 @@
     <br>
     <input type="submit" value="Save">
 </form>
-<table th:list="${bankList}">
+<table th:list="${accountList}">
     <thead>
     <th>Id</th>
     <th>Account Opening Date</th>
@@ -51,17 +51,17 @@
     <th>Operation</th>
     </thead>
     <tbody>
-    <tr th:each="bank : ${bankList}">
-        <td th:text="${bank.id}"></td>
-        <td th:text="${bank.accountOpeningDate}"></td>
-        <td th:text="${bank.accountNumber}"></td>
-        <td th:text="${bank.accountOwner}"></td>
-        <td th:text="${bank.bankAndBranch}"></td>
-        <td th:text="${bank.accountType}"></td>
-        <td th:text="${bank.accountStatus}"></td>
-        <td th:text="${bank.balance}"></td>
-        <td><a th:href="@{/bank/edit/{id}(id=${bank.id})}">Edit</a></td>
-        <td><a th:href="@{/bank/delete/{id}(id=${bank.id})}">Delete</a></td>
+    <tr th:each="account : ${accountList}">
+        <td th:text="${account.id}"></td>
+        <td th:text="${account.accountOpeningDate}"></td>
+        <td th:text="${account.accountNumber}"></td>
+        <td th:text="${account.accountOwner}"></td>
+        <td th:text="${account.bankAndBranch}"></td>
+        <td th:text="${account.accountType}"></td>
+        <td th:text="${account.accountStatus}"></td>
+        <td th:text="${account.balance}"></td>
+        <td><a th:href="@{/account/edit/{id}(id=${account.id})}">Edit</a></td>
+        <td><a th:href="@{/account/delete/{id}(id=${account.id})}">Delete</a></td>
     </tr>
     </tbody>
 </table>

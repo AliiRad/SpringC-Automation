@@ -1,9 +1,9 @@
 package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.model.Bank;
+import com.home.SpringBootAutomation.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BankRepository extends JpaRepository<Bank,Long> {
+public interface AccountRepository extends JpaRepository<Account,Long> {
 }
