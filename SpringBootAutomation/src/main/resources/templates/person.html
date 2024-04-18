@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Person Page</h2>
-<form th:action="@{/personModel/save}" method="post" th:object="${personModel}">
+<form th:action="@{/person/save}" method="post" th:object="${person}">
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
     <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
@@ -29,7 +29,7 @@
     <br>
     <input type="submit" th:value="Save">
     </form>
-<table th:if="${#lists.size(personModelList)>0}">
+<table th:if="${#lists.size(personList)>0}">
     <thead>
     <th>Id</th>
     <th>Person Name</th>
@@ -44,7 +44,7 @@
     <th>Person IsMarried</th>
     </thead>
     <tbody>
-    <tr th:each="p : ${personModelList}">
+    <tr th:each="p : ${personList}">
         <td th:text="${p.id}"></td>
         <td th:text="${p.name}"></td>
         <td th:text="${p.lastname}"></td>
@@ -58,7 +58,7 @@
         <td th:text="${p.isMarried}"></td>
     <td>
     <button>Edit</button>
-    <form th:action="@{/personModel/delete}" method="post">
+    <form th:action="@{/person/delete}" method="post">
         <input type="text" hidden="hidden" th:value="${p.id}"name="id">
         <button type="submit">Delete</button>
     </form>
