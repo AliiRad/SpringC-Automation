@@ -41,7 +41,6 @@ public class PersonModel {
 	@Column(name ="person_lastname")
 	private String lastname;
 
-
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid CertificateID")
 	@Column(name ="person_certificateID")
 	private String certificateID; //شماره شناس نامه
@@ -75,5 +74,11 @@ public class PersonModel {
 
 	@Column(name ="person_dead")
 	private boolean deleted;//زنده یا مرده؟
+
+	@Column(name ="person_userName")
+	private String userName;
+
+	@Column(name ="person_password")
+	private String password;
 
 }
