@@ -30,9 +30,7 @@ public interface PersonRepository extends JpaRepository<Person,Long> {
     @Query("select oo from  PersonEntity oo where oo.name=:name and oo.lastname=:lastname")
     List<Person> findByNameAndLastname(String name , String lastname);
 
-
     List<Person> findByLastname(String lastname);
-
 
     List<Person>findByUserName(String username);
 
@@ -45,6 +43,7 @@ public interface PersonRepository extends JpaRepository<Person,Long> {
 
     @Query("select oo from PersonEntity oo where oo.status=:true")
     List<Person>findByTrueStatus(boolean status);
+
     @Query("select oo from PersonEntity oo where oo.deleted=:true")
     List<Person>findByDeleted(boolean deleted);
 
