@@ -24,7 +24,7 @@ public class AppointmentDecree {//حکم کارگزینی
     private Long id;
 
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    private PersonModel person;
+//    private Person person;
 
 //    @Pattern(regexp = "^[a-zA-Z\\s]{3,20}$",message = "Invalid Type Of Employment")
     @Column(name ="appointmentDecree_typeOfEmployment" ,length =20 )

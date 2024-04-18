@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>Military Page</h2>
-<form th:action="@{/militaryServiceModel/save}" method="post" th:object="${militaryServiceModel}">
+<form th:action="@{/military/save}" method="post" th:object="${military}">
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
     <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
@@ -25,7 +25,7 @@
     <br>
     <input type="submit" th:value="Save">
     </form>
-<table th:if="${#lists.size(militaryServiceModelList)>0}">
+<table th:if="${#lists.size(militaryList)>0}">
     <thead>
     <th>Id</th>
     <th>Person Name</th>
@@ -38,7 +38,7 @@
     <th>Person issuanceDate</th>
     </thead>
     <tbody>
-    <tr th:each="p : ${militaryServiceModelList}">
+    <tr th:each="p : ${militaryList}">
         <td th:text="${p.id}"></td>
         <td th:text="${p.name}"></td>
         <td th:text="${p.lastname}"></td>
@@ -50,7 +50,7 @@
         <td th:text="${p.issuanceDate}"></td>
     <td>
     <button>Edit</button>
-    <form th:action="@{/militaryServiceModel/delete}" method="post">
+    <form th:action="@{/military/delete}" method="post">
         <input type="text" hidden="hidden" th:value="${p.id}"name="id">
         <button type="submit">Delete</button>
     </form>

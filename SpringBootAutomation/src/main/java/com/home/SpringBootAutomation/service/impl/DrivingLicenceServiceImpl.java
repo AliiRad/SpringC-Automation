@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.service.impl;
 
 
-import com.home.SpringBootAutomation.model.DrivingLicenceModel;
+import com.home.SpringBootAutomation.model.DrivingLicence;
 import com.home.SpringBootAutomation.repository.DrivingLicenceRepository;
 import com.home.SpringBootAutomation.service.DrivingLicenceService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,76 +22,76 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     }
 
     @Override
-    public DrivingLicenceModel save(DrivingLicenceModel drivingLicenceModel){
-        log.info("Service-DrivingLicenceModel-Save");
-        drivingLicenceRepository.save(drivingLicenceModel);
-        return drivingLicenceModel;
+    public DrivingLicence save(DrivingLicence drivingLicence){
+        log.info("Service-DrivingLicence-Save");
+        drivingLicenceRepository.save(drivingLicence);
+        return drivingLicence;
     }
 
     @Override
-    public DrivingLicenceModel edit(DrivingLicenceModel drivingLicenceModel){
-        log.info("Service-DrivingLicenceModel-Edit");
-        if(findById(drivingLicenceModel.getId())!=null){
-            drivingLicenceRepository.save(drivingLicenceModel);
-            return drivingLicenceModel;
+    public DrivingLicence edit(DrivingLicence drivingLicence){
+        log.info("Service-DrivingLicence-Edit");
+        if(findById(drivingLicence.getId())!=null){
+            drivingLicenceRepository.save(drivingLicence);
+            return drivingLicence;
         }
         else return null;
     }
 
     @Override
-    public DrivingLicenceModel remove(DrivingLicenceModel drivingLicenceModel) {
-        log.info("Service-DrivingLicenceModel-Remove");
-        if (findById(drivingLicenceModel.getId())!=null){
-            drivingLicenceRepository.delete(drivingLicenceModel);
-            return drivingLicenceModel;
+    public DrivingLicence remove(DrivingLicence drivingLicence) {
+        log.info("Service-DrivingLicence-Remove");
+        if (findById(drivingLicence.getId())!=null){
+            drivingLicenceRepository.delete(drivingLicence);
+            return drivingLicence;
         }
         else return null;
     }
 
-    public DrivingLicenceModel removeById(Long id){
-        log.info("Service-DrivingLicenceModel-removeById");
-        DrivingLicenceModel drivingLicenceModel =findById(id);
-        if (drivingLicenceModel !=null){
-            drivingLicenceModel.setLicenseSuspension(true);
-            return drivingLicenceModel;
+    public DrivingLicence removeById(Long id){
+        log.info("Service-DrivingLicence-removeById");
+        DrivingLicence drivingLicence =findById(id);
+        if (drivingLicence !=null){
+            drivingLicence.setLicenseSuspension(true);
+            return drivingLicence;
         }
         else return null;
     }
 
 
-    public DrivingLicenceModel licenseSuspension(Long id){
-        log.info("Service-DrivingLicenceModel-LicenseSuspension");
-        DrivingLicenceModel drivingLicenceModel =findById(id);
-        if (drivingLicenceModel !=null){
-            drivingLicenceModel.setLicenseSuspension(true);
-            return drivingLicenceModel;
+    public DrivingLicence licenseSuspension(Long id){
+        log.info("Service-DrivingLicence-LicenseSuspension");
+        DrivingLicence drivingLicence =findById(id);
+        if (drivingLicence !=null){
+            drivingLicence.setLicenseSuspension(true);
+            return drivingLicence;
         }
         else return null;
     }
 
 
     @Override
-    public List<DrivingLicenceModel> findAll(){
-        log.info("Service-DrivingLicenceModel-FindAll");
-        List<DrivingLicenceModel>drivingLicenceModelList=drivingLicenceRepository.findAll();
-        return drivingLicenceModelList;
+    public List<DrivingLicence> findAll(){
+        log.info("Service-DrivingLicence-FindAll");
+        List<DrivingLicence> drivingLicenceList =drivingLicenceRepository.findAll();
+        return drivingLicenceList;
     }
 
 
     @Override
-    public DrivingLicenceModel findById(Long id){
-        log.info("Service-DrivingLicenceModel-FindById");
-        Optional<DrivingLicenceModel> drivingLicence = drivingLicenceRepository.findById(id);
+    public DrivingLicence findById(Long id){
+        log.info("Service-DrivingLicence-FindById");
+        Optional<DrivingLicence> drivingLicence = drivingLicenceRepository.findById(id);
         return (drivingLicence.isPresent() ? drivingLicence.get() : null);
 
     }
-    public List<DrivingLicenceModel> findBySerialNumber(String serialNumber){
-        log.info("Service-DrivingLicenceModel-findBySerialNumber");
+    public List<DrivingLicence> findBySerialNumber(String serialNumber){
+        log.info("Service-DrivingLicence-findBySerialNumber");
         return drivingLicenceRepository.findBySerialNumber(serialNumber);
 
     }
-    public List<DrivingLicenceModel>findByDate(LocalDate issuanceDate){
-        log.info("Service-DrivingLicenceModel-findByDate");
+    public List<DrivingLicence>findByDate(LocalDate issuanceDate){
+        log.info("Service-DrivingLicence-findByDate");
         return drivingLicenceRepository.findByDate(issuanceDate);
 
     }

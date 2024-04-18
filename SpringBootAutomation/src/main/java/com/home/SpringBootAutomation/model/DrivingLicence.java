@@ -19,7 +19,7 @@ import java.time.LocalDate;
 
 @Table(name = "DrivingLicence_tbl")
 @Entity(name ="DrivingLicenceEntity" )
-public class DrivingLicenceModel {
+public class DrivingLicence {
 
 	//گواهینامه رانندگی
 

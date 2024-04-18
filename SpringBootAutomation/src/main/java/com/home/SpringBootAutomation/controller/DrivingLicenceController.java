@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 
-import com.home.SpringBootAutomation.model.DrivingLicenceModel;
+import com.home.SpringBootAutomation.model.DrivingLicence;
 import com.home.SpringBootAutomation.service.impl.DrivingLicenceServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class DrivingLicenceController {
     @GetMapping
     public String showDrivingLicence(Model model){
         log.info("Controller-DrivingLicenceController-Get-FindAll");
-        model.addAttribute("drivingLicence",new DrivingLicenceModel());
+        model.addAttribute("drivingLicence",new DrivingLicence());
         model.addAttribute("drivingLicenceList",drivingLicenceService.findAll());
         return "drivingLicence";
     }
@@ -36,7 +36,7 @@ public class DrivingLicenceController {
     @GetMapping(value = "/id{id}")
     public String showDrivingLicenceFindById(@ModelAttribute("id")Long id){
         log.info("Controller-DrivingLicenceController-Get-FindById");
-        Optional<DrivingLicenceModel> drivingLicence= Optional.ofNullable(drivingLicenceService.findById(id));
+        Optional<DrivingLicence> drivingLicence= Optional.ofNullable(drivingLicenceService.findById(id));
         if (drivingLicence.isPresent()){
             return "drivingLicence";
         }else {
@@ -47,9 +47,9 @@ public class DrivingLicenceController {
     @GetMapping(value = "/serialNumber")
     public String showDrivingLicenceFindBySerialNumber(Model model,@ModelAttribute("serialNumber")String serialNumber){
         log.info("Controller-DrivingLicenceController-Get-FindBySerialNumber");
-        List<DrivingLicenceModel> drivingLicenceModelList =drivingLicenceService.findBySerialNumber(serialNumber);
-        if (!drivingLicenceModelList.isEmpty()) {
-            model.addAttribute("drivingLicenceList", drivingLicenceModelList);
+        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findBySerialNumber(serialNumber);
+        if (!drivingLicenceList.isEmpty()) {
+            model.addAttribute("drivingLicenceList", drivingLicenceList);
             return "serialNumber";
         }else {
             return "error-404";
@@ -59,9 +59,9 @@ public class DrivingLicenceController {
     @GetMapping(value = "/date")
     public String showDrivingLicenceFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
         log.info("Controller-DrivingLicenceController-Get-FindByIssuanceDate");
-        List<DrivingLicenceModel> drivingLicenceModelList =drivingLicenceService.findByDate(issuanceDate);
-        if (!drivingLicenceModelList.isEmpty()){
-            model.addAttribute("drivingLicenceList", drivingLicenceModelList);
+        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findByDate(issuanceDate);
+        if (!drivingLicenceList.isEmpty()){
+            model.addAttribute("drivingLicenceList", drivingLicenceList);
             return "drivingLicence";
         }else {
             return "error-404";
@@ -69,28 +69,28 @@ public class DrivingLicenceController {
     }
 
     @PostMapping(value = "/save")
-    public  String saveDrivingLicence(DrivingLicenceModel drivingLicenceModel){
-        log.info("Controller-DrivingLicenceController-Post-SaveDrivingLicence: "+ drivingLicenceModel.toString());
+    public  String saveDrivingLicence(DrivingLicence drivingLicence){
+        log.info("Controller-DrivingLicenceController-Post-SaveDrivingLicence: "+ drivingLicence.toString());
         log.info("Controller-DrivingLicenceController-Post-SaveDrivingLicence");
-        drivingLicenceService.save(drivingLicenceModel);
+        drivingLicenceService.save(drivingLicence);
         return "redirect:/drivingLicence";
     }
     @PostMapping(value = "/edit")
-    public String editDrivingLicence(DrivingLicenceModel drivingLicenceModel){
+    public String editDrivingLicence(DrivingLicence drivingLicence){
         log.info("Controller-DrivingLicenceController-Post-EditDrivingLicence");
-        drivingLicenceService.edit(drivingLicenceModel);
+        drivingLicenceService.edit(drivingLicence);
         return "drivingLicence";
     }
     @PostMapping(value = "/suspension")
-    public String drivingLicenceSuspension(DrivingLicenceModel drivingLicenceModel){
+    public String drivingLicenceSuspension(DrivingLicence drivingLicence){
         log.info("Controller-DrivingLicenceController-Post-DrivingLicenceSuspension");
-        drivingLicenceService.licenseSuspension(drivingLicenceModel.getId());
+        drivingLicenceService.licenseSuspension(drivingLicence.getId());
         return "redirect:/drivingLicence";
     }
     @PostMapping(value = "/delete")
-    public String drivingLicenceDeleted(DrivingLicenceModel drivingLicenceModel) {
+    public String drivingLicenceDeleted(DrivingLicence drivingLicence) {
         log.info("Controller-DrivingLicenceController-Post-DrivingLicenceDeleted");
-        drivingLicenceService.removeById(drivingLicenceModel.getId());
+        drivingLicenceService.removeById(drivingLicence.getId());
         return "redirect:/drivingLicence";
     }
 

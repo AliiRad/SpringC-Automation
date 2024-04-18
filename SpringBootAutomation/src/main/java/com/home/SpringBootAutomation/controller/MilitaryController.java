@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.model.MilitaryServiceModel;
+import com.home.SpringBootAutomation.model.Military;
 import com.home.SpringBootAutomation.service.impl.MilitaryServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -28,14 +28,14 @@ public class MilitaryController {
     @GetMapping
     public String showMilitary(Model model){
         log.info("Controller-MilitaryController-Get-FindAll");
-        model.addAttribute("military",new MilitaryServiceModel());
+        model.addAttribute("military",new Military());
         model.addAttribute("militaryList",militaryService.findAll());
         return "/military";
     }
     @GetMapping(value = "/id{id}")
     public String showMilitaryFindById(@ModelAttribute("id")Long id){
         log.info("Controller-MilitaryController-Get-FindById");
-        Optional<MilitaryServiceModel>military=Optional.ofNullable(militaryService.findById(id));
+        Optional<Military>military=Optional.ofNullable(militaryService.findById(id));
         if (military.isPresent()){
             return "/military";
         }else{
@@ -45,9 +45,9 @@ public class MilitaryController {
     @GetMapping(value = "/serialNumber")
     public String showMilitaryFindBySerialNumber(Model model,@ModelAttribute("serialNumber")String serialNumber){
         log.info("Controller-MilitaryController-Get-FindBySerialNumber");
-        List<MilitaryServiceModel> militaryServiceModelList =militaryService.findBySerialNumber(serialNumber);
-        if (!militaryServiceModelList.isEmpty()){
-            model.addAttribute("militaryList", militaryServiceModelList);
+        List<Military> militaryList =militaryService.findBySerialNumber(serialNumber);
+        if (!militaryList.isEmpty()){
+            model.addAttribute("militaryList", militaryList);
             return "/serialNumber";
         }else {
             return "error-404";
@@ -57,37 +57,37 @@ public class MilitaryController {
     @GetMapping(value = "/date")
     public String showMilitaryFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
         log.info("Controller-MilitaryController-Get-FindByIssuanceDate");
-        List<MilitaryServiceModel> militaryServiceModelList =militaryService.findByIssuanceDate(issuanceDate);
-        if (!militaryServiceModelList.isEmpty()){
-            model.addAttribute("militaryList", militaryServiceModelList);
+        List<Military> militaryList =militaryService.findByIssuanceDate(issuanceDate);
+        if (!militaryList.isEmpty()){
+            model.addAttribute("militaryList", militaryList);
             return "military";
         }else {
             return "errore-404";
         }
     }
     @PostMapping(value = "/save")
-    public String saveMilitary(MilitaryServiceModel militaryServiceModel){
-        log.info("Controller-MilitaryController-Post-SaveMilitary: " + militaryServiceModel.toString());
+    public String saveMilitary(Military military){
+        log.info("Controller-MilitaryController-Post-SaveMilitary: " + military.toString());
         log.info("Controller-MilitaryController-Post-SaveMilitary");
-        militaryService.save(militaryServiceModel);
-        return "redirect:/MilitaryServiceModel";
+        militaryService.save(military);
+        return "redirect:/Military";
     }
     @PostMapping(value = "/edit")
-    public String editMilitary(MilitaryServiceModel militaryServiceModel){
+    public String editMilitary(Military military){
         log.info("Controller-MilitaryController-Post-EditMilitary");
-        militaryService.edit(militaryServiceModel);
-        return "redirect:/MilitaryServiceModel";
+        militaryService.edit(military);
+        return "redirect:/Military";
     }
     @PostMapping(value = "/vitiation")
-    public String militaryVitiation(MilitaryServiceModel militaryServiceModel){
+    public String militaryVitiation(Military military){
         log.info("Controller-MilitaryController-Post-militaryVitiation");
-        militaryService.militaryVitiation(militaryServiceModel.getId());
-        return "redirect:/MilitaryServiceModel";
+        militaryService.militaryVitiation(military.getId());
+        return "redirect:/Military";
     }
     @PostMapping(value = "/delete")
-    public String militaryDeleted(MilitaryServiceModel militaryServiceModel){
+    public String militaryDeleted(Military military){
         log.info("Controller-MilitaryController-Post-militaryDeleted");
-        militaryService.militaryVitiation(militaryServiceModel.getId());
+        militaryService.militaryVitiation(military.getId());
         return "redirect:/military";
     }
 

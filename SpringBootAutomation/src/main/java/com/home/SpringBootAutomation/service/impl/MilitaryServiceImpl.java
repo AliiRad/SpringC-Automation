@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.model.MilitaryServiceModel;
+import com.home.SpringBootAutomation.model.Military;
 import com.home.SpringBootAutomation.repository.MilitaryRepository;
 import com.home.SpringBootAutomation.service.MilitaryService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,74 +23,74 @@ public class MilitaryServiceImpl implements MilitaryService {
 
 
     @Override
-    public MilitaryServiceModel save(MilitaryServiceModel militaryServiceModel){
-        log.info("Service-MilitaryServiceModel-Save");
-        militaryRepository.save(militaryServiceModel);
-        return militaryServiceModel;
+    public Military save(Military military){
+        log.info("Service-Military-Save");
+        militaryRepository.save(military);
+        return military;
     }
 
     @Override
-    public MilitaryServiceModel edit(MilitaryServiceModel militaryServiceModel){
-        log.info("Service-MilitaryServiceModel-Edit");
-        if(findById(militaryServiceModel.getId())!= null){
-            militaryRepository.save(militaryServiceModel);
-            return militaryServiceModel;
+    public Military edit(Military military){
+        log.info("Service-Military-Edit");
+        if(findById(military.getId())!= null){
+            militaryRepository.save(military);
+            return military;
         }
         else return null;
     }
 
     @Override
-    public MilitaryServiceModel remove(MilitaryServiceModel militaryServiceModel) {
-        log.info("Service-MilitaryServiceModel-Remove");
-        if (findById(militaryServiceModel.getId())!= null){
-            militaryRepository.delete(militaryServiceModel);
-            return militaryServiceModel;
+    public Military remove(Military military) {
+        log.info("Service-Military-Remove");
+        if (findById(military.getId())!= null){
+            militaryRepository.delete(military);
+            return military;
         }
         else return null;
     }
     @Override
-    public MilitaryServiceModel removeById(Long id){
-        log.info("Service-MilitaryServiceModel-removeById");
-        MilitaryServiceModel militaryServiceModel =findById(id);
-        if (militaryServiceModel !=null){
-            militaryServiceModel.setDeleted(true);
-            return militaryServiceModel;
+    public Military removeById(Long id){
+        log.info("Service-Military-removeById");
+        Military military =findById(id);
+        if (military !=null){
+            military.setDeleted(true);
+            return military;
         }
         else return null;
     }
 
-    public MilitaryServiceModel militaryVitiation(Long id){
-        log.info("Service-MilitaryServiceModel-militaryVitiation");
-        MilitaryServiceModel militaryServiceModel =findById(id);
-        if (militaryServiceModel !=null){
-            militaryServiceModel.setMilitaryVitiation(true);
-            return militaryServiceModel;
+    public Military militaryVitiation(Long id){
+        log.info("Service-Military-militaryVitiation");
+        Military military =findById(id);
+        if (military !=null){
+            military.setMilitaryVitiation(true);
+            return military;
         }
         else return null;
     }
 
     @Override
-    public List<MilitaryServiceModel> findAll(){
-        log.info("Service-MilitaryServiceModel-FindAll");
-        List<MilitaryServiceModel>militaryServiceModelList=militaryRepository.findAll();
-        return militaryServiceModelList;
+    public List<Military> findAll(){
+        log.info("Service-Military-FindAll");
+        List<Military> militaryList =militaryRepository.findAll();
+        return militaryList;
     }
 
     @Override
-    public MilitaryServiceModel findById(Long id){
-        log.info("Service-MilitaryServiceModel-FindById");
-        Optional<MilitaryServiceModel> military=militaryRepository.findById(id);
+    public Military findById(Long id){
+        log.info("Service-Military-FindById");
+        Optional<Military> military=militaryRepository.findById(id);
         return (military.orElse(null));
     }
 
-    public List<MilitaryServiceModel>findBySerialNumber(String serialNumber) {
-        log.info("Service-MilitaryServiceModel-FindBySerialNumber");
+    public List<Military>findBySerialNumber(String serialNumber) {
+        log.info("Service-Military-FindBySerialNumber");
         return militaryRepository.findBySerialNumber(serialNumber);
 
     }
 
-    public List<MilitaryServiceModel>findByIssuanceDate(LocalDate issuanceDate){
-        log.info("Service-MilitaryServiceModel-FindByIssuanceDate");
+    public List<Military>findByIssuanceDate(LocalDate issuanceDate){
+        log.info("Service-Military-FindByIssuanceDate");
         return militaryRepository.findByIssuanceDate(issuanceDate);
     }
 }

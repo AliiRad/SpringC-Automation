@@ -1,22 +1,22 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+import com.home.SpringBootAutomation.model.Person;
 
 import java.util.List;
 
 public interface PersonService {
-    PersonModel save(PersonModel personModel);
+    Person save(Person person);
 
-    PersonModel edit(PersonModel personModel);
+    Person edit(Person person);
 
-    PersonModel remove(PersonModel personModel);
+    Person remove(Person person);
 
-    PersonModel removeById(Long id);
+    Person removeById(Long id);
 
-    List<PersonModel> findAll();
+    List<Person> findAll();
 
-    PersonModel findById(Long id);
+    Person findById(Long id);
 
-    List<PersonModel> findByNationalId(String nationalID);
+    List<Person> findByNationalId(String nationalID);
 
 }

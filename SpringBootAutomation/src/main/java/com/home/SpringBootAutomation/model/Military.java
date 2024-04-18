@@ -22,7 +22,7 @@ import java.time.LocalDate;
 @Entity(name = "MilitaryEntity")
 
 
-public class MilitaryServiceModel {
+public class Military {
 
 	//پایان خدمت سربازی
 
@@ -33,7 +33,7 @@ public class MilitaryServiceModel {
 	private long id;
 
 //	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//	private PersonModel personModel;//چطوری و در کجا شرط بگذاریم که اگر زن باشد نیاز به پایان خدمت ندارد؟؟
+//	private Person personModel;//چطوری و در کجا شرط بگذاریم که اگر زن باشد نیاز به پایان خدمت ندارد؟؟
 
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Name")
 	@Column(name ="military_name")

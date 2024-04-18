@@ -1,16 +1,16 @@
 package com.home.SpringBootAutomation.service;
 
 
-import com.home.SpringBootAutomation.model.DrivingLicenceModel;
+import com.home.SpringBootAutomation.model.DrivingLicence;
 
 import java.util.List;
 
 public interface DrivingLicenceService {
-    DrivingLicenceModel save(DrivingLicenceModel drivingLicenceModel);
-    DrivingLicenceModel edit(DrivingLicenceModel drivingLicenceModel);
-    DrivingLicenceModel remove (DrivingLicenceModel drivingLicenceModel);
+    DrivingLicence save(DrivingLicence drivingLicence);
+    DrivingLicence edit(DrivingLicence drivingLicence);
+    DrivingLicence remove (DrivingLicence drivingLicence);
 
-    DrivingLicenceModel licenseSuspension(Long id);
-    List<DrivingLicenceModel> findAll();
-    DrivingLicenceModel findById(Long id);
+    DrivingLicence licenseSuspension(Long id);
+    List<DrivingLicence> findAll();
+    DrivingLicence findById(Long id);
 }

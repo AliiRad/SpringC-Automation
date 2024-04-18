@@ -1,14 +1,14 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.model.MilitaryServiceModel;
+import com.home.SpringBootAutomation.model.Military;
 
 import java.util.List;
 
 public interface MilitaryService {
-    MilitaryServiceModel save(MilitaryServiceModel militaryServiceModel);
-    MilitaryServiceModel edit(MilitaryServiceModel militaryServiceModel);
-    MilitaryServiceModel remove(MilitaryServiceModel militaryServiceModel);
-    MilitaryServiceModel removeById(Long id);
-    List<MilitaryServiceModel> findAll();
-    MilitaryServiceModel findById (Long id);
+    Military save(Military military);
+    Military edit(Military military);
+    Military remove(Military military);
+    Military removeById(Long id);
+    List<Military> findAll();
+    Military findById (Long id);
 }

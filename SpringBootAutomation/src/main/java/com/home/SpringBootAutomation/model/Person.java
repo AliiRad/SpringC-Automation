@@ -23,7 +23,7 @@ import java.time.LocalDate;
 @Table(name = "Person_tbl")
 
 
-public class PersonModel {
+public class Person {
 
 	//شناس نامه
 

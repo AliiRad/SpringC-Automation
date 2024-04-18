@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
@@ -21,65 +21,65 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonModel save(PersonModel personModel){
-        log.info("Service-PersonModel-Save");
-        personRepository.save(personModel);
-        return personModel;
+    public Person save(Person person){
+        log.info("Service-Person-Save");
+        personRepository.save(person);
+        return person;
     }
 
     @Override
-    public PersonModel edit(PersonModel personModel){
-        log.info("Service-PersonModel-Edit");
-        if (findById(personModel.getId())!=null){
-            personRepository.save(personModel);
-            return personModel;
+    public Person edit(Person person){
+        log.info("Service-Person-Edit");
+        if (findById(person.getId())!=null){
+            personRepository.save(person);
+            return person;
         }
         else return null;
     }
 
     @Override
-    public PersonModel remove(PersonModel personModel) {
-        log.info("Service-PersonModel-Remove");
-        if (findById(personModel.getId())!=null){
-            personRepository.delete(personModel);
-            return personModel;
+    public Person remove(Person person) {
+        log.info("Service-Person-Remove");
+        if (findById(person.getId())!=null){
+            personRepository.delete(person);
+            return person;
         }
         else return null;
     }
     @Override
-    public PersonModel removeById(Long id){
-        log.info("Service-PersonModel-removeById");
-        PersonModel personModel =findById(id);
-        if (personModel !=null){
-            personModel.setDeleted(true);
-            return personModel;
+    public Person removeById(Long id){
+        log.info("Service-Person-removeById");
+        Person person =findById(id);
+        if (person !=null){
+            person.setDeleted(true);
+            return person;
         }
         else return null;
     }
 
     @Override
-    public List<PersonModel> findAll(){
-        log.info("Service-PersonModel-FindAll");
-        List<PersonModel>personList=personRepository.findAll();
+    public List<Person> findAll(){
+        log.info("Service-Person-FindAll");
+        List<Person>personList=personRepository.findAll();
         return personRepository.findAll();
     }
 
 
     @Override
-    public PersonModel findById(Long id){
-        log.info("Service-PersonModel-FindById");
-        Optional<PersonModel> person=personRepository.findById(id);
+    public Person findById(Long id){
+        log.info("Service-Person-FindById");
+        Optional<Person> person=personRepository.findById(id);
         return(person.orElse(null)) ;
     }
 
     @Override
-    public List<PersonModel> findByNationalId(String nationalId) {
-        log.info("Service-PersonModel-findByNationalId");
+    public List<Person> findByNationalId(String nationalId) {
+        log.info("Service-Person-findByNationalId");
         return personRepository.findByNationalID(nationalId);
     }
 
-    public List<PersonModel>findByBirthDate(LocalDate birthdate){
-        log.info("Service-PersonModel-findByBirthDate");
+    public List<Person>findByBirthDate(LocalDate birthdate){
+        log.info("Service-Person-findByBirthDate");
         return personRepository.findByBirthDate(birthdate);
     }
 }

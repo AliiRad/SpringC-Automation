@@ -6,7 +6,7 @@
 </head>
 <body>
 <h2>DrivingLicence Page</h2>
-<form th:action="@{/drivingLicenceModel/save}" method="post" th:object="${drivingLicenceModel}">
+<form th:action="@{/drivingLicence/save}" method="post" th:object="${drivingLicence}">
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
     <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
@@ -25,7 +25,7 @@
     <br>
     <input type="submit" th:value="Save">
     </form>
-<table th:if="${#lists.size(drivingLicenceModelList)>0}">
+<table th:if="${#lists.size(drivingLicenceList)>0}">
     <thead>
     <th>Id</th>
     <th>Person Name</th>
@@ -38,7 +38,7 @@
     <th>Person SerialNumber</th>
     </thead>
     <tbody>
-    <tr th:each="p : ${drivingLicenceModel}">
+    <tr th:each="p : ${drivingLicence}">
         <td th:text="${p.id}"></td>
         <td th:text="${p.name}"></td>
         <td th:text="${p.lastname}"></td>
@@ -50,7 +50,7 @@
         <td th:text="${p.serialNumber}"></td>
     <td>
     <button>Edit</button>
-    <form th:action="@{/drivingLicenceModel/delete}" method="post">
+    <form th:action="@{/drivingLicence/delete}" method="post">
         <input type="text" hidden="hidden" th:value="${p.id}"name="id">
         <button type="submit">Delete</button>
     </form>

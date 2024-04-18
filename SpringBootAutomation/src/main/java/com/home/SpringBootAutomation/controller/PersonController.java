@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -27,14 +27,14 @@ public class PersonController {
     @GetMapping
     public String showPerson(Model model){
         log.info("Controller-PersonController-Get-FindAll");
-        model.addAttribute("person",new PersonModel());
+        model.addAttribute("person",new Person());
         model.addAttribute("personList",personService.findAll());
         return "/person";
     }
     @GetMapping(value = "/id{id}")
     public String showPersonFindById(@ModelAttribute("id")Long id){
         log.info("Controller-PersonController-Get-FindById");
-        Optional<PersonModel>person=Optional.ofNullable(personService.findById(id));
+        Optional<Person>person=Optional.ofNullable(personService.findById(id));
         if (person.isPresent()){
             return "/person";
         }else {
@@ -44,9 +44,9 @@ public class PersonController {
     @GetMapping(value = "/nationalId")
     public String showPersonFindByNationalId(Model model,@ModelAttribute("nationalId")String nationalId){
         log.info("Controller-PersonController-Get-FindByNationalId");
-        List<PersonModel> personModelList =personService.findByNationalId(nationalId);
-        if (!personModelList.isEmpty()){
-            model.addAttribute("personList", personModelList);
+        List<Person> personList =personService.findByNationalId(nationalId);
+        if (!personList.isEmpty()){
+            model.addAttribute("personList", personList);
             return "/nationalId";
         }else {
             return "error-404";
@@ -55,31 +55,31 @@ public class PersonController {
     @GetMapping(value = "/date")
     public String showPersonFindByBirthDate(Model model, @ModelAttribute("timeStamp") LocalDate birthdate){
         log.info("Controller-PersonController-Get-FindByBirthDate");
-        List<PersonModel> personModelList =personService.findByBirthDate(birthdate);
-        if (!personModelList.isEmpty()){
-            model.addAttribute("personList", personModelList);
+        List<Person> personList =personService.findByBirthDate(birthdate);
+        if (!personList.isEmpty()){
+            model.addAttribute("personList", personList);
             return "person";
         }else {
             return "error-404";
         }
     }
     @PostMapping(value = "/save")
-    public String savePerson(PersonModel personModel){
-        log.info("Controller-PersonController-Post-SavePerson"+ personModel.toString());
+    public String savePerson(Person person){
+        log.info("Controller-PersonController-Post-SavePerson"+ person.toString());
         log.info("Controller-PersonController-Post-SavePerson");
-        personService.save(personModel);
+        personService.save(person);
         return "redirect:/Person";
     }
     @PostMapping(value = "/edit")
-    public String editPerson(PersonModel personModel){
+    public String editPerson(Person person){
         log.info("Controller-PersonController-Post-EditPerson");
-        personService.edit(personModel);
+        personService.edit(person);
         return "person";
     }
     @PostMapping(value = "/delete")
-    public String personDeleted(PersonModel personModel){
+    public String personDeleted(Person person){
         log.info("Controller-PersonController-Post-personDeleted");
-        personService.removeById(personModel.getId());
+        personService.removeById(person.getId());
         return "redirect:/person";
     }
 
