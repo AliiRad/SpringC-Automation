@@ -53,7 +53,6 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         DrivingLicenceModel drivingLicenceModel =findById(id);
         if (drivingLicenceModel !=null){
             drivingLicenceModel.setLicenseSuspension(true);
-//            drivingLicenceRepository.LicenseSuspension(id);
             return drivingLicenceModel;
         }
         else return null;
@@ -65,7 +64,6 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         DrivingLicenceModel drivingLicenceModel =findById(id);
         if (drivingLicenceModel !=null){
             drivingLicenceModel.setLicenseSuspension(true);
-//            drivingLicenceRepository.LicenseSuspension(id);
             return drivingLicenceModel;
         }
         else return null;
@@ -75,7 +73,8 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     @Override
     public List<DrivingLicenceModel> findAll(){
         log.info("Service-DrivingLicenceModel-FindAll");
-        return drivingLicenceRepository.findAll();
+        List<DrivingLicenceModel>drivingLicenceModelList=drivingLicenceRepository.findAll();
+        return drivingLicenceModelList;
     }
 
 

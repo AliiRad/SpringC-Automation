@@ -54,7 +54,6 @@ public class MilitaryServiceImpl implements MilitaryService {
         MilitaryServiceModel militaryServiceModel =findById(id);
         if (militaryServiceModel !=null){
             militaryServiceModel.setDeleted(true);
-//            militaryRepository.MilitaryDeleted(id);
             return militaryServiceModel;
         }
         else return null;

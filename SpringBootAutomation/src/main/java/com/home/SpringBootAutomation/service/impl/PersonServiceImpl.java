@@ -52,7 +52,6 @@ public class PersonServiceImpl implements PersonService {
         PersonModel personModel =findById(id);
         if (personModel !=null){
             personModel.setDeleted(true);
-//            personRepository.PersonDeleted(id);
             return personModel;
         }
         else return null;
