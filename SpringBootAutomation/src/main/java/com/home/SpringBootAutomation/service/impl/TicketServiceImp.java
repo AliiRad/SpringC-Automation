@@ -1,12 +1,15 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.model.PersonModel;
 import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.repository.TicketRepository;
+import com.home.SpringBootAutomation.service.TicketService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +27,7 @@ public class TicketServiceImp implements TicketService {
     public Ticket save(Ticket ticket) {
         log.info("Service-Ticket-Save");
         ticket.setActive(true);
-        ticket.setTicketDate(LocalDate.now());
-        ticket.setTicketTime(LocalTime.now());
+        ticket.setTicketTimeStamp(LocalDateTime.now());
         log.info(ticket.toString());
         ticketRepository.save(ticket);
         return ticket;
@@ -79,14 +81,14 @@ public class TicketServiceImp implements TicketService {
     }
 
     @Override
-    public List<Ticket> findByApplicant(String applicant) {
+    public List<Ticket> findByApplicant(PersonModel applicant) {
         log.info("Service-Ticket-FindByApplicant");
         List<Ticket> ticketList = ticketRepository.findByApplicant(applicant);
         return ticketList;
     }
 
     @Override
-    public List<Ticket> findByDate(LocalDate timeStamp) {
+    public List<Ticket> findByDate(LocalDateTime timeStamp) {
         log.info("Service-Ticket-FindByDate");
         List<Ticket> ticketList = ticketRepository.findByDate(timeStamp);
         return ticketList;

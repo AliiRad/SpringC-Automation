@@ -1,7 +1,8 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.repository.ResponseRepository;
+import com.home.SpringBootAutomation.service.ResponseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class ResponseServiceImp implements ResponseService{
+public class ResponseServiceImp implements ResponseService {
     private ResponseRepository responseRepository;
 
     public ResponseServiceImp(ResponseRepository responseRepository) {

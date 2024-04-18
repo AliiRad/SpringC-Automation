@@ -2,7 +2,7 @@ package com.home.SpringBootAutomation.controller;
 
 
 import com.home.SpringBootAutomation.model.Response;
-import com.home.SpringBootAutomation.service.ResponseServiceImp;
+import com.home.SpringBootAutomation.service.impl.ResponseServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

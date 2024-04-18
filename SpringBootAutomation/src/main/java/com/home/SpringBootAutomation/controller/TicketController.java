@@ -1,13 +1,14 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.model.PersonModel;
 import com.home.SpringBootAutomation.model.Ticket;
-import com.home.SpringBootAutomation.service.TicketServiceImp;
+import com.home.SpringBootAutomation.service.impl.TicketServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -41,7 +42,7 @@ public class TicketController {
     }
 
     @GetMapping(value ="/applicant")
-    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") String applicant) {
+    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") PersonModel applicant) {
         log.info("Controller-Ticket-Get-FindByApplicant");
         List<Ticket> ticketList = ticketServiceImp.findByApplicant(applicant);
         if (!ticketList.isEmpty()){
@@ -53,9 +54,9 @@ public class TicketController {
     }
 
     @GetMapping(value ="/date")
-    public String showTicketsByApplicant(Model model , @ModelAttribute("date") LocalDate date) {
+    public String showTicketsByTimeStamp(Model model , @ModelAttribute("date") LocalDateTime timeStamp) {
         log.info("Controller-Ticket-Get-FindByDate");
-        List<Ticket> ticketList = ticketServiceImp.findByDate(date);
+        List<Ticket> ticketList = ticketServiceImp.findByDate(timeStamp);
         if (!ticketList.isEmpty()){
             model.addAttribute("ticketList", ticketList);
             return "ticket";

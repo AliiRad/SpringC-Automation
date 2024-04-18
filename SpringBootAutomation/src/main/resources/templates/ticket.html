@@ -12,7 +12,7 @@
     <br>
     <input type="text" placeholder="Request" th:value="${request}" th:field="*{request}">
     <br>
-    <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}">
+    <input type="text" placeholder="Group" th:value="${ticketGroup}" th:field="*{ticketGroup}">
     <br>
     <input type="text" placeholder="Status" th:value="${status}" th:field="*{status}">
     <br>
@@ -36,7 +36,7 @@
         <td th:text="${t.ticketTime}"></td>
         <td th:text="${t.applicant}"></td>
         <td th:text="${t.request}"></td>
-        <td th:text="${t.group}"></td>
+        <td th:text="${t.ticketGroup}"></td>
         <td th:text="${t.status}"></td>
         <td th:text="${t.active}"></td>
         <td>
