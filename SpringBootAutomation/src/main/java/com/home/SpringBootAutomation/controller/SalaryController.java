@@ -127,8 +127,11 @@ public class SalaryController {
     //salary year search form
     @GetMapping(value = "/findByYear")
     public String searchByYear(@ModelAttribute("year") String year, Model model) {
-        log.info("Salary - Search By Year Page");
+        log.info("Salary - findByYear");
         try {
+            if(year.isEmpty()){
+                return "forward:/salary/salaryTable";
+            }
             model.addAttribute("salary",new Salary());
             Optional<Salary> salary = salaryService.findByYear(Integer.valueOf(year));
             if (salary.isPresent()){
@@ -137,7 +140,7 @@ public class SalaryController {
                 System.out.println(salaryService.findByYear(Integer.valueOf(year)));
                 return "forward:/salary/salaryTable";
             }
-            return "redirect:/salary/salaryTable";
+            return "forward:/salary/salaryTable";
         } catch (Exception e) {
             log.error(e.getMessage());
             throw new RuntimeException(e);
