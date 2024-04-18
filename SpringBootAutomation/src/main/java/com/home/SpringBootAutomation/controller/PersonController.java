@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.PersonModel;
+import com.home.SpringBootAutomation.model.PersonModel;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

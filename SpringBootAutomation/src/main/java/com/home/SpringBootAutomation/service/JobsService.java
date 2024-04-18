@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.Jobs;
+import com.home.SpringBootAutomation.model.Jobs;
 
 import java.util.List;
 

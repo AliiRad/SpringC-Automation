@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.AppointmentDecree;
+import com.home.SpringBootAutomation.model.AppointmentDecree;
 import com.home.SpringBootAutomation.repository.AppointmentDecreeRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

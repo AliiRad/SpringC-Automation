@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.Bank;
+import com.home.SpringBootAutomation.model.Bank;
 import com.home.SpringBootAutomation.repository.BankRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

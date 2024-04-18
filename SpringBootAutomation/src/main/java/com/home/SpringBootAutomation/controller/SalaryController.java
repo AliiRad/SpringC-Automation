@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.Salary;
+import com.home.SpringBootAutomation.model.Salary;
 import com.home.SpringBootAutomation.service.impl.SalaryServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

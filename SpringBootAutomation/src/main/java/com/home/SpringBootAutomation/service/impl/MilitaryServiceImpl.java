@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.MilitaryServiceModel;
+import com.home.SpringBootAutomation.model.MilitaryServiceModel;
 import com.home.SpringBootAutomation.repository.MilitaryRepository;
 import com.home.SpringBootAutomation.service.MilitaryService;
 import lombok.extern.slf4j.Slf4j;

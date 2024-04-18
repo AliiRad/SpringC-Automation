@@ -1,10 +1,8 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.model;
 
 import com.home.SpringBootAutomation.Enum.Gender;
 import com.home.SpringBootAutomation.Enum.IsMarried;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

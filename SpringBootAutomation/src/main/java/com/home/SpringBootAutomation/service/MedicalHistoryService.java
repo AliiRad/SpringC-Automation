@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.MedicalHistory;
+import com.home.SpringBootAutomation.model.MedicalHistory;
 
 import java.util.List;
 

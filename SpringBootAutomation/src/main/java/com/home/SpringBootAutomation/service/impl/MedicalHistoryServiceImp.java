@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.MedicalHistory;
+import com.home.SpringBootAutomation.model.MedicalHistory;
 import com.home.SpringBootAutomation.repository.MedicalHistoryRepository;
 import com.home.SpringBootAutomation.service.MedicalHistoryService;
 import lombok.extern.slf4j.Slf4j;

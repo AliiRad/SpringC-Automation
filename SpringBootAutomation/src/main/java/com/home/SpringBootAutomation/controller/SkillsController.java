@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
-import com.home.SpringBootAutomation.Model.Skills;
+import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.service.SkillsService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

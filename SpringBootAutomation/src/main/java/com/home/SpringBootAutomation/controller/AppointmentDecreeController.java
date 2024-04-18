@@ -1,18 +1,12 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.AppointmentDecree;
-import com.home.SpringBootAutomation.Model.Salary;
+import com.home.SpringBootAutomation.model.AppointmentDecree;
 import com.home.SpringBootAutomation.service.AppointmentDecreeServiceImp;
-import jakarta.persistence.Id;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @Slf4j
 @Controller

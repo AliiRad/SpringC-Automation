@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.PersonModel;
+import com.home.SpringBootAutomation.model.PersonModel;
 
 import java.util.List;
 

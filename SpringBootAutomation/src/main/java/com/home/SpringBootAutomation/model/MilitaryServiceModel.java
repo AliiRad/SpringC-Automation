@@ -1,9 +1,7 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.model;
 
 import com.home.SpringBootAutomation.Enum.MilitaryExemption;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

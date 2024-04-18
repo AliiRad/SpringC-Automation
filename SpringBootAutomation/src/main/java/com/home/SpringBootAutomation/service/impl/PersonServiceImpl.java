@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.PersonModel;
+import com.home.SpringBootAutomation.model.PersonModel;
 import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.PersonService;
 import lombok.extern.slf4j.Slf4j;

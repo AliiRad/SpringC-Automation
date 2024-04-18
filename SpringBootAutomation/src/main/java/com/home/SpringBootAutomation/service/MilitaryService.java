@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.MilitaryServiceModel;
+import com.home.SpringBootAutomation.model.MilitaryServiceModel;
 
 import java.util.List;
 

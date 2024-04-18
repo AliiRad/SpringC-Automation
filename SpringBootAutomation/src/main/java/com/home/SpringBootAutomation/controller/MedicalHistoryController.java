@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.MedicalHistory;
+import com.home.SpringBootAutomation.model.MedicalHistory;
 import com.home.SpringBootAutomation.service.impl.MedicalHistoryServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

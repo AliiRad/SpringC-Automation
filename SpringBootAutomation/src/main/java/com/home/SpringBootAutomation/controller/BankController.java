@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.Bank;
+import com.home.SpringBootAutomation.model.Bank;
 import com.home.SpringBootAutomation.service.BankServiceImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

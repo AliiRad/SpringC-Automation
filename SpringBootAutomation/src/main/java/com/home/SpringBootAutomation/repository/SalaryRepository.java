@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.Model.Salary;
+import com.home.SpringBootAutomation.model.Salary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

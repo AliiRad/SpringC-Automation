@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.Model.Ticket;
+import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.service.TicketServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

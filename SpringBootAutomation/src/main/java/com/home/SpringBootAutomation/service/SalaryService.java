@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.Salary;
+import com.home.SpringBootAutomation.model.Salary;
 
 import java.util.List;
 import java.util.Optional;

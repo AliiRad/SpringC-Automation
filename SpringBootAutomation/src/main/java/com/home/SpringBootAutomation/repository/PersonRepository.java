@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.Model.PersonModel;
+import com.home.SpringBootAutomation.model.PersonModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Model;
+package com.home.SpringBootAutomation.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;

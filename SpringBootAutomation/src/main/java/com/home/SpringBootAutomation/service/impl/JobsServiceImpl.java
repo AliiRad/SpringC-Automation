@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.Jobs;
+import com.home.SpringBootAutomation.model.Jobs;
 import com.home.SpringBootAutomation.repository.JobsRepository;
 import com.home.SpringBootAutomation.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;

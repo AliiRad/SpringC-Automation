@@ -2,7 +2,7 @@ package com.home.SpringBootAutomation.service.impl;
 
 
 import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
-import com.home.SpringBootAutomation.Model.Skills;
+import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.repository.SkillsRepository;
 import com.home.SpringBootAutomation.service.SkillsService;
 import org.springframework.beans.factory.annotation.Autowired;

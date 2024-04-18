@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Model.Response;
+import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.repository.ResponseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

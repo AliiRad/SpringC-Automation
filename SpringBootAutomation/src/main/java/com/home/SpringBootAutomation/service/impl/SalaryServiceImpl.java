@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.Salary;
+import com.home.SpringBootAutomation.model.Salary;
 import com.home.SpringBootAutomation.repository.SalaryRepository;
 import com.home.SpringBootAutomation.service.SalaryService;
 import org.springframework.stereotype.Service;
