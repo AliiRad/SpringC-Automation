@@ -34,8 +34,6 @@ public interface PersonRepository extends JpaRepository<Person,Long> {
 
     List<Person>findByUserName(String username);
 
-    List<Person>findByUserNameAndDeletedTrue(String username);
-
     List<Person>findByCertificateID(String certificateId);
 
     @Query("select oo from  PersonEntity oo where oo.city=:city and oo.province=:province")
@@ -50,5 +48,11 @@ public interface PersonRepository extends JpaRepository<Person,Long> {
     @Query("select p.name from PersonEntity  p where p.id  in :id")
     List<String> findAllNamesById(@Param("id") ArrayList<Long> id);
 
-    //TODO:List<Person>findAllByNameAndDeletedTrue(String name, boolean deleted);
+
+//    todo:in 2 query chek shavad;
+    @Query("select oo.status from PersonEntity oo where oo.status=:true")
+    List<Person>findAllUserNameStatusTrue(String name);
+
+    @Query("select oo.deleted from PersonEntity oo where oo.deleted=:true")
+    List<Person>findAllUserNameDeletedTrue(String username);
 }
