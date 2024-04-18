@@ -33,6 +33,12 @@ public class PersonModel {
 	@Column(name = "person_id")
 	private long id;
 
+	@Column(name ="person_userName")
+	private String userName;
+
+	@Column(name ="person_password")
+	private String password;
+
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Name")
 	@Column(name ="person_name")
 	private String name;
@@ -40,7 +46,6 @@ public class PersonModel {
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Last Name")
 	@Column(name ="person_lastname")
 	private String lastname;
-
 
 //	@Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid CertificateID")
 	@Column(name ="person_certificateID")
@@ -75,5 +80,7 @@ public class PersonModel {
 
 	@Column(name ="person_dead")
 	private boolean deleted;//زنده یا مرده؟
+
+
 
 }

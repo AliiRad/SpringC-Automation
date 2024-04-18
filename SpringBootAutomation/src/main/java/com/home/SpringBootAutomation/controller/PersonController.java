@@ -29,14 +29,14 @@ public class PersonController {
         log.info("Controller-PersonController-Get-FindAll");
         model.addAttribute("person",new PersonModel());
         model.addAttribute("personList",personService.findAll());
-        return "PersonModel";
+        return "/person";
     }
     @GetMapping(value = "/id{id}")
     public String showPersonFindById(@ModelAttribute("id")Long id){
         log.info("Controller-PersonController-Get-FindById");
         Optional<PersonModel>person=Optional.ofNullable(personService.findById(id));
         if (person.isPresent()){
-            return "PersonModel";
+            return "/person";
         }else {
             return "error-404";
         }
@@ -47,7 +47,7 @@ public class PersonController {
         List<PersonModel> personModelList =personService.findByNationalId(nationalId);
         if (!personModelList.isEmpty()){
             model.addAttribute("personList", personModelList);
-            return "nationalId";
+            return "/nationalId";
         }else {
             return "error-404";
         }
@@ -68,7 +68,7 @@ public class PersonController {
         log.info("Controller-PersonController-Post-SavePerson"+ personModel.toString());
         log.info("Controller-PersonController-Post-SavePerson");
         personService.save(personModel);
-        return "redirect:/PersonModel";
+        return "redirect:/Person";
     }
     @PostMapping(value = "/edit")
     public String editPerson(PersonModel personModel){

@@ -15,7 +15,7 @@ import java.util.Optional;
 @Slf4j
 public class MilitaryServiceImpl implements MilitaryService {
 
-    private MilitaryRepository militaryRepository;
+    private final MilitaryRepository militaryRepository;
 
     public MilitaryServiceImpl(MilitaryRepository militaryRepository) {
         this.militaryRepository = militaryRepository;
@@ -54,7 +54,6 @@ public class MilitaryServiceImpl implements MilitaryService {
         MilitaryServiceModel militaryServiceModel =findById(id);
         if (militaryServiceModel !=null){
             militaryServiceModel.setDeleted(true);
-//            militaryRepository.MilitaryDeleted(id);
             return militaryServiceModel;
         }
         else return null;
@@ -73,7 +72,8 @@ public class MilitaryServiceImpl implements MilitaryService {
     @Override
     public List<MilitaryServiceModel> findAll(){
         log.info("Service-MilitaryServiceModel-FindAll");
-        return militaryRepository.findAll();
+        List<MilitaryServiceModel>militaryServiceModelList=militaryRepository.findAll();
+        return militaryServiceModelList;
     }
 
     @Override

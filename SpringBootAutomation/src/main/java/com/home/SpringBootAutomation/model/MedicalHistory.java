@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -40,7 +42,7 @@ public class MedicalHistory {
     private String emergencyDrug;
 
     @Column(name = "m_disease")
-    private String disease;
+    private List<Disease> diseaseList;
 
     @Column(name = "m_emergencyPhoneNumber")
     private String emergencyPhoneNumber;

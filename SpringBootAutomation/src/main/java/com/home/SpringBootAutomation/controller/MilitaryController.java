@@ -30,14 +30,14 @@ public class MilitaryController {
         log.info("Controller-MilitaryController-Get-FindAll");
         model.addAttribute("military",new MilitaryServiceModel());
         model.addAttribute("militaryList",militaryService.findAll());
-        return "military";
+        return "/military";
     }
     @GetMapping(value = "/id{id}")
     public String showMilitaryFindById(@ModelAttribute("id")Long id){
         log.info("Controller-MilitaryController-Get-FindById");
         Optional<MilitaryServiceModel>military=Optional.ofNullable(militaryService.findById(id));
         if (military.isPresent()){
-            return "military";
+            return "/military";
         }else{
             return "error-404";
         }
@@ -48,7 +48,7 @@ public class MilitaryController {
         List<MilitaryServiceModel> militaryServiceModelList =militaryService.findBySerialNumber(serialNumber);
         if (!militaryServiceModelList.isEmpty()){
             model.addAttribute("militaryList", militaryServiceModelList);
-            return "serialNumber";
+            return "/serialNumber";
         }else {
             return "error-404";
         }
