@@ -11,11 +11,11 @@ import java.util.List;
 
 public interface DrivingLicenceRepository extends JpaRepository<DrivingLicenceModel, Long> {
 
-//    @Query("SELECT oo from DrivingLicenceEntity oo where oo.issuanceDate=:issuaceDate")
-//    List<DrivingLicenceModel> findByDate(LocalDate issuanceDate);
-//
-//    @Query("SELECT oo from DrivingLicenceEntity oo where oo.serialNumber=:serialNumber")
-//    List<DrivingLicenceModel> findBySerialNumber(String serialNumber );
+    @Query("SELECT oo from DrivingLicenceEntity oo where oo.issuanceDate=:issuaceDate")
+    List<DrivingLicenceModel> findByDate(LocalDate issuanceDate);
+
+    @Query("SELECT oo from DrivingLicenceEntity oo where oo.serialNumber=:serialNumber")
+    List<DrivingLicenceModel> findBySerialNumber(String serialNumber );
 
     //    @Modifying
 //    @Query("update DrivingLicenceEntity  oo set oo.LicenseSuspension=true where oo.id=:id")

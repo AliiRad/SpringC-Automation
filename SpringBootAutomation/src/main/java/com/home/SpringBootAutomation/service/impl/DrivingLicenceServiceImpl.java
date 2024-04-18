@@ -85,15 +85,15 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         return (drivingLicence.isPresent() ? drivingLicence.get() : null);
 
     }
-//    public List<DrivingLicenceModel> findBySerialNumber(String serialNumber){
-//        log.info("Service-DrivingLicenceModel-findBySerialNumber");
-//        return drivingLicenceRepository.findBySerialNumber(serialNumber);
-//
-//    }
-//    public List<DrivingLicenceModel>findByDate(LocalDate issuanceDate){
-//        log.info("Service-DrivingLicenceModel-findByDate");
-//        return drivingLicenceRepository.findByDate(issuanceDate);
-//
-//    }
+    public List<DrivingLicenceModel> findBySerialNumber(String serialNumber){
+        log.info("Service-DrivingLicenceModel-findBySerialNumber");
+        return drivingLicenceRepository.findBySerialNumber(serialNumber);
+
+    }
+    public List<DrivingLicenceModel>findByDate(LocalDate issuanceDate){
+        log.info("Service-DrivingLicenceModel-findByDate");
+        return drivingLicenceRepository.findByDate(issuanceDate);
+
+    }
 
 }
