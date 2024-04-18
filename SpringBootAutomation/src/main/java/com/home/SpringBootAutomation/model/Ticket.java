@@ -33,7 +33,7 @@ public class Ticket {
 
     @ManyToOne
     @Column(name = "t_applicant")
-    private PersonModel applicant;
+    private Person applicant;
 
 
     @Column(name = "t_timeStamp")

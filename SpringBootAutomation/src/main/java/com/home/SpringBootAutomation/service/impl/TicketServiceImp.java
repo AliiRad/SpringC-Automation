@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.repository.TicketRepository;
 import com.home.SpringBootAutomation.service.TicketService;
@@ -17,7 +18,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class TicketServiceImp implements TicketService {
-    private TicketRepository ticketRepository;
+    private  TicketRepository ticketRepository;
 
     public TicketServiceImp(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
@@ -80,8 +81,10 @@ public class TicketServiceImp implements TicketService {
         return (ticket.isPresent() ? ticket.get() : null);
     }
 
+
+
     @Override
-    public List<Ticket> findByApplicant(PersonModel applicant) {
+    public List<Ticket> findByApplicant(Person applicant) {
         log.info("Service-Ticket-FindByApplicant");
         List<Ticket> ticketList = ticketRepository.findByApplicant(applicant);
         return ticketList;

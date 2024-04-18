@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ public interface TicketService {
     Ticket logicalRemove(Long id);
     List<Ticket> findAll();
     Ticket findById(Long id);
-    List<Ticket> findByApplicant(PersonModel applicant);
+    List<Ticket> findByApplicant(Person applicant);
     List<Ticket> findByDate(LocalDateTime timeStamp);
 
 }

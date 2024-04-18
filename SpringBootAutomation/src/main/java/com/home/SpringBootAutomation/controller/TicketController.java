@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.model.PersonModel;
+
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.service.impl.TicketServiceImp;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +43,7 @@ public class TicketController {
     }
 
     @GetMapping(value ="/applicant")
-    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") PersonModel applicant) {
+    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") Person applicant) {
         log.info("Controller-Ticket-Get-FindByApplicant");
         List<Ticket> ticketList = ticketServiceImp.findByApplicant(applicant);
         if (!ticketList.isEmpty()){
