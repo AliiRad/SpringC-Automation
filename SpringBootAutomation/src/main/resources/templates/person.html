@@ -7,6 +7,10 @@
 <body>
 <h2>Person Page</h2>
 <form th:action="@{/person/save}" method="post" th:object="${person}">
+    <input type="userName" placeholder="UserName" th:value="${userName}" th:field="*{userName}">
+    <br>
+    <input type="password" placeholder="PassWord" th:value="${passWord}" th:field="*{password}">
+    <br>
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
     <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
