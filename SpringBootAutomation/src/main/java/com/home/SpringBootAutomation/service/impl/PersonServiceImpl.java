@@ -78,6 +78,19 @@ public class PersonServiceImpl implements PersonService {
         return personRepository.findByNationalID(nationalId);
     }
 
+    @Override
+    public Person findByName(String name) {
+        log.info("Service-Person-findByName");
+        return (Person) personRepository.findByName(name);
+    }
+
+    @Override
+    public Person findByNameAndLastname(String name, String lastname) {
+        log.info("Service-Person-findByNameAndLastname");
+
+        return null;
+    }
+
     public List<Person>findByBirthDate(LocalDate birthdate){
         log.info("Service-Person-findByBirthDate");
         return personRepository.findByBirthDate(birthdate);

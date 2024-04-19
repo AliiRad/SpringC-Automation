@@ -19,4 +19,8 @@ public interface PersonService {
 
     List<Person> findByNationalId(String nationalID);
 
+    Person findByName(String name);
+
+    Person findByNameAndLastname(String name,String lastname);
+
 }
