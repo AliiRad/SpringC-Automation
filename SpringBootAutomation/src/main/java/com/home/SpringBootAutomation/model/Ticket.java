@@ -28,7 +28,7 @@ public class Ticket {
     @Column(name = "t_group")
     private String group;
 
-    @Column(name = "t_request" , length = 255)
+    @Column(name = "t_request" )
     private String request;
 
     @ManyToOne

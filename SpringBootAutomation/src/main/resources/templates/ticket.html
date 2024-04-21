@@ -8,13 +8,13 @@
 <h2>Ticket Page</h2>
 
 <form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
-    <input type="text" placeholder="Applicant" th:value="${applicant}" th:field="*{applicant}">
+   <label>Ticket Applicant: <input type="text" placeholder="Applicant" th:value="${applicant}" th:field="*{applicant}"></label>
     <br>
-    <input type="text" placeholder="Request" th:value="${request}" th:field="*{request}">
+    <label>Ticket Request:<input type="text" placeholder="Request" th:value="${request}" th:field="*{request}"></label>
     <br>
-    <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}">
+    <label>Ticket Group: <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}"></label>
     <br>
-    <input type="text" placeholder="Status" th:value="${status}" th:field="*{status}">
+    <label>Ticket Status: <input type="text" placeholder="Status" th:value="${status}" th:field="*{status}"></label>
     <br>
     <input type="submit" value="Save">
 </form>
@@ -50,7 +50,7 @@
     </tbody>
 </table>
 <div th:if="${ticketEdit} != null">
-   <label>Ticket Id: <input type="text" th:value="${ticketEdit.id}"></label>
+   <label>Ticket ID: <input type="text" th:value="${ticketEdit.id}"></label>
    <label>Ticket Date: <input type="text" th:value="${ticketEdit.ticketTimeStamp}"></label>
     <label>Ticket Title: <input type="text" th:value="${ticketEdit.title}"></label>
     <label>Ticket Applicant: <input type="text" th:value="${ticketEdit.applicant}"></label>

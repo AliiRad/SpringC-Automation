@@ -6,10 +6,7 @@ import com.home.SpringBootAutomation.service.impl.ResponseServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,7 +30,7 @@ public class ResponseController {
     }
 
     @GetMapping(value ="/id/{id}")
-    public String showResponse(@ModelAttribute("id") Long id){
+    public String showResponse( @PathVariable Long id){
         log.info("Controller-Response-Get-FindById");
         Response response = responseServiceImp.findById(id);
         if (response != null){
