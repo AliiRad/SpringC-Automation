@@ -10,8 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 
-//@SuppressWarnings("ALL")
+
+
 @Controller
 @Slf4j
 @RequestMapping("/jobs")
@@ -19,138 +21,171 @@ import org.springframework.web.bind.annotation.*;
 public class JobsController {
 
 
-// Avoiding Field Injection With Constructor Injection
-
+    //    -------------------------------------------------------------------------
     private final JobsService service;
 
     @Autowired
     public JobsController(JobsService service) {
         this.service = service;
     }
-
     //    -------------------------------------------------------------------------
 
-
-//  Field Injection
-
-//    @Autowired
-//    private JobsService service;
-
-    //    -------------------------------------------------------------------------
 
     @PostMapping("/save")
     public String save(@Valid Jobs jobs, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            log.error(result.getAllErrors().toString());
-            return "jobs";
-        } else {
-            log.info("Job Saved - Post Method");
-            log.info(jobs.toString());
-            service.save(jobs);
-            return "redirect:/jobs";
+        try {
+            if (result.hasErrors()) {
+                log.error(result.getAllErrors().toString());
+
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                return "jobs";
+            } else {
+                service.save(jobs);
+                log.info("Job Saved - Post Method");
+                log.info(jobs.toString());
+
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent", "Job Saved successfully");
+                return "redirect:/jobs";
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
         }
-
-
     }
+
     //    -------------------------------------------------------------------------
 
+    @PutMapping("/edit")
+    public String edit(Long id, @Valid Jobs jobs, BindingResult result, Model model) {
+        try {
+            if (result.hasErrors()) {
+                log.error(result.getAllErrors().toString());
 
-    @PostMapping("/edit")
-    public String edit(Long id, @Valid Jobs jobs, Model model) {
-        log.info("Job Edited - Post Method");
-        if (service.findById(id) != null) {
-            service.update(id, jobs);
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                return "jobs";
 
-            model.addAttribute("jobs", jobs);
-            model.addAttribute("message", "Job Edited Successfully !");
+            } else if (service.findJobsByIdAndDeletedFalse(id).isPresent()) {
+                service.update(id, jobs);
+                log.info("Job Edited - Put Method");
+                log.info(jobs.toString());
 
-            return "redirect:/jobs";
-        } else {
-            model.addAttribute("message", "Job Not Found !");
-            return "redirect:/jobs";
+                model.addAttribute("jobs", jobs);
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent", "Job Edited Successfully .");
+                return "redirect:/jobs";
+
+            } else {
+                log.error("Job Not Found !");
+
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", "Job With Id :" + id + "  Not Found !");
+                return "redirect:/jobs";
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
         }
 
-
     }
+
     //    -------------------------------------------------------------------------
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete")
     public String delete(Long id, Model model) {
-        log.info("Job Deleted - Post Method");
-        service.logicalRemove(id);
-        model.addAttribute("message", "Job Deleted !");
-        return "redirect:/jobs";
+        try {
+            if (service.findJobsByIdAndDeletedFalse(id).isPresent()) {
+                service.logicalRemove(id);
 
+                log.info("Job Deleted - Put Method");
+                log.info("The Job With Id :" + id + "Successfully Deleted");
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent", "Job With Id : " + id + " Successfully Deleted .");
+                return "redirect:/jobs";
+
+            } else {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", "Job With Id :" + id + "  Not Found !");
+                return "redirect:/jobs";
+
+            }
+
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+        }
     }
 
     //    -------------------------------------------------------------------------
-
-
     @GetMapping
-    public String findAll(Model model) {
+    public String findAll(Model model){
+        try {
 
-        log.info("Job Founded - Get Method");
-        model.addAttribute("jobs", new Jobs());
-        model.addAttribute("jobsList", service.findAll());
-        return "jobs";
+            if (service.countByDeletedFalse() >0){
+                service.findJobsByDeletedFalse();
+                log.info("Find Jobs With Deleted False - Get Method");
 
+                model.addAttribute("jobs", new Jobs());
+                model.addAttribute("jobsList", service.findAll());
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent", "Jobs List Is Not Empty");
+
+                return "jobs";
+
+            }else {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", "Job List Is Empty");
+                return "jobs";
+
+            }
+
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+        }
     }
 
     //    -------------------------------------------------------------------------
-
     @GetMapping("/findById/{id}")
-    public String findById(@PathVariable("id") Long id, Model model) {
+    public String findById(@PathVariable("id") Long id, Model model){
+        try {
 
-        log.info("Find By Id - Get Method");
+            Optional<Jobs> jobs = service.findJobsByIdAndDeletedFalse(id);
+            log.info("Find Job By Id And Deleted False - Get Method");
+
+            if (jobs.isPresent()){
+                log.info("Active Job With Id : "+id+" Was Founded");
+                model.addAttribute("jobs", jobs);
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent" , "Active Job With Id : "+id+" Was Found" );
+                return "jobs";
 
 
-        Jobs jobs = service.findById(id);
-        model.addAttribute("jobs", jobs);
-        return "jobs";
+            }else {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", "Active Job With Id : "+id+" Was Not Found");
+                return "jobs";
+
+            }
+
+        }catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+        }
     }
 
-    //    -------------------------------------------------------------------------
-
-    @GetMapping("/findByCompanyName/{companyName}")
-    public String findByCompanyName(@PathVariable("companyName") String companyName, Model model) {
-
-        log.info("Find By Company Name - Get Method");
-
-
-        model.addAttribute("jobs", new Jobs());
-        model.addAttribute("jobsList", service.findByCompanyName(companyName));
-        return "jobs";
-    }
-
-    //    -------------------------------------------------------------------------
-
-
-    @GetMapping("/findByAddress/{address}")
-    public String findByAddress(@PathVariable("address") String address, Model model) {
-
-        log.info("Find By Address - Get Method");
-
-
-        model.addAttribute("jobs", new Jobs());
-        model.addAttribute("jobsList", service.findByAddress(address));
-        return "jobs";
-
-    }
-
-    //    -------------------------------------------------------------------------
-
-    @GetMapping("/findALlByPagination")
-    public String findJobsByPagination(@RequestParam(defaultValue = "1") Integer pageNo,
-                                       @RequestParam(defaultValue = "5") Integer pageSize,
-                                       Model model) {
-
-        log.info("Find By Pagination - Get Method");
-
-
-        model.addAttribute("jobs", service.getJobsByPagination(pageNo, pageSize));
-        model.addAttribute("totalPages", ((int) (service.getJobsCount() / pageSize)) + 1);
-        model.addAttribute("currentPage", pageNo);
-        return "skills";
-    }
     //    -------------------------------------------------------------------------
 }
