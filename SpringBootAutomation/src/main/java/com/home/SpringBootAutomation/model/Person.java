@@ -46,8 +46,10 @@ public class Person {
 	private String lastname;
 
 
-	@Column(name ="person_userName" ,length = 30 , nullable = false , columnDefinition = "VARCHAR2(30)")
+	@Column(name ="person_userName" ,length = 30 , nullable = false , columnDefinition = "VARCHAR2(30)" ,unique = true)
 	@Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Username")
+	//@UniqueElements
+	//TODO: Making this field unique using jakarta validation constraints
 	@Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
 	@NotBlank(message = "Should Not Be Null")
 	private String userName;
@@ -59,7 +61,7 @@ public class Person {
 	private String password;
 
 
-	//TODO: What is certificateID length? Does it Take Characters? If it Dose not take  characters, then the type should be Number?
+	//TODO: What is certificateID length? Does it Take Characters?
 	@Column(name ="person_certificateID",length = 12 , nullable = false , columnDefinition = "VARCHAR2(12)")
 	@Pattern(regexp = "^[0-9]{8,12}$", message = "Invalid Certificate ID")
 	@Size(min = 8, max = 12, message = " Certificate ID must be between 8 and 12 characters")
