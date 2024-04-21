@@ -112,14 +112,14 @@ public class Person {
 	private Boolean deleted = false;
 
 
-	//Jobs Relationship
-//	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "person")
-//	private List<Jobs> jobs;
-//
-//
-//	//Skills Relationship
-//	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY , mappedBy = "person")
-//	private List<Skills> skills ;
+    //Jobs Relationship
+	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "person")
+	private List<Jobs> jobs;
+
+
+	//Skills Relationship
+	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY , mappedBy = "person")
+	private List<Skills> skills ;
 
 
 
