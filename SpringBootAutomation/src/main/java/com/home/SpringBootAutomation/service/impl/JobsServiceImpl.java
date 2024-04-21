@@ -4,33 +4,27 @@ import com.home.SpringBootAutomation.model.Jobs;
 import com.home.SpringBootAutomation.repository.JobsRepository;
 import com.home.SpringBootAutomation.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-//@SuppressWarnings("ALL")
+
 @Service
 public class JobsServiceImpl implements JobsService {
 
     //------------------------------------------------------
-
-    private JobsRepository repository;
+    // Constructor Injection
+    private final JobsRepository repository;
 
     @Autowired
-    public void setRepository(JobsRepository repository) {
+    public JobsServiceImpl (JobsRepository repository) {
         this.repository = repository;
     }
 
     //------------------------------------------------------
 
-//    @Autowired
-//    private JobsRepository repository;
-
-    //------------------------------------------------------
     @Override
     public Jobs save(Jobs jobs) {
         return repository.save(jobs);
@@ -40,11 +34,13 @@ public class JobsServiceImpl implements JobsService {
 
     @Override
     public Jobs update(Long id, Jobs jobs) {
-        Optional<Jobs> optionalJobs = repository.findById(id);
+
+        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
+
         if (optionalJobs.isPresent()) {
             Jobs oldJobs = optionalJobs.get();
-            oldJobs.setAddress(jobs.getAddress());
             oldJobs.setCompanyName(jobs.getCompanyName());
+            oldJobs.setAddress(jobs.getAddress());
             oldJobs.setPositions(jobs.getPositions());
             oldJobs.setStartDate(jobs.getStartDate());
             oldJobs.setEndDate(jobs.getEndDate());
@@ -55,28 +51,24 @@ public class JobsServiceImpl implements JobsService {
 
         }
     }
-
     //------------------------------------------------------
 
     @Transactional
     @Override
     public void logicalRemove(Long id) {
-        Optional<Jobs> optionalJobs = repository.findById(id);
+        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
         if (optionalJobs.isPresent()) {
             repository.logicalRemove(id);
         } else {
             System.out.println(" Job not found !");
         }
-
     }
-
     //------------------------------------------------------
 
     @Override
     public List<Jobs> findAll() {
         return repository.findAll();
     }
-
     //------------------------------------------------------
 
     @Override
@@ -84,51 +76,18 @@ public class JobsServiceImpl implements JobsService {
         Optional<Jobs> optional = repository.findById(id);
         return optional.orElse(null);
     }
-
     //------------------------------------------------------
 
-    //TODO: Check if List is Empty or not.
-    @Override
-    public List<Jobs> findByCompanyName(String companyName) {
-        return repository.findByCompanyName(companyName);
-    }
-
-    //------------------------------------------------------
-
-    //TODO: Check if List is Empty or not.
-    @Override
-    public List<Jobs> findByAddress(String address) {
-        return repository.findByAddress(address);
-    }
-
-    //------------------------------------------------------
-
-    //TODO: Check if object is Empty or not.
-//    @Override
-//    public Jobs findJobsByPersonId(Long id) {
-//
-//        return repository.findJobsByPersonId(id);
-//    }
-    //------------------------------------------------------
-
-    @Override
-    public List<Jobs> getJobsByPagination(int pageNo, int pageSize) {
-        PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize);
-        Page<Jobs> page = repository.findAll(pageRequest);
-
-        return page.getContent();
-    }
-
-    //------------------------------------------------------
     @Override
     public Long getJobsCount() {
         return repository.count();
     }
-
     //------------------------------------------------------
+
+    @Transactional
     @Override
     public Jobs logicalRemoveWithReturn(Long id) {
-        Optional<Jobs> optionalJobs = repository.findById(id);
+        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
         if (optionalJobs.isPresent()) {
             Jobs oldJobs = optionalJobs.get();
             oldJobs.setDeleted(true);
@@ -138,7 +97,45 @@ public class JobsServiceImpl implements JobsService {
         }
 
     }
+    //------------------------------------------------------
 
+    @Override
+    public List<Jobs> findJobsByDeletedFalse() {
+        return repository.findJobsByDeletedFalse();
+    }
+    //------------------------------------------------------
+
+    @Override
+    public Optional<Jobs> findJobsByIdAndDeletedFalse(Long id) {
+        Optional<Jobs> optional = repository.findJobsByIdAndDeletedFalse(id);
+        if(optional.isPresent()){
+            return optional;
+        }else return  Optional.empty();
+    }
+    //------------------------------------------------------
+
+    @Override
+    public List<Jobs> findJobsByCompanyNameAAndDeletedFalse(String companyName) {
+        return repository.findJobsByCompanyNameAndDeletedFalse(companyName);
+    }
+    //------------------------------------------------------
+
+    @Override
+    public List<Jobs> findJobsByCompanyNameContainingIgnoreCaseAndDeletedFalse(String companyName) {
+        return repository.findJobsByCompanyNameContainingIgnoreCaseAndDeletedFalse(companyName);
+    }
+    //------------------------------------------------------
+
+    @Override
+    public List<Jobs> findJobsByAddressAndDeletedFalse(String address) {
+        return repository.findJobsByAddressAndDeletedFalse(address);
+    }
+    //------------------------------------------------------
+
+    @Override
+    public Long countByDeletedFalse() {
+        return repository.countByDeletedFalse();
+    }
     //------------------------------------------------------
 
 }
