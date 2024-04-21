@@ -73,17 +73,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         fetch('/skills/delete/' + id, {
             method: 'POST'
+            // body: id
         }).then(response => {
 
+            console.log('skill deleted successfully !');
 
-            console.log('Item deleted successfully');
         }).catch(error => {
 
-            console.error('Error deleting item:', error);
+            console.error('Error deleting skill:', error);
+
         });
 
 
-        deleteModalSkills.hide();
+        // deleteModalSkills.hide();
     });
 });
 
@@ -92,7 +94,9 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('findByIdForm__skill').addEventListener('submit', function (event) {
+
         event.preventDefault();
+
         let findByIdInputSkill = document.getElementById('findByIdInput__skill').value;
         let xhr = new XMLHttpRequest();
         xhr.open('GET', '/skills/findById/' + findByIdInputSkill)
@@ -111,3 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 });
+
+
+
+
+//TODO : Putting All Methods in a Single Event Listener Block And Delete The forEach()

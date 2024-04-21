@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
-import com.home.SpringBootAutomation.Model.Skills;
+import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.service.SkillsService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -19,17 +19,20 @@ public class SkillsController {
 
 
 
-//    private SkillsServiceI service;
-//
-//    @Autowired
-//    public void setService(SkillsService service) {
-//        this.service = service;
-//    }
-    //    -------------------------------------------------------------------------
+// Avoiding Field Injection With Setter Injection
 
+    private SkillsService service;
 
     @Autowired
-    private SkillsService service;
+    public void setService(SkillsService service) {
+        this.service = service;
+    }
+    //    -------------------------------------------------------------------------
+
+//  Field Injection
+
+//    @Autowired
+//    private SkillsService service;
 
     //    -------------------------------------------------------------------------
 
@@ -40,12 +43,14 @@ public class SkillsController {
             log.error(result.getAllErrors().toString());
 //                model.addAttribute("error" ,result.getAllErrors().toString());
             return "skills";
-        }
-        log.info("Skill Saved - Post Method");
-        log.info(skills.toString());
-        service.save(skills);
+        }else {
+            log.info("Skill Saved - Post Method");
+            log.info(skills.toString());
+            service.save(skills);
 
-        return "redirect:/skills";
+            return "redirect:/skills";
+        }
+
     }
     //    -------------------------------------------------------------------------
 
@@ -60,9 +65,11 @@ public class SkillsController {
             model.addAttribute("skills", skills);
             model.addAttribute("message", "Skill Edited Successfully !");
             return "redirect:/skills";
+        }else {
+            model.addAttribute("message", "Skill Not Found !");
+            return "redirect:/skills";
         }
-        model.addAttribute("message", "Skill Not Found !");
-        return "redirect:/skills";
+
     }
 
 

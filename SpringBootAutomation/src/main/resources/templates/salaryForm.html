@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Salary Form</title>
+    <style>
+        .error{
+            color:red;
+        }
+
+        .success{
+            color:green;
+        }
+    </style>
+</head>
+<body>
+<h1>Salary</h1>
+<form id="salary-form" th:fragment="salaryForm" th:action="@{/salary/save}" method="post" th:object="${salary}">
+    <label>
+        <input type="text" th:field="*{id}" hidden="hidden">
+    </label>
+
+    <label>
+        Year : <input type="text" th:field="*{year}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Invalid Year</span>
+    <br><br>
+
+    <label>
+        Basic Hourly Pay : <input type="text" th:field="*{basicHourlyPay}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('basicHourlyPay')}" th:errors="*{basicHourlyPay}">Invalid Basic Hourly Pay</span>
+    <br><br>
+
+    <label>
+        Basic Daily Pay : <input type="text" th:field="*{basicDailyPay}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('basicDailyPay')}" th:errors="*{basicDailyPay}">Invalid Basic Daily Pay</span>
+    <br><br>
+
+    <label>
+        Basic Monthly Pay : <input type="text" th:field="*{basicMonthlyPay}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('basicMonthlyPay')}" th:errors="*{basicMonthlyPay}">Invalid Basic Monthly Pay</span>
+    <br><br>
+
+    <label>
+        Working Coupon : <input type="text" th:field="*{workingCoupon}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('workingCoupon')}" th:errors="*{workingCoupon}">Invalid Working Coupon</span>
+    <br><br>
+
+    <label>
+        Housing Right : <input type="text" th:field="*{housingRight}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('housingRight')}" th:errors="*{housingRight}">Invalid Housing Right</span>
+    <br><br>
+
+    <label>
+        Working Year Pay : <input type="text" th:field="*{workingYearPay}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('workingYearPay')}" th:errors="*{workingYearPay}">Invalid Working Year Pay</span>
+    <br><br>
+
+    <label>
+        Pay For EachChild : <input type="text" th:field="*{payForEachChild}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('payForEachChild')}" th:errors="*{payForEachChild}">Invalid Pay For EachChild</span>
+    <br><br>
+
+    <label>
+        Married People Rights: <input type="text" th:field="*{marriedPeopleRights}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('marriedPeopleRights')}" th:errors="*{marriedPeopleRights}">Invalid Married People Rights</span>
+    <br><br>
+
+    <label>
+        Insurance: <input type="text" th:field="*{insurance}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('insurance')}" th:errors="*{insurance}">Invalid Insurance</span>
+    <br><br>
+
+    <div>
+        <button id="submit" type="submit">Save</button>
+    </div>
+
+<!--    <div th:if="${param.id != null}">-->
+<!--        <button type="submit" name="action" value="edit">Edit</button>-->
+<!--    </div>-->
+
+    <div class="success" th:if="${msg != null}">
+        <span th:text="${msg}"></span>
+    </div>
+
+</form>
+
+</body>
+</html>

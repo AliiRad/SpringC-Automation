@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.Model.Jobs;
+import com.home.SpringBootAutomation.model.Jobs;
 import com.home.SpringBootAutomation.repository.JobsRepository;
 import com.home.SpringBootAutomation.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +12,23 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("ALL")
+//@SuppressWarnings("ALL")
 @Service
 public class JobsServiceImpl implements JobsService {
-    @Autowired
+
+    //------------------------------------------------------
+
     private JobsRepository repository;
+
+    @Autowired
+    public void setRepository(JobsRepository repository) {
+        this.repository = repository;
+    }
+
+    //------------------------------------------------------
+
+//    @Autowired
+//    private JobsRepository repository;
 
     //------------------------------------------------------
     @Override
@@ -27,9 +39,9 @@ public class JobsServiceImpl implements JobsService {
 
 
     @Override
-    public Jobs update(Long id , Jobs jobs) {
+    public Jobs update(Long id, Jobs jobs) {
         Optional<Jobs> optionalJobs = repository.findById(id);
-        if (optionalJobs.isPresent()){
+        if (optionalJobs.isPresent()) {
             Jobs oldJobs = optionalJobs.get();
             oldJobs.setAddress(jobs.getAddress());
             oldJobs.setCompanyName(jobs.getCompanyName());
@@ -38,8 +50,10 @@ public class JobsServiceImpl implements JobsService {
             oldJobs.setEndDate(jobs.getEndDate());
 
             return repository.save(oldJobs);
+        } else {
+            return null;
+
         }
-        return null;
     }
 
     //------------------------------------------------------
@@ -48,10 +62,11 @@ public class JobsServiceImpl implements JobsService {
     @Override
     public void logicalRemove(Long id) {
         Optional<Jobs> optionalJobs = repository.findById(id);
-        if (optionalJobs.isPresent()){
+        if (optionalJobs.isPresent()) {
             repository.logicalRemove(id);
+        } else {
+            System.out.println(" Job not found !");
         }
-        System.out.println("not found !");
 
     }
 
@@ -97,8 +112,8 @@ public class JobsServiceImpl implements JobsService {
     //------------------------------------------------------
 
     @Override
-    public List<Jobs> getJobsByPagination(int pageNo , int pageSize){
-        PageRequest pageRequest =  PageRequest.of(pageNo-1 , pageSize);
+    public List<Jobs> getJobsByPagination(int pageNo, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNo - 1, pageSize);
         Page<Jobs> page = repository.findAll(pageRequest);
 
         return page.getContent();
@@ -106,19 +121,24 @@ public class JobsServiceImpl implements JobsService {
 
     //------------------------------------------------------
     @Override
-    public Long getJobsCount(){
+    public Long getJobsCount() {
         return repository.count();
     }
 
     //------------------------------------------------------
     @Override
-    public Jobs logicalRemoveWithReturn(Long id){
+    public Jobs logicalRemoveWithReturn(Long id) {
         Optional<Jobs> optionalJobs = repository.findById(id);
-        if (optionalJobs.isPresent()){
+        if (optionalJobs.isPresent()) {
             Jobs oldJobs = optionalJobs.get();
             oldJobs.setDeleted(true);
             return repository.save(oldJobs);
+        } else {
+            return null;
         }
-        return null;
+
     }
+
+    //------------------------------------------------------
+
 }

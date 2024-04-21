@@ -2,7 +2,7 @@ package com.home.SpringBootAutomation.service.impl;
 
 
 import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
-import com.home.SpringBootAutomation.Model.Skills;
+import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.repository.SkillsRepository;
 import com.home.SpringBootAutomation.service.SkillsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +14,24 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("ALL")
+//@SuppressWarnings("ALL")
 @Service
 public class SkillsServiceImpl implements SkillsService {
-    @Autowired
+
+
+    //------------------------------------------------------
+
     private SkillsRepository repository;
+
+    @Autowired
+    public void setRepository(SkillsRepository repository){
+        this.repository = repository;
+    }
+
+    //------------------------------------------------------
+
+//    @Autowired
+//    private SkillsRepository repository;
     //------------------------------------------------------
 
 
@@ -41,8 +54,10 @@ public class SkillsServiceImpl implements SkillsService {
             oldSkills.setTraining(skills.getTraining());
 
             return repository.save(oldSkills);
+        }else {
+            return null;
         }
-        return null;
+
     }
     //------------------------------------------------------
 
@@ -53,8 +68,10 @@ public class SkillsServiceImpl implements SkillsService {
         Optional<Skills> optional = repository.findById(id);
         if (optional.isPresent()){
             repository.logicalRemove(id);
+        }else {
+            System.out.println(" Skill not found !");
         }
-        System.out.println("not found !");
+
 
     }
 
@@ -133,8 +150,13 @@ public class SkillsServiceImpl implements SkillsService {
             Skills oldSkills = optionalSkills.get();
             oldSkills.setDeleted(true);
             return repository.save(oldSkills);
+        }else {
+            return null;
         }
-        return null;
+
     }
+
+    //------------------------------------------------------
+
 
 }

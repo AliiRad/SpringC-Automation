@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Person</title>
+</head>
+<body>
+<h2>Person Page</h2>
+<form th:action="@{/person/save}" method="post" th:object="${person}">
+    <input type="userName" placeholder="UserName" th:value="${userName}" th:field="*{userName}">
+    <br>
+    <input type="password" placeholder="PassWord" th:value="${passWord}" th:field="*{password}">
+    <br>
+    <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
+    <br>
+    <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
+    <br>
+    <input type="fathersName" placeholder="FathersName" th:value="${fathersName}" th:field="*{fathersName}">
+    <br>
+    <input type="gender" placeholder="Gender" th:value="${gender}" th:field="*{gender}">
+    <br>
+    <input type="nationalId" placeholder="NationalId" th:value="${nationalId}" th:field="*{nationalId}">
+    <br>
+    <input type="certificateID" placeholder="CertificateID" th:value="${certificateID}" th:field="*{certificateID}">
+    <br>
+    <input type="birthdate-local" placeholder="Birthdate" th:value="${birthdate}" th:field="*{birthdate}">
+    <br>
+    <input type="city" placeholder="City" th:value="${city}" th:field="*{city}">
+    <br>
+    <input type="province" placeholder="Province" th:value="${province}" th:field="*{province}">
+    <br>
+    <input type="isMarried" placeholder="IsMarried" th:value="${isMarried}" th:field="*{isMarried}">
+    <br>
+    <input type="submit" th:value="Save">
+    </form>
+<table th:if="${#lists.size(personList)>0}">
+    <thead>
+    <th>Id</th>
+    <th>Person Name</th>
+    <th>Person Lastname</th>
+    <th>Person FathersName</th>
+    <th>Person Gender</th>
+    <th>Person NationalId</th>
+    <th>Person CertificateID</th>
+    <th>Person Birthdate</th>
+    <th>Person City</th>
+    <th>Person Province</th>
+    <th>Person IsMarried</th>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${personList}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.name}"></td>
+        <td th:text="${p.lastname}"></td>
+        <td th:text="${p.fathersName}"></td>
+        <td th:text="${p.gender}"></td>
+        <td th:text="${p.gender}"></td>
+        <td th:text="${p.certificateID}"></td>
+        <td th:text="${p.birthdate}"></td>
+        <td th:text="${p.city}"></td>
+        <td th:text="${p.province}"></td>
+        <td th:text="${p.isMarried}"></td>
+    <td>
+    <button>Edit</button>
+    <form th:action="@{/person/delete}" method="post">
+        <input type="text" hidden="hidden" th:value="${p.id}"name="id">
+        <button type="submit">Delete</button>
+    </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

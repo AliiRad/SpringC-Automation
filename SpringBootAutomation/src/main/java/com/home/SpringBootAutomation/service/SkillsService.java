@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
-import com.home.SpringBootAutomation.Model.Skills;
+import com.home.SpringBootAutomation.model.Skills;
 
 import java.util.List;
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/account/update/{id}(id=${accountEdit.id})}" th:object="${accountEdit}" method="post">
+    <label>
+    <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}"
+           th:field="*{accountOpeningDate}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Owner" th:value="${accountOwner}" th:field="*{accountOwner}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Bank And Branch" th:value="${bankAndBranch}" th:field="*{bankAndBranch}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Type" th:value="${accountType}" th:field="*{accountType}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account Status" th:value="${accountStatus}" th:field="*{accountStatus}">
+    </label>
+    <br>
+    <label>
+        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
+    </label>
+    <br>
+    <input type="submit" value="Update">
+</form>
+
+</body>
+</html>
