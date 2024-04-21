@@ -35,7 +35,7 @@ public class TicketController {
         log.info("Controller-Ticket-Get-FindById");
         Ticket ticket = ticketServiceImp.findById(id);
         if (ticket != null){
-            model.addAttribute("ticket", ticket);
+            model.addAttribute("ticketEdit", ticket);
             return "ticket";
         }else {
             return "redirect:/ticket";

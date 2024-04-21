@@ -22,7 +22,7 @@
     <thead>
     <th>Id</th>
     <th>Ticket Date</th>
-    <th>Ticket Time</th>
+    <th>Ticket Title</th>
     <th>Applicant</th>
     <th>Request</th>
     <th>Group</th>
@@ -32,11 +32,11 @@
     <tbody>
     <tr th:each="t : ${ticketList}">
         <td th:text="${t.id}"></td>
-        <td th:text="${t.ticketDate}"></td>
-        <td th:text="${t.ticketTime}"></td>
+        <td th:text="${t.ticketTimeStamp}"></td>
+        <td th:text="${t.title}"></td>
         <td th:text="${t.applicant}"></td>
         <td th:text="${t.request}"></td>
-        <td th:text="${t.ticketGroup}"></td>
+        <td th:text="${t.group}"></td>
         <td th:text="${t.status}"></td>
         <td th:text="${t.active}"></td>
         <td>
@@ -49,13 +49,22 @@
     </tr>
     </tbody>
 </table>
+<div th:if="${ticketEdit} != null">
+   <label>Ticket Id: <input type="text" th:value="${ticketEdit.id}"></label>
+   <label>Ticket Date: <input type="text" th:value="${ticketEdit.ticketTimeStamp}"></label>
+    <label>Ticket Title: <input type="text" th:value="${ticketEdit.title}"></label>
+    <label>Ticket Applicant: <input type="text" th:value="${ticketEdit.applicant}"></label>
+   <label>Ticket Request: <input type="text" th:value="${ticketEdit.request}"></label>
+   <label>Ticket Group : <input type="text" th:value="${ticketEdit.group}"></label>
+   <label>Ticket Status: <input type="text" th:value="${ticketEdit.status}"></label>
+   <label>Ticket Active: <input type="text" th:value="${ticketEdit.active}"></label>
+</div>
 <script>
-    async function edit(id){
-        const resp =await fetch("/ticket/id/" +id , {
-            method:"get"
+    async function edit(id) {
+        const resp = await fetch("/ticket/id/" + id, {
+            method: "get"
         });
-        const data = resp.json();
-        console.log(data)
+        window.location.replace("/ticket")
     }
 </script>
 </body>

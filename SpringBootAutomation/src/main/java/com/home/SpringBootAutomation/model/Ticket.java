@@ -32,7 +32,7 @@ public class Ticket {
     private String request;
 
     @ManyToOne
-    @Column(name = "t_applicant")
+    @JoinColumn(name = "t_applicant_id")
     private Person applicant;
 
 
