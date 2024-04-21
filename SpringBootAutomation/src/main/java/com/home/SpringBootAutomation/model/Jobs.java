@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,42 +28,44 @@ public class Jobs {
     @Id
     @SequenceGenerator(name = "jobsSeq", sequenceName = "jobs_seq", initialValue = 1, allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobsSeq")
-    @Column(name = "id", nullable = false)
+    @Column(name = "job_id", nullable = false, unique = true)
     private Long id;
 
-    @Column(name = "company_name" , length = 30 , nullable = false)
-    @Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Name")
+
+    @Column(name = "job_companyName", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
+    @Size(min = 3, max = 50, message = "Company Name must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String companyName;
 
-    @Column(name = "job_address" , length = 50, nullable = false)
-    @Pattern(regexp = "^[a-zA-Z ,\\s]{3,30}$", message = "Invalid Address")
+    @Column(name = "job_address", length = 100, nullable = false, columnDefinition = "NVARCHAR2(100)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی ,\\s]{3,100}$", message = "Invalid Address")
+    @Size(min = 3, max = 100, message = "Address must be between 3 and 100 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String address;
 
-    @Column(name = "job_post" , length = 30)
-    @NotBlank
 
-//    private List<@NotBlank String> positions;
-//    private List<String> positions;
+    @Column(name = "job_post", length = 30, columnDefinition = "NVARCHAR2(30)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Position Names")
+    @Size(min = 3, max = 50, message = "Position Names must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String positions;
 
-
-    @Column(name = "start_date" , nullable = false)
+    @Column(name = "job_startDate", nullable = false)
     @Past(message = "Invalid Start Date")
+    @NotBlank(message = "Should Not Be Null")
     private LocalDate startDate;
 
-    @Column(name = "end_date" , nullable = false )
+    @Column(name = "job_endDate", nullable = false)
     @Past(message = "Invalid End Date")
+    @NotBlank(message = "Should Not Be Null")
     private LocalDate endDate;
 
-    @Column(name = "deleted" , length = 30)
+    @Column(name = "job_deleted")
     private Boolean deleted = false;
 
-//    @ManyToOne()
-//    private Person person ;
-
-//    @OneToMany(mappedBy = "")
-//    private List<Attachment> attachment;
-
-//    List<@NotBlank Attachment> attachment;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "job_personId")
+    private Person person;
 
 }
