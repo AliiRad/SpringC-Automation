@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -66,8 +67,10 @@ public class Person {
 	private String certificateID;
 
 
-	@Column(name = "person_nationalID",length = 12 , nullable = false , columnDefinition = "VARCHAR2(12)")
+	@Column(name = "person_nationalID",length = 12 , nullable = false , columnDefinition = "VARCHAR2(12)" , unique = true)
 	@Pattern(regexp = "^[0-9]{8,12}$", message = "Invalid National ID")
+    //@UniqueElements
+	//TODO: Making this field unique using jakarta validation constraints
 	@Size(min = 8, max = 12, message = " National ID must be between 8 and 12 characters")
 	@NotBlank(message = "Should Not Be Null")
 	private String nationalId;
