@@ -1,5 +1,5 @@
-package com.home.SpringBootAutomation.Enum;
-@SuppressWarnings("ALL")
+package com.home.SpringBootAutomation.enums;
+
 
 public enum SkillsGradeFa {
     مقدماتی ,
