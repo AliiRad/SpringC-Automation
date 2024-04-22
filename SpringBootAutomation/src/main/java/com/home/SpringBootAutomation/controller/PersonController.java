@@ -117,7 +117,7 @@ public class PersonController {
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
             return "error-page";
-            //TODO: Maybe a 505 error page ?
+            //TODO: Maybe a 500 error page ?
         }
     }
     //    -------------------------------------------------------------------------
