@@ -53,12 +53,10 @@ public class Jobs {
 
     @Column(name = "job_startDate", nullable = false)
     @Past(message = "Invalid Start Date")
-    @NotBlank(message = "Should Not Be Null")
     private LocalDate startDate;
 
     @Column(name = "job_endDate", nullable = false)
     @Past(message = "Invalid End Date")
-    @NotBlank(message = "Should Not Be Null")
     private LocalDate endDate;
 
     @Column(name = "job_deleted")

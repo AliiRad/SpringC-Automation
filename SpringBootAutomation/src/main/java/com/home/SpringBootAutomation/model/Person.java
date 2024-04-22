@@ -94,7 +94,6 @@ public class Person {
 
 	@Column(name ="person_birthdate" , nullable = false)
 	@Past(message = "Invalid Birth Date")
-	@NotBlank(message = "Should Not Be Null")
 	private LocalDate birthdate;
 
 	//------------------------------------------------------
