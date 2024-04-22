@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.AppointmentDecree;
-import com.home.SpringBootAutomation.service.AppointmentDecreeServiceImp;
+import com.home.SpringBootAutomation.service.impl.AppointmentDecreeServiceImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.Account;
-import com.home.SpringBootAutomation.service.AccountServiceImp;
+import com.home.SpringBootAutomation.service.impl.AccountServiceImp;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

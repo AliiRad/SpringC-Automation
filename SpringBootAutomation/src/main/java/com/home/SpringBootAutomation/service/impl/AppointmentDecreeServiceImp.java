@@ -1,7 +1,8 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.model.AppointmentDecree;
 import com.home.SpringBootAutomation.repository.AppointmentDecreeRepository;
+import com.home.SpringBootAutomation.service.AppointmentDecreeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AppointmentDecreeServiceImp implements AppointmentDecreeService{
+public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
     private AppointmentDecreeRepository repository;
 
     public AppointmentDecreeServiceImp(AppointmentDecreeRepository repository) {

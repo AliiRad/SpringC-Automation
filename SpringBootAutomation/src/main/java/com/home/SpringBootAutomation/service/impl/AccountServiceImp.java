@@ -1,7 +1,8 @@
-package com.home.SpringBootAutomation.service;
+package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.model.Account;
 import com.home.SpringBootAutomation.repository.AccountRepository;
+import com.home.SpringBootAutomation.service.AccountService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
