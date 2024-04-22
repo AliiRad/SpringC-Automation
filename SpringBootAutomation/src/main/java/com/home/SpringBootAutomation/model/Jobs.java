@@ -45,7 +45,7 @@ public class Jobs {
     private String address;
 
 
-    @Column(name = "job_post", length = 30, columnDefinition = "NVARCHAR2(30)")
+    @Column(name = "job_post", length = 30, nullable = false,  columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Position Names")
     @Size(min = 3, max = 50, message = "Position Names must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
