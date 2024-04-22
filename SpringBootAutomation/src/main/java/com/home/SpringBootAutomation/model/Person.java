@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -144,13 +144,13 @@ public class Person {
 
     //Jobs Relationship
 	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "person")
-	private List<Jobs> jobs;
+	private Set<Jobs> jobs;
 
 	//------------------------------------------------------
 
 	//Skills Relationship
 	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY , mappedBy = "person")
-	private List<Skills> skills ;
+	private Set<Skills> skills ;
 
 	//------------------------------------------------------
 
