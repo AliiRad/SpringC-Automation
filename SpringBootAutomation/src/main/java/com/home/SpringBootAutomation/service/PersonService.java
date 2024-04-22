@@ -1,26 +1,35 @@
 package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.model.Person;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PersonService {
     Person save(Person person);
+    Person update(Long id,Person person);
 
-    Person edit(Person person);
-
-    Person remove(Person person);
-
-    Person removeById(Long id);
+    @Transactional
+    void logicalRemove(Long id);
 
     List<Person> findAll();
-
     Person findById(Long id);
+    Long getPersonsCount();
 
-    List<Person> findByNationalId(String nationalID);
+    Person logicalRemoveWithReturn(Long id);
 
-    Person findByName(String name);
+    //-------------------------------------------------------------------
+    //deletedFalse
 
-    Person findByNameAndLastname(String name,String lastname);
+    List<Person> findPersonByDeletedFalse();
+    Optional<Person> findPersonByIdAndDeletedFalse(Long id);
+
+    List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name , String lastName);
+    Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId);
+    Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName);
+    List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city , String province );
+
+    Long countByDeletedFalse();
 
 }
