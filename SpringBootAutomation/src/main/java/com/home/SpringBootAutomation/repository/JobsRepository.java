@@ -30,16 +30,6 @@ public interface JobsRepository extends JpaRepository<Jobs, Long> {
     Long countByDeletedFalse();
 
 
-
-
-
-
-
-
-
-
-
-
     //TODO: findJobsBySumOfYears() ----> for finding the years of work experience
     // i think this method should be written in personRepository to find people with a given years of work experience.
     //List<Jobs> findJobsByYearOfWorkExperience()

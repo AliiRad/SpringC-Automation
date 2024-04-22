@@ -6,6 +6,7 @@ import com.home.SpringBootAutomation.service.PersonService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
@@ -44,7 +45,7 @@ public class PersonServiceImpl implements PersonService {
     }
     //------------------------------------------------------
 
-
+    @Transactional
     @Override
     public void logicalRemove(Long id) {
         Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);

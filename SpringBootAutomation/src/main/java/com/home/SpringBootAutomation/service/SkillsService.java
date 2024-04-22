@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.service;
 
-import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
+
+import com.home.SpringBootAutomation.enums.SkillsGradeEn;
 import com.home.SpringBootAutomation.model.Skills;
 import org.springframework.transaction.annotation.Transactional;
 

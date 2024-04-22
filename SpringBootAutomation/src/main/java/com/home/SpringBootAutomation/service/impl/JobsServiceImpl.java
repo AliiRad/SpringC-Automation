@@ -84,7 +84,6 @@ public class JobsServiceImpl implements JobsService {
     }
     //------------------------------------------------------
 
-    @Transactional
     @Override
     public Jobs logicalRemoveWithReturn(Long id) {
         Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);

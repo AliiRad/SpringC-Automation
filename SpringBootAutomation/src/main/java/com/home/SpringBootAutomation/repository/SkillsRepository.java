@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.repository;
 
-import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
+
+import com.home.SpringBootAutomation.enums.SkillsGradeEn;
 import com.home.SpringBootAutomation.model.Skills;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
