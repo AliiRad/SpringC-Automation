@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -100,6 +101,7 @@ public class JobsController {
     @DeleteMapping("/delete")
     public String delete(Long id, Model model) {
         try {
+            //TODO: Using logicalRemoveWithReturn to return deleted object .
             if (service.findJobsByIdAndDeletedFalse(id).isPresent()) {
                 service.logicalRemove(id);
 
@@ -131,11 +133,13 @@ public class JobsController {
         try {
 
             if (service.countByDeletedFalse() >0){
-                service.findJobsByDeletedFalse();
+                List<Jobs> jobsList =  service.findJobsByDeletedFalse();
                 log.info("Find Jobs With Deleted False - Get Method");
 
+
+                //TODO: is it needed?
                 model.addAttribute("jobs", new Jobs());
-                model.addAttribute("jobsList", service.findAll());
+                model.addAttribute("jobsList", jobsList);
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Jobs List Is Not Empty");
 
