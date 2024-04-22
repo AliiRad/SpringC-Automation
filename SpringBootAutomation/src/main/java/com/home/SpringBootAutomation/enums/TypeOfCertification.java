@@ -1,4 +1,4 @@
-package com.home.SpringBootAutomation.Enum;
+package com.home.SpringBootAutomation.enums;
 
 
 /* 
