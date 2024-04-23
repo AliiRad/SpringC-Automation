@@ -146,12 +146,14 @@ public class Person {
 	//------------------------------------------------------
 
     //Jobs Relationship
+	//TODO: Set or List?
 	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "person")
 	private Set<Jobs> jobs;
 
 	//------------------------------------------------------
 
 	//Skills Relationship
+	//TODO: Set or List?
 	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY , mappedBy = "person")
 	private Set<Skills> skills ;
 
