@@ -22,15 +22,14 @@ public class BankTransaction {
     private Long id;
 
     //todo: add balance from financialDocument
-    @Column(name = "bankTransaction_Balance")                  //     موجودی
+    @Column(name = "bankTransaction_balance")                  //     موجودی
     private int balance;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Column(name = "bankTransaction_FinancialDocument")       //      شماره سند مالی
+    @Column(name = "bankTransaction_financialDocument")       //      شماره سند مالی
     private FinancialDocument financialDocument;
 
     @Column(name = "bankTransaction_employee")                //      کارمند
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private String employee;
-
 }

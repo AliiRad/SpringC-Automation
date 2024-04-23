@@ -22,14 +22,14 @@ public class AccountController {
     }
 
     @GetMapping(value = "/account")
-    public String showBankList(Model model) {
+    public String showAccountList(Model model) {
         model.addAttribute("account",new Account());
         model.addAttribute("accountList", serviceImp.findAll());
         return "account";
     }
 
     @PostMapping(value = "/account/save")
-    public String saveBank(Account account) {
+    public String saveAccount(Account account) {
         serviceImp.save(account);
         return "redirect:/account";
     }

@@ -28,20 +28,20 @@ public class FinancialDocument {
     @Column(name = "financialDocument_documentDate")            //      تاریخ سند
     private LocalDate documentDate;
 
-    @Column(name = "financialDocument_Amount")                  //      مبلغ تراکنش
+    @Column(name = "financialDocument_amount")                  //      مبلغ تراکنش
     private int Amount;
 
-    @Column(name = "financialDocument_Behalf")                  //      بابت
+    @Column(name = "financialDocument_behalf")                  //      بابت
     private String behalf;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Column(name = "financialDocument_Account")                 //      حساب
+    @Column(name = "financialDocument_account")                 //      حساب
     private Account account;
 
-    @Column(name = "financialDocument_TransactionType")         //      نوع تراکنش
+    @Column(name = "financialDocument_transactionType")         //      نوع تراکنش
     private TransactionType transactionType;
 
-    @Column(name = "financialDocument_DocumentType")            //      نوع سند
+    @Column(name = "financialDocument_documentType")            //      نوع سند
     private DocumentType documentType;
 
     @Column(name = "financialDocument_customer")                //      مشتری

@@ -40,12 +40,12 @@ public class Account {
     @Column(name = "account_accountType")            //      نوع حساب
     private String accountType;
 
-    @Column(name = "account_AccountStatus")          //      وضعیت حساب
-    private String AccountStatus;
+    @Column(name = "account_accountStatus")          //      وضعیت حساب
+    private String accountStatus;
 
-    @Column(name = "account_Balance")                //      موجودی حساب
+    @Column(name = "account_balance")                //      موجودی حساب
     private int Balance;
 
-    @Column(name = "account_Deleted")                //      حذف بانک
+    @Column(name = "account_deleted")                //      حذف بانک
     private Boolean deleted;
 }
