@@ -37,7 +37,7 @@ public class Account {
     @Column(name = "account_bankAndBranch")          //      بانک و شعبه
     private String bankAndBranch;
 
-    @Column(name = "account_accountType")          //      نوع حساب
+    @Column(name = "account_accountType")            //      نوع حساب
     private String accountType;
 
     @Column(name = "account_AccountStatus")          //      وضعیت حساب
@@ -46,6 +46,6 @@ public class Account {
     @Column(name = "account_Balance")                //      موجودی حساب
     private int Balance;
 
-    @Column(name = "account_Deleted")                //    حذف بانک
+    @Column(name = "account_Deleted")                //      حذف بانک
     private Boolean deleted;
 }

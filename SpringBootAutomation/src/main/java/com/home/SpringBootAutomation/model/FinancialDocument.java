@@ -34,10 +34,14 @@ public class FinancialDocument {
     @Column(name = "financialDocument_Behalf")                  //      بابت
     private String behalf;
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @Column(name = "financialDocument_Account")                 //      حساب
+    private Account account;
+
     @Column(name = "financialDocument_TransactionType")         //      نوع تراکنش
     private TransactionType transactionType;
 
-    @Column(name = "financialDocument_DocumentType")            //      نوع تراکنش
+    @Column(name = "financialDocument_DocumentType")            //      نوع سند
     private DocumentType documentType;
 
     @Column(name = "financialDocument_customer")                //      مشتری
