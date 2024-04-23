@@ -138,7 +138,7 @@ public class Person {
 
 	//------------------------------------------------------
 
-
+	//TODO: what if we use primitive type boolean ?
 	@Column(name = "person_deleted")
 	private Boolean deleted = false;
 
