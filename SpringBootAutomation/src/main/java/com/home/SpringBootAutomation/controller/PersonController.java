@@ -35,7 +35,7 @@ public class PersonController {
 
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", result.getAllErrors().toString());
-                return "persons";
+                return "person";
             } else {
                 service.save(person);
                 log.info("Person Saved - Post Method");
@@ -43,7 +43,7 @@ public class PersonController {
 
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Person Saved successfully");
-                return "redirect:/persons";
+                return "redirect:/person";
             }
 
         } catch (Exception e) {
@@ -64,7 +64,7 @@ public class PersonController {
 
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", result.getAllErrors().toString());
-                return "persons";
+                return "person";
 
             } else if (service.findPersonByIdAndDeletedFalse(id).isPresent()) {
                 service.update(id, person);
@@ -74,14 +74,14 @@ public class PersonController {
                 model.addAttribute("person", person);
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Person Edited Successfully .");
-                return "redirect:/persons";
+                return "redirect:/person";
 
             } else {
                 log.error("Person Not Found !");
 
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", "Person With Id :" + id + "  Not Found !");
-                return "redirect:/persons";
+                return "redirect:/person";
             }
 
 
@@ -106,11 +106,11 @@ public class PersonController {
                 log.info("The Person With Id :" + id + "Successfully Deleted");
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Person With Id : " + id + " Successfully Deleted .");
-                return "redirect:/persons";
+                return "redirect:/person";
             } else {
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", "Person With Id :" + id + "  Not Found !");
-                return "redirect:/persons";
+                return "redirect:/person";
             }
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -134,14 +134,14 @@ public class PersonController {
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Person List Is Not Empty");
 
-                return "persons";
+                return "person";
 
             } else {
 
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", "Person List Is Empty");
 
-                return "persons";
+                return "person";
 
             }
         } catch (Exception e) {
@@ -167,11 +167,11 @@ public class PersonController {
                 model.addAttribute("person" , person);
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent" , "Active Person With Id : "+id+" Was Found" );
-                return "persons";
+                return "person";
             }else {
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", "Active Person With Id : "+id+" Was Not Found");
-                return "Persons";
+                return "person";
 
             }
 

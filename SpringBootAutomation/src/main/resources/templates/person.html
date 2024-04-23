@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Person</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
+
 <h2>Person Page</h2>
 <form th:action="@{/person/save}" method="post" th:object="${person}">
+
     <input type="userName" placeholder="UserName" th:value="${userName}" th:field="*{userName}">
     <br>
     <input type="password" placeholder="PassWord" th:value="${passWord}" th:field="*{password}">
     <br>
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
-    <input type="lastName" placeholder="LastName" th:value="${lastname}" th:field="*{lastname}">
+    <input type="lastName" placeholder="LastName" th:value="${Lastname}" th:field="*{lastname}">
     <br>
     <input type="fathersName" placeholder="FathersName" th:value="${fathersName}" th:field="*{fathersName}">
     <br>
@@ -30,23 +33,31 @@
     <br>
     <input type="province" placeholder="Province" th:value="${province}" th:field="*{province}">
     <br>
-    <input type="isMarried" placeholder="IsMarried" th:value="${isMarried}" th:field="*{isMarried}">
+    <input type="isMarried" placeholder="IsMarried" th:value="${marriageStatus}" th:field="*{marriageStatus}">
+    <br>
+    <input type="jobs" placeholder="Jobs" th:value="${jobs}" th:field="*{jobs}">
+    <br>
+    <input type="skills" placeholder="Skills" th:value="${skills}" th:field="*{skills}">
     <br>
     <input type="submit" th:value="Save">
     </form>
 <table th:if="${#lists.size(personList)>0}">
     <thead>
     <th>Id</th>
-    <th>Person Name</th>
-    <th>Person Lastname</th>
-    <th>Person FathersName</th>
-    <th>Person Gender</th>
-    <th>Person NationalId</th>
-    <th>Person CertificateID</th>
-    <th>Person Birthdate</th>
-    <th>Person City</th>
-    <th>Person Province</th>
-    <th>Person IsMarried</th>
+    <th> Name</th>
+    <th> Lastname</th>
+    <th> FathersName</th>
+    <th> UserName</th>
+    <th> PassWord</th>
+    <th> CertificateID</th>
+    <th> NationalId</th>
+    <th> Birthdate</th>
+    <th> Gender</th>
+    <th> MarriageStatus</th>
+    <th> City</th>
+    <th> Province</th>
+    <th> Jobs</th>
+    <th> Skills</th>
     </thead>
     <tbody>
     <tr th:each="p : ${personList}">
@@ -54,13 +65,17 @@
         <td th:text="${p.name}"></td>
         <td th:text="${p.lastname}"></td>
         <td th:text="${p.fathersName}"></td>
-        <td th:text="${p.gender}"></td>
-        <td th:text="${p.gender}"></td>
+        <td th:text="${p.userName}"></td>
+        <td th:text="${p.password}"></td>
         <td th:text="${p.certificateID}"></td>
+        <td th:text="${p.nationalId}"></td>
         <td th:text="${p.birthdate}"></td>
+        <td th:text="${p.gender}"></td>
+        <td th:text="${p.marriageStatus}"></td>
         <td th:text="${p.city}"></td>
         <td th:text="${p.province}"></td>
-        <td th:text="${p.isMarried}"></td>
+        <td th:text="${p.jobs}"></td>
+        <td th:text="${p.skills}"></td>
     <td>
     <button>Edit</button>
     <form th:action="@{/person/delete}" method="post">

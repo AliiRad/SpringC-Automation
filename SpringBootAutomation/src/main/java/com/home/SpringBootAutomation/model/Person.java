@@ -55,6 +55,16 @@ public class Person {
 
 	//------------------------------------------------------
 
+
+	@Column(name ="person_fathersName" ,length = 50 , nullable = false , columnDefinition = "NVARCHAR2(50)")
+	@Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Father Name")
+	@Size(min = 3, max = 50, message = "Father Name must be between 3 and 50 characters")
+	@NotBlank(message = "Should Not Be Null")
+	private String fathersName;
+
+	//------------------------------------------------------
+
+
 	@Column(name ="person_userName" ,length = 30 , nullable = false , columnDefinition = "VARCHAR2(30)" ,unique = true)
 	@Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Username")
 	//@UniqueElements
@@ -98,6 +108,20 @@ public class Person {
 
 	//------------------------------------------------------
 
+	@Column(name ="person_gender", nullable = false)
+	@NotNull(message = "Should Not Be Null")
+	@Enumerated(EnumType.ORDINAL)
+	private GenderEn gender;
+
+	//------------------------------------------------------
+
+	@Column(name ="person_marriageStatus", nullable = false)
+	@NotNull(message = "Should Not Be Null")
+	@Enumerated(EnumType.ORDINAL)
+	private MarriageEn marriageStatus;
+
+	//------------------------------------------------------
+
 	@Column(name ="person_city", length = 50 , nullable = false , columnDefinition = "NVARCHAR2(50)")
 	@Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid City Name")
 	@Size(min = 3, max = 50, message = "City Name must be between 3 and 50 characters")
@@ -114,27 +138,6 @@ public class Person {
 
 	//------------------------------------------------------
 
-	@Column(name ="person_gender", nullable = false)
-	@NotNull(message = "Should Not Be Null")
-	@Enumerated(EnumType.ORDINAL)
-	private GenderEn gender;
-
-	//------------------------------------------------------
-
-	@Column(name ="person_marriageStatus", nullable = false)
-	@NotNull(message = "Should Not Be Null")
-	@Enumerated(EnumType.ORDINAL)
-	private MarriageEn marriageStatus;
-
-	//------------------------------------------------------
-
-	@Column(name ="person_fathersName" ,length = 50 , nullable = false , columnDefinition = "NVARCHAR2(50)")
-	@Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Father Name")
-	@Size(min = 3, max = 50, message = "Father Name must be between 3 and 50 characters")
-	@NotBlank(message = "Should Not Be Null")
-	private String fathersName;
-
-	//------------------------------------------------------
 
 	@Column(name = "person_deleted")
 	private Boolean deleted = false;
