@@ -119,7 +119,7 @@
 5. findByIdAndDeletedFalse()
 6. findById()
 7. findAll()
-8. CUSTUME FINDS
+8. COSTUME FINDS
 
 -----------------------
 #.In Controller:
