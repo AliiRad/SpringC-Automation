@@ -1,6 +1,6 @@
 
 -----------------------
-#.Lombok annots:
+#.Lombok Annotations:
 
 	@SuperBuilder
 	@AllArgsConstructor
@@ -23,7 +23,7 @@
 
 
 -----------------------
-#.For enum fields:
+#.For Enum Fields:
 
     @Enumerated(EnumType.ORDINAL)
 -----------------------
@@ -45,7 +45,7 @@
 #### no unused import  is allowed .
 
 -----------------------
-#. deleted field :
+#. Deleted Field :
          
       private Boolean deleted = false;
 
@@ -56,7 +56,7 @@
 
 -----------------------
 
-#.sequence :
+#.Sequence :
 
     	@Id
     	@SequenceGenerator(name = "classNameSeq", sequenceName = "className_seq", initialValue = 1, allocationSize = 1)
@@ -65,7 +65,7 @@
 -----------------------
 
 
-#.we use Constructor Injection instead of Field Injection:
+#.We use Constructor Injection instead of Field Injection:
 
 1. in controller:
 
@@ -96,14 +96,14 @@
        private Person person;
 
 -----------------------
-#.we define cascade type and fetch type like this:
+#.We define cascade type and fetch type like this:
     
 
      @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY)
 
 -----------------------
 
-#.we use mappedBy when we have two-way one-to-many relation , like this :
+#.We use mappedBy when we have two-way one-to-many relation , like this :
 
 
        @OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "person")
