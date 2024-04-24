@@ -1,6 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
-import com.home.SpringBootAutomation.Enum.SkillsGradeEn;
+import com.home.SpringBootAutomation.enums.SkillsGradeEn;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
