@@ -25,7 +25,7 @@ public class BankTransaction {
     @Column(name = "bankTransaction_balance")                  //     موجودی
     private int balance;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Column(name = "bankTransaction_financialDocument")       //      شماره سند مالی
     private FinancialDocument financialDocument;
 
