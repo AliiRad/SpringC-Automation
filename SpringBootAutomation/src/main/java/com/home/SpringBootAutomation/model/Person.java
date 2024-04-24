@@ -159,9 +159,9 @@ public class Person {
 
 	//------------------------------------------------------
 
-//	//TODO: Set or List?
-//	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY ,mappedBy = "person")
-//	private Set<DrivingLicence>drivingLicences;
+	//TODO: Set or List?
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY ,mappedBy = "person")
+	private Set<DrivingLicence>drivingLicences;
 
 	//------------------------------------------------------
 
