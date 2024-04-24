@@ -29,14 +29,14 @@ public class FinancialDocument {
     private LocalDate documentDate;
 
     @Column(name = "financialDocument_amount")                  //      مبلغ تراکنش
-    private int Amount;
+    private int amount;
 
     @Column(name = "financialDocument_behalf")                  //      بابت
     private String behalf;
 
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Column(name = "financialDocument_account")                 //      حساب
-    private Account account;
+    private String account;
 
     @Column(name = "financialDocument_transactionType")         //      نوع تراکنش
     private TransactionType transactionType;

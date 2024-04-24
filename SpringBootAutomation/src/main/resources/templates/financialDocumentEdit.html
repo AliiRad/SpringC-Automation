@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Document Edit</title>
+</head>
+<body>
+<form th:action="@{/financialDocument/update/{id}(id=${financialDocumentEdit.id})}" th:object="${financialDocumentEdit}" method="post">
+    <label>
+        <input type="date" placeholder="Document Date" th:value="${documentDate}" th:field="*{documentDate}">
+    </label>
+    <br>
+    <label>
+        <input type="number" placeholder="Amount" th:value="${amount}" th:field="*{amount}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Behalf" th:value="${behalf}" th:field="*{behalf}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account" th:value="${account}" th:field="*{account}">
+    </label>
+    <br>
+    <label for="transactionType">Transaction Type:</label>
+    <!-- Enum Dropdown -->
+    <select id="transactionType" name="transactionType" th:field="*{transactionType}" required>
+        <option th:each="transactionType : ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
+                th:value="${transactionType}" th:text="${transactionType}"></option>
+    </select>
+    <br>
+    <label for="documentType">Document Type:</label>
+    <!-- Enum Dropdown -->
+    <select id="documentType" name="documentType" th:field="*{documentType}" required>
+        <option th:each="documentType : ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
+                th:value="${documentType}" th:text="${documentType}"></option>
+    </select>
+    <br>
+    <label>
+        <input type="text" placeholder="Customer" th:value="${customer}" th:field="*{customer}">
+    </label>
+    <br>
+    <input type="submit" value="Update">
+</form>
+</body>
+</html>

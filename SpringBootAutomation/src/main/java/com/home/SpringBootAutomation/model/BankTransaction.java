@@ -27,7 +27,7 @@ public class BankTransaction {
 
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Column(name = "bankTransaction_financialDocument")       //      شماره سند مالی
-    private FinancialDocument financialDocument;
+    private String financialDocument;
 
     @Column(name = "bankTransaction_employee")                //      کارمند
 //    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

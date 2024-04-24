@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bank Transaction</title>
+</head>
+<body>
+<h2>Bank Transaction</h2>
+
+<form th:action="@{/bankTransaction/save}" method="post" th:object="${bankTransaction}">
+    <label>
+        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Financial Document" th:value="${financialDocument}" th:field="*{financialDocument}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Employee" th:value="${employee}" th:field="*{employee}">
+    </label>
+    <br>
+    <input type="submit" value="Save">
+</form>
+<table th:list="${bankTransactionList}">
+    <thead>
+    <th>Id</th>
+    <th>Balance</th>
+    <th>Financial Document</th>
+    <th>Employee</th>
+    <th>Operation</th>
+    </thead>
+    <tbody>
+    <tr th:each="bankTransaction : ${bankTransactionList}">
+        <td th:text="${bankTransaction.id}"></td>
+        <td th:text="${bankTransaction.balance}"></td>
+        <td th:text="${bankTransaction.financialDocument}"></td>
+        <td th:text="${bankTransaction.employee}"></td>
+        <td><a th:href="@{/bankTransaction/edit/{id}(id=${bankTransaction.id})}">Edit</a></td>
+        <td><a th:href="@{/bankTransaction/delete/{id}(id=${bankTransaction.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

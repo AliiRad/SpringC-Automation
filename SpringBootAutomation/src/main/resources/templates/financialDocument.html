@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Document</title>
+</head>
+<body>
+<h2>FinancialDocument</h2>
+<form th:action="@{/financialDocument/save}" method="post" th:object="${financialDocument}">
+    <label>
+        <input type="date" placeholder="Document Date" th:value="${documentDate}" th:field="*{documentDate}">
+    </label>
+    <br>
+    <label>
+        <input type="number" placeholder="Amount" th:value="${amount}" th:field="*{amount}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Behalf" th:value="${behalf}" th:field="*{behalf}">
+    </label>
+    <br>
+    <label>
+        <input type="text" placeholder="Account" th:value="${account}" th:field="*{account}">
+    </label>
+    <br>
+    <label for="transactionType">Transaction Type:</label>
+        <!-- Enum Dropdown -->
+        <select id="transactionType" name="transactionType" th:field="*{transactionType}" required>
+            <option th:each="transactionType : ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
+                    th:value="${transactionType}" th:text="${transactionType}"></option>
+        </select>
+    <br>
+    <label for="documentType">Document Type:</label>
+    <!-- Enum Dropdown -->
+    <select id="documentType" name="documentType" th:field="*{documentType}" required>
+        <option th:each="documentType : ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
+                th:value="${documentType}" th:text="${documentType}"></option>
+    </select>
+    <br>
+    <label>
+        <input type="text" placeholder="Customer" th:value="${customer}" th:field="*{customer}">
+    </label>
+    <br>
+    <input type="submit" value="Save">
+</form>
+<table th:list="${financialDocumentList}">
+    <thead>
+    <th>Id</th>
+    <th>Document Date</th>
+    <th>Account</th>
+    <th>Behalf</th>
+    <th>Account</th>
+    <th>Transaction Type</th>
+    <th>Document Type</th>
+    <th>Customer</th>
+    <th>Operation</th>
+    </thead>
+    <tbody>
+    <tr th:each="financialDocument : ${financialDocumentList}">
+        <td th:text="${financialDocument.id}"></td>
+        <td th:text="${financialDocument.documentDate}"></td>
+        <td th:text="${financialDocument.amount}"></td>
+        <td th:text="${financialDocument.behalf}"></td>
+        <td th:text="${financialDocument.account}"></td>
+        <td th:text="${financialDocument.transactionType}"></td>
+        <td th:text="${financialDocument.documentType}"></td>
+        <td th:text="${financialDocument.customer}"></td>
+        <td><a th:href="@{/financialDocument/edit/{id}(id=${financialDocument.id})}">Edit</a></td>
+        <td><a th:href="@{/financialDocument/delete/{id}(id=${financialDocument.id})}">Delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
