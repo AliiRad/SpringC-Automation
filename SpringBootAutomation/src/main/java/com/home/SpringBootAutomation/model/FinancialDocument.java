@@ -34,7 +34,7 @@ public class FinancialDocument {
     @Column(name = "financialDocument_behalf")                  //      بابت
     private String behalf;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @Column(name = "financialDocument_account")                 //      حساب
     private Account account;
 
