@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
+
 import com.home.SpringBootAutomation.model.Salary;
 import com.home.SpringBootAutomation.service.impl.SalaryServiceImpl;
 import jakarta.validation.Valid;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/salary")
 public class SalaryController {
+
     private final SalaryServiceImpl salaryService;
 
     public SalaryController(SalaryServiceImpl salaryService) {
@@ -23,12 +25,20 @@ public class SalaryController {
 
     //salary table
     @GetMapping("/salaryTable")
-    public String showSalaryList(Model model){
+    public String showSalaryList(@ModelAttribute("year") String year,Model model){
         log.info("Salary Table - Get");
         try {
-//            for th:object="${salary}"
             model.addAttribute("salary", new Salary());
-            model.addAttribute("salaryList", salaryService.findAllByDeletedFalse());
+            if (year.isEmpty()){
+                model.addAttribute("salaryList", salaryService.findAllByDeletedFalse());
+            }else {
+                Optional<Salary> salary = salaryService.findByYear(Integer.valueOf(year));
+                if (salary.isPresent()){
+                    model.addAttribute("salaryList",salary.get());
+                }else {
+                    model.addAttribute("msg", "No salary available");
+                }
+            }
             return "salaryTable";
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -38,7 +48,7 @@ public class SalaryController {
 
     //salary form
     @GetMapping("/salaryForm")
-    public String showForm(Model model) {
+    public String showSaveForm(Model model) {
         log.info("Salary Form - Get");
         try {
             //for th:object="${salary}"
@@ -46,7 +56,7 @@ public class SalaryController {
             return "salaryForm";
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException(e);
+            return "errorPage";
         }
     }
 
@@ -61,33 +71,33 @@ public class SalaryController {
         try {
             salaryService.save(salary);
             log.info("Salary Saved");
-            log.info(salary.toString());
             model.addAttribute("salary", new Salary());
             model.addAttribute("msg", "Salary Saved");
-            return "redirect:/salary/salaryTable";
+            return "salaryForm";
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException(e);
+            return "errorPage";
         }
     }
 
     //salary edit form
     @GetMapping(value = "/edit")
-    public String edit(@RequestParam Long id, Model model) {
+    public String showEditForm(@RequestParam Long id, Model model) {
         log.info("Salary - Edit Page");
         try {
             Optional<Salary> salary = salaryService.findById(id);
             model.addAttribute("salary",salary);
-            return "salaryForm";
+            return "salaryEdit";
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException(e);
+            return "errorPage";
         }
     }
 
+    //todo why /salary/save works instead of this
     //salary edit
     @PostMapping(value = "/edit")
-    public String editForm(@Valid Salary salary, Model model){
+    public String edit(@Valid Salary salary, Model model){
         log.info("Salary - Edit");
         try {
             Long id = salary.getId();
@@ -96,58 +106,35 @@ public class SalaryController {
                 salaryService.edit(salary);
                 log.info("Salary Edited");
                 model.addAttribute("msg", "Salary Edited");
-                return "redirect:/salary/salaryTable";
+                return "salaryEdit";
             }
-            return "salaryForm";
+            return "salaryEdit";
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException(e);
+            return "errorPage";
         }
     }
 
+    //todo I cant show the error msg it gives 500 error
     //salary logical remove
     @PostMapping("/delete")
-    public String editForm(@ModelAttribute("id") Long id, Model model){
+    public String softDelete(@ModelAttribute("id") Long id,@ModelAttribute("year") Integer year, Model model){
         log.info("Salary - Delete");
         try {
             Optional<Salary> salary = salaryService.findById(id);
             if (salary.isPresent()){
+                salary.get().setYear(Integer.valueOf(year + id.toString()));
+                salaryService.save(salary.get());
                 salaryService.logicalRemove(id);
                 log.info("Salary Removed");
                 model.addAttribute("msg", "Salary Removed");
-                return "redirect:/salary/salaryTable";
+                return "salaryTable";
             }
-            return "salaryForm";
+            return "salaryTable";
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new RuntimeException(e);
+            return "errorPage";
         }
     }
-
-    //salary year search form
-    @GetMapping(value = "/findByYear")
-    public String searchByYear(@ModelAttribute("year") String year, Model model) {
-        log.info("Salary - findByYear");
-        try {
-            if(year.isEmpty()){
-                return "forward:/salary/salaryTable";
-            }
-            model.addAttribute("salary",new Salary());
-            Optional<Salary> salary = salaryService.findByYear(Integer.valueOf(year));
-            if (salary.isPresent()){
-                model.addAttribute("salaryYear",salary.get());
-                System.out.println(year);
-                System.out.println(salaryService.findByYear(Integer.valueOf(year)));
-                return "forward:/salary/salaryTable";
-            }
-            return "forward:/salary/salaryTable";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    //todo unique key violated when saving after setting deleted true
-    //todo th tag has warning in html files
 
 }

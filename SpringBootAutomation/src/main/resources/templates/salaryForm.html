@@ -15,6 +15,7 @@
 </head>
 <body>
 <h1>Salary</h1>
+<a href="/salary/salaryTable">Show all</a>
 <form id="salary-form" th:fragment="salaryForm" th:action="@{/salary/save}" method="post" th:object="${salary}">
     <label>
         <input type="text" th:field="*{id}" hidden="hidden">

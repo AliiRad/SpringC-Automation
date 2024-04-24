@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Salary Table</title>
@@ -19,7 +19,7 @@
 <br><br>
 <a href="/salary/salaryTable">Show All</a>
 <br><br>
-<form id="salary-year-form" th:action="@{/salary/findByYear}" method="get" th:object="${salary}">
+<form id="salary-year-form" th:action="@{/salary/salaryTable}" method="get" th:object="${salary}">
     <label>
         Search By Year : <input type="text" th:field="*{year}">
     </label>
@@ -28,59 +28,11 @@
         <button id="submit" type="submit">Search</button>
     </div>
 </form>
-<br><br>
-<div th:if="${not #lists.isEmpty(salaryYear)}">
-    <table>
-        <thead>
-        <th> Id </th>
-        <th> BasicHourlyPay </th>
-        <th> BasicDailyPay </th>
-        <th> BasicMonthlyPay </th>
-        <th> WorkingCoupon </th>
-        <th> HousingRight </th>
-        <th> WorkingYearPay </th>
-        <th> PayForEachChild </th>
-        <th> MarriedPeopleRights </th>
-        <th> Insurance </th>
-        <th> Year </th>
-        <th> Operation </th>
-        </thead>
-
-        <tbody>
-        <tr th:each="s : ${salaryYear}">
-            <td th:text="${s.id}"></td>
-            <td th:text="${s.basicHourlyPay}"></td>
-            <td th:text="${s.basicDailyPay}"></td>
-            <td th:text="${s.basicMonthlyPay}"></td>
-            <td th:text="${s.workingCoupon}"></td>
-            <td th:text="${s.housingRight}"></td>
-            <td th:text="${s.workingYearPay}"></td>
-            <td th:text="${s.payForEachChild}"></td>
-            <td th:text="${s.marriedPeopleRights}"></td>
-            <td th:text="${s.insurance}"></td>
-            <td th:text="${s.year}"></td>
-            <td>
-                <button th:onclick="edit('[[${s.id}]]')">Edit</button>
-
-                <form th:action="@{/salary/delete}" method="post">
-                    <label>
-                        <input type="text" name="id" hidden="hidden" th:value="${s.id}">
-                    </label>
-                    <button type="submit">Delete</button>
-                    <div class="success" th:if="${msg != null}">
-                        <span th:text="${msg}"></span>
-                    </div>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 <br>
-<h1 th:if="${#lists.size(salaryList) == 0}">
-    No Salary Table
+<h1 th:if="${#lists.isEmpty(salaryList)}">
+    no salary
 </h1>
-<table th:if="${#lists.size(salaryList)> 0 && #lists.isEmpty(salaryYear)}">
+<table th:if="${not #lists.isEmpty(salaryList)}">
     <thead>
     <th> Id </th>
     <th> BasicHourlyPay </th>
@@ -116,8 +68,11 @@
                 <label>
                     <input type="text" name="id" hidden="hidden" th:value="${s.id}">
                 </label>
+                <label>
+                    <input type="text" name="year" hidden="hidden" th:value="${s.year}">
+                </label>
                 <button type="submit">Delete</button>
-                <div class="success" th:if="${msg != null}">
+                <div class="error" th:if="${msg != null}">
                     <span th:text="${msg}"></span>
                 </div>
             </form>
@@ -125,7 +80,6 @@
     </tr>
     </tbody>
 </table>
-
 <script>
     function edit(id){
         window.location.replace("/salary/edit?id=" + id);

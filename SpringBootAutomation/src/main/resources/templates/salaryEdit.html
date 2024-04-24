@@ -5,13 +5,15 @@
     <title>Salary Edit</title>
 </head>
 <body>
+<h1>Salary Edit</h1>
+<a href="/salary/salaryTable">Show all</a>
 <div th:insert="/salaryForm.html :: salaryForm"></div>
-</body>
 <script>
     const submitBtn = document.getElementById("submit");
     submitBtn.innerText = "Edit";
 
-    form = document.getElementById("salaryForm").formAction = "/salary/edit"
+    form = document.getElementById("salary-form").formAction = "/salary/edit"
 
 </script>
+</body>
 </html>

@@ -1,7 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -9,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.web.context.annotation.ApplicationScope;
 
 import java.io.Serializable;
 
@@ -19,6 +19,7 @@ import java.io.Serializable;
 @ToString
 @Entity(name = "salaryEntity")
 @Table(name = "salary_tbl")
+@ApplicationScope
 public class Salary implements Serializable {
     //جدول حقوق سالانه
 
@@ -64,10 +65,10 @@ public class Salary implements Serializable {
     @Column(name = "insurance")
     private Integer insurance;
 
-    @Column(name = "year", length = 4, unique = true, nullable = false)
-    @Min(1350)
-    @Max(1490)
+    //todo max size for year
+    @Column(name = "year", length = 5, unique = true, nullable = false)
     @NotNull(message = "fill the field")
+    @Min(1400)
     private Integer year;
 
     @Column(name = "salary_deleted")
