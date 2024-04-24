@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Timesheet form</title>
+    <style>
+        .error{
+            color:red;
+        }
+
+        .success{
+            color:green;
+        }
+    </style>
+</head>
+<body>
+<form id="person-find-form" th:action="@{/timesheet/findByNameAndLastname}" method="get" th:object="${person}">
+    <label>
+        Search By employee name : <input type="text" th:field="*{name}">
+    </label>
+    <label>
+        Search By employee family : <input type="text" th:field="*{lastname}">
+    </label>
+    <br><br>
+    <div>
+        <button id="search" type="submit">Search</button>
+    </div>
+    <div class="error" th:if="${msg1 != null}">
+        <span th:text="${msg1}"></span>
+    </div>
+</form>
+<br>
+<div  th:if="${not #lists.isEmpty(personList)}">
+    <table>
+        <thead>
+        <th> Id </th>
+        <th> name </th>
+        <th> family </th>
+        <th> username </th>
+        <th> Operation </th>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${personList}">
+            <td th:text="${p.id}"></td>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.lastname}"></td>
+            <td th:text="${p.username}"></td>
+            <td>
+                <button th:onclick="select('[[${p.id}]]')">Select</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<br>
+<a href="/timesheet/timesheetTable">Show all</a>
+<h1>Timesheet</h1>
+<form id="timesheet-form" th:fragment="timesheetForm" th:action="@{/timesheet/save}" method="post" th:object="${timesheet}">
+    <label>
+        <input type="text" th:field="*{id}" hidden="hidden">
+    </label>
+
+    <label>
+        Date : <input type="text" th:field="*{date}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date</span>
+    <br><br>
+
+    <label>
+        regularTimeIn : <input type="text" th:field="*{regularTimeIn}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('regularTimeIn')}" th:errors="*{regularTimeIn}">Invalid regularTimeIn</span>
+    <br><br>
+
+    <label>
+        regularTimeOut : <input type="text" th:field="*{regularTimeOut}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('regularTimeOut')}" th:errors="*{regularTimeOut}">Invalid regularTimeOut</span>
+    <br><br>
+
+    <label>
+        overTimeIn : <input type="text" th:field="*{overTimeIn}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('overTimeIn')}" th:errors="*{overTimeIn}">Invalid overTimeIn</span>
+    <br><br>
+
+    <label>
+        overTimeOut : <input type="text" th:field="*{overTimeOut}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('overTimeOut')}" th:errors="*{overTimeOut}">Invalid overTimeOut</span>
+    <br><br>
+
+    <label>
+        employeeSignature : <input type="text" th:field="*{employeeSignature}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('employeeSignature')}" th:errors="*{employeeSignature}">Invalid employeeSignature</span>
+    <br><br>
+
+    <label>
+        managerSignature : <input type="text" th:field="*{managerSignature}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('managerSignature')}" th:errors="*{managerSignature}">Invalid managerSignature</span>
+    <br><br>
+
+<!--    <label>-->
+<!--        manager : <input type="text" th:field="*{manager.id}">-->
+<!--    </label>-->
+<!--    <br><br>-->
+
+    <label>
+       employee : <input type="text" th:field="*{employee}">
+    </label>
+    <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}">Invalid Employee</span>
+    <br><br>
+
+    <div>
+        <button id="submit" type="submit">Save</button>
+    </div>
+
+    <!--    <div th:if="${param.id != null}">-->
+    <!--        <button type="submit" name="action" value="edit">Edit</button>-->
+    <!--    </div>-->
+
+    <div class="success" th:if="${msg != null}">
+        <span th:text="${msg}"></span>
+    </div>
+
+</form>
+<script>
+    function select(id){
+        window.location.replace("/timesheet/selectPerson?id=" + id);
+    }
+</script>
+</body>
+</html>
