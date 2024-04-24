@@ -58,7 +58,7 @@ public class DrivingLicence {
 	@Column(name ="DrivingLicence_nationalID",length = 10,nullable = false,columnDefinition = "NVARCHAR2(10)")
 	@Size(min = 10, max = 10, message = "NationalID must be 10 characters")
 	@NotBlank(message = "Should Not Be Null")
-	private String nationalID; // شماره ملی
+	private String nationalId; // شماره ملی
 
 	//------------------------------------------------------
 
