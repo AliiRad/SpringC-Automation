@@ -2,43 +2,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <title>Sidebar with Java Backend Interaction</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet" href="stylesheet.css">
-    <link rel="stylesheet" href="style.css" >
+
+    <title>Sidebar with Java Backend Interaction</title>
 
 </head>
 <body>
 
 <div id="top-sidebar">
-    <a href="index0" class="top-sidebar-btn" ><span class="material-symbols-outlined">
-home
-</span>خانه </a>
-    <!--    <a href="page1.html" class="menu-btn">Button 1</a>-->
-    <a href="index1" class="top-sidebar-btn" >index1</a>
-    <a href="" onclick="loadPage('2');return false;" class="top-sidebar-btn" >index2</a>
-    <a href="index3" class="top-sidebar-btn" >index3</a>
-    <a href="index4" class="top-sidebar-btn" >index4</a>
-    <a href="index5" class="top-sidebar-btn" >index5</a>
-    <a href="index6" class="top-sidebar-btn" >index6</a>
+    <a href="" onclick="loadPage('0');return false;" class="top-sidebar-btn">خانه </a>
+    <a href="" onclick="loadPage('1');return false;" class="top-sidebar-btn">index1</a>
+    <a href="" onclick="loadPage('2');return false;" class="top-sidebar-btn">index2</a>
+    <a href="" onclick="loadPage('3');return false;" class="top-sidebar-btn">index3</a>
+    <a href="" onclick="loadPage('4');return false;" class="top-sidebar-btn">index4</a>
+    <a href="" onclick="loadPage('5');return false;" class="top-sidebar-btn">index5</a>
+    <a href="" onclick="loadPage('6');return false;" class="top-sidebar-btn">index6</a>
 </div>
 <div id="right-sidebar">
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button9')"><span class="material-symbols-outlined">
+    <a href="person.html" class="sidebar-btn" onclick="sendRequest('button9')"><span class="material-symbols-outlined">
 badge
-</span>        مشخصات  </a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button10')"><span class="material-symbols-outlined">
+</span> مشخصات </a>
+    <a href="skills.html" class="sidebar-btn" onclick="sendRequest('button10')"><span class="material-symbols-outlined">
 work_history
 </span>سوابق شغلی</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button5')"><span class="material-symbols-outlined">
+    <a href="medicalHistory.html" class="sidebar-btn" onclick="sendRequest('button5')"><span class="material-symbols-outlined">
 ecg_heart
 </span>سوابق پزشکی</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button6')"><span class="material-symbols-outlined">
+    <a href="account.html" class="sidebar-btn" onclick="sendRequest('button6')"><span class="material-symbols-outlined">
 account_balance_wallet
 </span>اطلاعات حساب</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button7')"><span class="material-symbols-outlined">
+    <a href="appointmentDecree.html" class="sidebar-btn" onclick="sendRequest('button7')"><span class="material-symbols-outlined">
 contract
 </span>حکم کارگزینی</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
+    <a href="skillsFilter.html.html" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
 list_alt
 </span>جدول شغلی</a>
     <a href="#" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
@@ -62,19 +60,16 @@ approval_delegation
 </br>
 <script>
     function loadPage(pagenumber) {
-
-            const javaResponse = '/index'+pagenumber;
-
-            fetch(javaResponse).then(data =>{
-                let responseEl = document.getElementById("response");
-                let ht = "";
-                data.text().then(ddd=>{
-                    responseEl.innerHTML = ddd;
-                });
-
-                console.log(ht);
+        const javaResponse = '/index' + pagenumber;
+        fetch(javaResponse).then(data => {
+            let responseEl = document.getElementById("response");
+            let ht = "";
+            data.text().then(ddd => {
+                responseEl.innerHTML = ddd;
             });
-        }
+            console.log(ht);
+        });
+    }
 
 
 </script>
