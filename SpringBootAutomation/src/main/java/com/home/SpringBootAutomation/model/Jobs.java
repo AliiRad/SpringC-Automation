@@ -26,28 +26,28 @@ import java.time.LocalDate;
 public class Jobs {
 
     @Id
-    @SequenceGenerator(name = "jobsSeq", sequenceName = "jobs_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "jobsSeq", sequenceName = "jobs_seq",  allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "jobsSeq")
     @Column(name = "job_id", nullable = false, unique = true)
     private Long id;
 
 
-    @Column(name = "job_companyName", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "job_companyName", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
     @Size(min = 3, max = 50, message = "Company Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String companyName;
 
-    @Column(name = "job_address", length = 100, nullable = false, columnDefinition = "NVARCHAR2(100)")
+    @Column(name = "job_address",  columnDefinition = "NVARCHAR2(100)")
     @Pattern(regexp = "^[a-zA-Zآ-ی ,\\s]{3,100}$", message = "Invalid Address")
     @Size(min = 3, max = 100, message = "Address must be between 3 and 100 characters")
     @NotBlank(message = "Should Not Be Null")
     private String address;
 
 
-    @Column(name = "job_post", length = 30, nullable = false,  columnDefinition = "NVARCHAR2(30)")
+    @Column(name = "job_post", columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Position Names")
-    @Size(min = 3, max = 50, message = "Position Names must be between 3 and 50 characters")
+    @Size(min = 3, max = 50, message = "Position Names must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String positions;
 

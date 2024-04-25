@@ -36,7 +36,7 @@ public class Military {
     private MilitaryExemption exemption; //نوع معافیت
 
     @Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
-    @Column(name = "military_serialNumber", length = 20, nullable = false, columnDefinition = "NVARCHAR2(20)")
+    @Column(name = "military_serialNumber", length = 20, nullable = false)
     @Size(min = 1, max = 20, message = "SerialNumber must be between 1 and 20 characters")
     @NotBlank(message = "Should Not Be Null")
     private String serialNumber;

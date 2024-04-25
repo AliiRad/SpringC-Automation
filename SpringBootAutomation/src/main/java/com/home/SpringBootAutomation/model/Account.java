@@ -26,42 +26,42 @@ public class Account {
     @Column(name = "account_id",length = 20)
     private Long id;
 
-    @Column(name = "account_accountNumber", length = 50, nullable = false)
+    @Column(name = "account_account_number", length = 50, nullable = false)
     @Pattern(regexp = "^\\d{3,50}$", message = "Invalid Account Number")
     @Size(min = 3, max = 50, message = "Account Number must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountNumber;
 
-    @Column(name = "account_cardNumber", length = 16, nullable = false)
+    @Column(name = "account_card_number", length = 16, nullable = false)
     @Pattern(regexp = "^\\d{16}$", message = "Invalid Card Number")
     @Size(min = 3, max = 50, message = "Card Number must be Exactly 16")
     @NotBlank(message = "Should Not Be Null")
     private String cardNumber;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "account_accountOwner")
+    @JoinColumn(name = "account_account_owner")
     private Person accountOwner;
 
-    @Column(name = "account_bankAndBranch", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "account_bank_and_branch", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")
     @Size(min = 3, max = 50, message = "Bank And Branch must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String bankAndBranch;
 
-    @Column(name = "account_accountType", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Type")
+    @Column(name = "account_account_type", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]$", message = "Invalid Account Type")
     @Size(min = 3, max = 50, message = "Account Type must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountType;
 
-    @Column(name = "account_accountStatus", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "account_account_status", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Status")
     @Size(min = 3, max = 50, message = "Account Status must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountStatus;
 
     @Column(name = "account_deleted")                //      حذف بانک
-    private Boolean deleted;
+    private boolean deleted;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private List<FinancialDocument> financialDocuments;

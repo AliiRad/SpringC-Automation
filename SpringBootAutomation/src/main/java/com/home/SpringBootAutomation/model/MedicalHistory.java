@@ -25,13 +25,13 @@ public class MedicalHistory {
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "medicalSeq")
     private Long id;
 
-    @Column(name = "medical_weight", length = 5, nullable = false, columnDefinition = "NVARCHAR2(5)")
+    @Column(name = "medical_weight", length = 5, nullable = false)
     @Pattern(regexp = "^{40,200}$", message = "Invalid weight")
     @Size(min = 40, max = 200, message = "Weight is invalid")
     @NotBlank(message = "Should Not Be Null")
     private Integer weight;
 
-    @Column(name = "medical_height", length = 5, nullable = false, columnDefinition = "NVARCHAR2(5)")
+    @Column(name = "medical_height", length = 5, nullable = false)
     @Pattern(regexp = "^{140,200}$", message = "Invalid height")
     @Size(min = 140, max = 200, message = "Height is invalid")
     @NotBlank(message = "Should Not Be Null")
@@ -43,23 +43,23 @@ public class MedicalHistory {
     @NotBlank(message = "Should Not Be Null")
     private String bloodPressure;
 
-    @Column(name = "medical_heartRate", length = 4, nullable = false, columnDefinition = "NVARCHAR2(4)")
+    @Column(name = "medical_heartRate", length = 4, nullable = false)
     @Pattern(regexp = "^{100,400}$", message = "Invalid weight")
     @Size(min = 100, max = 400, message = "Heart rate is invalid")
     @NotBlank(message = "Should Not Be Null")
     private Integer heartRate;
 
-    @Column(name = "medical_allergy", length = 100, nullable = true, columnDefinition = "NVARCHAR2(100)")
+    @Column(name = "medical_allergy", length = 100, columnDefinition = "NVARCHAR2(100)")
     @Pattern(regexp = "^[a-zA-Zآ-ی]$", message = "Invalid allergy")
     @Size(min = 0, max = 400, message = "Allergy is invalid")
     private String allergy;
 
-    @Column(name = "medical_surgery", length = 100, nullable = true, columnDefinition = "NVARCHAR2(100)")
+    @Column(name = "medical_surgery", length = 100,  columnDefinition = "NVARCHAR2(100)")
     @Pattern(regexp = "^[a-zA-Zآ-ی]$", message = "Invalid surgery")
     @Size(min = 0, max = 100, message = "Surgery is invalid")
     private String surgery;
 
-    @Column(name = "medical_emergencyDrug", length = 100, nullable = true, columnDefinition = "NVARCHAR2(100)")
+    @Column(name = "medical_emergencyDrug", length = 100, columnDefinition = "NVARCHAR2(100)")
     @Pattern(regexp = "^[a-zA-Zآ-ی]$", message = "Invalid surgery")
     @Size(min = 0, max = 100, message = "Surgery is invalid")
     private String emergencyDrug;
@@ -68,9 +68,13 @@ public class MedicalHistory {
     @Column(name = "medical_disease")
     private List<Disease> diseaseList;
 
-    @Column(name = "medical_emergencyPhoneNumber", length = 15, nullable = true, columnDefinition = "NVARCHAR2(15)")
+    @Column(name = "medical_emergencyPhoneNumber", length = 15)
     @Pattern(regexp = "^[1-9]\\d{2}\\s\\d{3}\\s\\d{4}$", message = "Invalid emergency phone number")
     @Size(min = 0, max = 15, message = "Emergency phone number is invalid")
     private String emergencyPhoneNumber;
+
+    @OneToOne
+    @Column(name = "medical_person")
+    private Person person;
 
 }

@@ -35,7 +35,7 @@ public class Disease {
     @NotBlank(message = "Disease can not be null")
     private String name;
 
-    @Column(name = "disease_grade", length = 1, nullable = false, columnDefinition = "NVARCHAR2(1)")
+    @Column(name = "disease_grade", length = 1, nullable = false)
     @Pattern(regexp = "^[1,5]$", message = "Invalid Grade")
     @Size(min = 0, max = 5, message = "Disease grade should between 1-5")
     @NotBlank(message = "Disease grade can not be null")
