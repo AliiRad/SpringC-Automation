@@ -8,8 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -42,22 +42,22 @@ public class Timesheet {
     //زمان شروع - موظفی
     @Column(name = "regular_time_in",nullable = false)
     @NotBlank(message = "Should Not Be Null")
-    private Timestamp regularTimeIn;
+    private LocalDateTime regularTimeIn;
 
     //زمان پایان - موظفی
     @Column(name = "regular_time_out",nullable = false)
     @NotBlank(message = "Should Not Be Null")
-    private Timestamp regularTimeOut;
+    private LocalDateTime regularTimeOut;
 
     //زمان شروع - اضافه کاری
     @Column(name = "over_time_in",nullable = false)
     @NotBlank(message = "Should Not Be Null")
-    private Timestamp overTimeIn;
+    private LocalDateTime overTimeIn;
 
     //زمان پایان - اضافه کاری
     @Column(name = "over_time_out",nullable = false)
     @NotBlank(message = "Should Not Be Null")
-    private Timestamp overTimeOut;
+    private LocalDateTime overTimeOut;
 
     //todo : I dont know the required type for signature
     @Column(name = "employee_signature", unique = true, length = 50)
