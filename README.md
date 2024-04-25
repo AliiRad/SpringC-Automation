@@ -3,8 +3,18 @@ This is a simple Automation-Project base on Spring-Boot technology
 
 
 ---------------------
+<span style="color:red; font-size: 20px;" >
+TODO:
+</span>
+
+### 1. Adding Organization , User  and  Section Entities.
 
 
+
+
+
+
+--------------------
 # Tasks:
 #### __________________________
 
