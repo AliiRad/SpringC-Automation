@@ -85,7 +85,7 @@ public class Person {
     private GenderEn gender;
 
     @Column(name = "person_marriage_status")
-    @NotNull(message = "Should Not Be Null")
+    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private MarriageEn marriageStatus;
 
