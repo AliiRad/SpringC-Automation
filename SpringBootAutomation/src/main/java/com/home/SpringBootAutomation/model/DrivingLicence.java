@@ -1,27 +1,25 @@
 package com.home.SpringBootAutomation.model;
-//
-//
-//import com.home.SpringBootAutomation.enums.TypeOfCertification;
-//import jakarta.persistence.*;
-//import jakarta.validation.constraints.*;
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//import lombok.experimental.SuperBuilder;
-//
-//import java.time.LocalDate;
-//
-//
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@SuperBuilder
-//
-//
-//@Table(name = "DrivingLicence_tbl")
-//@Entity(name ="DrivingLicenceEntity" )
-//
-//
+
+
+import com.home.SpringBootAutomation.enums.TypeOfCertification;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDate;
+
+
+@Getter
+@Setter
+@NoArgsConstructor
+@SuperBuilder
+
+
+@Table(name = "driving_licence_tbl")
+@Entity(name ="drivingLicenceEntity" )
 public class DrivingLicence {
 //
 //	//گواهینامه رانندگی
@@ -29,11 +27,11 @@ public class DrivingLicence {
 //	//------------------------------------------------------
 //
 //
-//	@Id
-//	@SequenceGenerator(name = "drivingLicenceSeq", sequenceName = "drivingLicence_seq" , initialValue = 1, allocationSize = 1)
-//	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "drivingLicenceSeq")
-//	@Column(name = "drivingLicence_id",nullable = false , unique = true)
-//	private Long id;
+	@Id
+	@SequenceGenerator(name = "drivingLicenceSeq", sequenceName = "drivingLicence_seq" , initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "drivingLicenceSeq")
+	@Column(name = "driving_licence_id")
+	private Long id;
 //
 //	//------------------------------------------------------
 //
@@ -108,9 +106,9 @@ public class DrivingLicence {
 //
 //	//------------------------------------------------------
 //
-//    @ManyToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY )
-//    @JoinColumn(name = "DrivingLicence_personId")
-//    private Person person;
+    @ManyToOne(cascade = CascadeType.ALL ,fetch = FetchType.LAZY )
+    @JoinColumn(name = "driving_licence_person_id")
+    private Person person;
 //
 //	//------------------------------------------------------
 //
