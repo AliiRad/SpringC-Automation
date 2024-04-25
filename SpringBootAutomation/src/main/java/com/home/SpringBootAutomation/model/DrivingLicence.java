@@ -16,9 +16,8 @@ import java.time.LocalDate;
 @Getter
 @Setter
 
-
-@Table(name = "driving_licence_tbl")
 @Entity(name = "drivingLicenceEntity")
+@Table(name = "driving_licence_tbl")
 public class DrivingLicence {
 //	//گواهینامه رانندگی
 
@@ -37,7 +36,6 @@ public class DrivingLicence {
     @PastOrPresent(message = "Invalid issuance Date")
     private LocalDate issuanceDate;//تاریخ صدور
 
-
     @Column(name = "driving_licence_serial_number", length = 20)
     @Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
     @Size(min = 1, max = 20, message = "SerialNumber must be between 1 and 20 characters")
@@ -47,16 +45,13 @@ public class DrivingLicence {
     @Column(name = "driving_licence_license_suspension", length = 30)
     private boolean licenseSuspension;//تعلیق گواهینامه
 
-
     @Column(name = "driving_licence_license_suspension_date")
     @PastOrPresent(message = "Invalid License Suspension Date") //TODO: Only @Past !
     private LocalDate licenseSuspensionDate;//تاریخ تعلیق گواهینامه
 
-
     @Column(name = "driving_licence_end_date")
     @FutureOrPresent(message = "Invalid End Date")
     private LocalDate endDate;//تاریخ پایان اعتبار
-
 
     @Column(name = "driving_licence_renewal")
     @PastOrPresent(message = "Invalid Renewal Date")
