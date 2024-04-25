@@ -27,7 +27,7 @@ public class TicketServiceImp implements TicketService {
     @Override
     public Ticket save(Ticket ticket) {
         log.info("Service-Ticket-Save");
-        ticket.setActive(true);
+        ticket.setDeleted(true);
         ticket.setTicketTimeStamp(LocalDateTime.now());
         log.info(ticket.toString());
         ticketRepository.save(ticket);
@@ -37,7 +37,7 @@ public class TicketServiceImp implements TicketService {
     @Override
     public Ticket edit(Ticket ticket) {
         log.info("Service-Ticket-Edit");
-        ticket.setActive(true);
+        ticket.setDeleted(true);
         if (findById(ticket.getId()) != null) {
             ticketRepository.save(ticket);
             return ticket;
@@ -60,7 +60,7 @@ public class TicketServiceImp implements TicketService {
         Ticket ticket = findById(id);
         log.info("Service-Ticket-LogicalRemove: " + ticket);
         if (ticket != null) {
-            ticket.setActive(false);
+            ticket.setDeleted(false);
             ticketRepository.save(ticket);
             return ticket;
         } else return null;
