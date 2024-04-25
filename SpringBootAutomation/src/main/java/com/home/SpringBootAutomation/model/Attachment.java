@@ -15,7 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 
-@Entity(name = "AttachmentEntity")
+@Entity(name = "attachmentEntity")
 @Table(name = "attachment_tbl")
 public class Attachment {
     @Id
