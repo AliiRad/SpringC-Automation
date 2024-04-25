@@ -69,4 +69,6 @@ public class Account {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private List<FinancialDocument> financialDocuments;
+
+
 }
