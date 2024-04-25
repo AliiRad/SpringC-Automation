@@ -23,21 +23,20 @@ public class Disease {
     @Column(name = "disease_id")
     private Long Id;
 
-    @Column(name = "disease_type", length = 100, nullable = false, columnDefinition = "NVARCHAR2(100)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی]$", message = "Invalid Type")
-    @Size(min = 0, max = 100, message = "Disease type should be less than 100 character")
+    @Column(name = "disease_type",  columnDefinition = "NVARCHAR2(100)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid Type")
+    @Size(min = 3, max = 100, message = "Disease type should be less than 100 character")
     @NotBlank(message = "Disease type can not be null")
     private String type;
 
-    @Column(name = "disease_name", length = 100, nullable = false, columnDefinition = "NVARCHAR2(100)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی]$", message = "Invalid Name")
-    @Size(min = 0, max = 100, message = "Disease name should be less than 100 character")
+    @Column(name = "disease_name", columnDefinition = "NVARCHAR2(100)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid Name")
+    @Size(min = 3, max = 100, message = "Disease name should be less than 100 character")
     @NotBlank(message = "Disease can not be null")
     private String name;
 
-    @Column(name = "disease_grade", length = 1, nullable = false)
+    @Column(name = "disease_grade", length = 1)
     @Pattern(regexp = "^[1,5]$", message = "Invalid Grade")
-    @Size(min = 0, max = 5, message = "Disease grade should between 1-5")
     @NotBlank(message = "Disease grade can not be null")
     private Integer grade;
 
