@@ -22,6 +22,7 @@ public class ProfileDTO {
 
 	private String name;
 	private String lastname;
+	private String username;
 	private Long personID;
 	private String nationalID;
 	private String certificateID;
