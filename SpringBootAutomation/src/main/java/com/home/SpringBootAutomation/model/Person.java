@@ -116,12 +116,12 @@ public class Person {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
     private Military military;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "accountOwner")
     private List<Account> accounts;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
     private List<FinancialDocument> financialDocuments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<BankTransaction> bankTransactions;
 }
