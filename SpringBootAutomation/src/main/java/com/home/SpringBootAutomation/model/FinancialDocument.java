@@ -57,7 +57,6 @@ public class FinancialDocument {
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
-
     @Column(name = "financialDocument_deleted")
     private Boolean deleted;
 
