@@ -36,7 +36,7 @@ public class Account {
 
     @Column(name = "account_card_number", length = 16)
     @Pattern(regexp = "^\\d{16}$", message = "Invalid Card Number")
-    @Size( max = 16, message = "Card Number must be Exactly 16")
+    @Size( min = 16 , max = 16, message = "Card Number must be Exactly 16")
     @NotBlank(message = "Should Not Be Null")
     private String cardNumber;
 
