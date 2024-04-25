@@ -31,71 +31,71 @@ public class Person {
     @Column(name = "person_id")
     private Long id;
 
-    @Column(name = "person_name", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "person_name",  columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String name;
 
-    @Column(name = "person_lastname", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "person_lastname", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Family")
     @Size(min = 3, max = 50, message = "Last Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String lastname;
 
-    @Column(name = "person_fathers_name", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "person_fathers_name", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Father Name")
     @Size(min = 3, max = 50, message = "Father Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String fathersName;
 
-    @Column(name = "person_user_name", length = 30, nullable = false, columnDefinition = "VARCHAR2(30)", unique = true)
+    @Column(name = "person_user_name",  columnDefinition = "VARCHAR2(30)", unique = true)
     @Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Username")
     @UniqueElements(message = "Duplicate Username")
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String username;
 
-    @Column(name = "person_password", length = 30, nullable = false, columnDefinition = "VARCHAR2(30)")
+    @Column(name = "person_password", columnDefinition = "VARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Z\\s]{8,30}$", message = "Invalid Password")
     @Size(min = 8, max = 30, message = "Password must be between 8 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String password;
 
-    @Column(name = "person_certificateID", length = 12, nullable = false, columnDefinition = "VARCHAR2(12)")
+    @Column(name = "person_certificateID", length = 12)
     @Pattern(regexp = "^[0-9]{1,12}$", message = "Invalid Certificate ID")
     @Size(min = 8, max = 12, message = " Certificate ID must be between 8 and 12 characters")
     @NotBlank(message = "Should Not Be Null")
     private String certificateID;
 
-    @Column(name = "person_nationalID", length = 12, nullable = false, columnDefinition = "VARCHAR2(12)", unique = true)
+    @Column(name = "person_nationalID", length = 12, unique = true)
     @Pattern(regexp = "^[0-9]{8,12}$", message = "Invalid National ID")
     @UniqueElements(message = "Duplicate National ID")
     @Size(min = 8, max = 12, message = " National ID must be between 8 and 12 characters")
     @NotBlank(message = "Should Not Be Null")
     private String nationalId;
 
-    @Column(name = "person_birthdate", nullable = false)
+    @Column(name = "person_birthdate")
     @Past(message = "Invalid Birth Date")
     private LocalDate birthdate;
 
-    @Column(name = "person_gender", nullable = false)
-    @NotNull(message = "Should Not Be Null")
+    @Column(name = "person_gender")
+    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private GenderEn gender;
 
-    @Column(name = "person_marriage_status", nullable = false)
+    @Column(name = "person_marriage_status")
     @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private MarriageEn marriageStatus;
 
-    @Column(name = "person_city", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "person_city", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid City Name")
     @Size(min = 3, max = 50, message = "City Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String city;
 
-    @Column(name = "person_province", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "person_province", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Province Name")
     @Size(min = 3, max = 50, message = "Province Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
