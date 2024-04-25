@@ -17,19 +17,20 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "BankTransaction_tbl")
 public class BankTransaction {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "bankTransactionSeq", sequenceName = "bankTransaction_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bankTransactionSeq")
     @Column(name = "bankTransaction_id",length = 20)
     private Long id;
 
-    //todo: add balance from financialDocument
-    @Column(name = "bankTransaction_balance")                  //     موجودی
-    private int balance;
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @JoinColumn(name = "bankTransaction_balance")
+    private FinancialDocument balance;
 
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @Column(name = "bankTransaction_financialDocument")       //      شماره سند مالی
-    private String financialDocument;
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @JoinColumn(name = "bankTransaction_financialDocument")
+    private FinancialDocument financialDocument;
 
-    @Column(name = "bankTransaction_employee")                //      کارمند
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private String employee;
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @JoinColumn(name = "bankTransaction_employee")
+    private Person employee;
 }

@@ -1,13 +1,14 @@
 package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @Getter
@@ -20,32 +21,48 @@ import java.time.LocalDate;
 
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "accountSeq", sequenceName = "account_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "accountSeq")
     @Column(name = "account_id",length = 20)
     private Long id;
 
-    @Column(name = "account_openingDate")            //      تاریخ افتتاح حساب
-    private LocalDate accountOpeningDate;
-
-    @Column(name = "account_accountNumber")          //      شماره حساب
+    @Column(name = "account_accountNumber", length = 50, nullable = false)
+    @Pattern(regexp = "^\\d{3,50}$", message = "Invalid Account Number")
+    @Size(min = 3, max = 50, message = "Account Number must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String accountNumber;
 
-    @Column(name = "account_accountOwner")           //      صاحب حساب
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private String accountOwner;
+    @Column(name = "account_cardNumber", length = 16, nullable = false)
+    @Pattern(regexp = "^\\d{16}$", message = "Invalid Card Number")
+    @Size(min = 3, max = 50, message = "Card Number must be Exactly 16")
+    @NotBlank(message = "Should Not Be Null")
+    private String cardNumber;
 
-    @Column(name = "account_bankAndBranch")          //      بانک و شعبه
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @JoinColumn(name = "account_accountOwner")
+    private Person accountOwner;
+
+    @Column(name = "account_bankAndBranch", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")
+    @Size(min = 3, max = 50, message = "Bank And Branch must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String bankAndBranch;
 
-    @Column(name = "account_accountType")            //      نوع حساب
+    @Column(name = "account_accountType", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Type")
+    @Size(min = 3, max = 50, message = "Account Type must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String accountType;
 
-    @Column(name = "account_accountStatus")          //      وضعیت حساب
+    @Column(name = "account_accountStatus", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Status")
+    @Size(min = 3, max = 50, message = "Account Status must be between 3 and 50 characters")
+    @NotBlank(message = "Should Not Be Null")
     private String accountStatus;
-
-    @Column(name = "account_balance")                //      موجودی حساب
-    private int Balance;
 
     @Column(name = "account_deleted")                //      حذف بانک
     private Boolean deleted;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    private List<FinancialDocument> financialDocuments;
 }
