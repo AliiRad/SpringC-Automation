@@ -28,35 +28,35 @@ public class Ticket {
     private Long id;
 
     @Column(name = "ticket_title" ,  length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
-    @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
+//    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
+//    @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
+//    @NotBlank(message = "Should Not Be Null")
     private String title;
 
 
-    @Column(name = "ticket_request" ,  length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Request")
-    @Size(min = 3, max = 50, message = "Request must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "ticket_request" ,  length = 255, nullable = false, columnDefinition = "NVARCHAR2(255)")
+//    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Request")
+//    @Size(min = 3, max = 50, message = "Request must be between 3 and 255 characters")
+//    @NotBlank(message = "Should Not Be Null")
     private String request;
 
     @Column(name = "ticket_time_stamp" ,nullable = false)
     private LocalDateTime ticketTimeStamp;
 
     @Column(name = "ticket_status")
-    @Enumerated(EnumType.ORDINAL)
-    private Status status;
+//    @Enumerated(EnumType.ORDINAL)
+    private String status;
 
 //    private List<Attachment> attachmentList;
 
     @Column(name = "ticket_active")
     private Boolean deleted;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_applicant_id")
-    private Person applicant;
+//    @ManyToOne
+//    @JoinColumn(name = "ticket_applicant_id")
+//    private Person applicant;
 
-    @OneToOne(cascade = CascadeType.ALL , mappedBy = "ticket")
-    @JoinColumn(name = "ticket_group_id")
-    private TicketGroup group;
+//    @OneToOne(cascade = CascadeType.ALL , mappedBy = "ticket")
+//    @JoinColumn(name = "ticket_group_id")
+//    private TicketGroup group;
 }

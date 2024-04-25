@@ -31,28 +31,29 @@ public class TicketController {
     }
 
     @GetMapping(value ="/id/{id}")
-    public String showTicket(@PathVariable("id") Long id , Model model){
-        log.info("Controller-Ticket-Get-FindById");
+    @ResponseBody
+    public Ticket showTicket(@PathVariable("id") Long id){ // , Model model){
         Ticket ticket = ticketServiceImp.findById(id);
         if (ticket != null){
-            model.addAttribute("ticketEdit", ticket);
-            return "ticket";
+//            model.addAttribute("ticketEdit", ticket);
+            log.info("Controller-Ticket-Get-FindById-Ticket: " + ticket);
+            return ticket;
         }else {
-            return "redirect:/ticket";
+            return null;
         }
     }
 
-    @GetMapping(value ="/applicant")
-    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") Person applicant) {
-        log.info("Controller-Ticket-Get-FindByApplicant");
-        List<Ticket> ticketList = ticketServiceImp.findByApplicant(applicant);
-        if (!ticketList.isEmpty()){
-            model.addAttribute("ticketList", ticketList);
-            return "ticket";
-        }else {
-            return "error-404";
-        }
-    }
+//    @GetMapping(value ="/applicant")
+//    public String showTicketsByApplicant(Model model , @ModelAttribute("applicant") Person applicant) {
+//        log.info("Controller-Ticket-Get-FindByApplicant");
+//        List<Ticket> ticketList = ticketServiceImp.findByApplicant(applicant);
+//        if (!ticketList.isEmpty()){
+//            model.addAttribute("ticketList", ticketList);
+//            return "ticket";
+//        }else {
+//            return "error-404";
+//        }
+//    }
 
     @GetMapping(value ="/date")
     public String showTicketsByTimeStamp(Model model , @ModelAttribute("date") LocalDateTime timeStamp) {
@@ -74,15 +75,15 @@ public class TicketController {
         return "redirect:/ticket";
     }
 
-    @PostMapping(value ="/edit")
-    public String editTicket(Ticket ticket) {
+    @PutMapping(value ="/edit")
+    public String editTicket(@ModelAttribute Ticket ticket) {
         log.info("Controller-Ticket-Post-Edit");
         ticketServiceImp.edit(ticket);
         return "ticket";
     }
 
-    @PostMapping(value ="/delete")
-    public String deleteTicket(Long id) {
+    @DeleteMapping(value ="/delete/{id}")
+    public String deleteTicket(@PathVariable Long id) {
         log.info("Controller-Ticket-Post-Delete: " + id);
         ticketServiceImp.logicalRemove(id);
         return "redirect:/ticket";

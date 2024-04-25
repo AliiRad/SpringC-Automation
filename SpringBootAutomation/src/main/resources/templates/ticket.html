@@ -8,13 +8,19 @@
 <h2>Ticket Page</h2>
 
 <form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
-   <label>Ticket Applicant: <input type="text" placeholder="Applicant" th:value="${applicant}" th:field="*{applicant}"></label>
+    <!--   <label>Ticket Applicant: <input type="text" placeholder="Applicant" th:value="${applicant.username}" th:field="*{applicant.username}"></label>-->
+
     <br>
-    <label>Ticket Request:<input type="text" placeholder="Request" th:value="${request}" th:field="*{request}"></label>
+    <label>Ticket Title:<input type="text" placeholder="Title" th:value="${ticket.title}" th:field="*{title}"></label>
     <br>
-    <label>Ticket Group: <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}"></label>
     <br>
-    <label>Ticket Status: <input type="text" placeholder="Status" th:value="${status}" th:field="*{status}"></label>
+    <label>Ticket Request:<input type="text" placeholder="Request" th:value="${ticket.request}"
+                                 th:field="*{request}"></label>
+    <br>
+    <!--    <label>Ticket Group: <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}"></label>-->
+    <br>
+    <label>Ticket Status: <input type="text" placeholder="Status" th:value="${ticket.status}"
+                                 th:field="*{status}"></label>
     <br>
     <input type="submit" value="Save">
 </form>
@@ -22,49 +28,107 @@
     <thead>
     <th>Id</th>
     <th>Ticket Date</th>
+    <th>Ticket Time</th>
     <th>Ticket Title</th>
-    <th>Applicant</th>
+    <!--    <th>Applicant</th>-->
     <th>Request</th>
-    <th>Group</th>
+    <!--    <th>Group</th>-->
     <th>Status</th>
+    <th>Active</th>
     <th>Operation</th>
     </thead>
     <tbody>
-    <tr th:each="t : ${ticketList}">
-        <td th:text="${t.id}"></td>
-        <td th:text="${t.ticketTimeStamp}"></td>
-        <td th:text="${t.title}"></td>
-        <td th:text="${t.applicant}"></td>
-        <td th:text="${t.request}"></td>
-        <td th:text="${t.group}"></td>
-        <td th:text="${t.status}"></td>
-        <td th:text="${t.active}"></td>
+    <tr th:each="ticket : ${ticketList}">
+        <td th:text="${ticket.id}"></td>
+        <td th:text="${ticket.ticketTimeStamp.toLocalDate()}"></td>
+        <td th:text="${ticket.ticketTimeStamp.toLocalTime()}"></td>
+        <td th:text="${ticket.title}"></td>
+        <!--        <td th:text="${ticket.applicant}"></td>-->
+        <td th:text="${ticket.request}"></td>
+        <!--        <td th:text="${ticket.group}"></td>-->
+        <td th:text="${ticket.status}"></td>
+        <td th:text="${ticket.deleted}"></td>
         <td>
-            <button th:onclick="'edit(\'' + ${t.id} + '\')'">Edit</button>
-            <form th:action="@{/ticket/delete}" method="post">
-                <input type="text" name="id" th:value="${t.id}" hidden="hidden">
-                <button type="submit">Delete</button>
-            </form>
+            <button th:onclick="'find(\'' + ${ticket.id} + '\')'">Edit</button>
+            <button th:onclick="'deleted(\'' + ${ticket.id} + '\')'">Delete</button>
         </td>
     </tr>
     </tbody>
 </table>
-<div th:if="${ticketEdit} != null">
-   <label>Ticket ID: <input type="text" th:value="${ticketEdit.id}"></label>
-   <label>Ticket Date: <input type="text" th:value="${ticketEdit.ticketTimeStamp}"></label>
-    <label>Ticket Title: <input type="text" th:value="${ticketEdit.title}"></label>
-    <label>Ticket Applicant: <input type="text" th:value="${ticketEdit.applicant}"></label>
-   <label>Ticket Request: <input type="text" th:value="${ticketEdit.request}"></label>
-   <label>Ticket Group : <input type="text" th:value="${ticketEdit.group}"></label>
-   <label>Ticket Status: <input type="text" th:value="${ticketEdit.status}"></label>
-   <label>Ticket Active: <input type="text" th:value="${ticketEdit.active}"></label>
+<div style="display: none" id="editForm">
+        <label>Ticket ID: <input type="text" id="ticketId"  readonly></label>
+        <br>
+        <label>Ticket Date: <input type="text" id="ticketDate"></label>
+        <br>
+        <label>Ticket Title: <input type="text" id="ticketTitle"></label>
+        <br>
+        <!--    <label>Ticket Applicant: <input type="text" id="ticketApplicant"></label>-->
+        <!--    <br>-->
+        <label>Ticket Request: <input type="text" id="ticketRequest"></label>
+        <!--    <br>-->
+        <!--   <label>Ticket Group : <input type="text" id="ticketGroup"></label>-->
+        <!--    <br>-->
+        <!--   <label>Ticket Status: <input type="text" id="ticketStatus"></label>-->
+        <br>
+        <label>Ticket Active: <input type="text" id="ticketActive"></label>
+        <button th:onclick="'edit(\'' + ${ticket.id} + '\')'">Edit</button>
+
 </div>
+
 <script>
-    async function edit(id) {
+    async function find(id) {
+        let editForm = document.getElementById("editForm");
+        editForm.style.display = "block";
         const resp = await fetch("/ticket/id/" + id, {
             method: "get"
         });
+        const data = await resp.json();
+        let ticketId = document.getElementById("ticketId");
+        let ticketDate = document.getElementById("ticketDate");
+        let ticketTitle = document.getElementById("ticketTitle");
+        // let ticketApplicant = document.getElementById("ticketApplicant");
+        let ticketRequest = document.getElementById("ticketRequest");
+        // let ticketGroup = document.getElementById("ticketGroup");
+        let ticketDeleted = document.getElementById("ticketActive");
+
+        ticketId.value = data.id;
+        ticketDate.value = data.ticketTimeStamp;
+        ticketTitle.value = data.title;
+        // ticketApplicant.value = data.applicant.username;
+        ticketRequest.value = data.request;
+        // ticketGroup.value = data.group.title;
+        ticketDeleted.value = data.deleted;
+        console.log(data)
+    }
+//todo: check edit (error code 400) - melika
+    async function edit(id){
+        let ticketId = document.getElementById("ticketId");
+        let ticketDate = document.getElementById("ticketDate");
+        let ticketTitle = document.getElementById("ticketTitle");
+        // let ticketApplicant = document.getElementById("ticketApplicant");
+        let ticketRequest = document.getElementById("ticketRequest");
+        // let ticketGroup = document.getElementById("ticketGroup");
+        let ticketDeleted = document.getElementById("ticketActive");
+
+        const formData = new FormData();
+        formData.append("id" , id);
+        // formData.append("ticketTimeStamp" , ticketDate.value);
+        formData.append("title" , ticketTitle.value);
+        // formData.append("applicant" , ticketApplicant.value);
+        formData.append("request" , request.value);
+        // formData.append("group" , ticketGroup.value);
+        formData.append("deleted" , deleted.value);
+
+const response = await fetch("/ticket/edit" , {method : "put" , body : formData})
+        console.log(formData);
+    }
+
+    async function deleted(id) {
+        const resp = await fetch("/ticket/delete/" + id, {
+            method: "delete"
+        });
         window.location.replace("/ticket")
+
     }
 </script>
 </body>
