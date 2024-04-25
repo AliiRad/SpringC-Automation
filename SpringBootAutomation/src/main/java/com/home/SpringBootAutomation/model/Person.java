@@ -52,7 +52,7 @@ public class Person {
     @Column(name = "person_user_name", length = 30, nullable = false, columnDefinition = "VARCHAR2(30)", unique = true)
     @Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Username")
     //@UniqueElements
-    //TODO: Making this field unique using jakarta validation constraints
+   //TODO: Making this field unique using jakarta validation constraints
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String userName;

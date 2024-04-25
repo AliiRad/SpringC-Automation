@@ -1,4 +1,4 @@
-//package com.home.SpringBootAutomation.model;
+package com.home.SpringBootAutomation.model;
 //
 //
 //import com.home.SpringBootAutomation.enums.TypeOfCertification;
@@ -22,7 +22,7 @@
 //@Entity(name ="DrivingLicenceEntity" )
 //
 //
-//public class DrivingLicence {
+public class DrivingLicence {
 //
 //	//گواهینامه رانندگی
 //
@@ -119,4 +119,4 @@
 //
 //	//------------------------------------------------------
 //
-//}
+}
