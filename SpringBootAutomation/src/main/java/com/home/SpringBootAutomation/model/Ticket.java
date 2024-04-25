@@ -47,6 +47,7 @@ public class Ticket {
     private LocalDateTime ticketTimeStamp;
 
     @Column(name = "ticket_status")
+//    @NotBlank(message = "Should Not Be Null")
 //    @Enumerated(EnumType.ORDINAL)
     private String status;
 
