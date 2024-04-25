@@ -51,7 +51,7 @@ public class Account {
     private String bankAndBranch;
 
     @Column(name = "account_account_type",  columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]$", message = "Invalid Account Type")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Type")
     @Size(min = 3, max = 50, message = "Account Type must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountType;
