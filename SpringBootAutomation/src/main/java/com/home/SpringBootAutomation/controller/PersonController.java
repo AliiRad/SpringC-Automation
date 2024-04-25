@@ -3,12 +3,14 @@ package com.home.SpringBootAutomation.controller;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.PersonService;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +51,9 @@ public class PersonController {
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
+//            model.addAttribute("statusCode", "error");
             model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
+            return "redirect:/person";
         }
     }
 
@@ -60,39 +63,25 @@ public class PersonController {
     public String edite(Long id, @Valid Person person, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
-                log.error(result.getAllErrors().toString());
-
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                return "person";
-
-            } else if (service.findPersonByIdAndDeletedFalse(id).isPresent()) {
-                service.update(id, person);
-                log.info("Person Edited - Put Method");
-                log.info(person.toString());
-
-                model.addAttribute("person", person);
-                model.addAttribute("messageType", "success");
-                model.addAttribute("messageContent", "Person Edited Successfully .");
-                return "redirect:/person";
-
-            } else {
-                log.error("Person Not Found !");
-
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", "Person With Id :" + id + "  Not Found !");
-                return "redirect:/person";
+                throw new ValidationException(result.getAllErrors().toString());
             }
 
+            service.update(person);
+            log.info("Person Edited - Put Method");
+            log.info(person.toString());
+
+            model.addAttribute("person", person);
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "Person Edited Successfully .");
+            return "redirect:/person";
 
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-
-
+            return "person";
         }
+
     }
 
     //    -------------------------------------------------------------------------
@@ -156,26 +145,26 @@ public class PersonController {
 
     //    -------------------------------------------------------------------------
     @GetMapping("/findById/{id}")
-    public String findById(@PathVariable("id") Long id , Model model){
+    public String findById(@PathVariable("id") Long id, Model model) {
         try {
             Optional<Person> person = service.findPersonByIdAndDeletedFalse(id);
             log.info("Find Person By Id And Deleted False - Get Method");
 
-            if (person.isPresent()){
-                log.info("Active Person With Id : "+id+" Was Founded");
+            if (person.isPresent()) {
+                log.info("Active Person With Id : " + id + " Was Founded");
 
-                model.addAttribute("person" , person);
+                model.addAttribute("person", person);
                 model.addAttribute("messageType", "success");
-                model.addAttribute("messageContent" , "Active Person With Id : "+id+" Was Found" );
+                model.addAttribute("messageContent", "Active Person With Id : " + id + " Was Found");
                 return "person";
-            }else {
+            } else {
                 model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", "Active Person With Id : "+id+" Was Not Found");
+                model.addAttribute("messageContent", "Active Person With Id : " + id + " Was Not Found");
                 return "person";
 
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
 
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
@@ -185,8 +174,6 @@ public class PersonController {
         }
     }
     //    -------------------------------------------------------------------------
-
-
 
 
 }

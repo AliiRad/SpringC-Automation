@@ -1,10 +1,9 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.PersonService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +19,7 @@ public class PersonServiceImpl implements PersonService {
     // Constructor Injection
     private final PersonRepository repository;
 
-    @Autowired
-    public PersonServiceImpl (PersonRepository repository) {
+    public PersonServiceImpl(PersonRepository repository) {
         this.repository = repository;
     }
 
@@ -35,26 +33,26 @@ public class PersonServiceImpl implements PersonService {
     //------------------------------------------------------
 
     @Override
-    public Person update(Long id,Person person) {
-        Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);
+    public Person update(Person person) throws NoContentException {
+        Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(person.getId());
 
-        if (optionalPerson.isPresent()){
+        if (optionalPerson.isPresent()) {
             return repository.save(person);
-
-        }else return null;
+        } else {
+            throw new NoContentException("Person not found !");
+        }
     }
     //------------------------------------------------------
 
     @Transactional
     @Override
-    public void logicalRemove(Long id) {
+    public void logicalRemove(Long id) throws NoContentException {
         Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);
-        if (optionalPerson.isPresent()){
+        if (optionalPerson.isPresent()) {
             repository.logicalRemove(id);
-        }else {
-            System.out.println(" Person not found !");
+        } else {
+            throw new NoContentException("Person not found !");
         }
-
     }
     //------------------------------------------------------
 
@@ -85,12 +83,12 @@ public class PersonServiceImpl implements PersonService {
     public Person logicalRemoveWithReturn(Long id) {
         Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);
 
-        if (optionalPerson.isPresent()){
+        if (optionalPerson.isPresent()) {
             Person oldPerson = optionalPerson.get();
             oldPerson.setDeleted(true);
             return repository.save(oldPerson);
 
-        }else return null;
+        } else return null;
     }
     //------------------------------------------------------
 
@@ -105,15 +103,16 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<Person> findPersonByIdAndDeletedFalse(Long id) {
         Optional<Person> optional = repository.findPersonByIdAndDeletedFalse(id);
-        if (optional.isPresent()){return optional;
-        }else return  Optional.empty();
+        if (optional.isPresent()) {
+            return optional;
+        } else return Optional.empty();
     }
     //------------------------------------------------------
 
 
     @Override
     public List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name, String lastName) {
-        return repository.findPersonByNameAndLastnameAndDeletedFalse(name , lastName);
+        return repository.findPersonByNameAndLastnameAndDeletedFalse(name, lastName);
     }
     //------------------------------------------------------
 
@@ -121,8 +120,9 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId) {
         Optional<Person> optional = repository.findPersonByNationalIdAndDeletedFalse(nationalId);
-        if (optional.isPresent()){return optional;
-        }else return  Optional.empty();
+        if (optional.isPresent()) {
+            return optional;
+        } else return Optional.empty();
     }
     //------------------------------------------------------
 
@@ -130,24 +130,18 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName) {
         Optional<Person> optional = repository.findPersonByUserNameAndDeletedFalse(UserName);
-        if (optional.isPresent()){return optional;
-        }else return  Optional.empty();
+        if (optional.isPresent()) {
+            return optional;
+        } else return Optional.empty();
     }
-    //------------------------------------------------------
-
 
     @Override
     public List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city, String province) {
-        return repository.findPersonByCityAndProvinceAndDeletedFalse(city , province);
+        return repository.findPersonByCityAndProvinceAndDeletedFalse(city, province);
     }
-    //------------------------------------------------------
-
 
     @Override
     public Long countByDeletedFalse() {
         return repository.countByDeletedFalse();
     }
-    //------------------------------------------------------
-
-
 }
