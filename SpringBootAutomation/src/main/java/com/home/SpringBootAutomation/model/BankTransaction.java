@@ -27,7 +27,7 @@ public class BankTransaction {
     private FinancialDocument balance;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "bankTransaction_financialDocument")
+    @JoinColumn(name = "bankTransaction_financial_document")
     private FinancialDocument financialDocument;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
