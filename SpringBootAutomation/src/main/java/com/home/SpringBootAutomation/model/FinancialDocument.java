@@ -28,7 +28,7 @@ public class FinancialDocument {
     @Column(name = "financialDocument_id",length = 20)
     private Long id;
 
-    @Column(name = "financialDocument_documentDate", nullable = false)
+    @Column(name = "financialDocument_document_date", nullable = false)
     @Past(message = "Invalid Document Date")
     private LocalDate documentDate;
 
@@ -47,18 +47,18 @@ public class FinancialDocument {
     @JoinColumn(name = "financialDocument_account")
     private Account account;
 
-    @Column(name = "financialDocument_transactionType", nullable = false)
+    @Column(name = "financialDocument_transaction_type", nullable = false)
     @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TransactionType transactionType;
 
-    @Column(name = "financialDocument_documentType", nullable = false)
+    @Column(name = "financialDocument_document_type", nullable = false)
     @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
     @Column(name = "financialDocument_deleted")
-    private Boolean deleted;
+    private boolean deleted;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "financialDocument_customer")

@@ -35,5 +35,5 @@ public class BankTransaction {
     private Person employee;
 
     @Column(name = "bankTransaction_deleted")
-    private Boolean deleted;
+    private boolean deleted;
 }
