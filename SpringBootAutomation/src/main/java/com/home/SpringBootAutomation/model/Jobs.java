@@ -12,9 +12,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 
-
-
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,7 +29,7 @@ public class Jobs {
     private Long id;
 
 
-    @Column(name = "job_companyName", columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "job_company_name", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
     @Size(min = 3, max = 50, message = "Company Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
@@ -46,24 +43,24 @@ public class Jobs {
 
 
     @Column(name = "job_post", columnDefinition = "NVARCHAR2(30)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Position Names")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,30}$", message = "Invalid Position Names")
     @Size(min = 3, max = 50, message = "Position Names must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String positions;
 
-    @Column(name = "job_startDate", nullable = false)
+    @Column(name = "job_start_date")
     @Past(message = "Invalid Start Date")
     private LocalDate startDate;
 
-    @Column(name = "job_endDate", nullable = false)
+    @Column(name = "job_end_date")
     @Past(message = "Invalid End Date")
     private LocalDate endDate;
 
     @Column(name = "job_deleted")
-    private Boolean deleted = false;
+    private boolean deleted ;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "job_personId")
+    @JoinColumn(name = "job_person_id")
     private Person person;
 
 }
