@@ -50,7 +50,7 @@ public class Ticket {
 //    private List<Attachment> attachmentList;
 
     @Column(name = "ticket_active")
-    private Boolean active;
+    private Boolean deleted;
 
     @ManyToOne
     @JoinColumn(name = "ticket_applicant_id")
