@@ -30,7 +30,7 @@ public class BankTransaction {
     @JoinColumn(name = "bankTransaction_financial_document")
     private FinancialDocument financialDocument;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @OneToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "bankTransaction_employee")
     private Person employee;
 
