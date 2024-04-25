@@ -26,4 +26,6 @@ public class Attachment {
     private FileFormat fileFormat;
     @Column(nullable = false)
     private byte[] content;
+    @Column(nullable = false)
+    private String caption;
 }

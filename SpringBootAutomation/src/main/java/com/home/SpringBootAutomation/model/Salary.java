@@ -2,7 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,50 +24,59 @@ public class Salary implements Serializable {
     //جدول حقوق سالانه
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salary_seq")
-    @SequenceGenerator(name = "salary_seq")
-    @Column(name = "id", nullable = false)
+    @SequenceGenerator(name = "salarySeq" , sequenceName = "salary_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salarySeq")
+    @Column(name = "salary_id")
     private Long id;
 
     //حقوق پایه ساعتی
-    @Column(name = "basic_hourly_pay")
+    @Column(name = "basic_hourly_pay", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer basicHourlyPay;
 
     //حقوق پایه روزانه
-    @Column(name = "basic_daily_pay")
+    @Column(name = "basic_daily_pay", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer basicDailyPay;
 
     //حقوق پایه ماهانه
-    @Column(name = "basic_monthly_pay")
+    @Column(name = "basic_monthly_pay", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer basicMonthlyPay;
 
     //بن کارگری
-    @Column(name = "working_coupon")
+    @Column(name = "working_coupon", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer workingCoupon;
 
     //حق مسکن
-    @Column(name = "housing_right")
+    @Column(name = "housing_right", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer housingRight;
 
     //پایه سنوات
-    @Column(name = "working_year_pay")
+    @Column(name = "working_year_pay", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer workingYearPay;
 
     //حق اولاد برای هر فرزند
-    @Column(name = "pay_for_each_child")
+    @Column(name = "pay_for_each_child", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer payForEachChild;
 
     //حق عائله مندی افراد متاهل
-    @Column(name = "married_people_rights")
+    @Column(name = "married_people_rights", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer marriedPeopleRights;
 
     //حق بیمه سهم کارگر
-    @Column(name = "insurance")
+    @Column(name = "insurance", length = 50, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     private Integer insurance;
 
     //todo max size for year
-    @Column(name = "year", length = 5, unique = true, nullable = false)
-    @NotNull(message = "fill the field")
+    @Column(name = "salary_year", length = 6, unique = true, nullable = false)
+    @NotBlank(message = "Should Not Be Null")
     @Min(1400)
     private Integer year;
 
