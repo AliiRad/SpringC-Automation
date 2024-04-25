@@ -56,6 +56,7 @@ public class Account {
     @NotBlank(message = "Should Not Be Null")
     private String accountType;
 
+
     @Column(name = "account_account_status",columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Status")
     @Size(min = 3, max = 50, message = "Account Status must be between 3 and 50 characters")
