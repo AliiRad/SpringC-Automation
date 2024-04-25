@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.enums.TypeOfCertification;
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.DrivingLicence;
 import com.home.SpringBootAutomation.model.Person;
@@ -85,6 +86,12 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         log.info("Service-DrivingLicence-FindAll");
         List<DrivingLicence> drivingLicenceList = drivingLicenceRepository.findAll();
         return drivingLicenceList;
+    }
+
+    //todo:this method;
+    @Override
+    public List<DrivingLicence> findAllByTypeOfCertification(TypeOfCertification typeOfCertification) {
+        return null;
     }
 
     @Override
