@@ -89,18 +89,6 @@ public class Person {
     @Enumerated(EnumType.ORDINAL)
     private MarriageEn marriageStatus;
 
-    @Column(name = "person_city", columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid City Name")
-    @Size(min = 3, max = 50, message = "City Name must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String city;
-
-    @Column(name = "person_province", columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Province Name")
-    @Size(min = 3, max = 50, message = "Province Name must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String province;
-
     @Column(name = "person_deleted")
     private boolean deleted;
 
