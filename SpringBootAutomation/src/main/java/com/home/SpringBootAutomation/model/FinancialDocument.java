@@ -32,7 +32,7 @@ public class FinancialDocument {
     @Past(message = "Invalid Document Date")
     private LocalDate documentDate;
 
-    @Column(name = "financialDocument_amount", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "financialDocument_amount", length = 50, nullable = false)
     @Min(1)
     @Max(50)
     private int amount;
