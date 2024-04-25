@@ -75,7 +75,7 @@ public class Salary implements Serializable {
     @NotBlank(message = "Should Not Be Null")
     private Integer insurance;
 
-    //todo max size for year
+    //TODO: max size for year
     @Column(name = "salary_year", length = 6, unique = true)
     @NotBlank(message = "Should Not Be Null")
     @Min(1400)
