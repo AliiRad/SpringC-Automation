@@ -129,7 +129,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName) {
-        Optional<Person> optional = repository.findPersonByUserNameAndDeletedFalse(UserName);
+        Optional<Person> optional = repository.findPersonByUsernameAndDeletedFalse(UserName);
         if (optional.isPresent()) {
             return optional;
         } else return Optional.empty();

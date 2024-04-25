@@ -26,7 +26,7 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId);
 
-    Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName);
+    Optional<Person> findPersonByUsernameAndDeletedFalse(String UserName);
 
     List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city, String province);
 

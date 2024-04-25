@@ -13,7 +13,7 @@ public interface TicketService {
     Ticket logicalRemove(Long id);
     List<Ticket> findAll();
     Ticket findById(Long id);
-    List<Ticket> findByApplicant(Person applicant);
+//    List<Ticket> findByApplicant(Person applicant);
     List<Ticket> findByDate(LocalDateTime timeStamp);
 
 }

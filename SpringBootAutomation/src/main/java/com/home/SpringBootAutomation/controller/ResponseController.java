@@ -8,12 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping(value ="/response")
+@RequestMapping(value = "/response")
 public class ResponseController {
     private ResponseServiceImp responseServiceImp;
 
@@ -29,37 +29,37 @@ public class ResponseController {
         return "response";
     }
 
-    @GetMapping(value ="/id/{id}")
-    public String showResponse( @PathVariable Long id){
+    @GetMapping(value = "/id/{id}")
+    public String showResponse(@PathVariable Long id) {
         log.info("Controller-Response-Get-FindById");
         Response response = responseServiceImp.findById(id);
-        if (response != null){
+        if (response != null) {
             return "response";
-        }else {
+        } else {
             return "error-404";
         }
     }
 
-    @GetMapping(value ="/responder")
-    public String showResponsesByApplicant(Model model , @ModelAttribute("responder") String responder) {
+    @GetMapping(value = "/responder")
+    public String showResponsesByApplicant(Model model, @ModelAttribute("responder") String responder) {
         log.info("Controller-Response-Get-FindByResponder");
         List<Response> responseList = responseServiceImp.findByResponder(responder);
-        if (!responseList.isEmpty()){
+        if (!responseList.isEmpty()) {
             model.addAttribute("responseList", responseList);
             return "response";
-        }else {
+        } else {
             return "error-404";
         }
     }
 
-    @GetMapping(value ="/date")
-    public String showResponsesByApplicant(Model model , @ModelAttribute("timeStamp") LocalDate responseDate) {
+    @GetMapping(value = "/date")
+    public String showResponsesByApplicant(Model model, @ModelAttribute("timeStamp") LocalDateTime responseDate) {
         log.info("Controller-Response-Get-FindByDate");
         List<Response> responseList = responseServiceImp.findByDate(responseDate);
-        if (!responseList.isEmpty()){
+        if (!responseList.isEmpty()) {
             model.addAttribute("responseList", responseList);
             return "response";
-        }else {
+        } else {
             return "error-404";
         }
     }
@@ -72,14 +72,14 @@ public class ResponseController {
         return "redirect:/response";
     }
 
-    @PostMapping(value ="/edit")
+    @PostMapping(value = "/edit")
     public String editResponse(Response response) {
         log.info("Controller-Response-Post-Edit");
         responseServiceImp.edit(response);
         return "response";
     }
 
-    @PostMapping(value ="/delete")
+    @PostMapping(value = "/delete")
     public String deleteResponse(Response response) {
         log.info("Controller-Response-Post-Delete");
         responseServiceImp.logicalRemove(response.getId());

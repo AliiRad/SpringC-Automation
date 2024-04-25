@@ -6,8 +6,7 @@ import com.home.SpringBootAutomation.service.ResponseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +22,8 @@ public class ResponseServiceImp implements ResponseService {
     @Override
     public Response save(Response response) {
         log.info("Service-Response-Save");
-        response.setActive(true);
-        response.setResponseDate(LocalDate.now());
-        response.setResponseTime(LocalTime.now());
+        response.setDeleted(true);
+        response.setResponseTimeStamp(LocalDateTime.now());
         responseRepository.save(response);
         return response;
     }
@@ -33,34 +31,31 @@ public class ResponseServiceImp implements ResponseService {
     @Override
     public Response edit(Response response) {
         log.info("Service-Response-Edit");
-        response.setActive(true);
-        if (findById(response.getId()) != null){
-        responseRepository.save(response);
-        return response;
-        }
-        else return null;
+        response.setDeleted(true);
+        if (findById(response.getId()) != null) {
+            responseRepository.save(response);
+            return response;
+        } else return null;
     }
 
     @Override
     public Response remove(Response response) {
         log.info("Service-Response-Remove");
-        if (findById(response.getId()) != null){
+        if (findById(response.getId()) != null) {
             responseRepository.delete(response);
             return response;
-        }
-        else return null;
+        } else return null;
     }
 
     @Override
     public Response logicalRemove(Long id) {
         log.info("Service-Response-LogicalRemove");
         Response response = findById(id);
-        if (response != null){
-            response.setActive(false);
+        if (response != null) {
+            response.setDeleted(false);
             responseRepository.save(response);
             return response;
-        }
-        else return null;
+        } else return null;
     }
 
     @Override
@@ -78,7 +73,7 @@ public class ResponseServiceImp implements ResponseService {
     }
 
     @Override
-    public List<Response> findByDate(LocalDate responseDate) {
+    public List<Response> findByDate(LocalDateTime responseDate) {
         log.info("Service-Response-FindByDate");
         List<Response> responseList = responseRepository.findByDate(responseDate);
         return responseList;

@@ -83,12 +83,12 @@ public class TicketServiceImp implements TicketService {
 
 
 
-    @Override
-    public List<Ticket> findByApplicant(Person applicant) {
-        log.info("Service-Ticket-FindByApplicant");
-        List<Ticket> ticketList = ticketRepository.findByApplicant(applicant);
-        return ticketList;
-    }
+//    @Override
+//    public List<Ticket> findByApplicant(Person applicant) {
+//        log.info("Service-Ticket-FindByApplicant");
+//        List<Ticket> ticketList = ticketRepository.findByApplicant(applicant);
+//        return ticketList;
+//    }
 
     @Override
     public List<Ticket> findByDate(LocalDateTime timeStamp) {
