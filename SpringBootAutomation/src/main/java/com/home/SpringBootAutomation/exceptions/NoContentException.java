@@ -13,4 +13,8 @@ public class NoContentException extends Exception{
         this.message = message;
     }
 
+    public int responseStatus(){
+        return 204;
+    }
+
 }

@@ -54,7 +54,7 @@ public class Person {
     @UniqueElements(message = "Duplicate Username")
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
-    private String userName;
+    private String username;
 
     @Column(name = "person_password", length = 30, nullable = false, columnDefinition = "VARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Z\\s]{8,30}$", message = "Invalid Password")

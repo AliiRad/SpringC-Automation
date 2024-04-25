@@ -1,17 +1,19 @@
 package com.home.SpringBootAutomation.service;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+
 public interface PersonService {
     Person save(Person person);
-    Person update(Long id,Person person);
+    Person update(Person person) throws NoContentException;
 
     @Transactional
-    void logicalRemove(Long id);
+    void logicalRemove(Long id) throws NoContentException;
 
     List<Person> findAll();
     Person findById(Long id);

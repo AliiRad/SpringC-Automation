@@ -10,9 +10,9 @@
 <h2>Person Page</h2>
 <form th:action="@{/person/save}" method="post" th:object="${person}">
 
-    <input type="userName" placeholder="UserName" th:value="${userName}" th:field="*{userName}">
+    <input type="userName" placeholder="UserName" th:value="${usernme}" th:field="*{username}">
     <br>
-    <input type="password" placeholder="PassWord" th:value="${passWord}" th:field="*{password}">
+    <input type="password" placeholder="PassWord" th:value="${password}" th:field="*{password}">
     <br>
     <input type="name" placeholder="Name" th:value="${name}" th:field="*{name}">
     <br>
