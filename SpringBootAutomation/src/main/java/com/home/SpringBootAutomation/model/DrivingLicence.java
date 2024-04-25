@@ -46,7 +46,7 @@ public class DrivingLicence {
     private boolean licenseSuspension;//تعلیق گواهینامه
 
     @Column(name = "driving_licence_license_suspension_date")
-    @PastOrPresent(message = "Invalid License Suspension Date") //TODO: Only @Past !
+    @PastOrPresent(message = "Invalid License Suspension Date")
     private LocalDate licenseSuspensionDate;//تاریخ تعلیق گواهینامه
 
     @Column(name = "driving_licence_end_date")
