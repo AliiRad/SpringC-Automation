@@ -33,4 +33,7 @@ public class BankTransaction {
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "bankTransaction_employee")
     private Person employee;
+
+    @Column(name = "bankTransaction_deleted")
+    private Boolean deleted;
 }

@@ -57,6 +57,10 @@ public class FinancialDocument {
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
+
+    @Column(name = "financialDocument_deleted")
+    private Boolean deleted;
+
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "financialDocument_customer")
     private Person customer;
