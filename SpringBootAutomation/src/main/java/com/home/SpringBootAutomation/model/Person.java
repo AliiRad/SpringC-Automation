@@ -122,6 +122,6 @@ public class Person {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
     private List<FinancialDocument> financialDocuments;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    private BankTransaction bankTransaction;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private List<BankTransaction> bankTransactions;
 }
