@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.PersonService;
@@ -47,14 +48,13 @@ public class PersonServiceImpl implements PersonService {
 
     @Transactional
     @Override
-    public void logicalRemove(Long id) {
+    public void logicalRemove(Long id) throws NoContentException {
         Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);
         if (optionalPerson.isPresent()){
             repository.logicalRemove(id);
         }else {
-            System.out.println(" Person not found !");
+            throw new NoContentException("Person not found !");
         }
-
     }
     //------------------------------------------------------
 
