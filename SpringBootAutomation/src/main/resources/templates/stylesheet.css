@@ -42,6 +42,7 @@ body {
     grid-template-rows: auto 10fr;
     grid-template-areas: "top top" "content sidebar";
     height: 100vh;
+    background-color: #f0f0f0;
 }
 
 #top-sidebar {
@@ -67,7 +68,7 @@ body {
 
 #right-sidebar {
     grid-area: sidebar;
-    background-color: #EFF2EF;
+    background-color: #B5E0E1;
     color: #fff;
     padding: 10px;
 }
