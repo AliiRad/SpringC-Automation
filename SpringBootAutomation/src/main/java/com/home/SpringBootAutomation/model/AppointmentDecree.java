@@ -102,5 +102,5 @@ public class AppointmentDecree {//حکم کارگزینی
     private String appointmentDescription;                                                   //شرح حکم
 
     @Column(name = "appointmentDecree_deleted")
-    private Boolean deleted = false;
+    private boolean deleted;
 }

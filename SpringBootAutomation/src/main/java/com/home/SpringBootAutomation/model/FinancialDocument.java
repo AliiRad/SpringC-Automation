@@ -28,11 +28,11 @@ public class FinancialDocument {
     @Column(name = "financialDocument_id",length = 20)
     private Long id;
 
-    @Column(name = "financialDocument_documentDate", nullable = false)
+    @Column(name = "financialDocument_document_date", nullable = false)
     @Past(message = "Invalid Document Date")
     private LocalDate documentDate;
 
-    @Column(name = "financialDocument_amount", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "financialDocument_amount", length = 50, nullable = false)
     @Min(1)
     @Max(50)
     private int amount;
@@ -47,15 +47,18 @@ public class FinancialDocument {
     @JoinColumn(name = "financialDocument_account")
     private Account account;
 
-    @Column(name = "financialDocument_transactionType", nullable = false)
+    @Column(name = "financialDocument_transaction_type", nullable = false)
     @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TransactionType transactionType;
 
-    @Column(name = "financialDocument_documentType", nullable = false)
+    @Column(name = "financialDocument_document_type", nullable = false)
     @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
+
+    @Column(name = "financialDocument_deleted")
+    private boolean deleted;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "financialDocument_customer")

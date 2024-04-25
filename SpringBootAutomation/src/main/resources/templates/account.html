@@ -9,11 +9,11 @@
 
 <form th:action="@{/account/save}" method="post" th:object="${account}">
     <label>
-        <input type="date" placeholder="Account Opening Date" th:value="${accountOpeningDate}" th:field="*{accountOpeningDate}">
+        <input type="text" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
     </label>
     <br>
     <label>
-        <input type="text" placeholder="Account Number" th:value="${accountNumber}" th:field="*{accountNumber}">
+        <input type="text" placeholder="Card Number" th:value="${cardNumber}" th:field="*{cardNumber}">
     </label>
     <br>
     <label>
@@ -32,34 +32,28 @@
         <input type="text" placeholder="Account Status" th:value="${accountStatus}" th:field="*{accountStatus}">
     </label>
     <br>
-    <label>
-        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
-    </label>
-    <br>
     <input type="submit" value="Save">
 </form>
 <table th:list="${accountList}">
     <thead>
     <th>Id</th>
-    <th>Account Opening Date</th>
     <th>Account Number</th>
+    <th>Card Number</th>
     <th>Account Owner</th>
     <th>Bank And Branch</th>
     <th>Account Type</th>
     <th>Account Status</th>
-    <th>Balance</th>
     <th>Operation</th>
     </thead>
     <tbody>
     <tr th:each="account : ${accountList}">
         <td th:text="${account.id}"></td>
-        <td th:text="${account.accountOpeningDate}"></td>
         <td th:text="${account.accountNumber}"></td>
+        <td th:text="${account.cardNumber}"></td>
         <td th:text="${account.accountOwner}"></td>
         <td th:text="${account.bankAndBranch}"></td>
         <td th:text="${account.accountType}"></td>
         <td th:text="${account.accountStatus}"></td>
-        <td th:text="${account.balance}"></td>
         <td><a th:href="@{/account/edit/{id}(id=${account.id})}">Edit</a></td>
         <td><a th:href="@{/account/delete/{id}(id=${account.id})}">Delete</a></td>
     </tr>
