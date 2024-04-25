@@ -62,16 +62,16 @@ public class Person {
     @NotBlank(message = "Should Not Be Null")
     private String password;
 
-    @Column(name = "person_certificateID", length = 12)
+    @Column(name = "person_certificate_id", length = 12)
     @Pattern(regexp = "^[0-9]{1,12}$", message = "Invalid Certificate ID")
     @Size(min = 8, max = 12, message = " Certificate ID must be between 8 and 12 characters")
     @NotBlank(message = "Should Not Be Null")
     private String certificateID;
 
-    @Column(name = "person_nationalID", length = 12, unique = true)
-    @Pattern(regexp = "^[0-9]{8,12}$", message = "Invalid National ID")
+    @Column(name = "person_national_id", length = 10, unique = true)
+    @Pattern(regexp = "^[0-9]{1,10}$", message = "Invalid National ID")
     @UniqueElements(message = "Duplicate National ID")
-    @Size(min = 8, max = 12, message = " National ID must be between 8 and 12 characters")
+    @Size(min = 1, max = 10, message = " National ID must be between 1 and 10 characters")
     @NotBlank(message = "Should Not Be Null")
     private String nationalId;
 
