@@ -23,40 +23,38 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "skills_tbl")
 public class Skills {
 
-
-
     @Id
-    @SequenceGenerator(name = "skillsSeq", sequenceName = "skills_seq", initialValue = 1, allocationSize = 1)
+    @SequenceGenerator(name = "skillsSeq", sequenceName = "skills_seq",  allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "skillsSeq")
-    @Column(name = "skill_id", nullable = false)
+    @Column(name = "skill_id")
     private Long id;
 
 
-    @Column(name = "skill_title" , length = 50 , nullable = false , columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "skill_title" , columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
     @Size(min = 3, max = 50, message = "Skill Title must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String skillTitle;
 
-    @Column(name = "skill_rate" , nullable = false)
+    @Column(name = "skill_rate" )
     @Enumerated(EnumType.ORDINAL)
     private SkillsGradeEn rate;
 
 
-    @Column(name = "skill_training" , length = 30 , nullable = false , columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "skill_training" ,  columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,30}$", message = "Invalid Skill Training")
     @Size(min = 3, max = 50, message = "Skill Training must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String training;
 
 
-    @Column(name = "skill_description" , length = 200, nullable = false ,  columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "skill_description" ,  columnDefinition = "NVARCHAR2(200)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{5,200}$", message = "Invalid Skill Description")
     @Size(min = 5, max = 200, message = "Skill Description must be between 5 and 200 characters")
     private String description;
 
 
-    @Column(name = "skill_certification" , length = 30 , nullable = false ,  columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "skill_certification" ,   columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,30}$", message = "Invalid Skill Certification")
     @Size(min = 3, max = 50, message = "Certification must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
