@@ -1,27 +1,28 @@
 package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
+
 @Entity(name = "timesheetEntity")
 @Table(name = "timesheet_tbl",uniqueConstraints = {@UniqueConstraint(columnNames = {"employee_id","t_date"})})
 public class Timesheet {
 
     //timesheet
-
     @Id
     @SequenceGenerator(name = "timesheetSeq", sequenceName = "timesheet_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "timesheet_seq")
@@ -29,40 +30,48 @@ public class Timesheet {
     private Long id;
 
     @ManyToOne
-    @NotBlank(message = "Should Not Be Null")
+    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
+    //TODO:  @JoinColumn
+    //@NotBlank(message = "Should Not Be Null") //TODO: Is This Needed?
     private Person employee;
 
     @Column(name = "timesheet_date")
-    @NotBlank(message = "Should Not Be Null")
+    //TODO: Put Date Validations
     private LocalDate date;
 
     @ManyToOne
+    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
+    //TODO:  @JoinColumn
     private Person manager;
 
     //زمان شروع - موظفی
-    @Column(name = "regular_time_in",nullable = false)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "timesheet_regular_time_in")
+    //TODO: Put Date Validations
     private LocalDateTime regularTimeIn;
 
     //زمان پایان - موظفی
-    @Column(name = "regular_time_out",nullable = false)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "timesheet_regular_time_out")
+    //TODO: Put Date Validations
     private LocalDateTime regularTimeOut;
 
     //زمان شروع - اضافه کاری
-    @Column(name = "over_time_in",nullable = false)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "timesheet_over_time_in")
+    //TODO: Put Date Validations
     private LocalDateTime overTimeIn;
 
     //زمان پایان - اضافه کاری
-    @Column(name = "over_time_out",nullable = false)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "timesheet_over_time_out")
+    //TODO: Put Date Validations
     private LocalDateTime overTimeOut;
 
     @ManyToOne
+    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
+    //TODO:  @JoinColumn
     private Attachment employeeSignature;
 
     @ManyToOne
+    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
+    //TODO:  @JoinColumn
     private Attachment managerSignature;
 
     @Column(name = "timesheet_deleted")
