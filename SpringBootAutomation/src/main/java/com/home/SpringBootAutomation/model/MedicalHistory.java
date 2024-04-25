@@ -73,4 +73,8 @@ public class MedicalHistory {
     @Size(min = 0, max = 15, message = "Emergency phone number is invalid")
     private String emergencyPhoneNumber;
 
+    @OneToOne
+    @Column(name = "medical_person")
+    private Person person;
+
 }
