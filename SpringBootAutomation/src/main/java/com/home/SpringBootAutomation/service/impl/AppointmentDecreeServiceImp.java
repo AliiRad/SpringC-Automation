@@ -1,17 +1,18 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.AppointmentDecree;
 import com.home.SpringBootAutomation.repository.AppointmentDecreeRepository;
 import com.home.SpringBootAutomation.service.AppointmentDecreeService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
-    private AppointmentDecreeRepository repository;
+    private final AppointmentDecreeRepository repository;
 
     public AppointmentDecreeServiceImp(AppointmentDecreeRepository repository) {
         this.repository = repository;
@@ -19,47 +20,74 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
 
     @Override
     public AppointmentDecree save(AppointmentDecree appointmentDecree) {
-        repository.save(appointmentDecree);
-        return appointmentDecree;
+        return repository.save(appointmentDecree);
     }
 
     @Override
-    public AppointmentDecree edit(AppointmentDecree appointmentDecree) {
-        repository.save(appointmentDecree);
-        return appointmentDecree;
-    }
+    public AppointmentDecree update(AppointmentDecree appointmentDecree) throws NoContentException {
+        Optional<AppointmentDecree> optionalAppointmentDecree=repository.findAppointmentDecreeByIdAndDeletedFalse(appointmentDecree.getId());
 
-    @Override
-    public AppointmentDecree remove(AppointmentDecree appointmentDecree) {
-        if (findById(appointmentDecree.getId()) != null) {
-            repository.delete(appointmentDecree);
-            return appointmentDecree;
-        } else {
-            return null;
+        if (optionalAppointmentDecree.isPresent()){
+            return repository.save(appointmentDecree);
+        }else {
+            throw new NoContentException("AppointmentDecree not found !");
         }
     }
 
-    @Override
     @Transactional
-    public AppointmentDecree logicalRemove(Long id) {
-        AppointmentDecree appointmentDecree = findById(id);
-        if (appointmentDecree != null) {
-            repository.save(appointmentDecree);
-            return appointmentDecree;
-        } else{
-            return null;
-        }
-    }
-
     @Override
-    public AppointmentDecree findById(Long id) {
-       Optional<AppointmentDecree> appointmentDecree= repository.findById(id);
-       return (appointmentDecree.isPresent() ? appointmentDecree.get() : null);
+    public void logicalRemove(Long id) throws NoContentException {
+        Optional<AppointmentDecree> optionalAppointmentDecree = repository.findAppointmentDecreeByIdAndDeletedFalse(id);
+        if (optionalAppointmentDecree.isPresent()) {
+            repository.logicalRemove(id);
+        } else {
+            throw new NoContentException("AppointmentDecree not found !");
+        }
     }
 
     @Override
     public List<AppointmentDecree> findAll() {
-        List<AppointmentDecree> appointmentDecreeList=repository.findAll();
-        return appointmentDecreeList;
+        return repository.findAll();
+    }
+
+    @Override
+    public AppointmentDecree findById(Long id) {
+        Optional<AppointmentDecree> optional = repository.findById(id);
+        return optional.orElse(null);
+    }
+
+    @Override
+    public Long getAppointmentDecreeCount() {
+        return repository.count();
+    }
+
+    @Override
+    public AppointmentDecree logicalRemoveWithReturn(Long id) {
+        Optional<AppointmentDecree> optionalAppointmentDecree = repository.findAppointmentDecreeByIdAndDeletedFalse(id);
+
+        if (optionalAppointmentDecree.isPresent()) {
+            AppointmentDecree oldAppointmentDecree = optionalAppointmentDecree.get();
+            oldAppointmentDecree.setDeleted(true);
+            return repository.save(oldAppointmentDecree);
+
+        } else return null;
+    }
+
+    @Override
+    public List<AppointmentDecree> findAppointmentDecreeByDeletedFalse() {
+        return repository.findAppointmentDecreeByDeletedFalse();
+    }
+
+    @Override
+    public Optional<AppointmentDecree> findAppointmentDecreeByIdAndDeletedFalse(Long id) {
+        Optional<AppointmentDecree> optional = repository.findAppointmentDecreeByIdAndDeletedFalse(id);
+        if (optional.isPresent()) {
+            return optional;
+        } else return Optional.empty();
+    }
+
+    @Override
+    public Long countByDeletedFalse() {
+        return repository.countByDeletedFalse();
     }
 }
