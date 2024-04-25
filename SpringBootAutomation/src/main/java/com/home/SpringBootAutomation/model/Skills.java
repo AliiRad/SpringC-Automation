@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-
-
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,7 +27,6 @@ public class Skills {
     @Column(name = "skill_id")
     private Long id;
 
-
     @Column(name = "skill_title" , columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
     @Size(min = 3, max = 50, message = "Skill Title must be between 3 and 50 characters")
@@ -40,19 +37,16 @@ public class Skills {
     @Enumerated(EnumType.ORDINAL)
     private SkillsGradeEn rate;
 
-
     @Column(name = "skill_training" ,  columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,30}$", message = "Invalid Skill Training")
     @Size(min = 3, max = 50, message = "Skill Training must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String training;
 
-
     @Column(name = "skill_description" ,  columnDefinition = "NVARCHAR2(200)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{5,200}$", message = "Invalid Skill Description")
     @Size(min = 5, max = 200, message = "Skill Description must be between 5 and 200 characters")
     private String description;
-
 
     @Column(name = "skill_certification" ,   columnDefinition = "NVARCHAR2(30)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,30}$", message = "Invalid Skill Certification")
@@ -60,14 +54,14 @@ public class Skills {
     @NotBlank(message = "Should Not Be Null")
     private String certification;
 
+    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @JoinColumn(name = "skill_person_id")
+    private Person person;
 
     @Column(name = "skill_deleted" , length = 30)
-    private Boolean deleted = false;
+    private boolean deleted;
 
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "skill_personId")
-    private Person person;
 
 
 }
