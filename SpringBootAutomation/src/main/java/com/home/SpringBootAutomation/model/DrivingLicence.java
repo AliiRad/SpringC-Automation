@@ -26,58 +26,40 @@ public class DrivingLicence {
     @Column(name = "driving_licence_id")
     private Long id;
 
-    @Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Name")
-    @Column(name = "DrivingLicence_name", length = 20, nullable = false, columnDefinition = "NVARCHAR2(20)")
-    @Size(min = 1, max = 20, message = "Name must be between 1 and 20 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String name;
-
-    @Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid Last Name")
-    @Column(name = "DrivingLicence_lastname", length = 20, nullable = false, columnDefinition = "NVARCHAR2(20)")
-    @Size(min = 1, max = 20, message = "Lastname must be between 1 and 20 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String lastname;
-
-    @Pattern(regexp = "^[0-9\\s]{10}$", message = "Invalid NationalID")
-    @Column(name = "DrivingLicence_nationalID", length = 10, nullable = false, columnDefinition = "NVARCHAR2(10)")
-    @Size(min = 10, max = 10, message = "NationalID must be 10 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String nationalId; // شماره ملی
-
-    @Column(name = "DrivingLicence_typeOfCertification", nullable = false)
+    @Column(name = "drivingLicence_typeOfCertification", nullable = false)
     @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TypeOfCertification typeOfCertification; //نوع گواهی نامه
 
     @PastOrPresent(message = "Invalid issuance Date")
-    @Column(name = "DrivingLicence_issuanceDate", nullable = false)
+    @Column(name = "drivingLicence_issuanceDate", nullable = false)
     private LocalDate issuanceDate;//تاریخ صدور
 
     @Pattern(regexp = "^[A-Za-zا-ی\\s]{1,20}$", message = "Invalid SerialNumber")
     @Size(min = 1, max = 20, message = "SerialNumber must be between 1 and 20 characters")
     @NotBlank(message = "Should Not Be Null")
-    @Column(name = "DrivingLicence_serialNumber", length = 20, nullable = false, columnDefinition = "NVARCHAR2(20)")
+    @Column(name = "drivingLicence_serialNumber", length = 20, nullable = false, columnDefinition = "NVARCHAR2(20)")
     private String serialNumber; // شماره گواهی نامه
 
-    @Column(name = "DrivingLicence_LicenseSuspension", length = 30)
+    @Column(name = "drivingLicence_LicenseSuspension", length = 30)
     private boolean licenseSuspension;//تعلیق گواهینامه
 
     @PastOrPresent(message = "Invalid LicenseSuspension Date")
-    @Column(name = "DrivingLicence_LicenseSuspensionDate")
+    @Column(name = "drivingLicence_LicenseSuspensionDate")
     private LocalDate licenseSuspensionDate;//تاریخ تعلیق گواهینامه
 
     @FutureOrPresent(message = "Invalid End Date")
-    @Column(name = "DrivingLicence_endDate", nullable = false)
+    @Column(name = "drivingLicence_endDate", nullable = false)
     private LocalDate endDate;//تاریخ پایان اعتبار
 
     @PastOrPresent(message = "Invalid Renewal Date")
-    @Column(name = "DrivingLicence_renewal")
+    @Column(name = "drivingLicence_renewal")
     private LocalDate renewal;//تاریخ تمدید مجدد
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "driving_licence_person_id")
     private Person person;
 
-    @Column(name = "DrivingLicence_Deleted", length = 30)
+    @Column(name = "drivingLicence_Deleted", length = 30)
     private boolean deleted;//حذف
 }

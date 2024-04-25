@@ -17,8 +17,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @SuperBuilder
 
-@Table(name = "Military_tbl")
-@Entity(name = "MilitaryEntity")
+@Table(name = "military_tbl")
+@Entity(name = "militaryEntity")
 
 public class Military {
 
@@ -29,24 +29,6 @@ public class Military {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "militarySeq")
     @Column(name = "military_id", nullable = false, unique = true)
     private Long id;
-
-    @Pattern(regexp = "^[A-Za-zا-ی\\s]{3,50}$", message = "Invalid Name")
-    @Column(name = "military_name", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
-    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String name;
-
-    @Pattern(regexp = "^[A-Za-zا-ی\\s]{3,50}$", message = "Invalid Last Name")
-    @Column(name = "military_lastname", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
-    @Size(min = 3, max = 50, message = "LastName must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String lastname;
-
-    @Pattern(regexp = "^[0-9\\s]{10}$", message = "Invalid NationalID")
-    @Column(name = "military_nationalID", length = 10, nullable = false, columnDefinition = "NVARCHAR2(10)")
-    @Size(min = 10, max = 10, message = "NationalID must be 10 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String nationalID; // شماره ملی
 
     @Column(name = "military_exemption", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
     @NotBlank(message = "Should Not Be Null")
