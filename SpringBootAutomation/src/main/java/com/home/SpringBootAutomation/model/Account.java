@@ -1,20 +1,22 @@
 package com.home.SpringBootAutomation.model;
 
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
-
+@SuperBuilder
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder
-@ToString //TODO: Delete @ToString .
 
 @Entity(name = "accountEntity")
 @Table(name = "account_tbl")
@@ -26,15 +28,15 @@ public class Account {
     @Column(name = "account_id",length = 20)
     private Long id;
 
-    @Column(name = "account_account_number", length = 50, nullable = false)
+    @Column(name = "account_account_number", length = 50)
     @Pattern(regexp = "^\\d{3,50}$", message = "Invalid Account Number")
     @Size(min = 3, max = 50, message = "Account Number must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountNumber;
 
-    @Column(name = "account_card_number", length = 16, nullable = false)
+    @Column(name = "account_card_number", length = 16)
     @Pattern(regexp = "^\\d{16}$", message = "Invalid Card Number")
-    @Size(min = 3, max = 50, message = "Card Number must be Exactly 16")
+    @Size( max = 16, message = "Card Number must be Exactly 16")
     @NotBlank(message = "Should Not Be Null")
     private String cardNumber;
 
@@ -42,23 +44,24 @@ public class Account {
     @JoinColumn(name = "account_account_owner")
     private Person accountOwner;
 
-    @Column(name = "account_bank_and_branch", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "account_bank_and_branch", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")
     @Size(min = 3, max = 50, message = "Bank And Branch must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String bankAndBranch;
 
-    @Column(name = "account_account_type", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "account_account_type",  columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]$", message = "Invalid Account Type")
     @Size(min = 3, max = 50, message = "Account Type must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountType;
 
-    @Column(name = "account_account_status", length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "account_account_status",columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Status")
     @Size(min = 3, max = 50, message = "Account Status must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountStatus;
+    //TODO: Make Account Status Enum .
 
     @Column(name = "account_deleted")                //      حذف بانک
     private boolean deleted;
