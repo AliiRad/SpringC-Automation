@@ -35,7 +35,7 @@ public class TimesheetController {
         log.info("Timesheet Table - Get");
         try {
             model.addAttribute("timesheet", new Timesheet());
-            model.addAttribute("timesheetList", timesheetService.findAllByDeletedFalse());
+            model.addAttribute("timesheetList", timesheetService.findTimesheetByDeletedFalse());
             return "timesheetTable";
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -89,7 +89,7 @@ public class TimesheetController {
     public String showEditForm(@RequestParam Long id, Model model) {
         log.info("Timesheet - Edit Page");
         try {
-            Optional<Timesheet> timesheet = timesheetService.findById(id);
+            Optional<Timesheet> timesheet = timesheetService.findTimesheetByIdAndDeletedFalse(id);
             model.addAttribute("timesheet",timesheet);
             return "timesheetEdit";
         } catch (Exception e) {
@@ -105,9 +105,9 @@ public class TimesheetController {
         log.info("Timesheet - Edit");
         try {
             Long id = timesheet.getId();
-            Optional<Timesheet> timesheet1 = timesheetService.findById(id);
+            Optional<Timesheet> timesheet1 = timesheetService.findTimesheetByIdAndDeletedFalse(id);
             if (timesheet1.isPresent()){
-                timesheetService.edit(timesheet);
+                timesheetService.update(timesheet);
                 log.info("Timesheet Edited");
                 model.addAttribute("msg", "Timesheet Edited");
                 return "timesheetEdit";
@@ -125,7 +125,7 @@ public class TimesheetController {
     public String softDelete(@ModelAttribute("id") Long id, @ModelAttribute("date") LocalDate date, Model model){
         log.info("Timesheet - Delete");
         try {
-            Optional<Timesheet> timesheet = timesheetService.findById(id);
+            Optional<Timesheet> timesheet = timesheetService.findTimesheetByIdAndDeletedFalse(id);
             if (timesheet.isPresent()){
                 timesheet.get().setDate(date.plusYears(id+1000));
                 timesheetService.save(timesheet.get());

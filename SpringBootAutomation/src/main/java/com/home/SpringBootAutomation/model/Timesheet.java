@@ -59,14 +59,13 @@ public class Timesheet {
     @NotBlank(message = "Should Not Be Null")
     private LocalDateTime overTimeOut;
 
-    //todo : I dont know the required type for signature
-    @Column(name = "employee_signature", unique = true, length = 50)
-    private String employeeSignature;
+    @ManyToOne
+    private Attachment employeeSignature;
 
-    @Column(name = "manager_signature", unique = true, length = 50)
-    private String managerSignature;
+    @ManyToOne
+    private Attachment managerSignature;
 
     @Column(name = "timesheet_deleted")
-    private Boolean deleted = false;
+    private boolean deleted;
 
 }
