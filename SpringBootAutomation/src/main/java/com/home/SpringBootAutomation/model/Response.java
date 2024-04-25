@@ -4,17 +4,20 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
-@ToString
 
 @Entity(name = "responseEntity")
 @Table(name = "response_tbl")
@@ -28,7 +31,7 @@ public class Response {
     @JoinColumn(name = "response_responder_id" )
     private Person responder;
 
-    @Column(name = "response_response"  , nullable = false , columnDefinition = "NVARCHAR2(255)")
+    @Column(name = "response_response"  ,columnDefinition = "NVARCHAR2(255)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Ticket Response")
     @Size(min = 3, max = 255, message = "City Name must be between 3 and 255 characters")
     @NotBlank(message = "Should Not Be Null")
@@ -37,7 +40,7 @@ public class Response {
     @Column(name = "response_time_stamp" )
     private LocalDateTime responseTimeStamp;
 
-    @Column(name = "response_active")
-    private Boolean deleted;
+    @Column(name = "response_deleted")
+    private boolean deleted;
 
 }
