@@ -1,8 +1,11 @@
 package com.home.SpringBootAutomation.service.impl;
 
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.DrivingLicence;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.repository.DrivingLicenceRepository;
+import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.DrivingLicenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,11 +17,12 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class DrivingLicenceServiceImpl implements DrivingLicenceService {
-    private DrivingLicenceRepository drivingLicenceRepository;
+    private final DrivingLicenceRepository drivingLicenceRepository;
+    private final PersonRepository personRepository;
 
-    public DrivingLicenceServiceImpl(DrivingLicenceRepository drivingLicenceRepository) {
-
+    public DrivingLicenceServiceImpl(DrivingLicenceRepository drivingLicenceRepository, PersonRepository personRepository) {
         this.drivingLicenceRepository = drivingLicenceRepository;
+        this.personRepository = personRepository;
     }
 
     @Override
@@ -81,6 +85,17 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     public Optional<DrivingLicence> findBySerialNumber(String serialNumber) {
         log.info("Service-DrivingLicence-findBySerialNumber");
         return drivingLicenceRepository.findBySerialNumber(serialNumber);
+    }
+
+
+    public List<DrivingLicence> findByNationalId (String nationalId) throws NoContentException {
+        log.info("Service-DrivingLicence-findByNationalId : "+ nationalId);
+        Optional <Person> person = personRepository.findPersonByNationalIdAndDeletedFalse(nationalId);
+        if (person.isPresent()) {
+            return person.get().getDrivingLicences();
+        }else{
+            throw new NoContentException("No Driving License");
+        }
     }
 
     public List<DrivingLicence> findByDate(LocalDate issuanceDate) {
