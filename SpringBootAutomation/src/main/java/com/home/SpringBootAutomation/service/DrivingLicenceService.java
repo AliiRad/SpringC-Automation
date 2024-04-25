@@ -9,7 +9,10 @@ public interface DrivingLicenceService {
     DrivingLicence save(DrivingLicence drivingLicence);
     DrivingLicence edit(DrivingLicence drivingLicence);
     DrivingLicence remove (DrivingLicence drivingLicence);
-    DrivingLicence licenseSuspension(Long id);
+    DrivingLicence removeById (Long id);
+    DrivingLicence licenseSuspensionTrue(Long id);
+    DrivingLicence licenseSuspensionFalse(Long id);
+
     List<DrivingLicence> findAll();
     DrivingLicence findById(Long id);
 }

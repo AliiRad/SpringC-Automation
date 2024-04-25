@@ -49,6 +49,7 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         } else return null;
     }
 
+    @Override
     public DrivingLicence removeById(Long id) {
         log.info("Service-DrivingLicence-removeById");
         DrivingLicence drivingLicence = findById(id);
@@ -58,14 +59,26 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         } else return null;
     }
 
-    public DrivingLicence licenseSuspension(Long id) {
-        log.info("Service-DrivingLicence-LicenseSuspension");
+    @Override
+    public DrivingLicence licenseSuspensionTrue(Long id) {
+        log.info("Service-DrivingLicence-LicenseSuspensionTrue");
         DrivingLicence drivingLicence = findById(id);
         if (drivingLicence != null) {
             drivingLicence.setLicenseSuspension(true);
             return drivingLicence;
         } else return null;
     }
+
+    @Override
+    public DrivingLicence licenseSuspensionFalse(Long id) {
+        log.info("Service-DrivingLicence-LicenseSuspensionFalse");
+        DrivingLicence drivingLicence = findById(id);
+        if (drivingLicence != null) {
+            drivingLicence.setLicenseSuspension(false);
+            return drivingLicence;
+        } else return null;
+    }
+
 
     @Override
     public List<DrivingLicence> findAll() {
@@ -87,12 +100,12 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     }
 
 
-    public List<DrivingLicence> findByNationalId (String nationalId) throws NoContentException {
-        log.info("Service-DrivingLicence-findByNationalId : "+ nationalId);
-        Optional <Person> person = personRepository.findPersonByNationalIdAndDeletedFalse(nationalId);
+    public List<DrivingLicence> findByNationalId(String nationalId) throws NoContentException {
+        log.info("Service-DrivingLicence-findByNationalId : " + nationalId);
+        Optional<Person> person = personRepository.findPersonByNationalIdAndDeletedFalse(nationalId);
         if (person.isPresent()) {
             return person.get().getDrivingLicences();
-        }else{
+        } else {
             throw new NoContentException("No Driving License");
         }
     }
