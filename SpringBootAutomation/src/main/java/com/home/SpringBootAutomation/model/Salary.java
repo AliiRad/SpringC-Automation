@@ -81,6 +81,6 @@ public class Salary implements Serializable {
     private Integer year;
 
     @Column(name = "salary_deleted")
-    private Boolean deleted = false;
+    private boolean deleted;
 
 }
