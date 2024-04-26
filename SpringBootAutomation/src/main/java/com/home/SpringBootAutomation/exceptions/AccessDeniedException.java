@@ -12,4 +12,7 @@ public class AccessDeniedException extends Exception{
         super(message);
         this.message = message;
     }
+    public int responseStatus(){
+        return 403;
+    }
 }
