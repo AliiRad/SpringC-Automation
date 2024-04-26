@@ -10,7 +10,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.validator.constraints.UniqueElements;
 
 
 import java.time.LocalDate;
@@ -51,7 +50,6 @@ public class Person {
 
     @Column(name = "person_user_name",  columnDefinition = "VARCHAR2(30)", unique = true)
     @Pattern(regexp = "^[a-zA-Z\\s]{3,30}$", message = "Invalid Username")
-    @UniqueElements(message = "Duplicate Username")
     @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String username;
@@ -70,7 +68,6 @@ public class Person {
 
     @Column(name = "person_national_id", length = 10, unique = true)
     @Pattern(regexp = "^[0-9]{1,10}$", message = "Invalid National ID")
-    @UniqueElements(message = "Duplicate National ID")
     @Size(min = 1, max = 10, message = " National ID must be between 1 and 10 characters")
     @NotBlank(message = "Should Not Be Null")
     private String nationalId;
@@ -80,12 +77,10 @@ public class Person {
     private LocalDate birthdate;
 
     @Column(name = "person_gender")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private GenderEn gender;
 
     @Column(name = "person_marriage_status")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private MarriageEn marriageStatus;
 
