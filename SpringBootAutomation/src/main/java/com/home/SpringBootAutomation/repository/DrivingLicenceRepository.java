@@ -22,7 +22,7 @@ public interface DrivingLicenceRepository extends JpaRepository<DrivingLicence, 
     List<DrivingLicence> findAllByTypeOfCertification(TypeOfCertification typeOfCertification);
 
     //:todo:Does it true?
-    List<DrivingLicence> findByNationalID(String nationalId);
+//    List<DrivingLicence> findByNationalID(String nationalId);
 //    List<DrivingLicence> findDrivingLicenceByNatio
 
     //:todo:Does it true?
@@ -38,7 +38,7 @@ public interface DrivingLicenceRepository extends JpaRepository<DrivingLicence, 
     //:todo:Does it true?
     List<DrivingLicence> findAllByEndDate(LocalDate endDate);
 
-    List<DrivingLicence>findByDate(LocalDate issuanceDate);
+//    List<DrivingLicence>findByDate(LocalDate issuanceDate);
 
     //:todo:Does it true?
     List<DrivingLicence> findAllByRenewal(LocalDate renewal);

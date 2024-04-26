@@ -17,6 +17,7 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class DrivingLicenceServiceImpl implements DrivingLicenceService {
+
     private final DrivingLicenceRepository drivingLicenceRepository;
     private final PersonRepository personRepository;
 
@@ -117,9 +118,9 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         }
     }
 
-    public List<DrivingLicence> findByDate(LocalDate issuanceDate) {
-        log.info("Service-DrivingLicence-findByDate");
-        return drivingLicenceRepository.findByDate(issuanceDate);
-
-    }
+//    public List<DrivingLicence> findByDate(LocalDate issuanceDate) {
+//        log.info("Service-DrivingLicence-findByDate");
+//        return drivingLicenceRepository.findByDate(issuanceDate);
+//
+//    }
 }

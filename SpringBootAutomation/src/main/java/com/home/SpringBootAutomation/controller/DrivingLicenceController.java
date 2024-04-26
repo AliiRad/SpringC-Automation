@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -28,6 +25,8 @@ public class DrivingLicenceController {
     public DrivingLicenceController(DrivingLicenceService drivingLicenceService) {
         this.drivingLicenceService = drivingLicenceService;
     }
+
+
     @GetMapping
     public String showDrivingLicence(Model model){
         log.info("Controller-DrivingLicenceController-Get-FindAll");
