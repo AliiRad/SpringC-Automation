@@ -34,7 +34,6 @@ public class Skills {
     private String skillTitle;
 
     @Column(name = "skill_rate" )
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private SkillsGradeEn rate;
 
