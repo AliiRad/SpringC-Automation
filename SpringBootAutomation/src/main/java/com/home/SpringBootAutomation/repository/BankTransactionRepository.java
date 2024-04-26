@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface BankTransactionRepository extends JpaRepository<BankTransaction,Long> {
     @Modifying
-    @Query("update BankTransactionEntity oo set oo.deleted=true where oo.id=:id")
+    @Query("update bankTransactionEntity oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
 
     List<BankTransaction> findBankTransactionByDeletedFalse();
