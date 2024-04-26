@@ -35,7 +35,6 @@ public class AppointmentDecree {
 //    private Person person;
 
     @Column(name = "appointment_decree_type_of_employment" )
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TypeOfEmployment typeOfEmployment;                                                      //نوع استخدام
 
@@ -95,7 +94,6 @@ public class AppointmentDecree {
     private Integer workingDay;                                                                  //روز کارکرد
 
     @Column(name = "appointment_decree_appointment_type")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private AppointmentType appointmentType;                                                         //نوع حکم
 
