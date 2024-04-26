@@ -29,7 +29,6 @@ public class Attachment {
     private String fileName;
 
     @Column(name = "attachment_file_format")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.STRING) //TODO: File Format Enum --> Ordinal
     private FileFormat fileFormat;
 
