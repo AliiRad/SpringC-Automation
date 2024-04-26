@@ -30,7 +30,7 @@ public interface PersonService {
     List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name , String lastName);
     Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId);
     Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName);
-    List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city , String province );
+
 
     Long countByDeletedFalse();
 

@@ -28,7 +28,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Optional<Person> findPersonByUsernameAndDeletedFalse(String UserName);
 
-    List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city, String province);
 
     Long countByDeletedFalse();
 

@@ -14,23 +14,16 @@ import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
-
-    //------------------------------------------------------
     // Constructor Injection
     private final PersonRepository repository;
-
     public PersonServiceImpl(PersonRepository repository) {
         this.repository = repository;
     }
-
-    //------------------------------------------------------
 
     @Override
     public Person save(Person person) {
         return repository.save(person);
     }
-
-    //------------------------------------------------------
 
     @Override
     public Person update(Person person) throws NoContentException {
@@ -42,7 +35,6 @@ public class PersonServiceImpl implements PersonService {
             throw new NoContentException("Person not found !");
         }
     }
-    //------------------------------------------------------
 
     @Transactional
     @Override
@@ -54,14 +46,12 @@ public class PersonServiceImpl implements PersonService {
             throw new NoContentException("Person not found !");
         }
     }
-    //------------------------------------------------------
 
 
     @Override
     public List<Person> findAll() {
         return repository.findAll();
     }
-    //------------------------------------------------------
 
 
     @Override
@@ -69,14 +59,12 @@ public class PersonServiceImpl implements PersonService {
         Optional<Person> optional = repository.findById(id);
         return optional.orElse(null);
     }
-    //------------------------------------------------------
 
 
     @Override
     public Long getPersonsCount() {
         return repository.count();
     }
-    //------------------------------------------------------
 
 
     @Override
@@ -90,7 +78,6 @@ public class PersonServiceImpl implements PersonService {
 
         } else return null;
     }
-    //------------------------------------------------------
 
 
     @Override
@@ -98,7 +85,6 @@ public class PersonServiceImpl implements PersonService {
         return repository.findPersonByDeletedFalse();
     }
 
-    //------------------------------------------------------
 
     @Override
     public Optional<Person> findPersonByIdAndDeletedFalse(Long id) {
@@ -107,14 +93,12 @@ public class PersonServiceImpl implements PersonService {
             return optional;
         } else return Optional.empty();
     }
-    //------------------------------------------------------
 
 
     @Override
     public List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name, String lastName) {
         return repository.findPersonByNameAndLastnameAndDeletedFalse(name, lastName);
     }
-    //------------------------------------------------------
 
 
     @Override
@@ -124,7 +108,6 @@ public class PersonServiceImpl implements PersonService {
             return optional;
         } else return Optional.empty();
     }
-    //------------------------------------------------------
 
 
     @Override
@@ -135,10 +118,7 @@ public class PersonServiceImpl implements PersonService {
         } else return Optional.empty();
     }
 
-    @Override
-    public List<Person> findPersonByCityAndProvinceAndDeletedFalse(String city, String province) {
-        return repository.findPersonByCityAndProvinceAndDeletedFalse(city, province);
-    }
+
 
     @Override
     public Long countByDeletedFalse() {
