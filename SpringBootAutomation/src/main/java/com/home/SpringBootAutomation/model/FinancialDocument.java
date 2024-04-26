@@ -49,12 +49,10 @@ public class FinancialDocument {
     private Account account;
 
     @Column(name = "financial_document_transaction_type")
-    @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TransactionType transactionType;
 
     @Column(name = "financial_document_document_type")
-    @NotNull(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
