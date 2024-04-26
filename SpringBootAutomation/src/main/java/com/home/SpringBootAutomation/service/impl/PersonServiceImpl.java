@@ -1,14 +1,10 @@
 package com.home.SpringBootAutomation.service.impl;
-
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.repository.PersonRepository;
 import com.home.SpringBootAutomation.service.PersonService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +12,7 @@ import java.util.Optional;
 public class PersonServiceImpl implements PersonService {
     // Constructor Injection
     private final PersonRepository repository;
+
     public PersonServiceImpl(PersonRepository repository) {
         this.repository = repository;
     }
@@ -24,6 +21,7 @@ public class PersonServiceImpl implements PersonService {
     public Person save(Person person) {
         return repository.save(person);
     }
+
 
     @Override
     public Person update(Person person) throws NoContentException {
@@ -50,14 +48,19 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findAll() {
+        //TODO:Check if list length
         return repository.findAll();
     }
 
 
     @Override
-    public Person findById(Long id) {
+    public Optional<Person> findById(Long id) throws NoContentException {
         Optional<Person> optional = repository.findById(id);
-        return optional.orElse(null);
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            throw new NoContentException("Person not found !");
+        }
     }
 
 
@@ -68,7 +71,7 @@ public class PersonServiceImpl implements PersonService {
 
 
     @Override
-    public Person logicalRemoveWithReturn(Long id) {
+    public Person logicalRemoveWithReturn(Long id) throws NoContentException {
         Optional<Person> optionalPerson = repository.findPersonByIdAndDeletedFalse(id);
 
         if (optionalPerson.isPresent()) {
@@ -76,48 +79,59 @@ public class PersonServiceImpl implements PersonService {
             oldPerson.setDeleted(true);
             return repository.save(oldPerson);
 
-        } else return null;
+        } else {
+            throw new NoContentException("Person not found !");
+        }
     }
 
 
     @Override
     public List<Person> findPersonByDeletedFalse() {
         return repository.findPersonByDeletedFalse();
+        //TODO:Check if list length
+
     }
 
 
     @Override
-    public Optional<Person> findPersonByIdAndDeletedFalse(Long id) {
+    public Optional<Person> findPersonByIdAndDeletedFalse(Long id) throws NoContentException {
         Optional<Person> optional = repository.findPersonByIdAndDeletedFalse(id);
         if (optional.isPresent()) {
             return optional;
-        } else return Optional.empty();
+        } else {
+            throw new NoContentException("Person not found !");
+        }
     }
 
 
     @Override
     public List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name, String lastName) {
         return repository.findPersonByNameAndLastnameAndDeletedFalse(name, lastName);
+        //TODO:Check if list length
     }
 
 
     @Override
-    public Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId) {
+    public Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId) throws NoContentException {
         Optional<Person> optional = repository.findPersonByNationalIdAndDeletedFalse(nationalId);
         if (optional.isPresent()) {
             return optional;
-        } else return Optional.empty();
+        } else {
+            throw new NoContentException("Person not found !");
+        }
     }
 
 
     @Override
-    public Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName) {
+    public Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName) throws NoContentException {
         Optional<Person> optional = repository.findPersonByUsernameAndDeletedFalse(UserName);
         if (optional.isPresent()) {
             return optional;
-        } else return Optional.empty();
+        } else {
+            throw new NoContentException("Person not found !");
+            //TODO: throw NoUserException .
+        }
     }
-
 
 
     @Override
