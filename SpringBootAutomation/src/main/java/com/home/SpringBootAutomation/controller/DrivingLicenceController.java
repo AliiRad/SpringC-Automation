@@ -2,7 +2,8 @@ package com.home.SpringBootAutomation.controller;
 
 
 import com.home.SpringBootAutomation.model.DrivingLicence;
-import com.home.SpringBootAutomation.service.impl.DrivingLicenceServiceImpl;
+import com.home.SpringBootAutomation.service.DrivingLicenceService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,11 @@ import java.util.Optional;
 @Controller
 @RequestMapping(value = "/drivingLicence")
 public class DrivingLicenceController {
-    private DrivingLicenceServiceImpl drivingLicenceService;
 
-    public DrivingLicenceController(DrivingLicenceServiceImpl drivingLicenceService) {
+
+    private final DrivingLicenceService drivingLicenceService;
+
+    public DrivingLicenceController(DrivingLicenceService drivingLicenceService) {
         this.drivingLicenceService = drivingLicenceService;
     }
     @GetMapping
@@ -56,17 +59,18 @@ public class DrivingLicenceController {
 //        }
 
 //    }
-    @GetMapping(value = "/date")
-    public String showDrivingLicenceFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
-        log.info("Controller-DrivingLicenceController-Get-FindByIssuanceDate");
-        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findByDate(issuanceDate);
-        if (!drivingLicenceList.isEmpty()){
-            model.addAttribute("drivingLicenceList", drivingLicenceList);
-            return "drivingLicence";
-        }else {
-            return "error-404";
-        }
-    }
+
+//    @GetMapping(value = "/date")
+//    public String showDrivingLicenceFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
+//        log.info("Controller-DrivingLicenceController-Get-FindByIssuanceDate");
+//        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findByDate(issuanceDate);
+//        if (!drivingLicenceList.isEmpty()){
+//            model.addAttribute("drivingLicenceList", drivingLicenceList);
+//            return "drivingLicence";
+//        }else {
+//            return "error-404";
+//        }
+//    }
 
     @PostMapping(value = "/save")
     public  String saveDrivingLicence(DrivingLicence drivingLicence){
