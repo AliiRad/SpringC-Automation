@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface FinancialDocumentRepository extends JpaRepository<FinancialDocument,Long> {
     @Modifying
-    @Query("update FinancialDocumentEntity oo set oo.deleted=true where oo.id=:id")
+    @Query("update financialDocumentEntity oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
 
     List<FinancialDocument> findFinancialDocumentByDeletedFalse();
