@@ -2,10 +2,12 @@ package com.home.SpringBootAutomation.controller;
 
 
 import com.home.SpringBootAutomation.model.Attachment;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.File;
@@ -13,6 +15,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Controller
+@RequestMapping("/uploadFile")
+@Slf4j
 public class UploadController {
 
     private static final String UPLOAD_DIR = "C:/uploads"; // Change this to your desired directory
