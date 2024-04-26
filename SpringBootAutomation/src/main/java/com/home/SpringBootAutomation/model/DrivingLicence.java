@@ -27,7 +27,6 @@ public class DrivingLicence {
     private Long id;
 
     @Column(name = "driving_licence_type_of_cert")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private TypeOfCertification typeOfCertification; //نوع گواهی نامه
 
