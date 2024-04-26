@@ -28,7 +28,6 @@ public class Military {
     private Long id;
 
     @Column(name = "military_exemption")
-    @NotBlank(message = "Should Not Be Null")
     @Enumerated(EnumType.ORDINAL)
     private MilitaryExemption exemption; //نوع معافیت
 
