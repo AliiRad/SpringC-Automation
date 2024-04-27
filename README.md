@@ -9,6 +9,10 @@ TODO:
 
 ### 1. Adding Organization , User  and  Section Entities.
 
+### 2.Finding a way to display a message for unique fields. (Validation)
+
+### 3. We did not validate date and enums properly. (We removed @NotBlank)
+
 
 
 
