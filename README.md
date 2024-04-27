@@ -15,6 +15,7 @@ TODO:
 
 ### 4. When we throw new ValidationException , We cannot show validation messages in our web pages .
 
+### 5. AccessDeniedException And NoUserException are same things ? they both return not allowed status code?
 
 
 
