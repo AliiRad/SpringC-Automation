@@ -48,7 +48,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findAll() {
-        //TODO:Check if list length
+        //TODO:Check  list length
         return repository.findAll();
     }
 
@@ -88,7 +88,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> findPersonByDeletedFalse() {
         return repository.findPersonByDeletedFalse();
-        //TODO:Check if list length
+        //TODO:Check list length
 
     }
 
@@ -107,7 +107,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name, String lastName) {
         return repository.findPersonByNameAndLastnameAndDeletedFalse(name, lastName);
-        //TODO:Check if list length
+        //TODO:Check list length
     }
 
 
