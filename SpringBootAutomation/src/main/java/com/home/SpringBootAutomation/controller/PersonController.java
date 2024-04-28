@@ -44,7 +44,7 @@ public class PersonController {
                 log.info(person.toString());
 
                 model.addAttribute("messageType", "success");
-                model.addAttribute("messageContent", "Person Saved successfully");
+                model.addAttribute("messageContent", "Person Saved successfully.");
                 return "redirect:/person";
             }
 
@@ -72,7 +72,7 @@ public class PersonController {
 
             model.addAttribute("person", person);
             model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Person Edited Successfully .");
+            model.addAttribute("messageContent", "Person Edited Successfully.");
             return "redirect:/person";
 
         } catch (Exception e) {

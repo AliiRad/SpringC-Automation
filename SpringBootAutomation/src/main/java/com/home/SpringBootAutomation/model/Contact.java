@@ -57,4 +57,7 @@ public class Contact {
     @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid National ID")
     @NotBlank(message = "Should Not Be Null")
     private String phoneNumber;
+
+    @Column(name = "contact_deleted")
+    private boolean deleted;
 }
