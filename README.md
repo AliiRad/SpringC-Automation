@@ -7,13 +7,13 @@ This is a simple Automation-Project base on Spring-Boot technology
 TODO:
 </span>
 
-### 1. Adding Organization , User  and  Section Entities.
+### 1.Using ResponseEntity and MVC for handling response code and the related template.
 
-### 2. Finding a way to display a message for unique fields. (Validation)
+### 2. Adding Organization , User  and  Section Entities.
 
-### 3. We did not validate date and enums properly. (We removed @NotBlank)
+### 3. Finding a way to display a message for unique fields. (Validation)
 
-### 4. When we throw new ValidationException , We cannot show validation messages in our web pages .
+### 4. We did not validate date and enums properly. (We removed @NotBlank)
 
 ### 5. AccessDeniedException And NoUserException are same things ? they both return not allowed status code?
 
