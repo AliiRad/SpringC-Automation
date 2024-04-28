@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 
 @Entity(name = "timesheetEntity")
 //TODO: Check @UniqueConstraint Because of Refactoring .
+//TODO: java.sql.SQLSyntaxErrorException: ORA-00904: "EMPLOYEE_ID": invalid identifier
 @Table(name = "timesheet_tbl",uniqueConstraints = {@UniqueConstraint(columnNames = {"employee_id","t_date"})})
 public class Timesheet {
 
