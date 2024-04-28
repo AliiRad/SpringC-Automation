@@ -28,9 +28,9 @@ public class JobsServiceImpl implements JobsService {
 
 
     @Override
-    public Jobs update(Long id, Jobs jobs) throws NoContentException {
+    public Jobs update(Jobs jobs) throws NoContentException {
 
-        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
+        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(jobs.getId());
 
         if (optionalJobs.isPresent()) {
         //TODO: using this way to prevent edition of id and deleted .

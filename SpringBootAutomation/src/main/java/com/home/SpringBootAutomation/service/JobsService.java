@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface JobsService {
 
     Jobs save(Jobs jobs) throws NoContentException;
-    Jobs update(Long id , Jobs jobs) throws NoContentException;
+    Jobs update(Jobs jobs) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
