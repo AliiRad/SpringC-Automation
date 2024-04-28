@@ -45,7 +45,7 @@ public class Ticket {
     private String request;
 
     @Column(name = "ticket_time_stamp" )
-    @FutureOrPresent
+//    @FutureOrPresent
     private LocalDateTime ticketTimeStamp;
 
     @Column(name = "ticket_status")

@@ -41,6 +41,7 @@ public class TicketController {
             }
         } catch (Exception e) {
             log.error(e.getMessage());
+            e.printStackTrace();
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
             return "redirect:/ticket";
@@ -48,19 +49,20 @@ public class TicketController {
     }
 
     @PutMapping(value = "/edit")
-    public String editTicket(@ModelAttribute Ticket ticket, BindingResult result, Model model) {
+    public String editTicket(Ticket ticket, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
                 throw new ValidationException(result.getAllErrors().toString());
             }
-            log.info("Controller-Ticket-Put-Edit");
+            log.info("Controller-Ticket-Put-Edit: " + ticket);
             ticketServiceImp.edit(ticket);
             model.addAttribute("ticket", ticket);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Ticket Edited Successfully .");
-            return "ticket";
+            return "redirect:/ticket";
         } catch (Exception e) {
             log.error(e.getMessage());
+            e.printStackTrace();
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
             return null;

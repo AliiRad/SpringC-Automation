@@ -33,7 +33,7 @@ public class TicketServiceImp implements TicketService {
         log.info("Service-Ticket-Save");
 //        Optional<Person> person = personService.findPersonByUserNameAndDeletedFalse(Principal.class.getName());
 //        ticket.setApplicant(person.get());
-        ticket.setDeleted(true);
+        ticket.setDeleted(false);
         ticket.setTicketTimeStamp(LocalDateTime.now());
         log.info(ticket.toString());
         ticketRepository.save(ticket);
@@ -41,13 +41,14 @@ public class TicketServiceImp implements TicketService {
     }
 
     @Override
+    @Transactional
     public Ticket edit(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Edit");
-        ticket.setDeleted(true);
-        if (findById(ticket.getId()) != null) {
+//        ticket.setDeleted(false);
+//        if (findById(ticket.getId()) != null) {
             ticketRepository.save(ticket);
             return ticket;
-        } else throw new NoContentException("Ticket Not Found !");
+//        } else throw new NoContentException("Ticket Not Found !");
     }
 
     @Override
@@ -66,7 +67,7 @@ public class TicketServiceImp implements TicketService {
         Ticket ticket = findById(id);
         log.info("Service-Ticket-LogicalRemove: " + ticket);
         if (ticket != null) {
-            ticket.setDeleted(false);
+            ticket.setDeleted(true);
             ticketRepository.save(ticket);
             return ticket;
         } else throw new NoContentException("Ticket Not Found !");
