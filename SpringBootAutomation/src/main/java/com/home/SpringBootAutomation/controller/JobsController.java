@@ -71,7 +71,7 @@ public class JobsController {
                 return "jobs";
 
             } else if (service.findJobsByIdAndDeletedFalse(id).isPresent()) {
-                service.update(id, jobs);
+                service.update( jobs);
                 log.info("Job Edited - Put Method");
                 log.info(jobs.toString());
 
