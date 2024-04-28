@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 import com.home.SpringBootAutomation.enums.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -30,20 +31,21 @@ public class Ticket {
     @Column(name = "ticket_id")
     private Long id;
 
-    @Column(name = "ticket_title" ,  length = 50, nullable = false, columnDefinition = "NVARCHAR2(50)")
+    @Column(name = "ticket_title" , columnDefinition = "NVARCHAR2(50)")
 //    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
 //    @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
 //    @NotBlank(message = "Should Not Be Null")
     private String title;
 
 
-    @Column(name = "ticket_request" ,  length = 255, nullable = false, columnDefinition = "NVARCHAR2(255)")
+    @Column(name = "ticket_request" ,  columnDefinition = "NVARCHAR2(255)")
 //    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Request")
 //    @Size(min = 3, max = 50, message = "Request must be between 3 and 255 characters")
 //    @NotBlank(message = "Should Not Be Null")
     private String request;
 
-    @Column(name = "ticket_time_stamp" ,nullable = false)
+    @Column(name = "ticket_time_stamp" )
+    @FutureOrPresent
     private LocalDateTime ticketTimeStamp;
 
     @Column(name = "ticket_status")
@@ -53,7 +55,7 @@ public class Ticket {
 //    private List<Attachment> attachmentList;
 
     @Column(name = "ticket_active")
-    private Boolean deleted;
+    private boolean deleted;
 
 //    @ManyToOne
 //    @JoinColumn(name = "ticket_applicant_id")
