@@ -32,7 +32,7 @@ public interface MilitaryService {
 
     Optional<Military> findMilitaryByIdAndDeletedFalse(Long id) throws NoContentException;
 
-//    Military findMilitaryByNameAndLastnameAndDeletedFalse(String name,String lastname);//todo:does it true?
+    Military findMilitaryByNameAndLastnameAndDeletedFalse(String name,String lastname);//todo:does it true?
 
     Optional<Military> findMilitaryBySerialNumberAndDeletedFalse(String serialNumber) throws NoContentException;
 

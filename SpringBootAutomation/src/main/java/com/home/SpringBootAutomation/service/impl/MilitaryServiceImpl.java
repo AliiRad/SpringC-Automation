@@ -109,16 +109,12 @@ public class MilitaryServiceImpl implements MilitaryService {
         }
     }
 
-//    @Override
-//    public Military findMilitaryByNameAndLastnameAndDeletedFalse(String name,String lastname) throws NoContentException{
-//        List<Person>personList=personRepository.findPersonByNameAndLastnameAndDeletedFalse(name, lastname);
-//        if (personList.get()){
-//            return personList.get().getMilitary();
-//        }else {
-//            throw new NoContentException("No Military found");
-//        }
-//        //todo:does it true?
-//    }
+    @Override
+    public Military findMilitaryByNameAndLastnameAndDeletedFalse(String name,String lastname){
+        List<Person>personList=personRepository.findPersonByNameAndLastnameAndDeletedFalse(name, lastname);
+        return null;
+        //todo:do it
+    }
 
     public Military findByNationalId(String nationalId) throws NoContentException {
         log.info("Service-Military-findByNationalId : " + nationalId);
