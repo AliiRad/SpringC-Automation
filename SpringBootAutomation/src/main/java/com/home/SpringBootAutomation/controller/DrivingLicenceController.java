@@ -35,16 +35,16 @@ public class DrivingLicenceController {
         return "drivingLicence";
     }
 
-    @GetMapping(value = "/id{id}")
-    public String showDrivingLicenceFindById(@ModelAttribute("id")Long id){
-        log.info("Controller-DrivingLicenceController-Get-FindById");
-        Optional<DrivingLicence> drivingLicence= Optional.ofNullable(drivingLicenceService.findById(id));
-        if (drivingLicence.isPresent()){
-            return "drivingLicence";
-        }else {
-            return "error-404";
-        }
-    }
+//    @GetMapping(value = "/id{id}")
+//    public String showDrivingLicenceFindById(@ModelAttribute("id")Long id){
+//        log.info("Controller-DrivingLicenceController-Get-FindById");
+//        Optional<DrivingLicence> drivingLicence= Optional.ofNullable(drivingLicenceService.findById(id));
+//        if (drivingLicence.isPresent()){
+//            return "drivingLicence";
+//        }else {
+//            return "error-404";
+//        }
+//    }
 
 //    @GetMapping(value = "/serialNumber")
 //    public String showDrivingLicenceFindBySerialNumber(Model model,@ModelAttribute("serialNumber")String serialNumber){
@@ -78,23 +78,23 @@ public class DrivingLicenceController {
         drivingLicenceService.save(drivingLicence);
         return "redirect:/drivingLicence";
     }
-    @PostMapping(value = "/edit")
-    public String editDrivingLicence(DrivingLicence drivingLicence){
-        log.info("Controller-DrivingLicenceController-Post-EditDrivingLicence");
-        drivingLicenceService.edit(drivingLicence);
-        return "drivingLicence";
-    }
+//    @PostMapping(value = "/edit")
+//    public String editDrivingLicence(DrivingLicence drivingLicence){
+//        log.info("Controller-DrivingLicenceController-Post-EditDrivingLicence");
+//        drivingLicenceService.update(drivingLicence);
+//        return "drivingLicence";
+//    }
 //    @PostMapping(value = "/suspension")
 //    public String drivingLicenceSuspension(DrivingLicence drivingLicence){
 //        log.info("Controller-DrivingLicenceController-Post-DrivingLicenceSuspension");
 //        drivingLicenceService.licenseSuspension(drivingLicence.getId());
 //        return "redirect:/drivingLicence";
 //    }
-    @PostMapping(value = "/delete")
-    public String drivingLicenceDeleted(DrivingLicence drivingLicence) {
-        log.info("Controller-DrivingLicenceController-Post-DrivingLicenceDeleted");
-        drivingLicenceService.removeById(drivingLicence.getId());
-        return "redirect:/drivingLicence";
-    }
+//    @PostMapping(value = "/delete")
+//    public String drivingLicenceDeleted(DrivingLicence drivingLicence) {
+//        log.info("Controller-DrivingLicenceController-Post-DrivingLicenceDeleted");
+//        drivingLicenceService.logicalRemove(drivingLicence.getId());
+//        return "redirect:/drivingLicence";
+//    }
 
 }

@@ -2,7 +2,6 @@ package com.home.SpringBootAutomation.repository;
 
 import com.home.SpringBootAutomation.enums.MilitaryExemption;
 import com.home.SpringBootAutomation.model.Military;
-import com.home.SpringBootAutomation.model.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,10 +14,35 @@ import java.util.Optional;
 
 @Repository
 public interface MilitaryRepository extends JpaRepository<Military,Long> {
-    Optional<Military> findById(Long id);
+
+    @Modifying
+    @Query("update militaryEntity  oo set oo.deleted=true where oo.id=:id")
+    void logicalRemove(Long id);
+
+    @Modifying
+    @Query("update militaryEntity  oo set oo.militaryVitiation=true where oo.id=:id")
+    void logicalMilitaryVitiation(Long id);
+
+
+    //fetches all active military.
+
+    List<Military> findMilitariesByDeletedFalse();
+
+    Optional<Military> findMilitariesByIdAndDeletedFalse(Long id);
+
+    //:todo:Does it true?
+    List<Military> findMilitaryByPersonNameAndPersonLastnameAndDeletedFalse(String name,String lastname);
+
+    Optional<Military>findMilitariesByPersonNationalIdAndDeletedFalse(String nationalId);
+
+    Optional<Military>findMilitariesByPersonUsernameAndDeletedFalse(String userName);
+
+    Long countByDeletedFalse();
+
     List<Military> findAll();
-    List<Military> findAllByDeletedFalse();
+
     List<Military> findAllByDeletedTrue();
+
     //:todo:Does it true?
     List<Military> findAllByExemption(MilitaryExemption militaryExemption);
 
@@ -29,16 +53,11 @@ public interface MilitaryRepository extends JpaRepository<Military,Long> {
 
     List<Military> findAllByMilitaryVitiationTrue();
 
+    Optional<Military>findMilitariesBySerialNumberAndDeletedFalse(String serialNumber);
+
     //:todo:Does it true?
     List<Military> findAllByVitiationDate(LocalDate vitiationDate);
 
-    //:todo:Does it true?
-    List<Military> findByPerson(Person person);
 
-    @Modifying
-    @Query("update militaryEntity  oo set oo.deleted=true where oo.id=:id")
-    void logicalRemove(Long id);
-
-    Long countByDeletedFalse();
 
 }

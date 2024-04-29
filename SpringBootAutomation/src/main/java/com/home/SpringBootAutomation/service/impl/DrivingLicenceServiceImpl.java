@@ -34,7 +34,7 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     }
 
     @Override
-    public DrivingLicence edit(DrivingLicence drivingLicence) {
+    public DrivingLicence update(DrivingLicence drivingLicence) {
         log.info("Service-DrivingLicence-Edit");
         if (findById(drivingLicence.getId()) != null) {
             drivingLicenceRepository.save(drivingLicence);
@@ -51,15 +51,15 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         } else return null;
     }
 
-    @Override
-    public DrivingLicence removeById(Long id) {
-        log.info("Service-DrivingLicence-removeById");
-        DrivingLicence drivingLicence = findById(id);
-        if (drivingLicence != null) {
-            drivingLicence.setLicenseSuspension(true);
-            return drivingLicence;
-        } else return null;
-    }
+//    @Override
+//    public DrivingLicence logicalRemove(Long id) {
+//        log.info("Service-DrivingLicence-logicalRemove");
+//        DrivingLicence drivingLicence = findById(id);
+//        if (drivingLicence != null) {
+//            drivingLicence.setLicenseSuspension(true);
+//            return drivingLicence;
+//        } else return null;
+//    }
 
     @Override
     public DrivingLicence licenseSuspensionTrue(Long id) {
@@ -100,6 +100,26 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         log.info("Service-DrivingLicence-FindById");
         Optional<DrivingLicence> drivingLicence = drivingLicenceRepository.findById(id);
         return (drivingLicence.isPresent() ? drivingLicence.get() : null);
+    }
+
+    @Override
+    public Long getDrivingLicenceCount() {
+        return null;
+    }
+
+    @Override
+    public DrivingLicence logicalRemoveWithReturn(Long id) throws NoContentException {
+        return null;
+    }
+
+    @Override
+    public List<DrivingLicence> findDrivingLicenceByDeletedFalse() {
+        return null;
+    }
+
+    @Override
+    public Optional<DrivingLicence> findDrivingLicenceByIdAndDeletedFalse(Long id) throws NoContentException {
+        return Optional.empty();
     }
 
     public Optional<DrivingLicence> findBySerialNumber(String serialNumber) {

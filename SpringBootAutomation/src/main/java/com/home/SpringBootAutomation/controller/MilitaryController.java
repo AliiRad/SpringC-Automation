@@ -32,16 +32,16 @@ public class MilitaryController {
         model.addAttribute("militaryList",militaryService.findAll());
         return "/military";
     }
-    @GetMapping(value = "/id{id}")
-    public String showMilitaryFindById(@ModelAttribute("id")Long id){
-        log.info("Controller-MilitaryController-Get-FindById");
-        Optional<Military>military=Optional.ofNullable(militaryService.findById(id));
-        if (military.isPresent()){
-            return "/military";
-        }else{
-            return "error-404";
-        }
-    }
+//    @GetMapping(value = "/id{id}")
+//    public String showMilitaryFindById(@ModelAttribute("id")Long id){
+//        log.info("Controller-MilitaryController-Get-FindById");
+//        Optional<Military>military=Optional.ofNullable(militaryService.findById(id));
+//        if (military.isPresent()){
+//            return "/military";
+//        }else{
+//            return "error-404";
+//        }
+//    }
 //    @GetMapping(value = "/serialNumber")
 //    public String showMilitaryFindBySerialNumber(Model model,@ModelAttribute("serialNumber")String serialNumber){
 //        log.info("Controller-MilitaryController-Get-FindBySerialNumber");
@@ -72,23 +72,23 @@ public class MilitaryController {
         militaryService.save(military);
         return "redirect:/Military";
     }
-    @PostMapping(value = "/edit")
-    public String editMilitary(Military military){
-        log.info("Controller-MilitaryController-Post-EditMilitary");
-        militaryService.edit(military);
-        return "redirect:/Military";
-    }
-    @PostMapping(value = "/vitiation")
-    public String militaryVitiation(Military military){
-        log.info("Controller-MilitaryController-Post-militaryVitiation");
-        militaryService.militaryVitiation(military.getId());
-        return "redirect:/Military";
-    }
-    @PostMapping(value = "/delete")
-    public String militaryDeleted(Military military){
-        log.info("Controller-MilitaryController-Post-militaryDeleted");
-        militaryService.militaryVitiation(military.getId());
-        return "redirect:/military";
-    }
+//    @PostMapping(value = "/edit")
+//    public String editMilitary(Military military){
+//        log.info("Controller-MilitaryController-Post-EditMilitary");
+//        militaryService.update(military);
+//        return "redirect:/Military";
+//    }
+//    @PostMapping(value = "/vitiation")
+//    public String militaryVitiation(Military military){
+//        log.info("Controller-MilitaryController-Post-militaryVitiation");
+//        militaryService.militaryVitiation(military.getId());
+//        return "redirect:/Military";
+//    }
+//    @PostMapping(value = "/delete")
+//    public String militaryDeleted(Military military){
+//        log.info("Controller-MilitaryController-Post-militaryDeleted");
+//        militaryService.militaryVitiation(military.getId());
+//        return "redirect:/military";
+//    }
 
 }
