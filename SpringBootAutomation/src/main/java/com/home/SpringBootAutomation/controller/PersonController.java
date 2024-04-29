@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +49,6 @@ public class PersonController {
             return "redirect:/person";
         }
     }
-
 
 
     @PostMapping("/edit") //TODO: PutMapping
@@ -129,7 +127,7 @@ public class PersonController {
 
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Person>> findById(@PathVariable("id") Long id, Model model){
+    public ResponseEntity<Optional<Person>> findById(@PathVariable("id") Long id, Model model) {
         try {
 
 
@@ -141,9 +139,10 @@ public class PersonController {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
-//TODO: return Error Page .
 
-//            return ResponseEntity.noContent();
+            //TODO: return Error Page .
+
+            //return ResponseEntity.noContent();
             return null;
         }
 
