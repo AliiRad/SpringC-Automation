@@ -18,7 +18,7 @@ public interface SkillsRepository extends JpaRepository<Skills, Long> {
 
 
     @Modifying
-    @Query("update jobsEntity  oo set oo.deleted=true where oo.id=:id")
+    @Query("update skillsEntity  oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
 
     List<Skills> findSkillsByDeletedFalse();
