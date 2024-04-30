@@ -17,15 +17,15 @@ public interface AppointmentDecreeService {
 
     List<AppointmentDecree> findAll();
 
-    AppointmentDecree findById(Long id);
+    Optional<AppointmentDecree> findById(Long id) throws NoContentException;
 
     Long getAppointmentDecreeCount();
 
-    AppointmentDecree logicalRemoveWithReturn(Long id);
+    AppointmentDecree logicalRemoveWithReturn(Long id) throws NoContentException;
 
     List<AppointmentDecree> findAppointmentDecreeByDeletedFalse();
 
-    Optional<AppointmentDecree> findAppointmentDecreeByIdAndDeletedFalse(Long id);
+    Optional<AppointmentDecree> findAppointmentDecreeByIdAndDeletedFalse(Long id) throws NoContentException;
 
     Long countByDeletedFalse();
 }

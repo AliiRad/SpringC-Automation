@@ -25,11 +25,11 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
 
     @Override
     public AppointmentDecree update(AppointmentDecree appointmentDecree) throws NoContentException {
-        Optional<AppointmentDecree> optionalAppointmentDecree=repository.findAppointmentDecreeByIdAndDeletedFalse(appointmentDecree.getId());
+        Optional<AppointmentDecree> optionalAppointmentDecree = repository.findAppointmentDecreeByIdAndDeletedFalse(appointmentDecree.getId());
 
-        if (optionalAppointmentDecree.isPresent()){
+        if (optionalAppointmentDecree.isPresent()) {
             return repository.save(appointmentDecree);
-        }else {
+        } else {
             throw new NoContentException("AppointmentDecree not found !");
         }
     }
@@ -51,9 +51,13 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
     }
 
     @Override
-    public AppointmentDecree findById(Long id) {
+    public Optional<AppointmentDecree> findById(Long id) throws NoContentException {
         Optional<AppointmentDecree> optional = repository.findById(id);
-        return optional.orElse(null);
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            throw new NoContentException("AppointmentDecree not found !");
+        }
     }
 
     @Override
@@ -62,7 +66,7 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
     }
 
     @Override
-    public AppointmentDecree logicalRemoveWithReturn(Long id) {
+    public AppointmentDecree logicalRemoveWithReturn(Long id) throws NoContentException {
         Optional<AppointmentDecree> optionalAppointmentDecree = repository.findAppointmentDecreeByIdAndDeletedFalse(id);
 
         if (optionalAppointmentDecree.isPresent()) {
@@ -70,7 +74,9 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
             oldAppointmentDecree.setDeleted(true);
             return repository.save(oldAppointmentDecree);
 
-        } else return null;
+        } else {
+            throw new NoContentException("AppointmentDecree not found !");
+        }
     }
 
     @Override
@@ -79,11 +85,13 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
     }
 
     @Override
-    public Optional<AppointmentDecree> findAppointmentDecreeByIdAndDeletedFalse(Long id) {
+    public Optional<AppointmentDecree> findAppointmentDecreeByIdAndDeletedFalse(Long id) throws NoContentException {
         Optional<AppointmentDecree> optional = repository.findAppointmentDecreeByIdAndDeletedFalse(id);
         if (optional.isPresent()) {
             return optional;
-        } else return Optional.empty();
+        } else {
+            throw new NoContentException("AppointmentDecree not found !");
+        }
     }
 
     @Override
