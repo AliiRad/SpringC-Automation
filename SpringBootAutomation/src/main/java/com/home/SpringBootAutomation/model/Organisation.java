@@ -36,14 +36,14 @@ public class Organisation {
     @NotBlank(message = "Should Not Be Null")
     private String name;
 
-    @OneToMany
-    private Attachment logo;
+//    @OneToMany
+//    private Attachment logo;
 
     @Column(name = "organisation_address" , length = 100)
     @NotBlank(message = "Should Not Be Null")
     private String address;
 
-    @Column(name = "organisation_phoneNumber" , length = 11)
+    @Column(name = "organisation_phone_number" , length = 11)
     @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
     @NotBlank(message = "Should Not Be Null")
     private String phoneNumber;

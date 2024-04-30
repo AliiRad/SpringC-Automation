@@ -37,18 +37,18 @@ public class Section {
     @Column(name = "section_duty", length = 100)
     private String duty;
 
-    @Column(name = "section_phoneNumber", length = 11)
+    @Column(name = "section_phone_number", length = 11)
     private String phoneNumber;
 
     //this was users in Automation EE Project
     //@OneToMany(mappedBy = "section")
-    private List<Person> Person;
+//    private List<Person> Person;
 
     @Column(name = "section_deleted")
     private boolean deleted;
 
-    @OneToMany
-    private Attachment attachment;
+//    @OneToMany
+//    private Attachment attachment;
 
     @OneToMany
     private List<Section> sectionsPart;
