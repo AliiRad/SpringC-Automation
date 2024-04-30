@@ -70,7 +70,7 @@ public class JobsController {
 
             }
             service.update(jobs);
-            log.info("Job Edited - Post Method ---->" + "job :" + jobs.toString());
+            log.info("Job Edited - Put Method ---->" + "job :" + jobs.toString());
 
             model.addAttribute("jobs", jobs);
             model.addAttribute("messageType", "success");
