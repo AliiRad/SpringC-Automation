@@ -62,7 +62,7 @@ public class PersonController {
 
             }
             service.update(person);
-            log.info("Controller - Person Edited - Post Method ---->" + " person :" + person.toString());
+            log.info("Controller - Person Edited - Put Method ---->" + " person :" + person.toString());
 
             model.addAttribute("person", person);
             model.addAttribute("messageType", "success");
