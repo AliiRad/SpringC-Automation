@@ -41,7 +41,7 @@ public class TicketController {
             }
         } catch (Exception e) {
             log.error(e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
             return "redirect:/ticket";

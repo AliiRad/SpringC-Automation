@@ -17,7 +17,7 @@ async function findId(id) {
 
 
     ticketId.value = data.id;
-    ticketDate.value =new Date(data.ticketTimeStamp).toISOString().slice(0, 16);
+    ticketDate.value = new Date(data.ticketTimeStamp).toISOString().slice(0, 16);
     ticketTitle.value = data.title;
     // ticketApplicant.value = data.applicant.username;
     ticketRequest.value = data.request;
@@ -27,11 +27,14 @@ async function findId(id) {
     console.log(data)
 }
 
-async function edit(){
+async function edit() {
     const formData = new FormData(document.getElementById("editFormTicket"));
     console.log(formData)
 //todo: refresh page after edit- melika
-    const response = await fetch("/ticket/edit" , {method : "put" , body : formData});
+    if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
+        const response = await fetch("/ticket/edit", {method: "put", body: formData});
+    }
+
     window.location.replace("/ticket")
 
 }
