@@ -6,6 +6,7 @@ import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.DrivingLicence;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,26 +18,30 @@ public interface DrivingLicenceService {
 
     DrivingLicence remove(DrivingLicence drivingLicence);
 
-//    @Transactional
-//    void logicalRemove(Long id) throws NoContentException;
+    @Transactional
+    void logicalRemove(Long id) throws NoContentException;
 
     List<DrivingLicence> findAll();
 
-    DrivingLicence findById(Long id) throws NoContentException;
+    DrivingLicence findById(Long id) throws NoContentException;//chek shavad.
 
     Long getDrivingLicenceCount();
-
-    DrivingLicence logicalRemoveWithReturn(Long id) throws NoContentException;
 
     //deletedFalse
 
     List<DrivingLicence>findDrivingLicenceByDeletedFalse();
 
-    Optional<DrivingLicence>findDrivingLicenceByIdAndDeletedFalse(Long id) throws NoContentException;
+    Optional<DrivingLicence>findByIdAndDeletedFalse(Long id) throws NoContentException;
 
-    DrivingLicence licenseSuspensionTrue(Long id);
+    Optional<DrivingLicence> licenseSuspensionTrue(Long id);
 
-    DrivingLicence licenseSuspensionFalse(Long id);
+    Optional<DrivingLicence> licenseSuspensionFalse(Long id);
 
     List<DrivingLicence> findAllByTypeOfCertification(TypeOfCertification typeOfCertification);
+
+    List<DrivingLicence>findAllByLicenseSuspensionTrue();//todo:balad nistam.
+
+    List<DrivingLicence>findByIssuanceDate(LocalDate issuanceDate);
+
+    Optional<DrivingLicence>findBySerialNumber(String serialNumber);
 }

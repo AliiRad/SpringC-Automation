@@ -30,7 +30,6 @@ public interface DrivingLicenceRepository extends JpaRepository<DrivingLicence, 
 
     Optional<DrivingLicence> findBySerialNumber(String serialNumber);
 
-    List<DrivingLicence> findAllByLicenseSuspensionTrue();
 
     //:todo:Does it true?
     List<DrivingLicence> findAllByLicenseSuspensionDate(LocalDate licenseSuspensionDate);

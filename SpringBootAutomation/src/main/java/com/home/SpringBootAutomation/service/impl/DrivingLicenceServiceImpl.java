@@ -51,6 +51,11 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         } else return null;
     }
 
+    @Override
+    public void logicalRemove(Long id) throws NoContentException {
+
+    }
+
 //    @Override
 //    public DrivingLicence logicalRemove(Long id) {
 //        log.info("Service-DrivingLicence-logicalRemove");
@@ -61,25 +66,25 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
 //        } else return null;
 //    }
 
-    @Override
-    public DrivingLicence licenseSuspensionTrue(Long id) {
-        log.info("Service-DrivingLicence-LicenseSuspensionTrue");
-        DrivingLicence drivingLicence = findById(id);
-        if (drivingLicence != null) {
-            drivingLicence.setLicenseSuspension(true);
-            return drivingLicence;
-        } else return null;
-    }
+//    @Override
+//    public DrivingLicence licenseSuspensionTrue(Long id) {
+//        log.info("Service-DrivingLicence-LicenseSuspensionTrue");
+//        DrivingLicence drivingLicence = findById(id);
+//        if (drivingLicence != null) {
+//            drivingLicence.setLicenseSuspension(true);
+//            return drivingLicence;
+//        } else return null;
+//    }
 
-    @Override
-    public DrivingLicence licenseSuspensionFalse(Long id) {
-        log.info("Service-DrivingLicence-LicenseSuspensionFalse");
-        DrivingLicence drivingLicence = findById(id);
-        if (drivingLicence != null) {
-            drivingLicence.setLicenseSuspension(false);
-            return drivingLicence;
-        } else return null;
-    }
+//    @Override
+//    public DrivingLicence licenseSuspensionFalse(Long id) {
+//        log.info("Service-DrivingLicence-LicenseSuspensionFalse");
+//        DrivingLicence drivingLicence = findById(id);
+//        if (drivingLicence != null) {
+//            drivingLicence.setLicenseSuspension(false);
+//            return drivingLicence;
+//        } else return null;
+//    }
 
 
     @Override
@@ -96,6 +101,16 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     }
 
     @Override
+    public List<DrivingLicence> findAllByLicenseSuspensionTrue() {
+        return null;
+    }
+
+    @Override
+    public List<DrivingLicence> findByIssuanceDate(LocalDate issuanceDate) {
+        return null;
+    }
+
+    @Override
     public DrivingLicence findById(Long id) {
         log.info("Service-DrivingLicence-FindById");
         Optional<DrivingLicence> drivingLicence = drivingLicenceRepository.findById(id);
@@ -107,10 +122,10 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
         return null;
     }
 
-    @Override
-    public DrivingLicence logicalRemoveWithReturn(Long id) throws NoContentException {
-        return null;
-    }
+//    @Override
+//    public DrivingLicence logicalRemoveWithReturn(Long id) throws NoContentException {
+//        return null;
+//    }
 
     @Override
     public List<DrivingLicence> findDrivingLicenceByDeletedFalse() {
@@ -118,9 +133,24 @@ public class DrivingLicenceServiceImpl implements DrivingLicenceService {
     }
 
     @Override
-    public Optional<DrivingLicence> findDrivingLicenceByIdAndDeletedFalse(Long id) throws NoContentException {
+    public Optional<DrivingLicence> findByIdAndDeletedFalse(Long id) throws NoContentException {
         return Optional.empty();
     }
+
+    @Override
+    public Optional<DrivingLicence> licenseSuspensionTrue(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<DrivingLicence> licenseSuspensionFalse(Long id) {
+        return Optional.empty();
+    }
+
+//    @Override
+//    public Optional<DrivingLicence> findDrivingLicenceByIdAndDeletedFalse(Long id) throws NoContentException {
+//        return Optional.empty();
+//    }
 
     public Optional<DrivingLicence> findBySerialNumber(String serialNumber) {
         log.info("Service-DrivingLicence-findBySerialNumber");
