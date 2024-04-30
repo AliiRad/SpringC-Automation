@@ -1,11 +1,13 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.Contact;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.ContactService;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,20 +30,18 @@ public class ContactController {
     public String save(@Valid Contact contact, BindingResult result, Model model){
         try {
             if (result.hasErrors()) {
-                log.error(result.getAllErrors().toString());
-
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.error("Controller - Person Save Failed ! --->" + result.getAllErrors());
                 return "contact";
-            }else {
-                service.save(contact);
-                log.info("Contact Saved - Post Method");
-                log.info(contact.toString());
-
-                model.addAttribute("message Type", "success");
-                model.addAttribute("messageContent", "Contact saved successfully.");
-                return "redirect:/contact";
             }
+            service.save(contact);
+            log.info("Controller - Contact Saved - Post Method --->" + contact.toString());
+
+            model.addAttribute("message Type", "success");
+            model.addAttribute("messageContent", "Contact saved successfully.");
+            return "redirect:/contact";
+
         } catch (Exception e){
             log.error(e.getMessage());
             model.addAttribute("message Type", "error");
@@ -51,15 +51,18 @@ public class ContactController {
     }
 
     @PutMapping("/edit")
-    public String edit(Long id, @Valid Contact contact, BindingResult result, Model model){
+    public String edit(@Valid Contact contact, BindingResult result, Model model){
         try {
             if(result.hasErrors()){
-                throw new ValidationException(result.getAllErrors().toString());
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.error("Controller - Contact Edit Failed ! --->" + result.getAllErrors());
+                return "contact";
             }
 
             service.update(contact);
-            log.info("Contact edited - put Method");
-            log.info(contact.toString());
+            log.info("Controller - Contact edited - put Method --->" + " contact : " + contact.toString());
+
 
             model.addAttribute("Contact", contact);
             model.addAttribute("message Type", "success");
@@ -70,26 +73,20 @@ public class ContactController {
             log.error(e.getMessage());
             model.addAttribute("message Type", "error");
             model.addAttribute("message Content", e.getMessage());
-            return "contact";
+            return "redirect:/contact";
         }
     }
 
-    @DeleteMapping("/delete")
-    public String delete(Long id, Model model) {
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
         try {
-            if(service.findContactByIdAndDeletedFalse(id).isPresent()){
-                service.logicalRemove(id);
+            service.logicalRemove(id);
 
-                log.info("Contact Deleted - Put Method");
-                log.info("The Contact with Id :" + id + "Successfully Deleted");
-                model.addAttribute("message Type", "success");
-                model.addAttribute("message Content", "The Contact with Id :" + id + "Successfully Deleted");
-                return "redirect:/content";
-            } else {
-                model.addAttribute("message Type", "error");
-                model.addAttribute("message Content", "The Contact with Id :" + id + "Successfully Deleted");
-                return "redirect:/content";
-            }
+            log.info("The Contact with Id :" + id + "Successfully Deleted");
+            model.addAttribute("message Type", "success");
+            model.addAttribute("message Content", "The Contact with Id :" + id + "Successfully Deleted");
+            return "redirect:/contact";
+
         }catch (Exception e){
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
@@ -101,21 +98,16 @@ public class ContactController {
     @GetMapping
     public String findAll(Model model) {
         try {
-            if (service.countByDeletedFalse() > 0) {
+
                 List<Contact> contactList = service.findContactByDeletedFalse();
-                log.info("Find Contact with Deleted False - Get Method");
+                log.info("Controller - Find Contact with Deleted False - Get Method");
 
                 model.addAttribute("contact", new Contact());
                 model.addAttribute("contactList", contactList);
                 model.addAttribute("message Type", "success");
                 model.addAttribute("messageContent", "Contact List Is Not Empty");
-                return "content";
-            } else{
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", "Content List Is Empty");
+                return "contact";
 
-            return "content";
-            }
         }catch (Exception e) {
 
             log.error(e.getMessage());
@@ -127,24 +119,11 @@ public class ContactController {
     }
 
     @GetMapping("/findById/{id}")
-    public String findById(@PathVariable("id") Long id, Model model){
+    public ResponseEntity<Optional<Contact>> findById(@PathVariable("id") Long id, Model model){
         try{
             Optional<Contact> contact = service.findContactByIdAndDeletedFalse(id);
-            log.info("Find By Id And Deleted False - Get Method");
 
-            if (contact.isPresent()) {
-                log.info("Active Content With Id : " + id + " Was Founded");
-
-                model.addAttribute("contact", contact);
-                model.addAttribute("messageType", "success");
-                model.addAttribute("messageContent", "Active Contact With Id : " + id + " Was Found");
-                return "contact";
-            } else {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", "Active Contact With Id : " + id + " Was Not Found");
-                return "contact";
-
-            }
+            return ResponseEntity.ok(contact);
 
         } catch (Exception e) {
 
@@ -152,7 +131,7 @@ public class ContactController {
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
 
-            return "error-page";
+            return null;
         }
         }
     }
