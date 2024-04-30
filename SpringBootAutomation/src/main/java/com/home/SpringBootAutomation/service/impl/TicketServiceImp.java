@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.service.impl;
 
 
+import com.home.SpringBootAutomation.enums.Status;
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
@@ -33,6 +34,7 @@ public class TicketServiceImp implements TicketService {
         log.info("Service-Ticket-Save");
 //        Optional<Person> person = personService.findPersonByUserNameAndDeletedFalse(Principal.class.getName());
 //        ticket.setApplicant(person.get());
+        ticket.setStatus(Status.postponed);
         ticket.setDeleted(false);
         ticket.setTicketTimeStamp(LocalDateTime.now());
         log.info(ticket.toString());
@@ -44,11 +46,10 @@ public class TicketServiceImp implements TicketService {
     @Transactional
     public Ticket edit(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Edit");
-//        ticket.setDeleted(false);
-//        if (findById(ticket.getId()) != null) {
+        if (findById(ticket.getId()) != null) {
             ticketRepository.save(ticket);
             return ticket;
-//        } else throw new NoContentException("Ticket Not Found !");
+        } else throw new NoContentException("Ticket Not Found !");
     }
 
     @Override

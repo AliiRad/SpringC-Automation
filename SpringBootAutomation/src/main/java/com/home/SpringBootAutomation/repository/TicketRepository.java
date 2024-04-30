@@ -14,6 +14,9 @@ import java.util.List;
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
+    @Query("select oo from ticketEntity oo order by oo.id")
+    List<Ticket> findAll();
+
 //    @Query("select oo from ticketEntity oo where oo.applicant.username=:applicant and oo.deleted=true")
 //    List<Ticket> findByApplicant(Person applicant);
 
@@ -22,5 +25,6 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
 
     @Query("select oo from ticketEntity oo where  oo.deleted=false ")
     List<Ticket> findAllDeletedFalse();
+
 
 }

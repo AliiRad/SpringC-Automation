@@ -50,7 +50,7 @@ public class Ticket {
 
     @Column(name = "ticket_status")
 //    @Enumerated(EnumType.ORDINAL)
-    private String status;
+    private Status status;
 
 //    private List<Attachment> attachmentList;
 

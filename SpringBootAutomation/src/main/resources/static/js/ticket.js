@@ -1,21 +1,23 @@
 async function findId(id) {
-    let editForm = document.getElementById("divEdit");
-    editForm.style.display = "block";
+    let editModal = document.getElementById("editModalTicket")
+    let modalTicket = new bootstrap.Modal(editModal);
+    modalTicket.show();
     const resp = await fetch("/ticket/id/" + id, {
         method: "get"
     });
     const data = await resp.json();
-    let ticketId = document.getElementById("ticketId");
-    let ticketDate = document.getElementById("ticketDate");
-    let ticketTitle = document.getElementById("ticketTitle");
-    // let ticketApplicant = document.getElementById("ticketApplicant");
-    let ticketRequest = document.getElementById("ticketRequest");
-    // let ticketGroup = document.getElementById("ticketGroup");
-    let ticketStatus = document.getElementById("ticketStatus");
-    let ticketDeleted = document.getElementById("ticketActive");
+    let ticketId = document.getElementById("id__edit__ticket");
+    let ticketDate = document.getElementById("ticketTimeStamp__edit__ticket");
+    let ticketTitle = document.getElementById("title__edit__ticket");
+    // let ticketApplicant = document.getElementById("applicant__edit__ticket");
+    let ticketRequest = document.getElementById("request__edit__ticket");
+    // let ticketGroup = document.getElementById("group__edit__ticket");
+    let ticketStatus = document.getElementById("status__edit__ticket");
+    // let ticketDeleted = document.getElementById("deleted__edit__ticket");
+
 
     ticketId.value = data.id;
-    ticketDate.value = data.ticketTimeStamp;
+    ticketDate.value =new Date(data.ticketTimeStamp).toISOString().slice(0, 16);
     ticketTitle.value = data.title;
     // ticketApplicant.value = data.applicant.username;
     ticketRequest.value = data.request;
@@ -25,16 +27,8 @@ async function findId(id) {
     console.log(data)
 }
 
-async function edit(id){
-
-    const formData = new FormData(document.getElementById("ticketEditFrom"));
-    // formData.append("id" , id);
-    // // formData.append("ticketTimeStamp" , ticketDate.value);
-    // formData.append("title" , ticketTitle.value);
-    // // formData.append("applicant" , ticketApplicant.value);
-    // formData.append("request" , request.value);
-    // // formData.append("group" , ticketGroup.value);
-    // formData.append("deleted" , deleted.value);
+async function edit(){
+    const formData = new FormData(document.getElementById("editFormTicket"));
     console.log(formData)
 //todo: refresh page after edit- melika
     const response = await fetch("/ticket/edit" , {method : "put" , body : formData});
@@ -43,9 +37,11 @@ async function edit(id){
 }
 
 async function deleted(id) {
-    const resp = await fetch("/ticket/delete/" + id, {
-        method: "delete"
-    });
+    if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
+        const resp = await fetch("/ticket/delete/" + id, {
+            method: "delete"
+        });
+    }
     window.location.replace("/ticket")
 
 }

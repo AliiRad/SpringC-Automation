@@ -2,82 +2,205 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
     <title>Ticket</title>
 </head>
 <body>
 <h2>Ticket Page</h2>
 
-<form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
-    <!--   <label>Ticket Applicant: <input type="text" placeholder="Applicant" th:value="${applicant.username}" th:field="*{applicant.username}"></label>-->
+<div class="container">
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalTicket">Add New Ticket
+        </button>
+    </div>
 
-    <br>
-    <label>Ticket Title:<input type="text" placeholder="Title" th:value="${ticket.title}" th:field="*{title}"></label>
-    <br>
-    <br>
-    <label>Ticket Request:<input type="text" placeholder="Request" th:value="${ticket.request}"
-                                 th:field="*{request}"></label>
-    <br>
-    <!--    <label>Ticket Group: <input type="text" placeholder="Group" th:value="${group}" th:field="*{group}"></label>-->
-    <br>
-    <label>Ticket Status: <input type="text" placeholder="Status" th:value="${ticket.status}"
-                                 th:field="*{status}"></label>
-    <br>
-    <input type="submit" value="Save">
-</form>
-<table th:if="${#lists.size(ticketList) > 0}">
-    <thead>
-    <th>Id</th>
-    <th>Ticket Date</th>
-    <th>Ticket Time</th>
-    <th>Ticket Title</th>
-    <!--    <th>Applicant</th>-->
-    <th>Request</th>
-    <!--    <th>Group</th>-->
-    <th>Status</th>
-    <th>Deleted</th>
-    <th>Operation</th>
-    </thead>
-    <tbody>
-    <tr th:each="ticket : ${ticketList}">
-        <td th:text="${ticket.id}"></td>
-        <td th:text="${ticket.ticketTimeStamp.toLocalDate()}"></td>
-        <td th:text="${ticket.ticketTimeStamp.toLocalTime()}"></td>
-        <td th:text="${ticket.title}"></td>
-        <!--        <td th:text="${ticket.applicant}"></td>-->
-        <td th:text="${ticket.request}"></td>
-        <!--        <td th:text="${ticket.group}"></td>-->
-        <td th:text="${ticket.status}"></td>
-        <td th:text="${ticket.deleted}"></td>
-        <td>
-            <button th:onclick="'findId(\'' + ${ticket.id} + '\')'">Edit</button>
-            <button th:onclick="'deleted(\'' + ${ticket.id} + '\')'">Delete</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<div style="display: none" id="divEdit">
-    <form action="" id="ticketEditFrom" th:object="${ticket}">
-        <label>Ticket ID: <input type="text" id="ticketId"   readonly th:value="${ticket.id}" th:field="*{id}"> </label>
-        <br>
-        <label>Ticket Date: <input type="text" id="ticketDate" th:value="${ticket.ticketTimeStamp}" th:field="*{ticketTimeStamp}"></label>
-        <br>
-        <label>Ticket Title: <input type="text" id="ticketTitle" th:value="${ticket.title}" th:field="*{title}"></label>
-        <br>
-        <!--    <label>Ticket Applicant: <input type="text" id="ticketApplicant" th:value="${ticket.applicant}" th:field="*{applicant}"></label>-->
-        <!--    <br>-->
-        <label>Ticket Request: <input type="text" id="ticketRequest" th:value="${ticket.request}" th:field="*{request}"></label>
-        <!--    <br>-->
-        <!--   <label>Ticket Group : <input type="text" id="ticketGroup"></label>-->
-            <br>
-           <label>Ticket Status: <input type="text" id="ticketStatus" th:value="${ticket.status}" th:field="*{status}"></label>
-        <br>
-        <label>Ticket Active: <input type="text" id="ticketActive"></label>
-        <button th:onclick="'edit(\'' + ${ticket.id} + '\')'">Edit</button>
-    </form>
+    <table class="table table-striped" th:if="${#lists.size(ticketList) > 0}">
+        <thead>
+        <th>Id</th>
+        <th>Ticket Date</th>
+        <th>Ticket Time</th>
+        <th>Ticket Title</th>
+        <!--    <th>Applicant</th>-->
+        <th>Request</th>
+        <!--    <th>Group</th>-->
+        <th>Status</th>
+        <th>Deleted</th>
+        <th>Operation</th>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${ticketList}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.ticketTimeStamp.toLocalDate()}"></td>
+            <td th:text="${ticket.ticketTimeStamp.toLocalTime()}"></td>
+            <td th:text="${ticket.title}"></td>
+            <!--        <td th:text="${ticket.applicant}"></td>-->
+            <td th:text="${ticket.request}"></td>
+            <!--        <td th:text="${ticket.group}"></td>-->
+            <td th:text="${ticket.status}"></td>
+            <td th:text="${ticket.deleted}"></td>
+            <td>
+                <button class="btn btn-warning editButtonJobs" th:onclick="'findId(\'' + ${ticket.id} + '\')'">Edit</button>
+                <button class="btn btn-danger deleteButtonJobs" th:onclick="'deleted(\'' + ${ticket.id} + '\')'">Delete</button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <!--Save Modal-->
+    <div class="modal fade" id="addModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Ticket </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="title__add__ticket" class="col-form-label">Title :</label>
+                            <input type="text" class="form-control" id="title__add__ticket" th:value="${ticket.title}"
+                                   th:field="*{title}">
+                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title !</span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="request__add__ticket" class="col-form-label">Request :</label>
+                            <input type="text" class="form-control" id="request__add__ticket"
+                                   th:value="${ticket.request}" th:field="*{request}">
+                            <span class="error" th:if="${#fields.hasErrors('request')}" th:errors="*{request}">Invalid Request !</span>
+                        </div>
+
+
+                        <!--                        <div class="mb-3">-->
+                        <!--                            <label for="group__add__ticket" class="col-form-label">Group :</label>-->
+                        <!--                            <select class="form-select" aria-label="Default select example" id="group__add__ticket" name="group" th:value="${ticket.group}" th:field="*{group}">-->
+                        <!--                                <option selected disabled value="-1">Choose Ticket Group : </option>-->
+                        <!--                                <option value="Single">Single</option>-->
+                        <!--                                <option value="Married">Married</option>-->
+                        <!--                            </select>-->
+                        <!--                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>-->
+                        <!--                        </div>-->
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Edit Modal-->
+    <div class="modal fade" id="editModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:object="${ticket}" id="editFormTicket" action="" method="">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title__ticket">Edit Ticket</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="id__edit__ticket" class="col-form-label">ID :</label>
+                            <input type="text" class="form-control" id="id__edit__ticket" name="id" readonly>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="title__edit__ticket" class="col-form-label">Title :</label>
+                            <input type="text" class="form-control" id="title__edit__ticket" name="title"
+                                   th:value="${ticket.title}" th:field="*{title}">
+                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title !</span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="request__edit__ticket" class="col-form-label">Request :</label>
+                            <input type="text" class="form-control" id="request__edit__ticket" name="request"
+                                   th:value="${ticket.request}" th:field="*{request}">
+                            <span class="error" th:if="${#fields.hasErrors('request')}" th:errors="*{request}">Invalid Request !</span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="ticketTimeStamp__edit__ticket" class="col-form-label">Date :</label>
+                            <input type="datetime-local" class="form-control" id="ticketTimeStamp__edit__ticket"
+                                   name="ticketTimeStamp" th:value="${ticket.ticketTimeStamp}"
+                                   th:field="*{ticketTimeStamp}">
+                            <span class="error" th:if="${#fields.hasErrors('ticketTimeStamp')}"
+                                  th:errors="*{ticketTimeStamp}">Invalid Date !</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="status__edit__ticket" class="col-form-label">Status :</label>
+                            <select class="form-select" aria-label="Default select example" id="status__edit__ticket"
+                                    name="status" th:value="${ticket.status}" th:field="*{status}">
+                                <option selected disabled value="-1">Choose Ticket Status :</option>
+                                <option value="unassigned">Unassigned</option>
+                                <option value="open">Open</option>
+                                <option value="answered">Answered</option>
+                                <option value="postponed">Postponed</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Invalid Status !</span>
+                        </div>
+
+<!--                        <div class="mb-3">-->
+<!--                            <label for="deleted__edit__ticket" class="col-form-label">Deleted :</label>-->
+<!--                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticket"-->
+<!--                                    name="deleted" th:value="${ticket.deleted}" th:field="*{deleted}">-->
+<!--                                <option selected disabled value="-1">Choose Ticket State :</option>-->
+<!--                                <option value="true">Not Active</option>-->
+<!--                                <option value="false">Active</option>-->
+<!--                            </select>-->
+<!--                            <span class="error" th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}">Invalid State !</span>-->
+<!--                        </div>-->
+
+                        <!--                        <div class="mb-3">-->
+                        <!--                            <label for="group__edit__ticket" class="col-form-label">Group :</label>-->
+                        <!--                            <select class="form-select" aria-label="Default select example" id="group__add__ticket"-->
+                        <!--                                    name="group" th:value="${ticket.group}" th:field="*{group}">-->
+                        <!--                                <option selected disabled value="-1">Choose Ticket Group :</option>-->
+                        <!--                                <option value=""></option>-->
+                        <!--                                <option value=""></option>-->
+                        <!--                            </select>-->
+                        <!--                            <span class="error" th:if="${#fields.hasErrors('group')}"-->
+                        <!--                                  th:errors="*{group}">Invalid Group !</span>-->
+                        <!--                        </div>-->
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="submitEditModal__ticket" onclick="edit()">
+                                Edit
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
 </div>
 
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/ticket.js}" src="../static/js/ticket.js" ></script>
+<script type="text/javascript" th:src="@{js/ticket.js}" src="../static/js/ticket.js"></script>
 </body>
 </html>
