@@ -1,99 +1,62 @@
-//Edit Modal
+// "Find Functionality"
+async function findById(id){
 
-document.addEventListener("DOMContentLoaded", function() {
-    let editButtonsJobs = document.querySelectorAll('.editButtonJobs');
-    let editModalJobs = document.getElementById('editModalJobs');
-    let submitButtonJobs = document.getElementById('submitEditModal__jobs');
+    let editModal = document.getElementById("editModalJobs");
+    let modalJobs = new bootstrap.Modal(editModal);
+    modalJobs.show();
 
-
-
-    editButtonsJobs.forEach(function(editButton) {
-        editButton.addEventListener('click', function(event) {
-            event.preventDefault();
-
-            let row = this.closest('tr');
-            let id = row.querySelector('td:nth-child(1)').innerText;
-            let companyName = row.querySelector('td:nth-child(2)').innerText;
-            let address = row.querySelector('td:nth-child(3)').innerText;
-            let positions = row.querySelector('td:nth-child(4)').innerText;
-            let startDate =new Date( row.querySelector('td:nth-child(5)').innerText).toISOString().slice(0,10);
-            let endDate = new Date( row.querySelector('td:nth-child(6)').innerText).toISOString().slice(0,10);
-
-
-
-
-
-
-            document.getElementById("id__edit__jobs").value = id;
-            document.getElementById("companyName__edit__jobs").value = companyName;
-            document.getElementById("address__edit__jobs").value = address;
-            document.getElementById("positions__edit__jobs").value = positions;
-            document.getElementById("startDate__edit__jobs").value = startDate;
-            document.getElementById("endDate__edit__jobs").value = endDate;
-
-            let modalJobs = new bootstrap.Modal(editModalJobs);
-            modalJobs.show();
-        });
-    });
-
-    submitButtonJobs.addEventListener('click', function(event) {
-        let formData = new FormData(document.getElementById('editForm'));
-        fetch('/jobs/edit', {
-            method: 'POST',
-            body: formData
-        })
-
-    });
-});
-
-//Delete Modal
-
-document.addEventListener("DOMContentLoaded", function() {
-    let deleteButtonsJobs = document.querySelectorAll('.deleteButtonJobs');
-    let deleteModalJobs = document.getElementById('deleteModalJobs');
-    let deleteConfirmButtonJobs = document.getElementById('deleteConfirmButtonJobs');
-    let deleteIdInputJobs = document.getElementById('id__delete__jobs');
-
-    deleteButtonsJobs.forEach(function(deleteButtonJobs) {
-        deleteButtonJobs.addEventListener('click', function(event) {
-            event.preventDefault();
-
-
-            let row = this.closest('tr');
-            let id = row.querySelector('td:nth-child(1)').innerText;
-
-
-            deleteIdInputJobs.value = id;
-
-
-            let modalJobs = new bootstrap.Modal(deleteModalJobs);
-            modalJobs.show();
-        });
+    const resp = await fetch("/jobs/findById/" + id,{
+        method:"GET"
     });
 
 
-    deleteConfirmButtonJobs.addEventListener('click', function(event) {
-
-        let id = deleteIdInputJobs.value;
-
-
-        fetch('/jobs/delete/' + id, {
-            method: 'POST'
-        }).then(response => {
-
-            // window.location.reload();
-
-            console.log('Item deleted successfully');
-        }).catch(error => {
-
-            console.error('Error deleting item:', error);
-        });
+    const data = await resp.json()
+    let jobsId = document.getElementById("id__edit__jobs");
+    let jobsCompanyName = document.getElementById("companyName__edit__jobs");
+    let jobsAddress = document.getElementById("address__edit__jobs");
+    let jobsPositions = document.getElementById("positions__edit__jobs");
+    let jobsStartDate = document.getElementById("startDate__edit__jobs");
+    let jobsEndDate = document.getElementById("endDate__edit__jobs");
 
 
-        deleteModalJobs.hide();
+    jobsId.value = data.id;
+    jobsCompanyName.value = data.companyName;
+    jobsAddress.value = data.address;
+    jobsPositions.value = data.positions;
+    jobsStartDate.value = data.startDate;
+    jobsEndDate.value = data.endDate;
+
+}
+
+// "Edit Functionality"
+async function edit(){
+    const formData = new FormData(document.getElementById("editFormJobs"));
+
+    const resp = await fetch("/jobs/edit",{
+        method:"PUT",
+        body: formData
+    }).then(() => {
+        window.location.replace("/jobs");
+
     });
-});
+}
+
+//"Delete Functionality"
+async function openDeleteModal(id){
+    let deleteIdInputJobs = document.getElementById("id__delete__jobs");
+
+    deleteIdInputJobs.value = id ;
+
+    let deleteModal = document.getElementById("deleteModalJobs");
+    let modalJobs =  new bootstrap.Modal(deleteModal);
+    modalJobs.show();
+}
 
 
-
-//TODO : Putting All Methods in a Single Event Listener Block And Delete The forEach()
+async function deleteById(id){
+    const resp= await fetch(`/jobs/delete/` + id,{
+        method:"DELETE"
+    });
+    console.log(id)
+    window.location.replace("/jobs")
+}
