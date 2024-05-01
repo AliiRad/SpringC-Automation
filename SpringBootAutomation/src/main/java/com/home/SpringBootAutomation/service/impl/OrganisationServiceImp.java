@@ -32,7 +32,6 @@ public class OrganisationServiceImp implements OrganisationService{
 
     @Override
     public List<Organisation> findSectionByDeletedFalse() throws NoContentException {
-        //TODO : Git Test
         return null;
     }
 
