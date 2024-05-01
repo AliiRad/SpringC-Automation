@@ -29,7 +29,7 @@ public class SalaryController {
         try {
             model.addAttribute("salary", new Salary());
             if (year.isEmpty()){
-                model.addAttribute("salaryList", salaryService.findSalariesByDeletedFalse());
+                model.addAttribute("salaryList", salaryService.findSalaryByDeletedFalse());
             }else {
                 Optional<Salary> salary = salaryService.findSalaryByYearAndDeletedFalse(Integer.valueOf(year));
                 if (salary.isPresent()){

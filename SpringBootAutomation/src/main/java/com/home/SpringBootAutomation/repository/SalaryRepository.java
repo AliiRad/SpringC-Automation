@@ -11,15 +11,16 @@ import java.util.Optional;
 
 @Repository
 public interface SalaryRepository extends JpaRepository<Salary,Long> {
-
     @Modifying
     @Query("update salaryEntity oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
 
-    List<Salary> findSalariesByDeletedFalse();
+    List<Salary> findSalaryByDeletedFalse();
 
     Optional<Salary> findSalaryByIdAndDeletedFalse(Long id);
 
     Optional<Salary> findSalaryByYearAndDeletedFalse(Integer year);
+
+    Long countByDeletedFalse();
 
 }
