@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,14 +37,17 @@ public class PresenceAndAbsence {
 
     @Column(name = "presence_date")
     @FutureOrPresent(message = "Invalid PresenceAndAbsence Date")
+    @NotNull(message = "Should Not Be Null")
     private LocalDate date;
 
     @Column(name = "presence_enter_time", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Enter Time")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime enterTime;
 
     @Column(name = "presence_exit_time", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Exit Time")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime exitTime;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
