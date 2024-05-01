@@ -40,5 +40,8 @@ public class Disease {
     @NotBlank(message = "Disease grade can not be null")
     private Integer grade;
 
+    @Column(name = "disease_active")
+    private boolean deleted;
+
 
 }
