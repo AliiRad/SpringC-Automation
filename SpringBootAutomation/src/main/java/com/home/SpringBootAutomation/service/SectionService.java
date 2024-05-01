@@ -11,7 +11,7 @@ public interface SectionService {
 
     Section save(Section section);
 
-    Section update(Section section);
+    Section update(Section section) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
@@ -20,7 +20,7 @@ public interface SectionService {
 
     Optional<Section> findById(Long id) throws NoContentException;
 
-    Optional<Section> findSectionByIdAndDeletedFalse() throws NoContentException;
+    Optional<Section> findSectionByIdAndDeletedFalse(Long id) throws NoContentException;
 
     List<Section> findSectionByDeletedFalse() throws NoContentException;
     

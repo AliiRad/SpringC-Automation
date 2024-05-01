@@ -29,13 +29,11 @@ public class MedicalHistory {
 
     @Column(name = "medical_weight", length = 5)
     @Pattern(regexp = "^{40,200}$", message = "Invalid weight")
-    //TODO: Check Pattern
     @NotBlank(message = "Should Not Be Null")
     private Integer weight;
 
     @Column(name = "medical_height", length = 5)
-    @Pattern(regexp = "^{140,200}$", message = "Invalid height")
-    //TODO: Check Pattern
+    @Pattern(regexp = "^{140,300}$", message = "Invalid height")
     @NotBlank(message = "Should Not Be Null")
     private Integer height;
 
@@ -43,12 +41,10 @@ public class MedicalHistory {
     @Pattern(regexp = "^{10,20}$", message = "Invalid weight")
     @Size(min = 10, max = 20, message = "Blood pressure is invalid")
     @NotBlank(message = "Should Not Be Null")
-    //TODO: String Or Integer? and Check Pattern.
     private String bloodPressure;
 
     @Column(name = "medical_heart_rate", length = 4)
     @Pattern(regexp = "^{100,400}$", message = "Invalid weight")
-    //TODO: check Pattern.
     @NotBlank(message = "Should Not Be Null")
     private Integer heartRate;
 
@@ -76,8 +72,11 @@ public class MedicalHistory {
     @Size(min = 15, max = 15, message = "Emergency phone number is invalid")
     private String emergencyPhoneNumber;
 
-    @OneToOne
-    @JoinColumn(name = "medical_person")
-    private Person person;
+    @Column(name = "medical_active")
+    private boolean deleted;
+//
+//    @OneToOne
+//    @JoinColumn(name = "medical_person")
+//    private Person person;
 
 }

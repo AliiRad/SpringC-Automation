@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,6 +35,7 @@ public class Timesheet {
 
     @Column(name = "timesheet_date")
     @FutureOrPresent(message = "Invalid Timesheet Date")
+    @NotNull(message = "Should Not Be Null")
     private LocalDate date;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -43,21 +45,25 @@ public class Timesheet {
     //زمان شروع - موظفی
     @Column(name = "timesheet_regular_time_in", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Regular Time In")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime regularTimeIn;
 
     //زمان پایان - موظفی
     @Column(name = "timesheet_regular_time_out", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Regular Time Out")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime regularTimeOut;
 
     //زمان شروع - اضافه کاری
     @Column(name = "timesheet_over_time_in", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Over Time In")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime overTimeIn;
 
     //زمان پایان - اضافه کاری
     @Column(name = "timesheet_over_time_out", columnDefinition = "TIMESTAMP")
     @FutureOrPresent(message = "Invalid Over Time Out")
+    @NotNull(message = "Should Not Be Null")
     private LocalDateTime overTimeOut;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
