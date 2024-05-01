@@ -14,6 +14,7 @@ import java.util.Optional;
 
 public interface DrivingLicenceRepository extends JpaRepository<DrivingLicence, Long> {
 
+    Optional<DrivingLicence> findByIdAndDeletedFalse(Long id);
     Optional<DrivingLicence> findById(Long id);
     List<DrivingLicence> findAll();
     List<DrivingLicence> findAllByDeletedFalse();

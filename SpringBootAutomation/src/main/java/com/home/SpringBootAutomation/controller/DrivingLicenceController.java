@@ -1,100 +1,151 @@
 package com.home.SpringBootAutomation.controller;
 
-
 import com.home.SpringBootAutomation.model.DrivingLicence;
-import com.home.SpringBootAutomation.service.DrivingLicenceService;
-
+import com.home.SpringBootAutomation.service.impl.DrivingLicenceServiceImpl;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+
 @Controller
 @RequestMapping(value = "/drivingLicence")
+@Slf4j
 public class DrivingLicenceController {
 
 
-    private final DrivingLicenceService drivingLicenceService;
+    private final DrivingLicenceServiceImpl service;
 
-    public DrivingLicenceController(DrivingLicenceService drivingLicenceService) {
-        this.drivingLicenceService = drivingLicenceService;
+    public DrivingLicenceController(DrivingLicenceServiceImpl service) {
+        this.service = service;
+    }
+
+
+    @PostMapping(value = "/save")
+    public String save(@Valid DrivingLicence drivingLicence, BindingResult result, Model model) {
+        try {
+            if (result.hasErrors()) {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.info("Controller-DrivingLicence-Post-Save Failed ! ---> " + result.getAllErrors());
+                return "drivingLicence";
+
+            }
+            service.save(drivingLicence);
+            log.info("Controller - DrivingLicence Saved - Post Method ---->" + " drivingLicence :" + drivingLicence.toString());
+
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "DrivingLicence Saved successfully");
+            return "redirect:/drivingLicence";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "redirect:/drivingLicence";
+        }
+    }
+
+
+    @PostMapping(value = "/edit")
+    public String edit(@Valid DrivingLicence drivingLicence, BindingResult result, Model model) {
+        try {
+            if (result.hasErrors()) {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.error("Controller - DrivingLicence Edit Failed ! --->" + result.getAllErrors());
+                return "drivingLicence";
+
+            }
+            service.update(drivingLicence);
+            log.info("Controller - drivingLicence Edited - Put Method ---->" + " drivingLicence :" + drivingLicence);
+
+            model.addAttribute("drivingLicence", drivingLicence);
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "drivingLicence Saved successfully");
+            return "redirect:/drivingLicence";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "redirect:/drivingLicence";
+        }
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+//
+            service.logicalRemove(id);
+
+            log.info("The DrivingLicence With Id :" + id + " Successfully Deleted");
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "DrivingLicence With Id : " + id + " Successfully Deleted .");
+            return "redirect:/drivingLicence";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+            //TODO: Maybe a 500 error page ?
+        }
     }
 
 
     @GetMapping
-    public String showDrivingLicence(Model model){
-        log.info("Controller-DrivingLicenceController-Get-FindAll");
-        model.addAttribute("drivingLicence",new DrivingLicence());
-        model.addAttribute("drivingLicenceList",drivingLicenceService.findAll());
-        return "drivingLicence";
+    public String findAll(Model model) {
+        try {
+
+            List<DrivingLicence> drivingLicenceList = service.findAll();
+            log.info("Controller - Find All DrivingLicence  - Get Method");
+
+            model.addAttribute("drivingLicence", new DrivingLicence());
+            model.addAttribute("drivingLicenceList", drivingLicenceList);
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "DrivingLicense List Is Not Empty");
+
+            return "drivingLicence";
+
+
+        } catch (Exception e) {
+
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+
+            return "error-page";
+        }
     }
 
-//    @GetMapping(value = "/id{id}")
-//    public String showDrivingLicenceFindById(@ModelAttribute("id")Long id){
-//        log.info("Controller-DrivingLicenceController-Get-FindById");
-//        Optional<DrivingLicence> drivingLicence= Optional.ofNullable(drivingLicenceService.findById(id));
-//        if (drivingLicence.isPresent()){
-//            return "drivingLicence";
-//        }else {
-//            return "error-404";
-//        }
-//    }
 
-//    @GetMapping(value = "/serialNumber")
-//    public String showDrivingLicenceFindBySerialNumber(Model model,@ModelAttribute("serialNumber")String serialNumber){
-//        log.info("Controller-DrivingLicenceController-Get-FindBySerialNumber");
-//        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findBySerialNumber(serialNumber);
-//        if (!drivingLicenceList.isEmpty()) {
-//            model.addAttribute("drivingLicenceList", drivingLicenceList);
-//            return "serialNumber";
-//        }else {
-//            return "error-404";
-//        }
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Optional<DrivingLicence>> findById(@PathVariable("id") Long id, Model model) {
+        try {
 
-//    }
 
-//    @GetMapping(value = "/date")
-//    public String showDrivingLicenceFindByIssuanceDate(Model model, @ModelAttribute("timeStamp") LocalDate issuanceDate){
-//        log.info("Controller-DrivingLicenceController-Get-FindByIssuanceDate");
-//        List<DrivingLicence> drivingLicenceList =drivingLicenceService.findByDate(issuanceDate);
-//        if (!drivingLicenceList.isEmpty()){
-//            model.addAttribute("drivingLicenceList", drivingLicenceList);
-//            return "drivingLicence";
-//        }else {
-//            return "error-404";
-//        }
-//    }
+            Optional<DrivingLicence> drivingLicence = service.findByIdAndDeletedFalse(id);
 
-    @PostMapping(value = "/save")
-    public  String saveDrivingLicence(DrivingLicence drivingLicence){
-        log.info("Controller-DrivingLicenceController-Post-SaveDrivingLicence: "+ drivingLicence.toString());
-        log.info("Controller-DrivingLicenceController-Post-SaveDrivingLicence");
-        drivingLicenceService.save(drivingLicence);
-        return "redirect:/drivingLicence";
+            return ResponseEntity.ok(drivingLicence);
+        } catch (Exception e) {
+
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+
+            //TODO: return Error Page .
+
+            //return ResponseEntity.noContent();
+            return null;
+        }
+
     }
-//    @PostMapping(value = "/edit")
-//    public String editDrivingLicence(DrivingLicence drivingLicence){
-//        log.info("Controller-DrivingLicenceController-Post-EditDrivingLicence");
-//        drivingLicenceService.update(drivingLicence);
-//        return "drivingLicence";
-//    }
-//    @PostMapping(value = "/suspension")
-//    public String drivingLicenceSuspension(DrivingLicence drivingLicence){
-//        log.info("Controller-DrivingLicenceController-Post-DrivingLicenceSuspension");
-//        drivingLicenceService.licenseSuspension(drivingLicence.getId());
-//        return "redirect:/drivingLicence";
-//    }
-//    @PostMapping(value = "/delete")
-//    public String drivingLicenceDeleted(DrivingLicence drivingLicence) {
-//        log.info("Controller-DrivingLicenceController-Post-DrivingLicenceDeleted");
-//        drivingLicenceService.logicalRemove(drivingLicence.getId());
-//        return "redirect:/drivingLicence";
-//    }
 
 }
