@@ -1,7 +1,7 @@
 package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -19,11 +19,8 @@ import java.time.LocalDateTime;
 @Setter
 
 @Entity(name = "timesheetEntity")
-//TODO: Check @UniqueConstraint Because of Refactoring .
-//TODO: java.sql.SQLSyntaxErrorException: ORA-00904: "EMPLOYEE_ID": invalid identifier
-@Table(name = "timesheet_tbl",uniqueConstraints = {@UniqueConstraint(columnNames = {"employee_id","t_date"})})
+@Table(name = "timesheet_tbl",uniqueConstraints = {@UniqueConstraint(columnNames = {"timesheet_employee","timesheet_date"})})
 public class Timesheet {
-
     //timesheet
     @Id
     @SequenceGenerator(name = "timesheetSeq", sequenceName = "timesheet_seq", allocationSize = 1)
@@ -31,52 +28,52 @@ public class Timesheet {
     @Column(name = "timesheet_id")
     private Long id;
 
-    @ManyToOne
-    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
-    //TODO:  @JoinColumn
-    //@NotBlank(message = "Should Not Be Null") //TODO: Is This Needed?
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "timesheet_employee")
     private Person employee;
 
     @Column(name = "timesheet_date")
-    //TODO: Put Date Validations
+    @FutureOrPresent(message = "Invalid Timesheet Date")
     private LocalDate date;
 
-    @ManyToOne
-    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
-    //TODO:  @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "timesheet_manager")
     private Person manager;
 
     //زمان شروع - موظفی
-    @Column(name = "timesheet_regular_time_in")
-    //TODO: Put Date Validations
+    @Column(name = "timesheet_regular_time_in", columnDefinition = "TIMESTAMP")
+    @FutureOrPresent(message = "Invalid Regular Time In")
     private LocalDateTime regularTimeIn;
 
     //زمان پایان - موظفی
-    @Column(name = "timesheet_regular_time_out")
-    //TODO: Put Date Validations
+    @Column(name = "timesheet_regular_time_out", columnDefinition = "TIMESTAMP")
+    @FutureOrPresent(message = "Invalid Regular Time Out")
     private LocalDateTime regularTimeOut;
 
     //زمان شروع - اضافه کاری
-    @Column(name = "timesheet_over_time_in")
-    //TODO: Put Date Validations
+    @Column(name = "timesheet_over_time_in", columnDefinition = "TIMESTAMP")
+    @FutureOrPresent(message = "Invalid Over Time In")
     private LocalDateTime overTimeIn;
 
     //زمان پایان - اضافه کاری
-    @Column(name = "timesheet_over_time_out")
-    //TODO: Put Date Validations
+    @Column(name = "timesheet_over_time_out", columnDefinition = "TIMESTAMP")
+    @FutureOrPresent(message = "Invalid Over Time Out")
     private LocalDateTime overTimeOut;
 
-    @ManyToOne
-    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
-    //TODO:  @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_signature")
     private Attachment employeeSignature;
 
-    @ManyToOne
-    //TODO: cascade = CascadeType.ALL , fetch = FetchType.LAZY
-    //TODO:  @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "manager_signature")
     private Attachment managerSignature;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "timesheet_attachment")
+    private List<Attachment> attachments;
 
     @Column(name = "timesheet_deleted")
     private boolean deleted;
+
 
 }

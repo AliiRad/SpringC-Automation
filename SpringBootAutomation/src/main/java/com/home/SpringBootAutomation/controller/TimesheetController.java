@@ -89,7 +89,7 @@ public class TimesheetController {
     public String showEditForm(@RequestParam Long id, Model model) {
         log.info("Timesheet - Edit Page");
         try {
-            Optional<Timesheet> timesheet = timesheetService.findTimesheetByIdAndDeletedFalse(id);
+            Optional<Timesheet> timesheet = timesheetService.findById(id);
             model.addAttribute("timesheet",timesheet);
             return "timesheetEdit";
         } catch (Exception e) {
@@ -105,7 +105,7 @@ public class TimesheetController {
         log.info("Timesheet - Edit");
         try {
             Long id = timesheet.getId();
-            Optional<Timesheet> timesheet1 = timesheetService.findTimesheetByIdAndDeletedFalse(id);
+            Optional<Timesheet> timesheet1 = timesheetService.findById(id);
             if (timesheet1.isPresent()){
                 timesheetService.update(timesheet);
                 log.info("Timesheet Edited");
@@ -125,7 +125,7 @@ public class TimesheetController {
     public String softDelete(@ModelAttribute("id") Long id, @ModelAttribute("date") LocalDate date, Model model){
         log.info("Timesheet - Delete");
         try {
-            Optional<Timesheet> timesheet = timesheetService.findTimesheetByIdAndDeletedFalse(id);
+            Optional<Timesheet> timesheet = timesheetService.findById(id);
             if (timesheet.isPresent()){
                 timesheet.get().setDate(date.plusYears(id+1000));
                 timesheetService.save(timesheet.get());
@@ -143,8 +143,8 @@ public class TimesheetController {
 
     //person nameAndFamily search form
     @GetMapping(value = "/findByNameAndLastname")
-    public String findByNameAndFamily(@ModelAttribute("name") String name,@ModelAttribute("lastname") String lastname, Model model) {
-        log.info("Person - findByNameAndFamily");
+    public String findByNameAndLastname(@ModelAttribute("name") String name,@ModelAttribute("lastname") String lastname, Model model) {
+        log.info("Person - findByNameAndLastname");
         try {
             if(name.isEmpty() && lastname.isEmpty()){
                 model.addAttribute("msg1", "fill in the blanks");
@@ -165,10 +165,10 @@ public class TimesheetController {
     //todo doesnt work
     //person select
     @GetMapping(value = "/selectPerson")
-    public String selectPerson(@RequestParam Long id, Model model) {
+    public String selectPerson(@RequestParam Long id, Model model,BindingResult result) {
         log.info("Timesheet Form - Select person");
         try {
-            Optional<Person> person = personService.findPersonByIdAndDeletedFalse(id);
+            Optional<Person> person = personService.findById(id);
             model.addAttribute("person",person);
             return "redirect:/timesheet/timesheetForm";
         } catch (Exception e) {

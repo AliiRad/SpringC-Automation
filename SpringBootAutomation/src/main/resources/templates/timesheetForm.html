@@ -62,46 +62,46 @@
     </label>
 
     <label>
-        Date : <input type="text" th:field="*{date}">
+        Date : <input type="date" th:field="*{date}">
     </label>
     <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date</span>
     <br><br>
 
     <label>
-        regularTimeIn : <input type="text" th:field="*{regularTimeIn}">
+        regularTimeIn : <input type="datetime-local" th:field="*{regularTimeIn}">
     </label>
     <span class="error" th:if="${#fields.hasErrors('regularTimeIn')}" th:errors="*{regularTimeIn}">Invalid regularTimeIn</span>
     <br><br>
 
     <label>
-        regularTimeOut : <input type="text" th:field="*{regularTimeOut}">
+        regularTimeOut : <input type="datetime-local" th:field="*{regularTimeOut}">
     </label>
     <span class="error" th:if="${#fields.hasErrors('regularTimeOut')}" th:errors="*{regularTimeOut}">Invalid regularTimeOut</span>
     <br><br>
 
     <label>
-        overTimeIn : <input type="text" th:field="*{overTimeIn}">
+        overTimeIn : <input type="datetime-local" th:field="*{overTimeIn}">
     </label>
     <span class="error" th:if="${#fields.hasErrors('overTimeIn')}" th:errors="*{overTimeIn}">Invalid overTimeIn</span>
     <br><br>
 
     <label>
-        overTimeOut : <input type="text" th:field="*{overTimeOut}">
+        overTimeOut : <input type="datetime-local" th:field="*{overTimeOut}">
     </label>
     <span class="error" th:if="${#fields.hasErrors('overTimeOut')}" th:errors="*{overTimeOut}">Invalid overTimeOut</span>
     <br><br>
 
-    <label>
-        employeeSignature : <input type="text" th:field="*{employeeSignature}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('employeeSignature')}" th:errors="*{employeeSignature}">Invalid employeeSignature</span>
-    <br><br>
+<!--    <label>-->
+<!--        employeeSignature : <input type="text" th:field="*{employeeSignature}">-->
+<!--    </label>-->
+<!--    <span class="error" th:if="${#fields.hasErrors('employeeSignature')}" th:errors="*{employeeSignature}">Invalid employeeSignature</span>-->
+<!--    <br><br>-->
 
-    <label>
-        managerSignature : <input type="text" th:field="*{managerSignature}">
-    </label>
-    <span class="error" th:if="${#fields.hasErrors('managerSignature')}" th:errors="*{managerSignature}">Invalid managerSignature</span>
-    <br><br>
+<!--    <label>-->
+<!--        managerSignature : <input type="text" th:field="*{managerSignature}">-->
+<!--    </label>-->
+<!--    <span class="error" th:if="${#fields.hasErrors('managerSignature')}" th:errors="*{managerSignature}">Invalid managerSignature</span>-->
+<!--    <br><br>-->
 
 <!--    <label>-->
 <!--        manager : <input type="text" th:field="*{manager.id}">-->
