@@ -4,135 +4,135 @@ import com.home.SpringBootAutomation.model.Salary;
 import com.home.SpringBootAutomation.service.impl.SalaryServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
-@Slf4j
+
 @Controller
 @RequestMapping("/salary")
+@Slf4j
 public class SalaryController {
 
-    private final SalaryServiceImpl salaryService;
+    private final SalaryServiceImpl service;
 
-    public SalaryController(SalaryServiceImpl salaryService) {
-        this.salaryService = salaryService;
+    public SalaryController(SalaryServiceImpl service) {
+        this.service = service;
     }
 
-    //salary table
-    @GetMapping("/salaryTable")
-    public String showSalaryList(@ModelAttribute("year") String year,Model model){
-        log.info("Salary Table - Get");
-        try {
-            model.addAttribute("salary", new Salary());
-            if (year.isEmpty()){
-                model.addAttribute("salaryList", salaryService.findSalaryByDeletedFalse());
-            }else {
-                Optional<Salary> salary = salaryService.findSalaryByYearAndDeletedFalse(Integer.valueOf(year));
-                if (salary.isPresent()){
-                    model.addAttribute("salaryList",salary.get());
-                }else {
-                    model.addAttribute("msg", "No salary available");
-                }
-            }
-            return "salaryTable";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
-
-    //salary form
-    @GetMapping("/salaryForm")
-    public String showSaveForm(Model model) {
-        log.info("Salary Form - Get");
-        try {
-            //for th:object="${salary}"
-            model.addAttribute("salary", new Salary());
-            return "salaryForm";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return "errorPage";
-        }
-    }
-
-    //salary save
     @PostMapping(value = "/save")
-    public String save(@Valid Salary salary, BindingResult result, Model model){
-        log.info("Salary Save - Post");
-        if (result.hasErrors()){
-            log.error(result.getAllErrors().toString());
-            return "salaryForm";
-        }
+    public String save(@Valid Salary salary, Model model, BindingResult result){
         try {
-            salaryService.save(salary);
-            log.info("Salary Saved");
+            if (result.hasErrors()) {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.error("Controller - Salary Save Failed ! --->" + result.getAllErrors());
+                return "salary";
+
+            }
+            service.save(salary);
+            log.info("Controller - Salary Saved - Post Method ---->" + " salary :" + salary.toString());
+
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "Salary Saved successfully");
+            return "redirect:/salary";
+
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "redirect:/salary";
+        }
+    }
+
+    @PostMapping("/edit") //TODO: PutMapping
+    public String edit(@Valid Salary salary, BindingResult result, Model model) {
+        try {
+            if (result.hasErrors()) {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", result.getAllErrors().toString());
+                log.error("Controller - Salary Edit Failed ! --->" + result.getAllErrors());
+                return "person";
+
+            }
+            service.update(salary);
+            log.info("Controller - Salary Edited - Put Method ---->" + " person :" + salary.toString());
+
+            model.addAttribute("salary", salary);
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "Salary Saved successfully");
+            return "redirect:/salary";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "redirect:/salary";
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+            service.logicalRemove(id);
+
+            log.info("The Salary With Id :" + id + " Successfully Deleted");
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "Salary With Id : " + id + " Successfully Deleted .");
+            return "redirect:/salary";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+            //TODO: Maybe a 500 error page ?
+        }
+    }
+
+    @GetMapping
+    public String findAll(Model model) {
+        try {
+            List<Salary> salaryList = service.findSalaryByDeletedFalse();
+            log.info("Controller - Find Salaries With Deleted False - Get Method");
+
             model.addAttribute("salary", new Salary());
-            model.addAttribute("msg", "Salary Saved");
-            return "salaryForm";
+            model.addAttribute("salaryList", salaryList);
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "Salary List Is Not Empty");
+
+            return "salary";
+
         } catch (Exception e) {
             log.error(e.getMessage());
-            return "errorPage";
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+
+            return "error-page";
         }
     }
 
-    //salary edit form
-    @GetMapping(value = "/edit")
-    public String showEditForm(@RequestParam Long id, Model model) {
-        log.info("Salary - Edit Page");
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Optional<Salary>> findById(@PathVariable("id") Long id, Model model) {
         try {
-            Optional<Salary> salary = salaryService.findSalaryByIdAndDeletedFalse(id);
-            model.addAttribute("salary",salary);
-            return "salaryEdit";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return "errorPage";
-        }
-    }
+            Optional<Salary> salary = service.findSalaryByIdAndDeletedFalse(id);
 
-    //todo why /salary/save works instead of this
-    //salary edit
-    @PostMapping(value = "/edit")
-    public String edit(@Valid Salary salary, Model model){
-        log.info("Salary - Edit");
-        try {
-            Long id = salary.getId();
-            Optional<Salary> salary1 = salaryService.findSalaryByIdAndDeletedFalse(id);
-            if (salary1.isPresent()){
-                salaryService.update(salary);
-                log.info("Salary Edited");
-                model.addAttribute("msg", "Salary Edited");
-                return "salaryEdit";
-            }
-            return "salaryEdit";
+            return ResponseEntity.ok(salary);
         } catch (Exception e) {
             log.error(e.getMessage());
-            return "errorPage";
-        }
-    }
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
 
-    //todo I cant show the error msg it gives 500 error
-    //salary logical remove
-    @PostMapping("/delete")
-    public String softDelete(@ModelAttribute("id") Long id,@ModelAttribute("year") Integer year, Model model){
-        log.info("Salary - Delete");
-        try {
-            Optional<Salary> salary = salaryService.findSalaryByIdAndDeletedFalse(id);
-            if (salary.isPresent()){
-                salary.get().setYear(Integer.valueOf(year + id.toString()));
-                salaryService.save(salary.get());
-                salaryService.logicalRemove(id);
-                log.info("Salary Removed");
-                model.addAttribute("msg", "Salary Removed");
-                return "salaryTable";
-            }
-            return "salaryTable";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return "errorPage";
+            //TODO: return Error Page .
+
+            //return ResponseEntity.noContent();
+            return null;
         }
     }
 
