@@ -37,7 +37,7 @@ public class AttachmentUploadController {
 
         try {
             // Specify the directory to save the file
-            String uploadDir = "C:/uploads"; // Change this to your desired directory
+            String uploadDir = "src/main/resources/attachment"; // Change this to your desired directory
 
             // Create the directory if it doesn't exist
             File directory = new File(uploadDir);
