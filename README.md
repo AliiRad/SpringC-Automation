@@ -9,7 +9,7 @@ TODO:
 
 ### 1.Using ResponseEntity and MVC for handling response code and the related template.
 
-### 2. Adding Organization , User  and  Section Entities.
+### 2. Add User Entity.
 
 ### 3. Finding a way to display a message for unique fields. (Validation)
 
