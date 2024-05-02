@@ -74,9 +74,9 @@ public class MedicalHistory {
 
     @Column(name = "medical_active")
     private boolean deleted;
-//
-//    @OneToOne
-//    @JoinColumn(name = "medical_person")
-//    private Person person;
+
+    @OneToOne
+    @JoinColumn(name = "medical_person")
+    private Person person;
 
 }
