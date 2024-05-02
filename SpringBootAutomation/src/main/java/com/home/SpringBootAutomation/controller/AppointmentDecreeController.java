@@ -18,7 +18,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/appointmentDecree")
 public class AppointmentDecreeController {
-    private AppointmentDecreeServiceImp service;
+    private final AppointmentDecreeServiceImp service;
 
     public AppointmentDecreeController(AppointmentDecreeServiceImp service) {
         this.service = service;
@@ -74,16 +74,25 @@ public class AppointmentDecreeController {
         }
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public String deleteAppointmentDecree(@PathVariable("id") long id) throws NoContentException {
-        Optional<AppointmentDecree> appointmentDecree = service.findAppointmentDecreeByIdAndDeletedFalse(id);
-        if (appointmentDecree.isPresent()) {
+    @DeleteMapping("/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
+        try {
+//
             service.logicalRemove(id);
-            return "redirect:/appointmentDecree";
-        }
-        return "Invalid Id";
-    }
 
+            log.info("The Person With Id :" + id + " Successfully Deleted");
+            model.addAttribute("messageType", "success");
+            model.addAttribute("messageContent", "AppointmentDecree With Id : " + id + " Successfully Deleted .");
+            return "redirect:/appointmentDecree";
+
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            return "error-page";
+            //TODO: Maybe a 500 error page ?
+        }
+    }
     @GetMapping
     public String findAll(Model model) {
         try {
