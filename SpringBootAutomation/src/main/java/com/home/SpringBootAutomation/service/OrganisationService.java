@@ -11,7 +11,7 @@ public interface OrganisationService {
 
     Organisation save(Organisation organisation);
 
-    Organisation update(Organisation organisation);
+    Organisation update(Organisation organisation) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
@@ -20,7 +20,7 @@ public interface OrganisationService {
 
     Optional<Organisation> findById(Long id) throws NoContentException;
 
-    Optional<Organisation> findSectionByIdAndDeletedFalse() throws NoContentException;
+    Optional<Organisation> findSectionByIdAndDeletedFalse(Long id) throws NoContentException;
 
     List<Organisation> findSectionByDeletedFalse() throws NoContentException;
 

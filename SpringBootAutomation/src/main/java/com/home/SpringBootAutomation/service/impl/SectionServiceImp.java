@@ -65,9 +65,9 @@ public class SectionServiceImp implements SectionService{
 
     @Override
     public Section update(Section section) throws NoContentException {
-        Optional<Section> optionalPerson = repository.findPersonByIdAndDeletedFalse(section.getId());
+        Optional<Section> optional = repository.findPersonByIdAndDeletedFalse(section.getId());
 
-        if (optionalPerson.isPresent()) {
+        if (optional.isPresent()) {
             return repository.save(section);
         } else {
             throw new NoContentException("Section not found !");
