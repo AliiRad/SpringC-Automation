@@ -39,6 +39,25 @@ async function edit() {
 
 }
 
+async function save() {
+    const saveFormData = new FormData();
+
+    let ticketTitle = document.getElementById("title__add__ticket");
+    let ticketRequest = document.getElementById("request__add__ticket");
+    // let ticketGroup = document.getElementById("group__add__ticket");
+
+    saveFormData.append('title' , ticketTitle.value)
+    saveFormData.append('request' , ticketRequest.value)
+
+    if (confirm(  "از صحت اطلاعات وارد شده اطمینان دارید؟")) {
+        const response = await fetch("/ticket/save", {method: "post", body: saveFormData});
+        console.log(saveFormData)
+    }
+    //
+    window.location.replace("/ticket")
+
+}
+
 async function deleted(id) {
     if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
         const resp = await fetch("/ticket/delete/" + id, {

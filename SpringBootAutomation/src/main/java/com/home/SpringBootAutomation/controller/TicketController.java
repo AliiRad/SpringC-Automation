@@ -26,40 +26,41 @@ public class TicketController {
     }
 
     @PostMapping(value = "/save")
-    public String saveTicket( Ticket ticket, BindingResult result, Model model) {
+    @ResponseBody
+    public Ticket saveTicket( Ticket ticket, BindingResult result, Model model) {
         try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                return "ticket";
-            } else {
+//            if (result.hasErrors()) {
+//                model.addAttribute("messageType", "error");
+//                model.addAttribute("messageContent", result.getAllErrors().toString());
+//                return ;
+//            } else {
                 log.info("Controller-Ticket-Post-Save: " + ticket.toString());
-                ticketServiceImp.save(ticket);
+
                 model.addAttribute("messageType", "success");
                 model.addAttribute("messageContent", "Ticket Saved successfully");
-                return "redirect:/ticket";
-            }
+                return ticketServiceImp.save(ticket);
+//            }
         } catch (Exception e) {
             log.error(e.getMessage());
-//            e.printStackTrace();
+            e.printStackTrace();
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/ticket";
+            return null;
         }
     }
 
     @PutMapping(value = "/edit")
-    public String editTicket(Ticket ticket, BindingResult result, Model model) {
+    @ResponseBody
+    public Ticket editTicket(Ticket ticket, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
                 throw new ValidationException(result.getAllErrors().toString());
             }
             log.info("Controller-Ticket-Put-Edit: " + ticket);
-            ticketServiceImp.edit(ticket);
-            model.addAttribute("ticket", ticket);
+//            model.addAttribute("ticket", ticket);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Ticket Edited Successfully .");
-            return "redirect:/ticket";
+            return ticketServiceImp.edit(ticket);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -71,13 +72,13 @@ public class TicketController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public String deleteTicket(@PathVariable Long id, Model model) {
+    @ResponseBody
+    public Ticket deleteTicket(@PathVariable Long id, Model model) {
         try {
             log.info("Controller-Ticket-Delete-Delete: " + id);
-            ticketServiceImp.logicalRemove(id);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Ticket Deleted Successfully .");
-            return "redirect:/ticket";
+            return ticketServiceImp.logicalRemove(id);
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");

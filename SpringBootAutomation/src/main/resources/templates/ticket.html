@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalTicket">Add New Ticket
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#saveModalTicket">Add New Ticket
         </button>
     </div>
 
@@ -39,8 +39,8 @@
             <td th:text="${ticket.status}"></td>
             <td th:text="${ticket.deleted}"></td>
             <td>
-                <button class="btn btn-warning editButtonJobs" th:onclick="'findId(\'' + ${ticket.id} + '\')'">Edit</button>
-                <button class="btn btn-danger deleteButtonJobs" th:onclick="'deleted(\'' + ${ticket.id} + '\')'">Delete</button>
+                <button class="btn btn-warning editButtonJobs"  th:data-name="${ticket.id}" th:onclick="findId(this.getAttribute('data-name'))">Edit</button>
+                <button class="btn btn-danger deleteButtonJobs" th:data-name="${ticket.id}" th:onclick="deleted(this.getAttribute('data-name'))">Delete</button>
             </td>
         </tr>
 
@@ -48,8 +48,8 @@
     </table>
 
     <!--Save Modal-->
-    <div class="modal fade" id="addModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/ticket/save}" method="post" th:object="${ticket}">
+    <div class="modal fade" id="saveModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form  id="saveFormTicket" >
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -63,17 +63,13 @@
 
                         <div class="mb-3">
                             <label for="title__add__ticket" class="col-form-label">Title :</label>
-                            <input type="text" class="form-control" id="title__add__ticket" th:value="${ticket.title}"
-                                   th:field="*{title}">
-                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title !</span>
+                            <input type="text" name="title" class="form-control" id="title__add__ticket">
                         </div>
 
 
                         <div class="mb-3">
                             <label for="request__add__ticket" class="col-form-label">Request :</label>
-                            <input type="text" class="form-control" id="request__add__ticket"
-                                   th:value="${ticket.request}" th:field="*{request}">
-                            <span class="error" th:if="${#fields.hasErrors('request')}" th:errors="*{request}">Invalid Request !</span>
+                            <input type="text"  name="request" class="form-control" id="request__add__ticket">
                         </div>
 
 
@@ -91,9 +87,8 @@
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button  onclick="save()" class="btn btn-primary">Save</button>
                     </div>
-
                 </div>
             </div>
         </form>
@@ -101,7 +96,7 @@
     </div>
     <!--Edit Modal-->
     <div class="modal fade" id="editModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${ticket}" id="editFormTicket" action="" method="">
+        <form  id="editFormTicket" action="" method="">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
@@ -121,33 +116,26 @@
 
                         <div class="mb-3">
                             <label for="title__edit__ticket" class="col-form-label">Title :</label>
-                            <input type="text" class="form-control" id="title__edit__ticket" name="title"
-                                   th:value="${ticket.title}" th:field="*{title}">
-                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid Title !</span>
+                            <input type="text" class="form-control" id="title__edit__ticket" name="title">
                         </div>
 
 
                         <div class="mb-3">
                             <label for="request__edit__ticket" class="col-form-label">Request :</label>
-                            <input type="text" class="form-control" id="request__edit__ticket" name="request"
-                                   th:value="${ticket.request}" th:field="*{request}">
-                            <span class="error" th:if="${#fields.hasErrors('request')}" th:errors="*{request}">Invalid Request !</span>
+                            <input type="text" class="form-control" id="request__edit__ticket" name="request">
                         </div>
 
 
                         <div class="mb-3">
                             <label for="ticketTimeStamp__edit__ticket" class="col-form-label">Date :</label>
                             <input type="datetime-local" class="form-control" id="ticketTimeStamp__edit__ticket"
-                                   name="ticketTimeStamp" th:value="${ticket.ticketTimeStamp}"
-                                   th:field="*{ticketTimeStamp}">
-                            <span class="error" th:if="${#fields.hasErrors('ticketTimeStamp')}"
-                                  th:errors="*{ticketTimeStamp}">Invalid Date !</span>
+                                   name="ticketTimeStamp">
                         </div>
 
                         <div class="mb-3">
                             <label for="status__edit__ticket" class="col-form-label">Status :</label>
                             <select class="form-select" aria-label="Default select example" id="status__edit__ticket"
-                                    name="status" th:value="${ticket.status}" th:field="*{status}">
+                                    name="status">
                                 <option selected disabled value="-1">Choose Ticket Status :</option>
                                 <option value="unassigned">Unassigned</option>
                                 <option value="open">Open</option>
@@ -155,7 +143,6 @@
                                 <option value="postponed">Postponed</option>
                                 <option value="closed">Closed</option>
                             </select>
-                            <span class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Invalid Status !</span>
                         </div>
 
 <!--                        <div class="mb-3">-->
