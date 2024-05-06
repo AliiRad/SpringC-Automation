@@ -1,13 +1,12 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.model.TicketGroup;
 import com.home.SpringBootAutomation.service.impl.TicketGroupServiceImp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
@@ -18,35 +17,63 @@ public class TicketGroupController {
     public TicketGroupController(TicketGroupServiceImp ticketGroupServiceImp) {
         this.ticketGroupServiceImp = ticketGroupServiceImp;
     }
+    @PostMapping(value = "/save")
+    @ResponseBody
+    public TicketGroup saveTicket(TicketGroup ticketGroup) {
+        log.info("Controller-TicketGroup-Post-Save: " + ticketGroup.toString());
+        log.info("Controller-TicketGroup-Post-Save");
+        ticketGroupServiceImp.save(ticketGroup);
+        return  ticketGroupServiceImp.save(ticketGroup);
+    }
 
+    @PutMapping(value ="/edit")
+    @ResponseBody
+    public TicketGroup editTicket(TicketGroup ticketGroup) {
+        log.info("Controller-TicketGroup-Post-Edit");
+        return ticketGroupServiceImp.edit(ticketGroup);
+    }
+
+    @DeleteMapping(value ="/delete/{id}")
+    @ResponseBody
+    public TicketGroup deleteTicket(@PathVariable Long id ) {
+        TicketGroup ticketGroup = ticketGroupServiceImp.findById(id);
+        log.info("Controller-Ticket-Post-Delete: " + ticketGroup);
+        return ticketGroupServiceImp.remove(ticketGroup);
+    }
 
     @GetMapping
     public String showTicketGroups(Model model) {
         log.info("Controller-TicketGroup-Get-FindAll");
         model.addAttribute("ticketGroup", new TicketGroup());
         model.addAttribute("ticketGroupList", ticketGroupServiceImp.findAll());
-        return "ticket";
+        model.addAttribute("ticketGroupParents", ticketGroupServiceImp.findByParentRoot());
+        return "ticketGroup";
     }
 
-    @PostMapping(value = "/save")
-    public String saveTicket(TicketGroup ticketGroup) {
-        log.info("Controller-TicketGroup-Post-Save: " + ticketGroup.toString());
-        log.info("Controller-TicketGroup-Post-Save");
-        ticketGroupServiceImp.save(ticketGroup);
-        return "redirect:/ticket";
+    @GetMapping(value = "/id/{id}")
+    @ResponseBody
+    public TicketGroup showTicket(@PathVariable("id") Long id, Model model) {
+        try {
+            TicketGroup ticketGroup = ticketGroupServiceImp.findById(id);
+            if (ticketGroup != null) {
+                log.info("Controller-Ticket-Get-FindById-Ticket: " + ticketGroup);
+                model.addAttribute("messageType", "success");
+                model.addAttribute("messageContent", "Active Ticket With Id : " + id + " Was Found");
+                return ticketGroup;
+            } else {
+                model.addAttribute("messageType", "error");
+                model.addAttribute("messageContent", "Active Ticket With Id : " + id + " Was Not Found");
+                //todo: return error page
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("messageType", "error");
+            model.addAttribute("messageContent", e.getMessage());
+            //todo: return error page
+            return null;
+        }
     }
 
-    @PostMapping(value ="/edit")
-    public String editTicket(TicketGroup ticketGroup) {
-        log.info("Controller-TicketGroup-Post-Edit");
-        ticketGroupServiceImp.edit(ticketGroup);
-        return "ticket";
-    }
 
-    @PostMapping(value ="/delete")
-    public String deleteTicket(TicketGroup ticketGroup) {
-        log.info("Controller-Ticket-Post-Delete: " + ticketGroup);
-        ticketGroupServiceImp.remove(ticketGroup);
-        return "redirect:/ticket";
-    }
 }
