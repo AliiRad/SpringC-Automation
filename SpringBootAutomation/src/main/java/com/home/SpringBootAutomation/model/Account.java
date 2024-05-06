@@ -43,8 +43,8 @@ public class Account {
     private String cardNumber;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "account_account_owner")
-    private Person accountOwner;
+    @JoinColumn(name = "account_person")
+    private Person person;
 
     @Column(name = "account_bank_and_branch", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")

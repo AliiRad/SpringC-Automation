@@ -9,15 +9,17 @@
 <div class="container">
 
     <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalAccount">Add New Account</button>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalAccount">Add New
+            Account
+        </button>
     </div>
 
-    <table class="table table-striped" th:if="${AccountList != null and #lists.size(AccountList) > 0}">
+    <table class="table table-striped" th:if="${accountList != null and #lists.size(accountList) > 0}">
         <thead>
         <th>Id</th>
         <th>Account Number</th>
         <th>Card Number</th>
-        <th>Account Owner</th>
+        <th>Person</th>
         <th>Bank And Branch</th>
         <th>Account Type</th>
         <th>Account Status</th>
@@ -31,13 +33,15 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-            <td th:text="${account.accountOwner}"></td>
+            <td th:text="${account.person.username}"></td>
             <td th:text="${account.bankAndBranch}"></td>
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>
             <td>Active</td>
-            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</a></td>
+            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
+            </td>
+            <td><a class="btn btn-danger deleteButtonJobs"
+                   th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</a></td>
         </tr>
         </tbody>
     </table>
@@ -55,37 +59,58 @@
 
                         <div class="mb-3">
                             <label for="accountNumber__add__account" class="col-form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber__add__account"  th:value="${account.accountNumber}" th:field="*{accountNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}">Invalid Account Number!</span>
+                            <input type="text" class="form-control" id="accountNumber__add__account"
+                                   th:value="${account.accountNumber}" th:field="*{accountNumber}">
+                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}"
+                                  th:errors="*{accountNumber}">Invalid Account Number!</span>
                         </div>
 
                         <div class="mb-3">
                             <label for="cardNumber__add__account" class="col-form-label">Card Number:</label>
-                            <input type="text" class="form-control" id="cardNumber__add__account"  th:value="${account.cardNumber}" th:field="*{cardNumber}">
+                            <input type="text" class="form-control" id="cardNumber__add__account"
+                                   th:value="${account.cardNumber}" th:field="*{cardNumber}">
                             <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>
                         </div>
 
                         <div class="mb-3">
-                            <label for="accountOwner__add__account" class="col-form-label">Account Owner:</label>
-                            <select class="form-select" id="accountOwner__add__account" name="accountOwner">
-                                <option value="">Select Account Owner</option>
-                                <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.firstName} + ' ' + ${person.lastName}"></option>
+                            <label for="person__add__account" class="col-form-label">Select Owner:</label>
+                            <select id="person__add__account" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="bankAndBranch__add__account" class="col-form-label">Bank And Branch:</label>
-                            <input type="text" class="form-control" id="bankAndBranch__add__account"  th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
-                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}" th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
+                            <input type="text" class="form-control" id="bankAndBranch__add__account"
+                                   th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
+                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}"
+                                  th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
                         </div>
 
                         <div class="mb-3">
-                            <label for="accountType__add__account" class="col-form-label">Account Type :</label>
-                            <select class="form-select" aria-label="Default select example" id="accountType__add__account" name="accountType" th:value="${account.accountType}" th:field="*{accountType}">
+                            <label for="accountType__add__account" class="col-form-label">Account Type:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="accountType__add__account" name="accountType" th:value="${account.accountType}"
+                                    th:field="*{accountType}">
                                 <option selected disabled value="-1">Choose Account Type</option>
-                                <option th:each="accountType : ${T(com.home.SpringBootAutomation.enums.AccountType).values()}" th:value="${accountType}" th:text="${accountType.label}"></option>
+                                <option th:each="accountType: ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"
+                                        th:value="${accountType}" th:text="${accountType.label}"></option>
                             </select>
                             <span class="error" th:if="${#fields.hasErrors('accountType')}" th:errors="*{accountType}">Invalid Account Type !</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountStatus__add__account" class="col-form-label">Account Status:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="accountStatus__add__account" name="accountStatus"
+                                    th:value="${account.accountStatus}" th:field="*{accountStatus}">
+                                <option selected disabled value="-1">Choose Account Status</option>
+                                <option th:each="accountStatus: ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"
+                                        th:value="${accountStatus}" th:text="${accountStatus.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('accountStatus')}"
+                                  th:errors="*{accountStatus}">Invalid Account Status!</span>
                         </div>
                     </div>
 
@@ -99,83 +124,111 @@
     </div>
 
     <div class="modal fade" id="editModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${account}" id="editFormAccount" th:action="@{/account/edit}" method="post">
+        <form th:object="${account}" id="editFormAccount" th:action="@{/account/edit}" method="put">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__Account">Edit Modal</h5>
+                        <h5 class="modal-title" id="edit__modal__title__account">Edit Modal</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div class="modal-body">
 
                         <div class="mb-3">
-                            <label for="id__edit__Account" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__Account" name="id" readonly>
+                            <label for="id__edit__account" class="col-form-label">ID:</label>
+                            <input type="text" class="form-control" id="id__edit__account" name="id" readonly>
                         </div>
 
                         <div class="mb-3">
                             <label for="accountNumber__edit__account" class="col-form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber__edit__account" name="accountNumber" th:value="${account.accountNumber}" th:field="*{accountNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}">Invalid Account Number!</span>
+                            <input type="text" class="form-control" id="accountNumber__edit__account"
+                                   name="accountNumber" th:value="${account.accountNumber}" th:field="*{accountNumber}">
+                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}"
+                                  th:errors="*{accountNumber}">Invalid Account Number!</span>
                         </div>
 
                         <div class="mb-3">
                             <label for="cardNumber__edit__account" class="col-form-label">Card Number:</label>
-                            <input type="text" class="form-control" id="cardNumber__edit__account" name="cardNumber" th:value="${account.cardNumber}" th:field="*{cardNumber}">
+                            <input type="text" class="form-control" id="cardNumber__edit__account" name="cardNumber"
+                                   th:value="${account.cardNumber}" th:field="*{cardNumber}">
                             <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>
                         </div>
 
-                        <div>
-                            <select th:field="*{accountOwner}">
-                                <option value="">Select...</option>
-                                <option th:each="ao : ${person}" th:value="${ao.id}" th:utext="${ao.username}"></option>
+                        <div class="mb-3">
+                            <label for="person__edit__account" class="col-form-label">Select Owner:</label>
+                            <select id="person__edit__account" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="bankAndBranch__edit__account" class="col-form-label">Bank And Branch:</label>
-                            <input type="text" class="form-control" id="bankAndBranch__edit__account" name="bankAndBranch" th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
-                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}" th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
+                            <input type="text" class="form-control" id="bankAndBranch__edit__account"
+                                   name="bankAndBranch" th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
+                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}"
+                                  th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
                         </div>
 
                         <div class="mb-3">
                             <label for="accountType__edit__account" class="col-form-label">Account Type:</label>
-                            <select class="form-select" aria-label="Default select example" id="accountType__edit__account" name="accountType" th:value="${account.accountType}" th:field="*{accountType}">
+                            <select class="form-select" aria-label="Default select example"
+                                    id="accountType__edit__account" name="accountType" th:value="${account.accountType}"
+                                    th:field="*{accountType}">
                                 <option selected disabled value="-1">Choose Account Type</option>
-                                <option th:each="accountType : ${T(com.home.SpringBootAutomation.enums.AccountType).values()}" th:value="${accountType}" th:text="${accountType.label}"></option>
+                                <option th:each="accountType: ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"
+                                        th:value="${accountType}" th:text="${accountType.label}"></option>
                             </select>
                             <span class="error" th:if="${#fields.hasErrors('accountType')}" th:errors="*{accountType}">Invalid Account Type !</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="accountStatus__edit__account" class="col-form-label">Account Status:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="accountStatus__edit__account" name="accountStatus"
+                                    th:value="${account.accountStatus}" th:field="*{accountStatus}">
+                                <option selected disabled value="-1">Choose Account Status</option>
+                                <option th:each="accountStatus : ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"
+                                        th:value="${accountStatus}" th:text="${accountStatus.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('accountStatus')}"
+                                  th:errors="*{accountStatus}">Invalid Account Status!</span>
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__account" onclick="edit()">Save Edited</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__account" onclick="edit()">
+                            Save Edited
+                        </button>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 
-    <div class="modal fade" id="deleteModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal fade" id="deleteModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
 
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelAccount"> Confirm The Deletion !</h5>
+                    <h5 class="modal-title" id="exampleModalLabelAccount"> Confirm The Deletion!</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="mb-3" th:object="${account}">
-                        <label for="id__delete__Account" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__Account" name="id" readonly th:text="${account.id}">
+                        <label for="id__delete__Account" class="col-form-label">ID:</label>
+                        <input type="text" class="form-control" id="id__delete__Account" name="id" readonly
+                               th:text="${account.id}">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonAccount"  th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" id="deleteConfirmButtonAccount"
+                            th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete
+                    </button>
                 </div>
             </div>
         </div>
@@ -187,16 +240,16 @@
 <script type="text/javascript" th:src="@{js/account.js}" src="../static/js/account.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.ajax({
             url: '/person',
             type: 'GET',
-            success: function(data) {
-                $.each(data, function(index, person) {
+            success: function (data) {
+                $.each(data, function (index, person) {
                     $('#accountOwner__add__account').append('<option value="' + person.id + '">' + person.firstName + ' ' + person.lastName + '</option>');
                 });
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });

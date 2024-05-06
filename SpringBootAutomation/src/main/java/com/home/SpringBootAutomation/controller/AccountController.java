@@ -78,7 +78,6 @@ public class AccountController {
     public String delete(@PathVariable Long id, Model model) {
         try {
             serviceImp.logicalRemove(id);
-
             log.info("The Account With Id :" + id + " Successfully Deleted");
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Account With Id : " + id + " Successfully Deleted .");
@@ -94,10 +93,10 @@ public class AccountController {
     @GetMapping
     public String findAll(Model model) {
         try {
-            List<Account> personList = serviceImp.findAccountByDeletedFalse();
+            List<Account> accountList = serviceImp.findAccountByDeletedFalse();
             log.info("Controller - Find Accounts With Deleted False - Get Method");
             model.addAttribute("account", new Account());
-            model.addAttribute("accountList", personList);
+            model.addAttribute("accountList", accountList);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Account List Is Not Empty");
             List<Person> person = personService.findAll();
@@ -112,14 +111,16 @@ public class AccountController {
     }
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Account>> findById(@PathVariable("id") Long id, Model model) {
+    public ResponseEntity<Optional<Account>> findById(@PathVariable("id") Long id) {
         try {
             Optional<Account> account = serviceImp.findAccountByIdAndDeletedFalse(id);
-            return ResponseEntity.ok(account);
+            if (account.isPresent()) {
+                return ResponseEntity.ok(account);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
         } catch (Exception e) {
             log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
             return null;
         }
     }

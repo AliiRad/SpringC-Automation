@@ -12,7 +12,7 @@ async function findById(id){
     let accountId =document.getElementById("id__edit__Account");
     let accountAccountNumber = document.getElementById("accountNumber__edit__account");
     let accountCardNumber = document.getElementById("cardNumber__edit__account")
-    let accountAccountOwner = document.getElementById("accountOwner__edit__account");
+    let accountPerson = document.getElementById("person__edit__account");
     let accountBankAndBranch = document.getElementById("bankAndBranch__edit__account");
     let accountAccountType = document.getElementById("accountType__edit__account");
     let accountAccountStatus = document.getElementById("accountStatus__edit__account");
@@ -20,20 +20,14 @@ async function findById(id){
     accountId.value = data.id;
     accountAccountNumber.value = data.accountNumber;
     accountCardNumber.value = data.cardNumber;
-    accountAccountOwner.value =data.accountOwner;
+    accountPerson.value =data.person;
     accountBankAndBranch.value = data.bankAndBranch;
     accountAccountType.value = data.accountType;
     accountAccountStatus.value = data.accountStatus;
 }
 
-async function edit(){
-
-    const formData = new FormData(document.getElementById("editFormAccount"));
-
-    const resp = await fetch("/account/edit" ,{
-        method:"POST",
-        body: formData
-    });
+function edit() {
+    document.getElementById("editFormAccount").submit();
 }
 
 async function openDeleteModal(id){

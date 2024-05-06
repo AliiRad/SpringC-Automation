@@ -24,6 +24,7 @@ public interface AccountService {
     Account logicalRemoveWithReturn(Long id) throws NoContentException;
 
     List<Account> findAccountByDeletedFalse();
+
     Optional<Account> findAccountByIdAndDeletedFalse(Long id) throws NoContentException;
 
     Long countByDeletedFalse();
