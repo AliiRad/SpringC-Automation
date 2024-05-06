@@ -1,6 +1,8 @@
 package com.home.SpringBootAutomation.model;
 
 
+import com.home.SpringBootAutomation.enums.AccountStatus;
+import com.home.SpringBootAutomation.enums.AccountType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -29,8 +31,8 @@ public class Account {
     private Long id;
 
     @Column(name = "account_account_number", length = 50)
-    @Pattern(regexp = "^\\d{3,50}$", message = "Invalid Account Number")
-    @Size(min = 3, max = 50, message = "Account Number must be between 3 and 50 characters")
+    @Pattern(regexp = "^\\d{3,30}$", message = "Invalid Account Number")
+    @Size(min = 3, max = 50, message = "Account Number must be between 3 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String accountNumber;
 
@@ -50,25 +52,17 @@ public class Account {
     @NotBlank(message = "Should Not Be Null")
     private String bankAndBranch;
 
-    @Column(name = "account_account_type",  columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Type")
-    @Size(min = 3, max = 50, message = "Account Type must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String accountType;
+    @Column(name = "account_account_type")
+    @Enumerated(EnumType.ORDINAL)
+    private AccountType accountType;
 
+    @Column(name = "account_account_status")
+    @Enumerated(EnumType.ORDINAL)
+    private AccountStatus accountStatus;
 
-    @Column(name = "account_account_status",columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Account Status")
-    @Size(min = 3, max = 50, message = "Account Status must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String accountStatus;
-    //TODO: Make Account Status Enum .
-
-    @Column(name = "account_deleted")                //      حذف بانک
+    @Column(name = "account_deleted")
     private boolean deleted;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private List<FinancialDocument> financialDocuments;
-
-
 }
