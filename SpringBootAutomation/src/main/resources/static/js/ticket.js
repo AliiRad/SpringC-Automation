@@ -30,7 +30,6 @@ async function findId(id) {
 async function edit() {
     const formData = new FormData(document.getElementById("editFormTicket"));
     console.log(formData)
-//todo: refresh page after edit- melika
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
         const response = await fetch("/ticket/edit", {method: "put", body: formData});
     }

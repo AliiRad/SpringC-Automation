@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+    <title>TicketGroup</title>
+</head>
+<body>
+<h2>TicketGroup Page</h2>
+
+<div class="container">
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#saveModalTicketGroup">Add
+            New TicketGroup
+        </button>
+    </div>
+
+    <table class="table table-striped" th:if="${#lists.size(ticketGroupParents) > 0}">
+        <thead>
+        <th>Id</th>
+        <th>TicketGroup Title</th>
+        <th>TicketGroup Field</th>
+        <th>Operation</th>
+        </thead>
+        <tbody>
+        <tr th:each="ticketGroup : ${ticketGroupList}">
+            <td th:text="${ticketGroup.id}"></td>
+            <td th:text="${ticketGroup.title}"></td>
+            <td th:text="${ticketGroup.root}"></td>
+            <td>
+                <button class="btn btn-warning editButtonJobs" th:data-name="${ticketGroup.id}"
+                        th:onclick="findId(this.getAttribute('data-name'))">Edit
+                </button>
+                <button class="btn btn-danger deleteButtonJobs" th:data-name="${ticketGroup.id}"
+                        th:onclick="deleted(this.getAttribute('data-name'))">Delete
+                </button>
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <!--Save Modal-->
+    <div class="modal fade" id="saveModalTicketGroup" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form id="saveFormTicketGroup">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__jobs">Save New TicketGroup </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="title__add__ticketGroup" class="col-form-label">Title :</label>
+                            <input type="text" name="title" class="form-control" id="title__add__ticketGroup">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="parent__add__ticketGroup" class="col-form-label">Title :</label>
+                            <input type="text" name="root" class="form-control" id="parent__add__ticketGroup">
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="parent_add__ticketGroup" class="col-form-label">Field :</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="parent_add__ticketGroup"
+                                    name="parent" th:if="${#lists.size(ticketGroupParents) > 0}">
+                                <option selected disabled value="-1">Choose TicketGroup Field :</option>
+                                <option th:each="ticketGroup : ${ticketGroupParents}"
+                                        th:value="${ticketGroup.parent}"
+                                        th:text="${ticketGroup.parent}">
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button onclick="save()" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--    &lt;!&ndash;Edit Modal&ndash;&gt;-->
+    <!--    <div class="modal fade" id="editModalTicketGroup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+    <!--        <form  id="editFormTicketGroup" action="" method="">-->
+    <!--            <div class="modal-dialog" role="document">-->
+    <!--                <div class="modal-content">-->
+
+    <!--                    <div class="modal-header">-->
+    <!--                        <h5 class="modal-title" id="edit__modal__title__ticketGroup">Edit TicketGroup</h5>-->
+    <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+    <!--                    </div>-->
+
+
+    <!--                    <div class="modal-body">-->
+
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="id__edit__ticketGroup" class="col-form-label">ID :</label>-->
+    <!--                            <input type="text" class="form-control" id="id__edit__ticketGroup" name="id" readonly>-->
+    <!--                        </div>-->
+
+
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="title__edit__ticketGroup" class="col-form-label">Title :</label>-->
+    <!--                            <input type="text" class="form-control" id="title__edit__ticketGroup" name="title">-->
+    <!--                        </div>-->
+
+
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="request__edit__ticketGroup" class="col-form-label">Request :</label>-->
+    <!--                            <input type="text" class="form-control" id="request__edit__ticketGroup" name="request">-->
+    <!--                        </div>-->
+
+
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="ticketGroupTimeStamp__edit__ticketGroup" class="col-form-label">Date :</label>-->
+    <!--                            <input type="datetime-local" class="form-control" id="ticketGroupTimeStamp__edit__ticketGroup"-->
+    <!--                                   name="ticketGroupTimeStamp">-->
+    <!--                        </div>-->
+
+    <!--                        <div class="mb-3">-->
+    <!--                            <label for="status__edit__ticketGroup" class="col-form-label">Status :</label>-->
+    <!--                            <select class="form-select" aria-label="Default select example" id="status__edit__ticketGroup"-->
+    <!--                                    name="status">-->
+    <!--                                <option selected disabled value="-1">Choose TicketGroup Status :</option>-->
+    <!--                                <option value="unassigned">Unassigned</option>-->
+    <!--                                <option value="open">Open</option>-->
+    <!--                                <option value="answered">Answered</option>-->
+    <!--                                <option value="postponed">Postponed</option>-->
+    <!--                                <option value="closed">Closed</option>-->
+    <!--                            </select>-->
+    <!--                        </div>-->
+
+    <!--                        &lt;!&ndash;                        <div class="mb-3">&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <label for="deleted__edit__ticketGroup" class="col-form-label">Deleted :</label>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticketGroup"&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                    name="deleted" th:value="${ticketGroup.deleted}" th:field="*{deleted}">&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option selected disabled value="-1">Choose TicketGroup State :</option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option value="true">Not Active</option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option value="false">Active</option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            </select>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <span class="error" th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}">Invalid State !</span>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                        </div>&ndash;&gt;-->
+
+    <!--                        &lt;!&ndash;                        <div class="mb-3">&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <label for="group__edit__ticketGroup" class="col-form-label">Group :</label>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <select class="form-select" aria-label="Default select example" id="group__add__ticketGroup"&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                    name="group" th:value="${ticketGroup.group}" th:field="*{group}">&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option selected disabled value="-1">Choose TicketGroup Group :</option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option value=""></option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                <option value=""></option>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            </select>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                            <span class="error" th:if="${#fields.hasErrors('group')}"&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                                  th:errors="*{group}">Invalid Group !</span>&ndash;&gt;-->
+    <!--                        &lt;!&ndash;                        </div>&ndash;&gt;-->
+
+
+    <!--                        <div class="modal-footer">-->
+    <!--                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+    <!--                            <button type="submit" class="btn btn-primary" id="submitEditModal__ticketGroup" onclick="edit()">-->
+    <!--                                Edit-->
+    <!--                            </button>-->
+    <!--                        </div>-->
+
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </form>-->
+
+</div>
+
+
+</div>
+
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/ticketGroup.js}" src="../static/js/ticketGroup.js"></script>
+</body>
+</html>

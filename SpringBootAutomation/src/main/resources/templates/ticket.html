@@ -10,7 +10,8 @@
 
 <div class="container">
     <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#saveModalTicket">Add New Ticket
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#saveModalTicket">Add New
+            Ticket
         </button>
     </div>
 
@@ -39,8 +40,12 @@
             <td th:text="${ticket.status}"></td>
             <td th:text="${ticket.deleted}"></td>
             <td>
-                <button class="btn btn-warning editButtonJobs"  th:data-name="${ticket.id}" th:onclick="findId(this.getAttribute('data-name'))">Edit</button>
-                <button class="btn btn-danger deleteButtonJobs" th:data-name="${ticket.id}" th:onclick="deleted(this.getAttribute('data-name'))">Delete</button>
+                <button class="btn btn-warning editButtonJobs" th:data-name="${ticket.id}"
+                        th:onclick="findId(this.getAttribute('data-name'))">Edit
+                </button>
+                <button class="btn btn-danger deleteButtonJobs" th:data-name="${ticket.id}"
+                        th:onclick="deleted(this.getAttribute('data-name'))">Delete
+                </button>
             </td>
         </tr>
 
@@ -49,10 +54,9 @@
 
     <!--Save Modal-->
     <div class="modal fade" id="saveModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form  id="saveFormTicket" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+        <form id="saveFormTicket">
                     <div class="modal-header">
                         <h5 class="modal-title" id="save__modal__title__jobs">Save New Ticket </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -69,7 +73,7 @@
 
                         <div class="mb-3">
                             <label for="request__add__ticket" class="col-form-label">Request :</label>
-                            <input type="text"  name="request" class="form-control" id="request__add__ticket">
+                            <input type="text" name="request" class="form-control" id="request__add__ticket">
                         </div>
 
 
@@ -84,21 +88,20 @@
                         <!--                        </div>-->
                     </div>
 
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button  onclick="save()" class="btn btn-primary">Save</button>
-                    </div>
+        </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button onclick="save()" class="btn btn-primary">Save</button>
                 </div>
             </div>
-        </form>
+        </div>
 
     </div>
     <!--Edit Modal-->
     <div class="modal fade" id="editModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form  id="editFormTicket" action="" method="">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="editFormTicket" action="" method="">
 
                     <div class="modal-header">
                         <h5 class="modal-title" id="edit__modal__title__ticket">Edit Ticket</h5>
@@ -145,16 +148,16 @@
                             </select>
                         </div>
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="deleted__edit__ticket" class="col-form-label">Deleted :</label>-->
-<!--                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticket"-->
-<!--                                    name="deleted" th:value="${ticket.deleted}" th:field="*{deleted}">-->
-<!--                                <option selected disabled value="-1">Choose Ticket State :</option>-->
-<!--                                <option value="true">Not Active</option>-->
-<!--                                <option value="false">Active</option>-->
-<!--                            </select>-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}">Invalid State !</span>-->
-<!--                        </div>-->
+                        <!--                        <div class="mb-3">-->
+                        <!--                            <label for="deleted__edit__ticket" class="col-form-label">Deleted :</label>-->
+                        <!--                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticket"-->
+                        <!--                                    name="deleted" th:value="${ticket.deleted}" th:field="*{deleted}">-->
+                        <!--                                <option selected disabled value="-1">Choose Ticket State :</option>-->
+                        <!--                                <option value="true">Not Active</option>-->
+                        <!--                                <option value="false">Active</option>-->
+                        <!--                            </select>-->
+                        <!--                            <span class="error" th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}">Invalid State !</span>-->
+                        <!--                        </div>-->
 
                         <!--                        <div class="mb-3">-->
                         <!--                            <label for="group__edit__ticket" class="col-form-label">Group :</label>-->
@@ -169,17 +172,16 @@
                         <!--                        </div>-->
 
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" id="submitEditModal__ticket" onclick="edit()">
-                                Edit
-                            </button>
-                        </div>
-
                     </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submitEditModal__ticket" onclick="edit()">
+                        Edit
+                    </button>
                 </div>
             </div>
-        </form>
+        </div>
 
     </div>
 
