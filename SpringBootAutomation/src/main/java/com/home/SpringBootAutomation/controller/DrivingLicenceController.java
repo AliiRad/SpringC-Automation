@@ -126,26 +126,26 @@ public class DrivingLicenceController {
     }
 
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<DrivingLicence>> findById(@PathVariable("id") Long id, Model model) {
-        try {
-
-
-            Optional<DrivingLicence> drivingLicence = service.findByIdAndDeletedFalse(id);
-
-            return ResponseEntity.ok(drivingLicence);
-        } catch (Exception e) {
-
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
-            return null;
-        }
-
-    }
+//    @GetMapping("/findById/{id}")
+//    public ResponseEntity<Optional<DrivingLicence>> findById(@PathVariable("id") Long id, Model model) {
+//        try {
+//
+//            // TODO: Fox output of findByIdAndDeletedFalse method in service. please change the name of services and  write exact name of services Like -> drivingLicenceService for better understanding
+////            Optional<DrivingLicence> drivingLicence = service.findByIdAndDeletedFalse(id);
+//
+//            return ResponseEntity.ok(drivingLicence);
+//        } catch (Exception e) {
+//
+//            log.error(e.getMessage());
+//            model.addAttribute("messageType", "error");
+//            model.addAttribute("messageContent", e.getMessage());
+//
+//            //TODO: return Error Page .
+//
+//            //return ResponseEntity.noContent();
+//            return null;
+//        }
+//
+//    }
 
 }
