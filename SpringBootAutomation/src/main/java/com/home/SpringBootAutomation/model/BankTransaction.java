@@ -1,7 +1,5 @@
 package com.home.SpringBootAutomation.model;
 
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity(name = "bankTransactionEntity")
 @Table(name = "bank_transaction_tbl")
+
 public class BankTransaction {
     @Id
     @SequenceGenerator(name = "bankTransactionSeq", sequenceName = "bankTransaction_seq", allocationSize = 1)
@@ -29,12 +28,12 @@ public class BankTransaction {
     private FinancialDocument balance;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "bank_transaction_financial_document")
+    @JoinColumn(name = "bank_transaction_f_d")
     private FinancialDocument financialDocument;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "bank_transaction_employee")
-    private Person employee;
+    @JoinColumn(name = "bank_transaction_person")
+    private Person person;
 
     @Column(name = "bank_transaction_deleted")
     private boolean deleted;

@@ -18,4 +18,6 @@ public interface BankTransactionRepository extends JpaRepository<BankTransaction
     List<BankTransaction> findBankTransactionByDeletedFalse();
 
     Long countByDeletedFalse();
+
+    Optional<BankTransaction> findBankTransactionByIdAndDeletedFalse(Long id);
 }
