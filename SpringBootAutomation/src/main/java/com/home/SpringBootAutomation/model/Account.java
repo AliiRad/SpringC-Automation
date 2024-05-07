@@ -1,6 +1,5 @@
 package com.home.SpringBootAutomation.model;
 
-
 import com.home.SpringBootAutomation.enums.AccountStatus;
 import com.home.SpringBootAutomation.enums.AccountType;
 import jakarta.persistence.*;
@@ -14,6 +13,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,13 +33,11 @@ public class Account {
     @Column(name = "account_account_number", length = 50)
     @Pattern(regexp = "^\\d{3,30}$", message = "Invalid Account Number")
     @Size(min = 3, max = 50, message = "Account Number must be between 3 and 30 characters")
-    @NotBlank(message = "Should Not Be Null")
     private String accountNumber;
 
     @Column(name = "account_card_number", length = 16)
     @Pattern(regexp = "^\\d{16}$", message = "Invalid Card Number")
     @Size( min = 16 , max = 16, message = "Card Number must be Exactly 16")
-    @NotBlank(message = "Should Not Be Null")
     private String cardNumber;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
@@ -49,7 +47,6 @@ public class Account {
     @Column(name = "account_bank_and_branch", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")
     @Size(min = 3, max = 50, message = "Bank And Branch must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
     private String bankAndBranch;
 
     @Column(name = "account_account_type")

@@ -239,22 +239,6 @@
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" th:src="@{js/account.js}" src="../static/js/account.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: '/person',
-            type: 'GET',
-            success: function (data) {
-                $.each(data, function (index, person) {
-                    $('#accountOwner__add__account').append('<option value="' + person.id + '">' + person.firstName + ' ' + person.lastName + '</option>');
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
-        });
-    });
-</script>
 
 </body>
 </html>
