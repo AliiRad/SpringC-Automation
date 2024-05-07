@@ -32,8 +32,8 @@
             <td th:text="${bankTransaction.financialDocument.id}"></td>
             <td th:text="${bankTransaction.person.username}"></td>
             <td>Active</td>
-            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${bankTransaction.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'deleteById(\'' + ${bankTransaction.id} + '\')'">Delete</a></td>
+            <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${bankTransaction.id} + '\')'">Edit</a></td>
+            <td><a class="btn btn-danger deleteButtonAccount" th:onclick="'deleteById(\'' + ${bankTransaction.id} + '\')'">Delete</a></td>
         </tr>
         </tbody>
     </table>
@@ -43,7 +43,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Bank Transaction </h5>
+                        <h5 class="modal-title" id="save__modal__title__bankTransaction">Save New Bank Transaction </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
