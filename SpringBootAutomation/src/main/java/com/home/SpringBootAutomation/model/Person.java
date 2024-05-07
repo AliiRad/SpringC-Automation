@@ -102,9 +102,9 @@ public class Person {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
     private List<Account> accounts;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "customer")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
     private List<FinancialDocument> financialDocuments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<BankTransaction> bankTransactions;
 }
