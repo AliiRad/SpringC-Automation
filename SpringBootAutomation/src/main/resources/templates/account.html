@@ -38,9 +38,9 @@
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>
             <td>Active</td>
-            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
+            <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
             </td>
-            <td><a class="btn btn-danger deleteButtonJobs"
+            <td><a class="btn btn-danger deleteButtonAccount"
                    th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</a></td>
         </tr>
         </tbody>
@@ -51,7 +51,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Person </h5>
+                        <h5 class="modal-title" id="save__modal__title__account">Save New Account </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
