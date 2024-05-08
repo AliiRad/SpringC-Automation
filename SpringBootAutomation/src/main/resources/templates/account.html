@@ -19,7 +19,8 @@
         <th>Id</th>
         <th>Account Number</th>
         <th>Card Number</th>
-        <th>Person</th>
+        <th>Name</th>
+        <th>LastName</th>
         <th>Bank And Branch</th>
         <th>Account Type</th>
         <th>Account Status</th>
@@ -33,7 +34,8 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-            <td th:text="${account.person.username}"></td>
+            <td th:text="${account.person.name}"></td>
+            <td th:text="${account.person.lastname}"></td>
             <td th:text="${account.bankAndBranch}"></td>
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>

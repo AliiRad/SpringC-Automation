@@ -19,7 +19,8 @@
         <th>Id</th>
         <th>Balance</th>
         <th>Financial Document</th>
-        <th>Person</th>
+        <th>Name</th>
+        <th>LastName</th>
         <th>Status</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -28,9 +29,10 @@
         <tbody>
         <tr th:each="bankTransaction : ${bankTransactionList}">
             <td th:text="${bankTransaction.id}"></td>
-            <td th:text="${bankTransaction.balance}"></td>
+            <td th:text="${bankTransaction.financialDocument.amount}"></td>
             <td th:text="${bankTransaction.financialDocument.id}"></td>
-            <td th:text="${bankTransaction.person.username}"></td>
+            <td th:text="${bankTransaction.person.name}"></td>
+            <td th:text="${bankTransaction.person.lastname}"></td>
             <td>Active</td>
             <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${bankTransaction.id} + '\')'">Edit</a></td>
             <td><a class="btn btn-danger deleteButtonAccount" th:onclick="'deleteById(\'' + ${bankTransaction.id} + '\')'">Delete</a></td>
@@ -48,14 +50,6 @@
                     </div>
 
                     <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="balance__add__bankTransaction" class="col-form-label">Balance:</label>
-                            <input type="text" class="form-control" id="balance__add__bankTransaction"
-                                   th:value="${bankTransaction.balance}" th:field="*{balance}">
-                            <span class="error" th:if="${#fields.hasErrors('balance')}"
-                                  th:errors="*{balance}">Invalid Balance!</span>
-                        </div>
 
                         <div class="mb-3">
                             <label for="financialDocument__add__bankTransaction" class="col-form-label">Select Financial Document:</label>
@@ -98,14 +92,6 @@
                         <div class="mb-3">
                             <label for="id__edit__bankTransaction" class="col-form-label">ID:</label>
                             <input type="text" class="form-control" id="id__edit__bankTransaction" name="id" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="balance__edit__bankTransaction" class="col-form-label">Balance:</label>
-                            <input type="text" class="form-control" id="balance__edit__bankTransaction"
-                                   name="balance" th:value="${bankTransaction.balance}" th:field="*{balance}">
-                            <span class="error" th:if="${#fields.hasErrors('balance')}"
-                                  th:errors="*{balance}">Invalid Balance!</span>
                         </div>
 
                         <div class="mb-3">

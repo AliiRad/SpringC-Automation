@@ -26,7 +26,8 @@
         <th>Account</th>
         <th>Transaction Type</th>
         <th>Document Type</th>
-        <th>Person</th>
+        <th>Name</th>
+        <th>LastName</th>
         <th>Status</th>
         <th>Edit</th>
         <th>Delete</th>
@@ -41,7 +42,8 @@
             <td th:text="${financialDocument.account.accountNumber}"></td>
             <td th:text="${financialDocument.transactionType}"></td>
             <td th:text="${financialDocument.documentType}"></td>
-            <td th:text="${financialDocument.person.username}"></td>
+            <td th:text="${financialDocument.person.name}"></td>
+            <td th:text="${financialDocument.person.lastname}"></td>
             <td>Active</td>
             <td><a class="btn btn-warning editButtonFinancialDocument" th:onclick="'findById(\'' + ${financialDocument.id} + '\')'">Edit</a>
             </td>
