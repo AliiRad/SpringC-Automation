@@ -2,11 +2,9 @@ package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.AppointmentDecree;
 import com.home.SpringBootAutomation.model.Person;
-import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.service.impl.AppointmentDecreeServiceImp;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -122,7 +120,6 @@ public class AppointmentDecreeController {
     @GetMapping("/findById/{id}")
     public ResponseEntity<Optional<AppointmentDecree>> findById(@PathVariable("id") Long id,Model model) {
         try {
-
             Optional<AppointmentDecree> appointmentDecree = service.findAppointmentDecreeByIdAndDeletedFalse(id);
             return ResponseEntity.ok(appointmentDecree);
         }catch (Exception e) {
