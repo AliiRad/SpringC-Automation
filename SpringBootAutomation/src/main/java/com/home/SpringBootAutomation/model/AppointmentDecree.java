@@ -31,8 +31,9 @@ public class AppointmentDecree {
     @Column(name = "appointment_decree_id")
     private Long id;
 
-//    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-//    private Person person;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointment_decree_person")
+    private Person person;
 
     @Column(name = "appointment_decree_type_of_employment" )
     @Enumerated(EnumType.ORDINAL)
@@ -88,9 +89,9 @@ public class AppointmentDecree {
     @NotBlank(message = "Should Not Be Null")
     private String workingHours;                                                             //ساعت کاری
 
-    @Column(name = "appointment_decree_working_day", length = 4)
-    @Min(1)
-    @Max(4)
+    @Column(name = "appointment_decree_working_day")
+//    @Min(1)
+//    @Max(4)
     private Integer workingDay;                                                                  //روز کارکرد
 
     @Column(name = "appointment_decree_appointment_type")

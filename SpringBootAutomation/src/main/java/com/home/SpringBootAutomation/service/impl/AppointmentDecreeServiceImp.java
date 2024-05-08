@@ -24,14 +24,12 @@ public class AppointmentDecreeServiceImp implements AppointmentDecreeService {
     }
 
     @Override
+    @Transactional
     public AppointmentDecree update(AppointmentDecree appointmentDecree) throws NoContentException {
-        Optional<AppointmentDecree> optionalAppointmentDecree = repository.findAppointmentDecreeByIdAndDeletedFalse(appointmentDecree.getId());
-
-        if (optionalAppointmentDecree.isPresent()) {
-            return repository.save(appointmentDecree);
-        } else {
-            throw new NoContentException("AppointmentDecree not found !");
-        }
+        if (findById(appointmentDecree.getId()).isPresent()) {
+          repository.save(appointmentDecree);
+            return appointmentDecree;
+        } else throw new NoContentException("Ticket Not Found !");
     }
 
     @Transactional

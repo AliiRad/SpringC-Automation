@@ -1,10 +1,14 @@
 package com.home.SpringBootAutomation.controller;
 
-import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.AppointmentDecree;
+import com.home.SpringBootAutomation.model.Person;
+import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.service.impl.AppointmentDecreeServiceImp;
+import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +24,9 @@ import java.util.Optional;
 public class AppointmentDecreeController {
     private final AppointmentDecreeServiceImp service;
 
+    @Autowired
+    private PersonServiceImpl personService;
+
     public AppointmentDecreeController(AppointmentDecreeServiceImp service) {
         this.service = service;
     }
@@ -30,9 +37,9 @@ public class AppointmentDecreeController {
             if (result.hasErrors()) {
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", result.getAllErrors().toString());
+
                 log.error("Controller - AppointmentDecree Save Failed ! --->" + result.getAllErrors());
                 return "appointmentDecree";
-
             }
             service.save(appointmentDecree);
             log.info("Controller - AppointmentDecree Saved - Post Method ---->" + " appointmentDecree :" + appointmentDecree.toString());
@@ -40,8 +47,6 @@ public class AppointmentDecreeController {
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "AppointmentDecree Saved successfully");
             return "redirect:/appointmentDecree";
-
-
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
@@ -50,22 +55,25 @@ public class AppointmentDecreeController {
         }
     }
 
-    @PostMapping("/edit")
+    @PutMapping("/edit")
     public String edit(@Valid AppointmentDecree appointmentDecree, BindingResult result, Model model) {
         try {
             if (result.hasErrors()) {
+
                 model.addAttribute("messageType", "error");
                 model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - AppointmentDecree Edit Failed ! --->" + result.getAllErrors());
+                log.error(" Did Not Edit ! --->" + result.getAllErrors());
                 return "appointmentDecree";
+
             }
             service.update(appointmentDecree);
-            log.info("Controller - AppointmentDecree Edited - Put Method ---->" + " appointmentDecree :" + appointmentDecree.toString());
+            log.info("AppointmentDecree Edited - Put Method ---->" + "appointmentDecree :" + appointmentDecree.toString());
 
             model.addAttribute("appointmentDecree", appointmentDecree);
             model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "AppointmentDecree Saved successfully");
+            model.addAttribute("messageContent", "AppointmentDecree Edited Successfully .");
             return "redirect:/appointmentDecree";
+
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
@@ -77,14 +85,11 @@ public class AppointmentDecreeController {
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
         try {
-//
             service.logicalRemove(id);
-
             log.info("The Person With Id :" + id + " Successfully Deleted");
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "AppointmentDecree With Id : " + id + " Successfully Deleted .");
             return "redirect:/appointmentDecree";
-
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
@@ -93,6 +98,7 @@ public class AppointmentDecreeController {
             //TODO: Maybe a 500 error page ?
         }
     }
+
     @GetMapping
     public String findAll(Model model) {
         try {
@@ -102,6 +108,8 @@ public class AppointmentDecreeController {
             model.addAttribute("appointmentDecreeList", appointmentDecreeList);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "AppointmentDecree List Is Not Empty");
+            List<Person> person = personService.findAll();
+            model.addAttribute("person", person);
             return "appointmentDecree";
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -112,21 +120,17 @@ public class AppointmentDecreeController {
     }
 
     @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<AppointmentDecree>> findById(@PathVariable("id") Long id, Model model) {
+    public ResponseEntity<Optional<AppointmentDecree>> findById(@PathVariable("id") Long id,Model model) {
         try {
+
             Optional<AppointmentDecree> appointmentDecree = service.findAppointmentDecreeByIdAndDeletedFalse(id);
             return ResponseEntity.ok(appointmentDecree);
-        } catch (Exception e) {
+        }catch (Exception e) {
+
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
-
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
             return null;
         }
-
     }
-
 }
