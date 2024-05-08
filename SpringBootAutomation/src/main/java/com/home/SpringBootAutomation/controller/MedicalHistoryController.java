@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
-@RequestMapping(value = "/medical")
+@RequestMapping(value = "/medicalHistory")
 public class MedicalHistoryController {
     private MedicalHistoryServiceImp medicalHistoryServiceImp;
 
