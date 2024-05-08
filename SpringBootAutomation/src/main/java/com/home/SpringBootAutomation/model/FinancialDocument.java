@@ -29,41 +29,39 @@ public class FinancialDocument {
     @Column(name = "financial_document_id",length = 20)
     private Long id;
 
-    @Column(name = "financial_document_document_date")
+    @Column(name = "financial_document_d_date")
     @Past(message = "Invalid Document Date")
     private LocalDate documentDate;
 
-    @Column(name = "financial_document_amount", length = 50)
-    @Min(1)
-    @Max(50)
+    @Column(name = "financial_document_amount")
+//    @Min(1)
+//    @Max(50)
     private int amount;
 
     @Column(name = "financial_document_behalf", columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^{3,50}$", message = "Invalid Behalf")
+    @Pattern(regexp = "^.{3,50}$", message = "Invalid Behalf")
     @Size(min = 3, max = 50, message = "Behalf must be between 3 and 50 characters")
-    @NotBlank(message = "Should Not Be Null")
     private String behalf;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
     @JoinColumn(name = "financial_document_account")
     private Account account;
 
-    @Column(name = "financial_document_transaction_type")
+    @Column(name = "financial_document_t_type")
     @Enumerated(EnumType.ORDINAL)
     private TransactionType transactionType;
 
-    @Column(name = "financial_document_document_type")
+    @Column(name = "financial_document_d_type")
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
     @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "financial_document_customer")
-    private Person customer;
+    @JoinColumn(name = "financial_document_person")
+    private Person person;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "financialDocument")
     private List<BankTransaction> bankTransactions;
 
     @Column(name = "financial_document_deleted")
     private boolean deleted;
-
 }

@@ -3,72 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <title>Financial Document</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
 <h2>FinancialDocument</h2>
-<form th:action="@{/financialDocument/save}" method="post" th:object="${financialDocument}">
-    <label>
-        <input type="date" placeholder="Document Date" th:value="${documentDate}" th:field="*{documentDate}">
-    </label>
-    <br>
-    <label>
-        <input type="number" placeholder="Amount" th:value="${amount}" th:field="*{amount}">
-    </label>
-    <br>
-    <label>
-        <input type="text" placeholder="Behalf" th:value="${behalf}" th:field="*{behalf}">
-    </label>
-    <br>
-    <label>
-        <input type="text" placeholder="Account" th:value="${account}" th:field="*{account}">
-    </label>
-    <br>
-    <label for="transactionType">Transaction Type:</label>
-        <!-- Enum Dropdown -->
-        <select id="transactionType" name="transactionType" th:field="*{transactionType}" required>
-            <option th:each="transactionType : ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
-                    th:value="${transactionType}" th:text="${transactionType}"></option>
-        </select>
-    <br>
-    <label for="documentType">Document Type:</label>
-    <!-- Enum Dropdown -->
-    <select id="documentType" name="documentType" th:field="*{documentType}" required>
-        <option th:each="documentType : ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
-                th:value="${documentType}" th:text="${documentType}"></option>
-    </select>
-    <br>
-    <label>
-        <input type="text" placeholder="Customer" th:value="${customer}" th:field="*{customer}">
-    </label>
-    <br>
-    <input type="submit" value="Save">
-</form>
-<table th:list="${financialDocumentList}">
-    <thead>
-    <th>Id</th>
-    <th>Document Date</th>
-    <th>Account</th>
-    <th>Behalf</th>
-    <th>Account</th>
-    <th>Transaction Type</th>
-    <th>Document Type</th>
-    <th>Customer</th>
-    <th>Operation</th>
-    </thead>
-    <tbody>
-    <tr th:each="financialDocument : ${financialDocumentList}">
-        <td th:text="${financialDocument.id}"></td>
-        <td th:text="${financialDocument.documentDate}"></td>
-        <td th:text="${financialDocument.amount}"></td>
-        <td th:text="${financialDocument.behalf}"></td>
-        <td th:text="${financialDocument.account}"></td>
-        <td th:text="${financialDocument.transactionType}"></td>
-        <td th:text="${financialDocument.documentType}"></td>
-        <td th:text="${financialDocument.customer}"></td>
-        <td><a th:href="@{/financialDocument/edit/{id}(id=${financialDocument.id})}">Edit</a></td>
-        <td><a th:href="@{/financialDocument/delete/{id}(id=${financialDocument.id})}">Delete</a></td>
-    </tr>
-    </tbody>
-</table>
+<div class="container">
+
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                data-bs-target="#addModalFinancialDocument">Add New
+            Financial Document
+        </button>
+    </div>
+
+    <table class="table table-striped"
+           th:if="${financialDocumentList != null and #lists.size(financialDocumentList) > 0}">
+        <thead>
+        <th>Id</th>
+        <th>Document Date</th>
+        <th>Amount</th>
+        <th>Behalf</th>
+        <th>Account</th>
+        <th>Transaction Type</th>
+        <th>Document Type</th>
+        <th>Person</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="financialDocument: ${financialDocumentList}">
+            <td th:text="${financialDocument.id}"></td>
+            <td th:text="${financialDocument.documentDate}"></td>
+            <td th:text="${financialDocument.amount}"></td>
+            <td th:text="${financialDocument.behalf}"></td>
+            <td th:text="${financialDocument.account.accountNumber}"></td>
+            <td th:text="${financialDocument.transactionType}"></td>
+            <td th:text="${financialDocument.documentType}"></td>
+            <td th:text="${financialDocument.person.username}"></td>
+            <td>Active</td>
+            <td><a class="btn btn-warning editButtonFinancialDocument" th:onclick="'findById(\'' + ${financialDocument.id} + '\')'">Edit</a>
+            </td>
+            <td><a class="btn btn-danger deleteButtonFinancialDocument"
+                   th:onclick="'deleteById(\'' + ${financialDocument.id} + '\')'">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="addModalFinancialDocument" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <form th:action="@{/financialDocument/save}" method="post" th:object="${financialDocument}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__financialDocument">Save New Financial Document </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="documentDate__add__financialDocument" class="col-form-label">Document Date :</label>
+                            <input type="date" class="form-control" id="documentDate__add__financialDocument"
+                                   th:value="${financialDocument.documentDate}" th:field="*{documentDate}">
+                            <span class="error" th:if="${#fields.hasErrors('documentDate')}" th:errors="*{documentDate}">Invalid Document Date !</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="amount__add__financialDocument" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount__add__financialDocument"
+                                   th:value="${financialDocument.amount}" th:field="*{amount}">
+                            <span class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid Amount!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="behalf__add__financialDocument" class="col-form-label">Behalf:</label>
+                            <input type="text" class="form-control" id="behalf__add__financialDocument"
+                                   th:value="${financialDocument.behalf}" th:field="*{behalf}">
+                            <span class="error" th:if="${#fields.hasErrors('behalf')}" th:errors="*{behalf}">Invalid Behalf!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="account__add__financialDocument" class="col-form-label">Select Account:</label>
+                            <select id="account__add__financialDocument" th:field="*{account}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${account}" th:value="${ac.id}" th:utext="${ac.accountNumber}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="transactionType__add__financialDocument" class="col-form-label">Transaction Type:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="transactionType__add__financialDocument" name="transactionType"
+                                    th:value="${financialDocument.transactionType}" th:field="*{transactionType}">
+                                <option selected disabled value="-1">Choose Transaction Type</option>
+                                <option th:each="transactionType: ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
+                                        th:value="${transactionType}" th:text="${transactionType.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('transactionType')}"
+                                  th:errors="*{transactionType}">Invalid Transaction Type !</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="documentType__add__financialDocument" class="col-form-label">Document Type:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="documentType__add__financialDocument" name="documentType"
+                                    th:value="${financialDocument.documentType}" th:field="*{documentType}">
+                                <option selected disabled value="-1">Choose Document Type</option>
+                                <option th:each="documentType: ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
+                                        th:value="${documentType}" th:text="${documentType.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('documentType')}"
+                                  th:errors="*{documentType}">Invalid Document Type!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="person__add__financialDocument" class="col-form-label">Select Employee:</label>
+                            <select id="person__add__financialDocument" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="editModalFinancialDocument" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:object="${financialDocument}" id="editFormFinancialDocument" th:action="@{/financialDocument/edit}" method="put">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title__financialDocument">Edit Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="id__edit__financialDocument" class="col-form-label">ID:</label>
+                            <input type="text" class="form-control" id="id__edit__financialDocument" name="id" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="documentDate__edit__financialDocument" class="col-form-label">Document Date:</label>
+                            <input type="date" class="form-control" id="documentDate__edit__financialDocument"
+                                   name="documentDate" th:value="${financialDocument.documentDate}" th:field="*{documentDate}">
+                            <span class="error" th:if="${#fields.hasErrors('documentDate')}"
+                                  th:errors="*{documentDate}">Invalid Document Date!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="amount__edit__financialDocument" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount__edit__financialDocument" name="amount"
+                                   th:value="${financialDocument.amount}" th:field="*{amount}">
+                            <span class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid Amount!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="behalf__edit__financialDocument" class="col-form-label">Behalf:</label>
+                            <input type="text" class="form-control" id="behalf__edit__financialDocument" name="behalf"
+                                   th:value="${financialDocument.behalf}" th:field="*{behalf}">
+                            <span class="error" th:if="${#fields.hasErrors('behalf')}" th:errors="*{behalf}">Invalid Behalf!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="account__edit__financialDocument" class="col-form-label">Select Account Number:</label>
+                            <select id="account__edit__financialDocument" th:field="*{account}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${account}" th:value="${ac.id}" th:utext="${ac.accountNumber}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="transactionType__add__financialDocument" class="col-form-label">Transaction Type:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="transactionType__edit__financialDocument" name="transactionType" th:value="${financialDocument.transactionType}"
+                                    th:field="*{transactionType}">
+                                <option selected disabled value="-1">Choose Transaction Type</option>
+                                <option th:each="transactionType: ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
+                                        th:value="${transactionType}" th:text="${transactionType.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('transactionType')}" th:errors="*{transactionType}">Invalid Transaction Type!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="documentType__add__financialDocument" class="col-form-label">Document Type:</label>
+                            <select class="form-select" aria-label="Default select example"
+                                    id="documentType__edit__financialDocument" name="documentType" th:value="${financialDocument.documentType}"
+                                    th:field="*{documentType}">
+                                <option selected disabled value="-1">Choose Document Type</option>
+                                <option th:each="documentType: ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
+                                        th:value="${documentType}" th:text="${documentType.label}"></option>
+                            </select>
+                            <span class="error" th:if="${#fields.hasErrors('documentType')}" th:errors="*{documentType}">Invalid Document Type!</span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="person__edit__financialDocument" class="col-form-label">Select Customer:</label>
+                            <select id="person__edit__financialDocument" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__financialDocument" onclick="edit()">
+                            Save Edited
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="deleteModalFinancialDocument" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelFinancialDocument"> Confirm The Deletion!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" th:object="${financialDocument}">
+                        <label for="id__delete__FinancialDocument" class="col-form-label">ID:</label>
+                        <input type="text" class="form-control" id="id__delete__FinancialDocument" name="id" readonly
+                               th:text="${financialDocument.id}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" id="deleteConfirmButtonFinancialDocument"
+                            th:onclick="'deleteById(\'' + ${financialDocument.id} + '\')'">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/financialDocument.js}" src="../static/js/financialDocument.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </body>
 </html>
