@@ -3,43 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <title>Bank Transaction</title>
+    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
-<h2>Bank Transaction</h2>
+<div class="container">
 
-<form th:action="@{/bankTransaction/save}" method="post" th:object="${bankTransaction}">
-    <label>
-        <input type="number" placeholder="Balance" th:value="${balance}" th:field="*{balance}">
-    </label>
-    <br>
-    <label>
-        <input type="text" placeholder="Financial Document" th:value="${financialDocument}" th:field="*{financialDocument}">
-    </label>
-    <br>
-    <label>
-        <input type="text" placeholder="Employee" th:value="${employee}" th:field="*{employee}">
-    </label>
-    <br>
-    <input type="submit" value="Save">
-</form>
-<table th:list="${bankTransactionList}">
-    <thead>
-    <th>Id</th>
-    <th>Balance</th>
-    <th>Financial Document</th>
-    <th>Employee</th>
-    <th>Operation</th>
-    </thead>
-    <tbody>
-    <tr th:each="bankTransaction : ${bankTransactionList}">
-        <td th:text="${bankTransaction.id}"></td>
-        <td th:text="${bankTransaction.balance}"></td>
-        <td th:text="${bankTransaction.financialDocument}"></td>
-        <td th:text="${bankTransaction.employee}"></td>
-        <td><a th:href="@{/bankTransaction/edit/{id}(id=${bankTransaction.id})}">Edit</a></td>
-        <td><a th:href="@{/bankTransaction/delete/{id}(id=${bankTransaction.id})}">Delete</a></td>
-    </tr>
-    </tbody>
-</table>
+    <div class="navBar">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalBankTransaction">Add New
+            Bank Transaction
+        </button>
+    </div>
+
+    <table class="table table-striped" th:if="${bankTransactionList != null and #lists.size(bankTransactionList) > 0}">
+        <thead>
+        <th>Id</th>
+        <th>Balance</th>
+        <th>Financial Document</th>
+        <th>Name</th>
+        <th>LastName</th>
+        <th>Status</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="bankTransaction : ${bankTransactionList}">
+            <td th:text="${bankTransaction.id}"></td>
+            <td th:text="${bankTransaction.financialDocument.amount}"></td>
+            <td th:text="${bankTransaction.financialDocument.id}"></td>
+            <td th:text="${bankTransaction.person.name}"></td>
+            <td th:text="${bankTransaction.person.lastname}"></td>
+            <td>Active</td>
+            <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${bankTransaction.id} + '\')'">Edit</a></td>
+            <td><a class="btn btn-danger deleteButtonAccount" th:onclick="'deleteById(\'' + ${bankTransaction.id} + '\')'">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="addModalBankTransaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/bankTransaction/save}" method="post" th:object="${bankTransaction}">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__bankTransaction">Save New Bank Transaction </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="financialDocument__add__bankTransaction" class="col-form-label">Select Financial Document:</label>
+                            <select id="financialDocument__add__bankTransaction" th:field="*{financialDocument}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${financialDocument}" th:value="${ac.id}" th:utext="${ac.id}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="person__add__bankTransaction" class="col-form-label">Select Employee:</label>
+                            <select id="person__add__bankTransaction" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="editModalBankTransaction" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:object="${bankTransaction}" id="editFormBankTransaction" th:action="@{/bankTransaction/edit}" method="put">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title__bankTransaction">Edit Modal</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="id__edit__bankTransaction" class="col-form-label">ID:</label>
+                            <input type="text" class="form-control" id="id__edit__bankTransaction" name="id" readonly>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="financialDocument__edit__bankTransaction" class="col-form-label">Select Financial Document:</label>
+                            <select id="financialDocument__edit__bankTransaction" th:field="*{financialDocument}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${financialDocument}" th:value="${ac.id}" th:utext="${ac.id}"></option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="person__edit__bankTransaction" class="col-form-label">Select Employee:</label>
+                            <select id="person__edit__bankTransaction" th:field="*{person}">
+                                <option value="">Select</option>
+                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__bankTransaction" onclick="edit()">
+                            Save Edited
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal fade" id="deleteModalBankTransaction" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelBankTransaction"> Confirm The Deletion!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" th:object="${bankTransaction}">
+                        <label for="id__delete__bankTransaction" class="col-form-label">ID:</label>
+                        <input type="text" class="form-control" id="id__delete__bankTransaction" name="id" readonly
+                               th:text="${bankTransaction.id}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-danger" id="deleteConfirmButtonBankTransaction"
+                            th:onclick="'deleteById(\'' + ${bankTransaction.id} + '\')'">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/bankTransaction.js}" src="../static/js/bankTransaction.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </body>
 </html>

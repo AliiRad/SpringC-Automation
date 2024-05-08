@@ -9,7 +9,7 @@ async function findById(id){
     });
 
     const data = await resp.json();
-    let accountId =document.getElementById("id__edit__Account");
+    let accountId =document.getElementById("id__edit__account");
     let accountAccountNumber = document.getElementById("accountNumber__edit__account");
     let accountCardNumber = document.getElementById("cardNumber__edit__account")
     let accountPerson = document.getElementById("person__edit__account");

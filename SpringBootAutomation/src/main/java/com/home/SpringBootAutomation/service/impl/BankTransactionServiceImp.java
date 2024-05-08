@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.BankTransaction;
 import com.home.SpringBootAutomation.repository.BankTransactionRepository;
 import com.home.SpringBootAutomation.service.BankTransactionService;
@@ -19,46 +20,80 @@ public class BankTransactionServiceImp implements BankTransactionService {
 
     @Override
     public BankTransaction save(BankTransaction bankTransaction) {
-        repository.save(bankTransaction);
-        return bankTransaction;
+        return repository.save(bankTransaction);
     }
 
-    @Override
-    public BankTransaction edit(BankTransaction bankTransaction) {
-        repository.save(bankTransaction);
-        return bankTransaction;
-    }
+    public BankTransaction update(BankTransaction bankTransaction) throws NoContentException {
+        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(bankTransaction.getId());
 
-    @Override
-    public BankTransaction remove(BankTransaction bankTransaction) {
-        if (findById(bankTransaction.getId()) != null) {
-            repository.delete(bankTransaction);
-            return bankTransaction;
+        if (optionalBankTransaction.isPresent()) {
+            return repository.save(bankTransaction);
         } else {
-            return null;
+            throw new NoContentException("Bank Transaction not found!");
         }
     }
 
     @Override
     @Transactional
-    public BankTransaction logicalRemove(Long id) {
-        BankTransaction bankTransaction = findById(id);
-        if (bankTransaction != null) {
-            repository.save(bankTransaction);
-            return bankTransaction;
-        } else{
-            return null;
+    public void logicalRemove(Long id) throws NoContentException{
+        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(id);
+        if (optionalBankTransaction.isPresent()) {
+            repository.logicalRemove(id);
+        } else {
+            throw new NoContentException("Bank Transaction not found!");
         }
-    }
-
-    @Override
-    public BankTransaction findById(Long id) {
-       Optional<BankTransaction> bankTransaction= repository.findById(id);
-       return (bankTransaction.orElse(null));
     }
 
     @Override
     public List<BankTransaction> findAll() {
         return repository.findAll();
+    }
+
+    @Override
+    public Optional<BankTransaction> findById(Long id) throws NoContentException {
+        Optional<BankTransaction> optional = repository.findById(id);
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            throw new NoContentException("BankTransaction not found !");
+        }
+    }
+
+    @Override
+    public Long getBankTransactionsCount() {
+        return repository.count();
+    }
+
+    @Override
+    public BankTransaction logicalRemoveWithReturn(Long id) throws NoContentException {
+        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(id);
+
+        if (optionalBankTransaction.isPresent()) {
+            BankTransaction oldBankTransaction = optionalBankTransaction.get();
+            oldBankTransaction.setDeleted(true);
+            return repository.save(oldBankTransaction);
+        } else {
+            throw new NoContentException("Bank Transaction not found!");
+        }
+    }
+
+    @Override
+    public List<BankTransaction> findBankTransactionByDeletedFalse() {
+        return repository.findBankTransactionByDeletedFalse();
+    }
+
+    @Override
+    public Optional<BankTransaction> findBankTransactionByIdAndDeletedFalse(Long id) throws NoContentException {
+        Optional<BankTransaction> optional = repository.findBankTransactionByIdAndDeletedFalse(id);
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            throw new NoContentException("Bank Transaction not found!");
+        }
+    }
+
+    @Override
+    public Long countByDeletedFalse() {
+        return repository.countByDeletedFalse();
     }
 }

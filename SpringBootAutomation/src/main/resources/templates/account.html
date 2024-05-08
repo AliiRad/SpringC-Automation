@@ -19,7 +19,8 @@
         <th>Id</th>
         <th>Account Number</th>
         <th>Card Number</th>
-        <th>Person</th>
+        <th>Name</th>
+        <th>LastName</th>
         <th>Bank And Branch</th>
         <th>Account Type</th>
         <th>Account Status</th>
@@ -33,14 +34,15 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-            <td th:text="${account.person.username}"></td>
+            <td th:text="${account.person.name}"></td>
+            <td th:text="${account.person.lastname}"></td>
             <td th:text="${account.bankAndBranch}"></td>
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>
             <td>Active</td>
-            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
+            <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
             </td>
-            <td><a class="btn btn-danger deleteButtonJobs"
+            <td><a class="btn btn-danger deleteButtonAccount"
                    th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</a></td>
         </tr>
         </tbody>
@@ -51,7 +53,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Person </h5>
+                        <h5 class="modal-title" id="save__modal__title__account">Save New Account </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -239,22 +241,6 @@
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" th:src="@{js/account.js}" src="../static/js/account.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: '/person',
-            type: 'GET',
-            success: function (data) {
-                $.each(data, function (index, person) {
-                    $('#accountOwner__add__account').append('<option value="' + person.id + '">' + person.firstName + ' ' + person.lastName + '</option>');
-                });
-            },
-            error: function (xhr, status, error) {
-                console.error(error);
-            }
-        });
-    });
-</script>
 
 </body>
 </html>
