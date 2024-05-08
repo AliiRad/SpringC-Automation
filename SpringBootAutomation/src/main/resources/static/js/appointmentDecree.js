@@ -44,7 +44,7 @@ async function findById(id) {
 }
 
 // "Edit Functionality"
-async function editAppointmentDecree() {
+async function edit() {
     const formData = new FormData(document.getElementById("editFormAppointmentDecree"));
 
     const resp = await fetch("/appointmentDecree/edit", {
