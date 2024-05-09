@@ -1,78 +1,151 @@
 <!DOCTYPE html>
-<html lang="fa" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="rtl" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-<!--    <link rel="stylesheet" type="text/css" href="../static/css/stylesheet.css"/>-->
-    <link type="text/css" rel="stylesheet" media="all"  href="../static/css/stylesheet.css"  th:href="@{/css/stylesheet.css}"   />
+    <title>Index</title>
+    <link type="text/css" rel="stylesheet" media="all"  href="../css/dashboard.css"  th:href="@{/css/dashboard.css}"   />
+    <link type="text/css" rel="stylesheet" media="all"  href="https://fonts.googleapis.com/icon?family-Material+Icons" />
+    <link type="text/css" rel="stylesheet" media="all"  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200" />
 
-    <title>Sidebar with Java Backend Interaction</title>
+    <!-- THESE LINKS WERE FILTERED AND THROWED 404 PLZ CHECK IF ITS FIXED-->
+    <!-- THAT IS IF YOU NEED THEM-->
+    <!-- <link type="text/css" rel="preconnect" media="all"  href="https://fonts.googleapis.com" />
+    <link type="text/css" rel="preconnect" media="all"  href="https://fonts.gstatic.com" crossorigin /> -->
+
+    <link type="text/css" rel="stylesheet" media="all"  href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" />
 
 </head>
 <body>
+    <div class="container"> 
+        <!--SideBar -->
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img th:src="@{/img/mftlogo.png}" />
 
-<div id="top-sidebar">
-    <a href="" onclick="loadPage('0');return false;" class="top-sidebar-btn">خانه </a>
-    <a href="" onclick="loadPage('1');return false;" class="top-sidebar-btn">index1</a>
-    <a href="" onclick="loadPage('2');return false;" class="top-sidebar-btn">index2</a>
-    <a href="" onclick="loadPage('3');return false;" class="top-sidebar-btn">index3</a>
-    <a href="" onclick="loadPage('4');return false;" class="top-sidebar-btn">index4</a>
-    <a href="" onclick="loadPage('5');return false;" class="top-sidebar-btn">index5</a>
-    <a href="" onclick="loadPage('6');return false;" class="top-sidebar-btn">index6</a>
-</div>
-<div id="right-sidebar">
-    <a href="person" class="sidebar-btn" onclick="sendRequest('button9')"><span class="material-symbols-outlined">
-badge
-</span> مشخصات </a>
-    <a href="skills" class="sidebar-btn" onclick="sendRequest('button10')"><span class="material-symbols-outlined">
-work_history
-</span>سوابق شغلی</a>
-    <a href="medicalHistory" class="sidebar-btn" onclick="sendRequest('button5')"><span class="material-symbols-outlined">
-ecg_heart
-</span>سوابق پزشکی</a>
-    <a href="account" class="sidebar-btn" onclick="sendRequest('button6')"><span class="material-symbols-outlined">
-account_balance_wallet
-</span>اطلاعات حساب</a>
-    <a href="appointmentDecree" class="sidebar-btn" onclick="sendRequest('button7')"><span class="material-symbols-outlined">
-contract
-</span>حکم کارگزینی</a>
-    <a href="skills" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
-list_alt
-</span>جدول شغلی</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
-lab_profile
-</span>گزارشات</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')"><span class="material-symbols-outlined">
-approval_delegation
-</span>درخواست</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')">آیکون رزرو 1</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')">آیکون رزرو 2</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')">آیکون رزرو 3</a>
-    <a href="#" class="sidebar-btn" onclick="sendRequest('button8')">آیکون رزرو 4</a>
-</div>
-<div id="content">
-    <h1>Main Content</h1>
-    <p>This is the main content area.</p>
-    <div id="response"></div>
-</div>
+                    <h1>MF<span class="danger">T</span></h1>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
 
+            <div class="sidebar">
+                <a href="/person">
+                    <span class="material-symbols-outlined">
+                        dashboard
+                    </span>
+                    <h3>داشبورد</h3>
+                </a>
+                <a href="/person" class="active">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>شخص
+                    <h3>شخص</h3>
+                    
+                </a>
+                <a href="/salary">
+                    <span class="material-symbols-outlined">
+                        receipt_long
+                        </span>حقوق و دستمزد
+                    <h3>حقوق و دستمزد</h3>
+                </a>
+                <a href="/jobs">
+                    <span class="material-symbols-outlined">
+                        finance
+                        </span>مشاغل
+                    <h3>مشاغل</h3>
+                </a>
+                <a href="/medicalHistory">
+                    <span class="material-symbols-outlined">
+                        mail
+                        </span>سوابق پزشکی
+                    <h3>سوابق پزشکی</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a href="/financialDocument">
+                    <span class="material-symbols-outlined">
+                        inventory
+                        </span>مدارک حسابداری
+                    <h3>مدارک حسابداری</h3>
+                </a>
+                <a href="/skills">
+                    <span class="material-symbols-outlined">
+                        report
+                        </span>مهارت ها
+                    <h3>مهارت ها</h3>
+                </a>
+                <a href="/military">
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>سربازی
+                    <h3>سربازی</h3>
+                </a>
+                <a href="/drivingLicence">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>گواهینامه
+                    <h3>گواهینامه</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        logout
+                    </span>
+                    <h3>خروج</h3>
+                </a>
+            </div>
+        </aside>
+        <!--SideBar -->
 
-</br>
-<script>
-    function loadPage(pagenumber) {
-        const javaResponse = '/index' + pagenumber;
-        fetch(javaResponse).then(data => {
-            let responseEl = document.getElementById("response");
-            let ht = "";
-            data.text().then(ddd => {
-                responseEl.innerHTML = ddd;
-            });
-            console.log(ht);
-        });
-    }
+        <main>
+           <!-- Entity Forms -->
 
+        </main>
+        <!-- ===========End Of Main============ -->
 
-</script>
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                </button>
+                <div class="lang-toggler">
+                    <span class="material-symbols-outlined lang-icon" role="button" id="lang-icon">
+                        language
+                    </span>
+                    <ul class="lang-dropdown" id="lang-dropdown">
+                        <li><a href="#"><b>English</b></a></li>
+                        <li><a href="" class="text-muted">فارسی</a></li>
+                    </ul>
+                </div>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">
+                        light_mode
+                    </span>
+                    
+                    <span class="material-symbols-outlined">
+                        dark_mode
+                    </span>
+
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>سلام  <b> Admin</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img th:src="@{/img/profile2.png}" />
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script type="text/javascript" th:src="@{js/orders.js}" src="../static/js/orders.js"></script>
+    <script type="text/javascript" th:src="@{js/dashboard.js}" src="../static/js/dashboard.js"></script>
+ 
 </body>
 </html>
