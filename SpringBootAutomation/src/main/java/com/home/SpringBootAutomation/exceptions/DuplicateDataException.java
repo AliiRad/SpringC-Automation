@@ -1,18 +1,12 @@
 package com.home.SpringBootAutomation.exceptions;
 
-public class DuplicateDataException extends Exception{
+public class DuplicateDataException extends TemplateException{
 
     /*409 is the correct status code for duplicate resource or resource already exists.*/
-    private String message;
 
-    public DuplicateDataException() {
-        message = "Duplicate Data";
-    }
-
-    public DuplicateDataException(String message) {
+    public DuplicateDataException(String message){
         super(message);
-        this.message = message;
+        setStatusCode(409);
     }
-    public int responseStatus(){return 409;}
 
 }

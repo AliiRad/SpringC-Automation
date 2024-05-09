@@ -1,20 +1,10 @@
 package com.home.SpringBootAutomation.exceptions;
 
-public class NoContentException extends Exception{
-
-    private String message;
-
-    public NoContentException() {
-        message = "No Content Found";
-    }
+public class NoContentException extends TemplateException{
 
     public NoContentException(String message) {
         super(message);
-        this.message = message;
-    }
-
-    public int responseStatus(){
-        return 204;
+        setStatusCode(404);
     }
 
 }
