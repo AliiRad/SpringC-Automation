@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DashBoard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family-Material+Icons">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200" />
+    
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" /> -->
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container"> 
+        <!--SideBar -->
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <img src="img/mftlogo.png" >
+                    <h1>MF<span class="danger">T</span></h1>
+                </div>
+                <div class="close" id="close-btn">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        dashboard
+                    </span>
+                    <h3>داشبورد</h3>
+                </a>
+                <a href="#" class="active">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <h3>مشتری</h3>
+                    
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        receipt_long
+                        </span>
+                    <h3>سفارشات</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        finance
+                        </span>
+                    <h3>آنالیز و آمار</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        mail
+                        </span>
+                    <h3>پیام</h3>
+                    <span class="message-count">26</span>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        inventory
+                        </span>
+                    <h3>محصولات</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        report
+                        </span>
+                    <h3>گزارشات</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+                    <h3>تنظیمات</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <h3>افزودن</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-outlined">
+                        logout
+                    </span>
+                    <h3>خروج</h3>
+                </a>
+            </div>
+        </aside>
+        <!--SideBar -->
+
+        <main>
+           <!-- Entity Forms -->
+
+        </main>
+        <!-- ===========End Of Main============ -->
+
+        <div class="right">
+            <div class="top">
+                <button id="menu-btn">
+                    <span class="material-symbols-outlined">
+                        menu
+                    </span>
+                </button>
+                <div class="lang-toggler">
+                    <span class="material-symbols-outlined lang-icon" role="button" id="lang-icon">
+                        language
+                    </span>
+                    <ul class="lang-dropdown" id="lang-dropdown">
+                        <li><a href="../en/enDashboard.html"><b>English</b></a></li>
+                        <li><a href="" class="text-muted">فارسی</a></li>
+                    </ul>
+                </div>
+                <div class="theme-toggler">
+                    <span class="material-symbols-outlined active">
+                        light_mode
+                    </span>
+                    
+                    <span class="material-symbols-outlined">
+                        dark_mode
+                    </span>
+
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p>سلام  <b> Mahoor</b></p>
+                        <small class="text-muted">Admin</small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="img/profile2.png">
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+ 
+
+    <script src="js/orders.js"></script>
+    <script src="js/dashboard.js"></script>
+    
+</body>
+</html>
