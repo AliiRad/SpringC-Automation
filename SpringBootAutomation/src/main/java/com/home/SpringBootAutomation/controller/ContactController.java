@@ -1,12 +1,9 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.Contact;
-import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.ContactService;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +20,11 @@ public class ContactController {
 
     private final ContactService service;
 
-    @Autowired
-    public ContactController(ContactService service) { this.service = service; }
+    public ContactController(ContactService service) { 
+        this.service = service; 
+    }
 
-    @PostMapping("/sava")
+    @PostMapping("/save")
     public String save(@Valid Contact contact, BindingResult result, Model model){
         try {
             if (result.hasErrors()) {
