@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Person</title>
+    <title>contact</title>
     <link rel="stylesheet" href="/css/person.css">
     <link rel="stylesheet" href="/css/popup.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
@@ -18,10 +18,10 @@
 
 <div id="save-modal">
     <div id="save-modal-content">
-        <form id="save-form" th:object="${person}">
-            <div th:replace="~{/fragments/person-fragments :: personFormContent('name', 'family')}"></div>
+        <form id="save-form" th:object="${contact}">
+            <div th:replace="~{/fragments/contact-fragments :: contactFormContent('title','family')} "></div>
         </form>
-        <button onclick="save('/person', 'save-form')">Save</button>
+        <button onclick="save('/contact', 'save-form')">Save</button>
         <button onclick="closeModal()">Close</button>
     </div>
 </div>
@@ -37,22 +37,22 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Name</th>
-        <th>Family</th>
+        <th>Title</th>
+        <th>PhoneNumber</th>
         <th>Operation</th>
     </tr>
     <tbody>
-    <tr th:each="person : ${personList}">
-        <td th:text="${person.id}"></td>
-        <td th:text="${person.name}"></td>
-        <td th:text="${person.family}"></td>
+    <tr th:each="contact : ${contactList}">
+        <td th:text="${contact.id}"></td>
+        <td th:text="${contact.title}"></td>
+        <td th:text="${contact.phoneNumber}"></td>
         <td>
             <!--            <button th:onclick="getDataForEdit([[${person.id}]])">Edit</button>-->
             <!--            <button th:onclick="remove([[${person.id}]])">Remove</button>-->
-            <button th:data-name="${person.id}"
-                    th:onclick="|getDataForEdit('/person', this.getAttribute('data-name'))|"> Edit
+            <button th:data-name="${contact.id}"
+                    th:onclick="|getDataForEdit('/contact', this.getAttribute('data-name'))|"> Edit
             </button>
-            <button th:data-name="${person.id}" th:onclick="|remove('/person', this.getAttribute('data-name'))|">Remove
+            <button th:data-name="${contact.id}" th:onclick="|remove('/contact', this.getAttribute('data-name'))|">Remove
             </button>
             <!--todo : add delete confirmation-->
 
@@ -65,9 +65,9 @@
     <div id="edit-modal-content">
         <form id="edit-form">
             <input type="text" id="id" name="id" hidden="hidden">
-            <div th:replace="~{/fragments/person-fragments :: personFormContent('edit-name', 'edit-family')}"></div>
+            <div th:replace="~{/fragments/contact-fragments :: contactFormContent('edit-title', 'edit-phoneNumber')}"></div>
         </form>
-        <button onclick="edit('/person', 'edit-form')">Edit</button>
+        <button onclick="edit('/contact', 'edit-form')">Edit</button>
         <button onclick="closeModal()">Close</button>
     </div>
 </div>
