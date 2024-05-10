@@ -1,10 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Contact</title>
+    <title>Person</title>
+    <link rel="stylesheet" href="/css/person.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
+
 </head>
 <body>
+<div>
 
+</div>
+
+<div id="save-modal">
+    <div id="save-modal-content">
+        <form id="save-form" th:object="${person}">
+            <div th:replace="~{/fragments/person-fragments :: personFormContent('name', 'family')}"></div>
+        </form>
+        <button onclick="save('/person', 'save-form')">Save</button>
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+
+<br><br>
+
+<button onclick="addNew()">Add New</button>
+
+<br><br>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Family</th>
+        <th>Operation</th>
+    </tr>
+    <tbody>
+    <tr th:each="person : ${personList}">
+        <td th:text="${person.id}"></td>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.family}"></td>
+        <td>
+            <!--            <button th:onclick="getDataForEdit([[${person.id}]])">Edit</button>-->
+            <!--            <button th:onclick="remove([[${person.id}]])">Remove</button>-->
+            <button th:data-name="${person.id}"
+                    th:onclick="|getDataForEdit('/person', this.getAttribute('data-name'))|"> Edit
+            </button>
+            <button th:data-name="${person.id}" th:onclick="|remove('/person', this.getAttribute('data-name'))|">Remove
+            </button>
+            <!--todo : add delete confirmation-->
+
+        </td>
+    </tr>
+    </tbody>
+    </thead></table>
+
+<div id="edit-modal">
+    <div id="edit-modal-content">
+        <form id="edit-form">
+            <input type="text" id="id" name="id" hidden="hidden">
+            <div th:replace="~{/fragments/person-fragments :: personFormContent('edit-name', 'edit-family')}"></div>
+        </form>
+        <button onclick="edit('/person', 'edit-form')">Edit</button>
+        <button onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+
+<div class="popup" id="popup">
+    <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
+
+        <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
+
+        <div class="popup-message" id="popup-message">
+            <span class="text text-1 popup-title" id="popup-title"></span>
+            <span class="text text-2 popup-text" id="popup-text"></span>
+        </div>
+    </div>
+    <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+    <div class="popup-progress" id="popup-progress"></div>
+</div>
+
+<script src="/js/person.js"></script>
+<script src="/js/js.js"></script>
+<script src="/js/popup.js"></script>
 </body>
 </html>
