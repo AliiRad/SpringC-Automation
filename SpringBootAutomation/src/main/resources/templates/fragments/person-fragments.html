@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="personFormContent(name, family)">
+<!--    <label for="name">Name :</label>-->
+    <input type="text" th:id="${name}" name="name" placeholder="Name">
+<!--    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>-->
+
+<!--    <label for="family">Family :</label>-->
+    <input type="text" th:id="${family}" name="family" placeholder="Family">
+<!--    <span class="error" th:if="${#fields.hasErrors('family')}" th:errors="*{family}">Invalid Family !</span>-->
+</div>
+</body>
+</html>
