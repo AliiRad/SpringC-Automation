@@ -82,7 +82,7 @@
                         <select class="form-select" aria-label="Default select example"
                                 id="parent__add__ticket"
                                 th:if="${#lists.size(ticketGroupParents) > 0}"
-                                onchange="handleSelectChange(event)">
+                                onchange="handleSelectChange(event , 'parent__add__ticket')">
                             <option selected disabled value="-1">Select The Relevant Group: </option>
                             <option th:each="ticketGroup : ${ticketGroupParents}"
                                     th:value="${ticketGroup.id}"
@@ -158,28 +158,33 @@
                             </select>
                         </div>
 
-                        <label for="ticket__edit__group" class="col-form-label">Field :</label>
+                        <div class="mb-3">
+                            <label for="deleted__edit__ticket" class="col-form-label">State:</label>
+                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticket"
+                                    name="deleted">
+                                <option selected disabled value="-1">Choose Ticket State :</option>
+                                <option value="true">Not Active</option>
+                                <option value="false">Active</option>
+                            </select>
+                        </div>
+
+                        <label for="parent__edit__ticket" class="col-form-label">Field :</label>
                         <select class="form-select" aria-label="Default select example"
-                                id="ticket__edit__group"
-                                name="group" th:if="${#lists.size(ticketGroupParents) > 0}">
-                            <option selected value="-1"></option>
+                                id="parent__edit__ticket"
+                                th:if="${#lists.size(ticketGroupParents) > 0}"
+                                onchange="handleSelectChange(event , 'parent__edit__ticket')">
+                            <option selected disabled value="-1">Select The Relevant Group: </option>
                             <option th:each="ticketGroup : ${ticketGroupParents}"
                                     th:value="${ticketGroup.id}"
-                                    th:text="${ticketGroup.title}">
+                                    th:text="${ticketGroup.title}"
+                                    th:data-name="${ticketGroup.id}">
                             </option>
                         </select>
 
-                        <!--                        <div class="mb-3">-->
-                        <!--                            <label for="group__edit__ticket" class="col-form-label">Group :</label>-->
-                        <!--                            <select class="form-select" aria-label="Default select example" id="group__add__ticket"-->
-                        <!--                                    name="group" th:value="${ticket.group}" th:field="*{group}">-->
-                        <!--                                <option selected disabled value="-1">Choose Ticket Group :</option>-->
-                        <!--                                <option value=""></option>-->
-                        <!--                                <option value=""></option>-->
-                        <!--                            </select>-->
-                        <!--                            <span class="error" th:if="${#fields.hasErrors('group')}"-->
-                        <!--                                  th:errors="*{group}">Invalid Group !</span>-->
-                        <!--                        </div>-->
+                        <label for="child__edit__ticket" class="col-form-label" style="display: none">Sub Group :</label>
+                        <select id="child__edit__ticket" class="form-select" style="display: none"
+                                aria-label="Default select example">
+                        </select>
 
 
                     </div>

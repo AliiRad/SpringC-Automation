@@ -85,7 +85,7 @@ public class TicketGroupController {
         try {
             List<TicketGroup> ticketGroups = ticketGroupServiceImp.findByParentId(id);
             if (!ticketGroups.isEmpty()) {
-                log.info("Controller-Ticket-Get-FindById-Ticket: " + ticketGroups);
+                log.info("Controller-TicketGroup-Get-FindByParentId-TicketGroup: " + ticketGroups);
                 return ticketGroups;
             } else {
                 //todo: return error page
