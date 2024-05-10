@@ -61,7 +61,7 @@ public class Ticket {
 //    @JoinColumn(name = "ticket_applicant_id")
 //    private Person applicant;
 
-//    @OneToOne(cascade = CascadeType.ALL , mappedBy = "ticket")
-//    @JoinColumn(name = "ticket_group_id")
-//    private TicketGroup group;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ticket_group_id")
+    private TicketGroup group;
 }

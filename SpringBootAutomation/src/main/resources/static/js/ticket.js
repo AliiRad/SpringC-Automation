@@ -2,7 +2,7 @@ async function findId(id) {
     let editModal = document.getElementById("editModalTicket")
     let modalTicket = new bootstrap.Modal(editModal);
     modalTicket.show();
-    const resp = await fetch("/ticket/id/" + id, {
+    const resp = await fetch("/ticket/" + id, {
         method: "get"
     });
     const data = await resp.json();
@@ -31,7 +31,7 @@ async function edit() {
     const formData = new FormData(document.getElementById("editFormTicket"));
     console.log(formData)
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket/edit", {method: "put", body: formData});
+        const response = await fetch("/ticket", {method: "put", body: formData});
     }
 
     window.location.replace("/ticket")
@@ -39,17 +39,17 @@ async function edit() {
 }
 
 async function save() {
-    const saveFormData = new FormData();
+    const saveFormData = new FormData(saveFormTicket);
 
-    let ticketTitle = document.getElementById("title__add__ticket");
-    let ticketRequest = document.getElementById("request__add__ticket");
-    // let ticketGroup = document.getElementById("group__add__ticket");
-
-    saveFormData.append('title' , ticketTitle.value)
-    saveFormData.append('request' , ticketRequest.value)
+    // let ticketTitle = document.getElementById("title__add__ticket");
+    // let ticketRequest = document.getElementById("request__add__ticket");
+    // // let ticketGroup = document.getElementById("group__add__ticket");
+    //
+    // saveFormData.append('title' , ticketTitle.value)
+    // saveFormData.append('request' , ticketRequest.value)
 
     if (confirm(  "از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket/save", {method: "post", body: saveFormData});
+        const response = await fetch("/ticket", {method: "post", body: saveFormData});
         console.log(saveFormData)
     }
     //
@@ -59,10 +59,53 @@ async function save() {
 
 async function deleted(id) {
     if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
-        const resp = await fetch("/ticket/delete/" + id, {
+        const resp = await fetch("/ticket/" + id, {
             method: "delete"
         });
     }
     window.location.replace("/ticket")
+
+}
+function handleSelectChange(event) {
+    const selectedId = event.target.value;  // Get the selected option's value
+    getSubGroups(selectedId);  // Call the getSubGroups function with the selected ID
+}
+
+async function getSubGroups(id){
+    const resp = await fetch("/ticketGroup/parent/" + id ,  {
+        method : "get"
+    });
+    let data;
+    let select = document.getElementById('child__add__ticket');
+    const label = document.querySelector('label[for="child__add__ticket"]');
+    select.innerHTML = '';
+    try {
+        data = await resp.json();
+        select.name = 'group'
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '-1';
+        defaultOption.textContent = 'Select The Relevant Sub Group:';
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        select.appendChild(defaultOption);
+        data.forEach(function (item){
+            let opt = document.createElement('option');
+            opt.value = item.id;
+            opt.innerHTML = item.title;
+            select.appendChild(opt);
+            select.style.display='block';
+            label.style.display = 'block';
+        });
+    } catch (e) {
+        data = null;
+        let select2 = document.getElementById("parent__add__ticket")
+        select2.name = 'group'
+        select.innerHTML = '';
+        select.style.display='none';
+        label.style.display = 'none';
+    }
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.model.TicketGroup;
 import com.home.SpringBootAutomation.service.impl.TicketGroupServiceImp;
@@ -7,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -70,6 +73,26 @@ public class TicketGroupController {
             e.printStackTrace();
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
+            //todo: return error page
+            return null;
+        }
+    }
+
+
+    @GetMapping(value = "/parent/{id}")
+    @ResponseBody
+    public List<TicketGroup> showTickets(@PathVariable("id") Long id) {
+        try {
+            List<TicketGroup> ticketGroups = ticketGroupServiceImp.findByParentId(id);
+            if (!ticketGroups.isEmpty()) {
+                log.info("Controller-Ticket-Get-FindById-Ticket: " + ticketGroups);
+                return ticketGroups;
+            } else {
+                //todo: return error page
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             //todo: return error page
             return null;
         }

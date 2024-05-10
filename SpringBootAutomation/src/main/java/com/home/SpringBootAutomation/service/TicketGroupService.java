@@ -11,7 +11,7 @@ public interface TicketGroupService {
     TicketGroup findById(Long id);
     List<TicketGroup> findAll();
     TicketGroup findByTitle(String title);
-    TicketGroup findByParentId(Long id);
+    List<TicketGroup> findByParentId(Long id);
     List<TicketGroup> findByParentRoot();
 
 }

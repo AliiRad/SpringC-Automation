@@ -37,7 +37,7 @@ public class TicketGroupServiceImp implements TicketGroupService {
     @Override
     public TicketGroup findById(Long id) {
         Optional<TicketGroup> group = ticketGroupRepository.findById(id);
-        return (group.isPresent())? group.get() : null;
+        return (group.isPresent()) ? group.get() : null;
 
     }
 
@@ -50,13 +50,13 @@ public class TicketGroupServiceImp implements TicketGroupService {
     @Override
     public TicketGroup findByTitle(String title) {
         Optional<TicketGroup> group = Optional.ofNullable(ticketGroupRepository.findByTitle(title));
-        return (group.isPresent())? group.get() : null;
+        return (group.isPresent()) ? group.get() : null;
     }
 
     @Override
-    public TicketGroup findByParentId(Long id) {
-        Optional<TicketGroup> group = Optional.ofNullable(ticketGroupRepository.findByParentId(id));
-        return (group.isPresent())? group.get() : null;
+    public List<TicketGroup> findByParentId(Long id) {
+        List<TicketGroup> ticketGroupList = ticketGroupRepository.findByParentId(id);
+        return ticketGroupList;
     }
 
     @Override

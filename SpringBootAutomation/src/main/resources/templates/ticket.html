@@ -23,7 +23,7 @@
         <th>Ticket Title</th>
         <!--    <th>Applicant</th>-->
         <th>Request</th>
-        <!--    <th>Group</th>-->
+        <th>Group</th>
         <th>Status</th>
         <th>Deleted</th>
         <th>Operation</th>
@@ -36,7 +36,8 @@
             <td th:text="${ticket.title}"></td>
             <!--        <td th:text="${ticket.applicant}"></td>-->
             <td th:text="${ticket.request}"></td>
-            <!--        <td th:text="${ticket.group}"></td>-->
+            <td th:if="${ticket.group.parent != null}" th:text="${ticket.group.title}"></td>
+            <td th:unless="${ticket.group.parent != null}" th:text="${ticket.group.title}"></td>
             <td th:text="${ticket.status}"></td>
             <td th:text="${ticket.deleted}"></td>
             <td>
@@ -56,7 +57,7 @@
     <div class="modal fade" id="saveModalTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-        <form id="saveFormTicket">
+                <form id="saveFormTicket">
                     <div class="modal-header">
                         <h5 class="modal-title" id="save__modal__title__jobs">Save New Ticket </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -77,18 +78,27 @@
                         </div>
 
 
-                        <!--                        <div class="mb-3">-->
-                        <!--                            <label for="group__add__ticket" class="col-form-label">Group :</label>-->
-                        <!--                            <select class="form-select" aria-label="Default select example" id="group__add__ticket" name="group" th:value="${ticket.group}" th:field="*{group}">-->
-                        <!--                                <option selected disabled value="-1">Choose Ticket Group : </option>-->
-                        <!--                                <option value="Single">Single</option>-->
-                        <!--                                <option value="Married">Married</option>-->
-                        <!--                            </select>-->
-                        <!--                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>-->
-                        <!--                        </div>-->
+                        <label for="parent__add__ticket" class="col-form-label">Field :</label>
+                        <select class="form-select" aria-label="Default select example"
+                                id="parent__add__ticket"
+                                th:if="${#lists.size(ticketGroupParents) > 0}"
+                                onchange="handleSelectChange(event)">
+                            <option selected disabled value="-1">Select The Relevant Group: </option>
+                            <option th:each="ticketGroup : ${ticketGroupParents}"
+                                    th:value="${ticketGroup.id}"
+                                    th:text="${ticketGroup.title}"
+                                    th:data-name="${ticketGroup.id}">
+                            </option>
+                        </select>
+
+                        <label for="child__add__ticket" class="col-form-label" style="display: none">Sub Group :</label>
+                        <select id="child__add__ticket" class="form-select" style="display: none"
+                                aria-label="Default select example">
+                        </select>
+
                     </div>
 
-        </form>
+                </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button onclick="save()" class="btn btn-primary">Save</button>
@@ -148,16 +158,16 @@
                             </select>
                         </div>
 
-                        <!--                        <div class="mb-3">-->
-                        <!--                            <label for="deleted__edit__ticket" class="col-form-label">Deleted :</label>-->
-                        <!--                            <select class="form-select" aria-label="Default select example" id="deleted__edit__ticket"-->
-                        <!--                                    name="deleted" th:value="${ticket.deleted}" th:field="*{deleted}">-->
-                        <!--                                <option selected disabled value="-1">Choose Ticket State :</option>-->
-                        <!--                                <option value="true">Not Active</option>-->
-                        <!--                                <option value="false">Active</option>-->
-                        <!--                            </select>-->
-                        <!--                            <span class="error" th:if="${#fields.hasErrors('deleted')}" th:errors="*{deleted}">Invalid State !</span>-->
-                        <!--                        </div>-->
+                        <label for="ticket__edit__group" class="col-form-label">Field :</label>
+                        <select class="form-select" aria-label="Default select example"
+                                id="ticket__edit__group"
+                                name="group" th:if="${#lists.size(ticketGroupParents) > 0}">
+                            <option selected value="-1"></option>
+                            <option th:each="ticketGroup : ${ticketGroupParents}"
+                                    th:value="${ticketGroup.id}"
+                                    th:text="${ticketGroup.title}">
+                            </option>
+                        </select>
 
                         <!--                        <div class="mb-3">-->
                         <!--                            <label for="group__edit__ticket" class="col-form-label">Group :</label>-->

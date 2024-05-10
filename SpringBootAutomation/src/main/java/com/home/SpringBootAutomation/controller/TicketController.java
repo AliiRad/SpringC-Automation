@@ -3,6 +3,7 @@ package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
+import com.home.SpringBootAutomation.service.impl.TicketGroupServiceImp;
 import com.home.SpringBootAutomation.service.impl.TicketServiceImp;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -20,12 +21,14 @@ import java.util.List;
 @RequestMapping(value = "/ticket")
 public class TicketController {
     private TicketServiceImp ticketServiceImp;
+    private TicketGroupServiceImp ticketGroupServiceImp;
 
-    public TicketController(TicketServiceImp ticketServiceImp) {
+    public TicketController(TicketServiceImp ticketServiceImp, TicketGroupServiceImp ticketGroupServiceImp) {
         this.ticketServiceImp = ticketServiceImp;
+        this.ticketGroupServiceImp = ticketGroupServiceImp;
     }
 
-    @PostMapping(value = "/save")
+    @PostMapping()
     @ResponseBody
     public Ticket saveTicket( Ticket ticket, BindingResult result, Model model) {
         try {
@@ -49,7 +52,7 @@ public class TicketController {
         }
     }
 
-    @PutMapping(value = "/edit")
+    @PutMapping()
     @ResponseBody
     public Ticket editTicket(Ticket ticket, BindingResult result, Model model) {
         try {
@@ -71,7 +74,7 @@ public class TicketController {
 
     }
 
-    @DeleteMapping(value = "/delete/{id}")
+    @DeleteMapping(value = "/{id}")
     @ResponseBody
     public Ticket deleteTicket(@PathVariable Long id, Model model) {
         try {
@@ -93,6 +96,7 @@ public class TicketController {
             log.info("Controller-Ticket-Get-FindAll");
             model.addAttribute("ticket", new Ticket());
             model.addAttribute("ticketList", ticketServiceImp.findAll());
+            model.addAttribute("ticketGroupParents", ticketGroupServiceImp.findByParentRoot());
             return "ticket";
 //            if (!ticketServiceImp.findAll().isEmpty()) {
 //                log.info("Controller-Ticket-Get-FindAll");
@@ -113,7 +117,7 @@ public class TicketController {
     }
 
 
-    @GetMapping(value = "/id/{id}")
+    @GetMapping(value = "/{id}")
     @ResponseBody
     public Ticket showTicket(@PathVariable("id") Long id, Model model) {
         try {

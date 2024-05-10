@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface TicketGroupRepository extends JpaRepository<TicketGroup,Long> {
     @Query("select oo from ticketGroupEntity  oo where oo.parent.id=:id")
-    TicketGroup findByParentId(Long id);
+    List<TicketGroup> findByParentId(Long id);
 
     @Query("select oo from ticketGroupEntity oo where oo.title=:title")
     TicketGroup findByTitle(String title);

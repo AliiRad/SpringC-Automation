@@ -22,9 +22,9 @@ import java.util.Optional;
 @Slf4j
 public class TicketServiceImp implements TicketService {
     private final TicketRepository ticketRepository;
-    private final PersonService personService;
+    private final PersonServiceImpl personService;
 
-    public TicketServiceImp(TicketRepository ticketRepository, PersonService personService) {
+    public TicketServiceImp(TicketRepository ticketRepository, PersonServiceImpl personService) {
         this.ticketRepository = ticketRepository;
         this.personService = personService;
     }
