@@ -10,7 +10,7 @@ import java.util.List;
 public interface TicketService {
     Ticket save(Ticket ticket) throws NoContentException;
     Ticket edit(Ticket ticket) throws NoContentException;
-    Ticket remove(Ticket ticket) throws NoContentException;
+    void remove(Ticket ticket) throws NoContentException;
     Ticket logicalRemove(Long id) throws NoContentException;
     List<Ticket> findAll();
     List<Ticket> findAllDeletedFalse();

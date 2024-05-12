@@ -32,7 +32,9 @@ public class TicketServiceImp implements TicketService {
     @Override
     public Ticket save(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Save");
-//        Optional<Person> person = personService.findPersonByUserNameAndDeletedFalse(Principal.class.getName());
+//        Person person = personService.findPersonByUserNameAndDeletedFalse(Principal.class.getName()).orElseThrow(
+//                () -> new NoContentException("No Person Found with username : " + Principal.class.getName())
+//        );
 //        ticket.setApplicant(person.get());
         ticket.setStatus(Status.postponed);
         ticket.setDeleted(false);
@@ -46,32 +48,28 @@ public class TicketServiceImp implements TicketService {
     @Transactional
     public Ticket edit(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Edit");
-        if (findById(ticket.getId()) != null) {
-            ticketRepository.save(ticket);
-            return ticket;
-        } else throw new NoContentException("Ticket Not Found !");
+        ticketRepository.findById(ticket.getId()).orElseThrow(
+                () -> new NoContentException("No Ticket Found with id : " + ticket.getId()));
+        return ticketRepository.save(ticket);
     }
 
     @Override
-    public Ticket remove(Ticket ticket) throws NoContentException {
+    public void remove(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Remove");
-        if (findById(ticket.getId()) != null) {
-            ticketRepository.delete(ticket);
-            return ticket;
-        } else throw new NoContentException("Ticket Not Found !");
+        ticketRepository.findById(ticket.getId()).orElseThrow(
+                () -> new NoContentException("No Ticket Found with id : " + ticket.getId()));
+        ticketRepository.delete(ticket);
     }
 
     @Override
     @Transactional
     public Ticket logicalRemove(Long id) throws NoContentException {
         log.info("Service-Ticket-LogicalRemove");
-        Ticket ticket = findById(id);
-        log.info("Service-Ticket-LogicalRemove: " + ticket);
-        if (ticket != null) {
-            ticket.setDeleted(true);
-            ticketRepository.save(ticket);
-            return ticket;
-        } else throw new NoContentException("Ticket Not Found !");
+        Ticket ticket = ticketRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Ticket Found with id : " + id));
+        ticket.setDeleted(true);
+        return ticketRepository.save(ticket);
+
     }
 
     @Override
@@ -91,11 +89,9 @@ public class TicketServiceImp implements TicketService {
     @Override
     public Ticket findById(Long id) throws NoContentException {
         log.info("Service-Ticket-FindById");
-        Optional<Ticket> ticket = ticketRepository.findById(id);
-        if (ticket.isPresent()) {
-            log.info("Service-Ticket-FindById: " + ticket.get());
-            return ticket.get();
-        } else throw new NoContentException("Ticket Not Found !");
+        return ticketRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Ticket Found with id : " + id)
+        );
     }
 
 
