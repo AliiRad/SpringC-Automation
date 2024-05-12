@@ -28,38 +28,10 @@ async function findId(id) {
     console.log(data)
 }
 
-async function edit() {
-    const formData = new FormData(document.getElementById("editFormTicket"));
-    console.log(formData)
-    if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket", {method: "put", body: formData});
-    }
 
-    window.location.replace("/ticket")
 
-}
 
-async function save() {
-    const saveFormData = new FormData(saveFormTicket);
 
-    if (confirm(  "از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket", {method: "post", body: saveFormData});
-        console.log(saveFormData)
-    }
-    //
-    window.location.replace("/ticket")
-
-}
-
-async function deleted(id) {
-    if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
-        const resp = await fetch("/ticket/" + id, {
-            method: "delete"
-        });
-    }
-    window.location.replace("/ticket")
-
-}
 function handleSelectChange(event , selectTagId) {
     const selectedId = event.target.value;
     getSubGroups(selectedId , selectTagId);
