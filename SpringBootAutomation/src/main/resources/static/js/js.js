@@ -36,7 +36,7 @@ async function remove(url, id) {
             method: "DELETE"
         }
     );
-    if(!response.ok && confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")){
+    if(!response.ok){
         showErrorPopup(url,response.status ,(await response.text()).toString());
     }else {
         showInfoPopup(url, response.status , (await response.text()).toString());

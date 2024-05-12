@@ -90,7 +90,7 @@ public class TicketController {
 
 //    @GetMapping(value = "/applicant")
 //    @ResponseBody
-//    public String showTicketsByApplicant(Model model, @ModelAttribute("applicant") Person applicant) {
+//    public Ticket showTicketsByApplicant @ModelAttribute("applicant") Person applicant) {
 //        log.info("Controller-Ticket-Get-FindByApplicant" );
 //                return ticketServiceImp.findByApplicant(applicant);
 //    }
@@ -99,7 +99,8 @@ public class TicketController {
     @ResponseBody
     public List<Ticket> showTicketsByTimeStamp(Model model, @ModelAttribute("date") LocalDateTime timeStamp) throws NoContentException {
         log.info("Controller-Ticket-Get-FindByDate");
-        return ticketServiceImp.findByDate(timeStamp);
+        List<Ticket> ticketList = ticketServiceImp.findByDate(timeStamp);
+        return ((ticketList.isEmpty()) ? null : ticketList);
     }
 
 

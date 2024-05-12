@@ -46,7 +46,7 @@
                         th:onclick="findId(this.getAttribute('data-name'))">Edit
                 </button>
                 <button class="btn btn-danger deleteButtonJobs" th:data-name="${ticket.id}"
-                        th:onclick="remove('/ticket',this.getAttribute('data-name'))">Delete
+                        th:onclick="deleted(this.getAttribute('data-name'))">Delete
                 </button>
             </td>
         </tr>
@@ -102,7 +102,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button onclick="save('/ticket' , 'saveFormTicket' )" class="btn btn-primary">Save</button>
+                    <button onclick="save()" class="btn btn-primary">Save</button>
                 </div>
             </div>
         </div>
@@ -192,7 +192,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="submitEditModal__ticket" onclick="edit('/ticket' , 'editFormTicket')">
+                    <button type="submit" class="btn btn-primary" id="submitEditModal__ticket" onclick="edit()">
                         Edit
                     </button>
                 </div>
@@ -202,7 +202,7 @@
     </div>
 
 </div>
-<!--todo : check popup body-->
+<!--todo : check popup body - Mahoor-->
 <div class="popup" id="popup">
     <div class="popup-content" id="popup-content">
             <span class="material-symbols-outlined popup-info" id="popup-info">
@@ -227,7 +227,6 @@
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/popup.js"></script>
-<script type="text/javascript" src="/js/js.js"></script>
 <script type="text/javascript" th:src="@{js/ticket.js}" src="../static/js/ticket.js"></script>
 </body>
 </html>
