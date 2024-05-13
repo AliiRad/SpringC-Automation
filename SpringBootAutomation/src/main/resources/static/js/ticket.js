@@ -25,55 +25,22 @@ async function findId(id) {
     ticketStatus.value = data.status;
     ticketDeleted.value = data.deleted;
 
-    console.log(data)
 }
 
-async function edit() {
-    const formData = new FormData(document.getElementById("editFormTicket"));
-    console.log(formData)
-    if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket", {method: "put", body: formData});
-    }
-
-    window.location.replace("/ticket")
-
-}
-
-async function save() {
-    const saveFormData = new FormData(saveFormTicket);
-
-    if (confirm(  "از صحت اطلاعات وارد شده اطمینان دارید؟")) {
-        const response = await fetch("/ticket", {method: "post", body: saveFormData});
-        console.log(saveFormData)
-    }
-    //
-    window.location.replace("/ticket")
-
-}
-
-async function deleted(id) {
-    if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
-        const resp = await fetch("/ticket/" + id, {
-            method: "delete"
-        });
-    }
-    window.location.replace("/ticket")
-
-}
-function handleSelectChange(event , selectTagId) {
+function handleSelectChange(event, selectTagId) {
     const selectedId = event.target.value;
-    getSubGroups(selectedId , selectTagId);
+    getSubGroups(selectedId, selectTagId);
 }
 
-async function getSubGroups(id , selectTagId){
-    const resp = await fetch("/ticketGroup/parent/" + id ,  {
-        method : "get"
+async function getSubGroups(id, selectTagId) {
+    const resp = await fetch("/ticketGroup/parent/" + id, {
+        method: "get"
     });
 
     let childId;
-    if (selectTagId === 'parent__add__ticket'){
+    if (selectTagId === 'parent__add__ticket') {
         childId = 'child__add__ticket'
-    }else if (selectTagId === 'parent__edit__ticket'){
+    } else if (selectTagId === 'parent__edit__ticket') {
         childId = 'child__edit__ticket'
     }
 
@@ -84,7 +51,7 @@ async function getSubGroups(id , selectTagId){
     try {
         data = await resp.json();
         select.name = 'group';
-        select.style.display='block';
+        select.style.display = 'block';
         label.style.display = 'block';
         const defaultOption = document.createElement('option');
         defaultOption.value = '-1';
@@ -92,7 +59,7 @@ async function getSubGroups(id , selectTagId){
         defaultOption.disabled = true;
         defaultOption.selected = true;
         select.appendChild(defaultOption);
-        data.forEach(function (item){
+        data.forEach(function (item) {
             let opt = document.createElement('option');
             opt.value = item.id;
             opt.innerHTML = item.title;
@@ -104,8 +71,51 @@ async function getSubGroups(id , selectTagId){
         let select2 = document.getElementById(selectTagId)
         select2.name = 'group'
         select.innerHTML = '';
-        select.style.display='none';
+        select.style.display = 'none';
         label.style.display = 'none';
+    }
+}
+
+async function edit() {
+    // todo : close modal then pop up
+    const formData = new FormData(document.getElementById("editFormTicket"));
+    console.log(formData)
+    if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
+        const response = await fetch("/ticket", {method: "put", body: formData});
+        if (!response.ok) {
+            showErrorPopup('/ticket', response.status, (await response.text()).toString());
+        } else {
+            showInfoPopup('/ticket', response.status, (await response.text()).toString());
+        }
+    }
+
+}
+
+async function save() {
+    // todo : close modal then pop up
+    const saveFormData = new FormData(saveFormTicket);
+
+    if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
+        const response = await fetch("/ticket", {method: "post", body: saveFormData});
+        if (!response.ok) {
+            showErrorPopup('/ticket', response.status, (await response.text()).toString());
+        } else {
+            showInfoPopup('/ticket', response.status, (await response.text()).toString());
+        }
+    }
+
+}
+
+async function deleted(id) {
+    if (confirm("آیا از حذف تیکت " + id + " اطمینان دارید؟")) {
+        const response = await fetch("/ticket/" + id, {
+            method: "delete"
+        });
+        if (!response.ok) {
+            showErrorPopup('/ticket', response.status, (await response.text()).toString());
+        } else {
+            showInfoPopup('/ticket', response.status, (await response.text()).toString());
+        }
     }
 
 }

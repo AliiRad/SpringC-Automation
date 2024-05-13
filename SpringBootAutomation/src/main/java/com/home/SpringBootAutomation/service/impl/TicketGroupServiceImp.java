@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.TicketGroup;
 import com.home.SpringBootAutomation.repository.TicketGroupRepository;
 import com.home.SpringBootAutomation.service.TicketGroupService;
@@ -35,9 +36,10 @@ public class TicketGroupServiceImp implements TicketGroupService {
     }
 
     @Override
-    public TicketGroup findById(Long id) {
-        Optional<TicketGroup> group = ticketGroupRepository.findById(id);
-        return (group.isPresent()) ? group.get() : null;
+    public TicketGroup findById(Long id) throws NoContentException {
+        return ticketGroupRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Ticket Group Found with id : " + id)
+        );
 
     }
 
@@ -49,6 +51,7 @@ public class TicketGroupServiceImp implements TicketGroupService {
 
     @Override
     public TicketGroup findByTitle(String title) {
+//todo : orElse ??
         Optional<TicketGroup> group = Optional.ofNullable(ticketGroupRepository.findByTitle(title));
         return (group.isPresent()) ? group.get() : null;
     }
