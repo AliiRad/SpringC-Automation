@@ -58,8 +58,10 @@
             <form id="saveFormTicket">
                 <div th:replace="~{/fragments/ticket-fragments :: ticketSaveFormContent('title','request','group') }"></div>
             </form>
+            <div class="modal-footer">
             <button onclick="save()" class="save-button">Save</button>
             <button onclick="closeModal()" class="close-button">Close</button>
+            </div>
         </div>
     </div>
 
@@ -70,8 +72,10 @@
                 <input type="text" id="id__edit__ticket" name="id" readonly>
                 <div th:replace="~{/fragments/ticket-fragments :: ticketEditFormContent('title','request','status','state','group')}"></div>
             </form>
+            <div class="modal-footer">
             <button onclick="edit()" class="edit-button">Edit</button>
             <button onclick="closeModal()" class="close-button">Close</button>
+            </div>
         </div>
     </div>
 

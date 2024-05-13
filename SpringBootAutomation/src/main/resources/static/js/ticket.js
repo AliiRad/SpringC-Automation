@@ -81,9 +81,10 @@ async function getSubGroups(id, selectTagId) {
 }
 
 async function edit() {
-    // todo : close modal then pop up
+    let editModal = document.getElementById("editModalTicket")
+    editModal.style.display = 'none';
     const formData = new FormData(document.getElementById("editFormTicket"));
-    console.log(formData)
+
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
         const response = await fetch("/ticket", {method: "put", body: formData});
         if (!response.ok) {
@@ -96,7 +97,8 @@ async function edit() {
 }
 
 async function save() {
-    // todo : close modal then pop up
+    let saveModal = document.getElementById("saveModalTicket")
+    saveModal.style.display='none'
     const saveFormData = new FormData(saveFormTicket);
 
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {

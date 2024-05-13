@@ -8,9 +8,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
-#saveModalTicket, #editModalTicket {
+#saveModalTicketGroup, #editModalTicketGroup {
     display: none;
     position: fixed;
     z-index: 1000;
@@ -23,7 +21,7 @@
 }
 
 
-#saveModalTicketContent, #editModalTicketContent {
+#saveModalTicketGroupContent, #editModalTicketGroupContent {
     background-color: #f2f2f2;
     margin: 15% auto;
     padding: 20px;
@@ -33,7 +31,7 @@
     border-radius: 5px;
 }
 
-#saveFormTicket, #editFormTicket {
+#saveFormTicketGroup, #editFormTicketGroup {
     width: 100%;
     max-width: 500px;
     margin: auto;
@@ -44,7 +42,8 @@
 }
 
 
-input, textarea, select {
+
+input, textarea, select , option {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -53,7 +52,6 @@ input, textarea, select {
     border-radius: 4px;
     box-sizing: border-box;
 }
-
 
 table {
     width: 100%;
