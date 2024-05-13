@@ -3,7 +3,6 @@ package com.home.SpringBootAutomation.model;
 import com.home.SpringBootAutomation.enums.AccountStatus;
 import com.home.SpringBootAutomation.enums.AccountType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -40,22 +39,22 @@ public class Account {
     @Size( min = 16 , max = 16, message = "Card Number must be Exactly 16")
     private String cardNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
-    @JoinColumn(name = "account_person")
-    private Person person;
+//    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+//    @JoinColumn(name = "account_person")
+//    private Person person;
 
     @Column(name = "account_bank_and_branch", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Bank And Branch")
     @Size(min = 3, max = 50, message = "Bank And Branch must be between 3 and 50 characters")
     private String bankAndBranch;
 
-    @Column(name = "account_account_type")
-    @Enumerated(EnumType.ORDINAL)
-    private AccountType accountType;
-
-    @Column(name = "account_account_status")
-    @Enumerated(EnumType.ORDINAL)
-    private AccountStatus accountStatus;
+//    @Column(name = "account_account_type")
+//    @Enumerated(EnumType.ORDINAL)
+//    private AccountType accountType;
+//
+//    @Column(name = "account_account_status")
+//    @Enumerated(EnumType.ORDINAL)
+//    private AccountStatus accountStatus;
 
     @Column(name = "account_deleted")
     private boolean deleted;

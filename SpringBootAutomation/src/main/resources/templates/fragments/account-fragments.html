@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)">
+<!--        <label for="accountNumber">Account Number:</label>-->
+    <input type="text" th:id="${accountNumber}" name="accountNumber" placeholder="Account Number">
+<!--        <span class="error" th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}">Invalid Account Number!</span>-->
+
+    <!--    <label for="cardNumber">Card Number:</label>-->
+    <input type="text" th:id="${cardNumber}" name="cardNumber" placeholder="Card Number">
+    <!--    <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>-->
+
+    <!--    <label for="person">Person:</label>-->
+<!--    <select th:id="${person}" th:field="*{person}" name="person">-->
+<!--        <option value="">Select</option>-->
+<!--        <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>-->
+<!--    </select>-->
+    <!--    <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid person!</span>-->
+
+    <!--    <label for="bankAndBranch">Bank And Branch:</label>-->
+    <input type="text" th:id="${bankAndBranch}" name="bankAndBranch" placeholder="Bank And Branch">
+    <!--    <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}" th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>-->
+
+    <!--    <label for="accountType">Account Type:</label>-->
+<!--    <select class="form-select" aria-label="Default select example"-->
+<!--            th:id="${accountType}" name="accountType" th:value="${account.accountType}"-->
+<!--            th:field="*{accountType}">-->
+<!--        <option selected disabled value="-1">Choose Account Type</option>-->
+<!--        <option th:each="accountType: ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"-->
+<!--                th:value="${accountType}" th:text="${accountType.label}"></option>-->
+<!--    </select>-->
+    <!--    <span class="error" th:if="${#fields.hasErrors('accountType')}" th:errors="*{accountType}">Invalid Account Type!</span>-->
+
+    <!--    <label for="accountStatus">Account Status:</label>-->
+<!--    <select class="form-select" aria-label="Default select example"-->
+<!--            th:id="${accountStatus}" name="accountStatus" th:value="${account.accountStatus}"-->
+<!--            th:field="*{accountStatus}">-->
+<!--        <option selected disabled value="-1">Choose Account Status</option>-->
+<!--        <option th:each="accountStatus: ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"-->
+<!--                th:value="${accountStatus}" th:text="${accountStatus.label}"></option>-->
+<!--    </select>-->
+    <!--    <span class="error" th:if="${#fields.hasErrors('accountStatus')}" th:errors="*{accountStatus}">Invalid Account Status!</span>-->
+</div>
+
+</body>
+</html>
