@@ -36,5 +36,6 @@ function closeModal(){
     const editModal = document.getElementById("edit-modal");
     saveModal.style.display = "none";
     editModal.style.display = "none";
+    // editModal.style.display = "none";
 }
 
