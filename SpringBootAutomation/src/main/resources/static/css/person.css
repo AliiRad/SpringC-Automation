@@ -1,0 +1,27 @@
+body{
+    background-color: pink;
+}
+
+#save-form, #edit-form {
+    width: 50%;
+    margin: auto;
+}
+
+#save-modal, #edit-modal{
+    display: none;
+    background-color: black;
+    opacity: 80%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    color: white;
+}
+
+#save-modal-content, #edit-modal-content{
+    background-color: lightblue;
+    width: 50%;
+    top: 300px;
+    margin: 200px auto;
+}
