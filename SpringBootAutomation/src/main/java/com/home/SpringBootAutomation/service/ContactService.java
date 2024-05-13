@@ -2,30 +2,41 @@ package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Contact;
-import org.springframework.transaction.annotation.Transactional;
+import com.home.SpringBootAutomation.repository.ContactRepository;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface ContactService {
+@Service
+public class ContactService {
+    private ContactRepository contactRepository;
+    private Contact contact;
 
-    Contact save(Contact contact);
+    public  ContactService(ContactRepository contactRepository) { this.contactRepository = contactRepository; }
 
-    Contact update(Contact contact) throws NoContentException;
+    public Contact save(Contact contact) { return contactRepository.save(contact); }
 
-    @Transactional
-    void logicalRemove(Long id) throws NoContentException;
+    public Contact edit(@Valid Contact person) throws NoContentException {
+        contactRepository.findById(contact.getId()).orElseThrow(
+                () -> new NoContentException("No Contact Found with id : " + contact.getId())
+        );
+        return contactRepository.save(contact);
+    }
 
-    List<Contact> findAll();
+    public Contact remove(Long id) throws NoContentException {
+        Contact contact = contactRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Contact Found with id : " + id)
+        );
+        contactRepository.deleteById(id);
+        return contact;
+    }
 
-    Optional<Contact> findById(Long id) throws NoContentException;
+    public List<Contact> findAll() { return contactRepository.findAll(); }
 
-    Long getContactCount();
-
-    Contact logicalRemoveWithReturn(Long id) throws NoContentException;
-
-    List<Contact> findContactByDeletedFalse();
-    Optional<Contact> findContactByIdAndDeletedFalse(Long id) throws NoContentException;
-
-    Long countByDeletedFalse();
+    public Contact findById(Long id) throws NoContentException {
+        return contactRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Contact Found with id : " + id)
+        );
+    }
 }

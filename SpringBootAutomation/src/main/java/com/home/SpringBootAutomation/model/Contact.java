@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.home.SpringBootAutomation.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -8,7 +9,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -16,11 +16,11 @@ import lombok.experimental.SuperBuilder;
 
 @Entity(name = "contactEntity")
 @Table(name = "contact_tbl")
-public class Contact {
+public class Contact extends Base {
 
     @Id
     @SequenceGenerator(name = "contactSeq", sequenceName = "contact_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "contactSeq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "contact_id")
     private Long id;
 

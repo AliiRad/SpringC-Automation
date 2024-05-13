@@ -41,7 +41,6 @@ public class PersonController {
             model.addAttribute("messageContent", "Person Saved successfully");
             return "redirect:/person";
 
-
         } catch (Exception e) {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
