@@ -119,11 +119,9 @@ public class PersonController {
             log.error(e.getMessage());
             model.addAttribute("messageType", "error");
             model.addAttribute("messageContent", e.getMessage());
-
             return "error-page";
         }
     }
-
 
     @GetMapping("/findById/{id}")
     public ResponseEntity<Optional<Person>> findById(@PathVariable("id") Long id, Model model) {
