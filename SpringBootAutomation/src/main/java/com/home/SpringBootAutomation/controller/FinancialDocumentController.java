@@ -8,7 +8,6 @@ import com.home.SpringBootAutomation.service.impl.FinancialDocumentServiceImp;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +23,14 @@ import java.util.Optional;
 public class FinancialDocumentController {
     private final FinancialDocumentServiceImp fServiceImp;
 
-    @Autowired
-    private PersonServiceImpl personService;
+    private final PersonServiceImpl personService;
 
-    @Autowired
-    private AccountServiceImp serviceImp;
+    private final AccountServiceImp serviceImp;
 
-    public FinancialDocumentController(FinancialDocumentServiceImp fServiceImp) {
+    public FinancialDocumentController(FinancialDocumentServiceImp fServiceImp, PersonServiceImpl personService, AccountServiceImp serviceImp) {
         this.fServiceImp = fServiceImp;
+        this.personService = personService;
+        this.serviceImp = serviceImp;
     }
 
     @PostMapping("/save")
@@ -66,7 +65,7 @@ public class FinancialDocumentController {
                 return "financialDocument";
             }
             fServiceImp.update(financialDocument);
-            log.info("Controller - Financial Document Edited - Put Method ---->" + " financialDocument :" + financialDocument.toString());
+            log.info("Controller - Financial Document Edited - Put Method ---->" + " financialDocument :" + financialDocument);
             model.addAttribute("financialDocument", financialDocument);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "Financial Document Saved successfully");

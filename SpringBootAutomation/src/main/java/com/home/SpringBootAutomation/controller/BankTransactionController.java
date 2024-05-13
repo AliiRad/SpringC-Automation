@@ -8,7 +8,6 @@ import com.home.SpringBootAutomation.service.impl.FinancialDocumentServiceImp;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +23,14 @@ import java.util.Optional;
 public class BankTransactionController {
     private final BankTransactionServiceImp serviceImp;
 
-    @Autowired
-    private PersonServiceImpl personService;
+    private final PersonServiceImpl personService;
 
-    @Autowired
-    private FinancialDocumentServiceImp financialDocumentService;
+    private final FinancialDocumentServiceImp financialDocumentService;
 
-    public BankTransactionController(BankTransactionServiceImp serviceImp) {
+    public BankTransactionController(BankTransactionServiceImp serviceImp, PersonServiceImpl personService, FinancialDocumentServiceImp financialDocumentService) {
         this.serviceImp = serviceImp;
+        this.personService = personService;
+        this.financialDocumentService = financialDocumentService;
     }
 
     @PostMapping("/save")
@@ -66,7 +65,7 @@ public class BankTransactionController {
                 return "bankTransaction";
             }
             serviceImp.update(bankTransaction);
-            log.info("Controller - BankTransaction Edited - Put Method ---->" + " bankTransaction:" + bankTransaction.toString());
+            log.info("Controller - BankTransaction Edited - Put Method ---->" + " bankTransaction:" + bankTransaction);
             model.addAttribute("bankTransaction", bankTransaction);
             model.addAttribute("messageType", "success");
             model.addAttribute("messageContent", "BankTransaction Saved successfully");
