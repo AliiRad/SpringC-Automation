@@ -36,7 +36,7 @@ public class TicketController {
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("ticketList", ticketServiceImp.findAll());
         model.addAttribute("ticketGroupParents", ticketGroupServiceImp.findByParentRoot());
-        return "ticket";
+        return "ticket" ;
     }
 
     @PostMapping()

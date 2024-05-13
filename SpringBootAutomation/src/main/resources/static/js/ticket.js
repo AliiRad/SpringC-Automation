@@ -1,7 +1,11 @@
+function addTicket(){
+    let saveModal = document.getElementById("saveModalTicket");
+    saveModal.style.display = "block"
+}
+
 async function findId(id) {
     let editModal = document.getElementById("editModalTicket")
-    let modalTicket = new bootstrap.Modal(editModal);
-    modalTicket.show();
+    editModal.style.display = 'block';
     const resp = await fetch("/ticket/" + id, {
         method: "get"
     });
@@ -119,3 +123,12 @@ async function deleted(id) {
     }
 
 }
+
+function closeModal(){
+    let saveModal = document.getElementById("saveModalTicket")
+    let editModal = document.getElementById("editModalTicket")
+    editModal.style.display = 'none';
+    saveModal.style.display = "none"
+}
+
+
