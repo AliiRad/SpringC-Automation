@@ -1,86 +1,62 @@
-
-async function findById(id){
-
-    let editModal = document.getElementById("editModalSalary")
-    let modalSalary = new bootstrap.Modal(editModal);
-    modalSalary.show();
-
-    const resp = await fetch("/salary/findById/" + id ,{
-        method :"GET"
-    });
-
-    const data = await resp.json();
-    let salaryId =document.getElementById("id__edit__salary");
-    let salaryBasicHourlyPay = document.getElementById("basicHourlyPay__edit__salary");
-    let salaryBasicDailyPay = document.getElementById("basicDailyPay__edit__salary")
-    let salaryBasicMonthlyPay = document.getElementById("basicMonthlyPay__edit__salary");
-    let salaryWorkingCoupon = document.getElementById("workingCoupon__edit__salary");
-    let salaryHousingRight = document.getElementById("housingRight__edit__salary");
-    let salaryWorkingYearPay = document.getElementById("workingYearPay__edit__salary");
-    let salaryPayForEachChild = document.getElementById("payForEachChild__edit__salary");
-    let salaryMarriedPeopleRights = document.getElementById("marriedPeopleRights__edit__salary");
-    let salaryInsurance = document.getElementById("insurance__edit__salary");
-    let salaryYear = document.getElementById("year__edit__salary");
-
-
-    salaryId.value = data.id;
-    salaryBasicHourlyPay.value = data.basicHourlyPay;
-    salaryBasicDailyPay.value = data.basicDailyPay;
-    salaryBasicMonthlyPay.value =data.basicMonthlyPay;
-    salaryWorkingCoupon.value = data.workingCoupon;
-    salaryHousingRight.value = data.housingRight;
-    salaryWorkingYearPay.value = data.workingYearPay;
-    salaryPayForEachChild.value = data.payForEachChild;
-    salaryMarriedPeopleRights.value = data.marriedPeopleRights;
-    salaryInsurance.value = data.insurance;
-    salaryYear.value = data.year;
-
-
+function addNew(){
+    let modal = document.getElementById("save-modal");
+    modal.style.display = "block";
 }
 
+// todo : is just for salary - its not generic
+async function getDataForEdit(url, id) {
+    const response = await fetch(url + "/" + id,
+        {
+            method: "GET"
+        }
+    );
+    if (!response.ok) {
+        alert("Error : " + response.status + "\n" + (await response.text()).toString());
+    } else {
+        // todo : make it automate
+        let salary = JSON.parse(await response.text());
+        let modal = document.getElementById("edit-modal");
+        modal.style.display = "block";
 
-// "Edit Functionality"
-async function edit(){
+        let idEdit = document.querySelector("#edit-form #id");
+        idEdit.value = salary.id;
 
-    const formData = new FormData(document.getElementById("editFormSalary"));
+        let basicHourlyPayEdit = document.querySelector("#edit-form div :nth-child(1)");
+        basicHourlyPayEdit.id = "edit-basicHourlyPay";
+        basicHourlyPayEdit.value = salary.basicHourlyPay;
 
-    const resp = await fetch("/salary/edit" ,{
-        method:"POST",
-        body: formData
-    });
-    // window.location.href = "/person"
-    // window.location.replace("/person")
-    // window.location.reload();
-    //
-    // if (resp.ok) {
-    //      console.log("ok")
-    //
-    // } else {
-    //     console.error("Failed to save edited person.");
-    // }
+        let basicDailyPayEdit = document.querySelector("#edit-form div :nth-child(2)");
+        basicDailyPayEdit.value = salary.basicDailyPay;
 
+        let basicMonthlyPayEdit = document.querySelector("#edit-form div :nth-child(3)");
+        basicMonthlyPayEdit.value = salary.basicMonthlyPay;
 
+        let workingCouponEdit = document.querySelector("#edit-form div :nth-child(4)");
+        workingCouponEdit.value = salary.workingCoupon;
+
+        let housingRightEdit = document.querySelector("#edit-form div :nth-child(5)");
+        housingRightEdit.value = salary.housingRight;
+
+        let workingYearPayEdit = document.querySelector("#edit-form div :nth-child(6)");
+        workingYearPayEdit.value = salary.workingYearPay;
+
+        let payForEachChildEdit = document.querySelector("#edit-form div :nth-child(7)");
+        payForEachChildEdit.value = salary.payForEachChild;
+
+        let marriedPeopleRightsEdit = document.querySelector("#edit-form div :nth-child(8)");
+        marriedPeopleRightsEdit.value = salary.marriedPeopleRights;
+
+        let insuranceEdit = document.querySelector("#edit-form div :nth-child(9)");
+        insuranceEdit.value = salary.insurance;
+
+        let yearEdit = document.querySelector("#edit-form div :nth-child(10)");
+        yearEdit.value = salary.year;
+    }
 }
 
-
-//"Delete Functionality"
-async function openDeleteModal(id){
-
-    let deleteIdInputSalary =document.getElementById("id__delete__salary");
-
-    deleteIdInputSalary.value = id;
-
-    let deleteModal = document.getElementById("deleteModalSalary")
-    let modalSalary = new bootstrap.Modal(deleteModal);
-    modalSalary.show();
-
-
-}
-
-async function deleteById(id){
-    const resp= await fetch(`/salary/delete/` + id,{
-        method:"DELETE"
-    });
-    console.log(id)
-    window.location.replace("/salary")
+function closeModal(){
+    const saveModal = document.getElementById("save-modal");
+    const editModal = document.getElementById("edit-modal");
+    saveModal.style.display = "none";
+    editModal.style.display = "none";
 }

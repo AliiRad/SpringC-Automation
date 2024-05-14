@@ -1,138 +1,95 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Salary;
 import com.home.SpringBootAutomation.service.impl.SalaryServiceImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/salary")
 @Slf4j
 public class SalaryController {
 
-    private final SalaryServiceImpl service;
+    private final SalaryServiceImpl salaryService;
 
-    public SalaryController(SalaryServiceImpl service) {
-        this.service = service;
+    public SalaryController(SalaryServiceImpl salaryService) {
+        this.salaryService = salaryService;
     }
 
-    @PostMapping(value = "/save")
-    public String save(@Valid Salary salary, Model model, BindingResult result){
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Salary Save Failed ! --->" + result.getAllErrors());
-                return "salary";
-
-            }
-            service.save(salary);
-            log.info("Controller - Salary Saved - Post Method ---->" + " salary :" + salary.toString());
-
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Salary Saved successfully");
-            return "redirect:/salary";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/salary";
-        }
+    @RequestMapping(method = RequestMethod.GET)
+    public String salaryForm(Model model) {
+        model.addAttribute("salaryList", salaryService.findSalaryByDeletedFalse());
+        model.addAttribute("salary", new Salary());
+        return "salary";
     }
 
-    @PostMapping("/edit") //TODO: PutMapping
-    public String edit(@Valid Salary salary, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Salary Edit Failed ! --->" + result.getAllErrors());
-                return "person";
-
-            }
-            service.update(salary);
-            log.info("Controller - Salary Edited - Put Method ---->" + " person :" + salary.toString());
-
-            model.addAttribute("salary", salary);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Salary Saved successfully");
-            return "redirect:/salary";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/salary";
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Salary save(Model model, @Valid Salary salary, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return salaryService.save(salary);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            service.logicalRemove(id);
-
-            log.info("The Salary With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Salary With Id : " + id + " Successfully Deleted .");
-            return "redirect:/salary";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-            //TODO: Maybe a 500 error page ?
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public Salary edit(Model model, @Valid Salary salary, BindingResult bindingResult) throws NoContentException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return salaryService.update(salary);
     }
 
-    @GetMapping
-    public String findAll(Model model) {
-        try {
-            List<Salary> salaryList = service.findSalaryByDeletedFalse();
-            log.info("Controller - Find Salaries With Deleted False - Get Method");
-
-            model.addAttribute("salary", new Salary());
-            model.addAttribute("salaryList", salaryList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Salary List Is Not Empty");
-
-            return "salary";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            return "error-page";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Salary remove(Model model, @PathVariable Long id) throws NoContentException {
+        return salaryService.logicalRemove(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Salary>> findById(@PathVariable("id") Long id, Model model) {
-        try {
-            Optional<Salary> salary = service.findSalaryByIdAndDeletedFalse(id);
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Salary findById(Model model, @PathVariable Long id) throws NoContentException {
+        return salaryService.findById(id);
+    }
 
-            return ResponseEntity.ok(salary);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/year/{year}", method = RequestMethod.GET)
+    public Salary findByYear(Model model, @PathVariable Integer year) throws NoContentException {
+        return salaryService.findSalaryByYearAndDeletedFalse(year);
+    }
 
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
-            return null;
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Salary> findAll(Model model) throws NoContentException {
+        return salaryService.findAll();
     }
 
 }
