@@ -12,13 +12,13 @@ import com.home.SpringBootAutomation.repository.OrganisationRepository;
 import com.home.SpringBootAutomation.service.OrganisationService;
 
 @Service
-public class OrganisationServiceImp implements OrganisationService{
+public class OrganisationServiceImp implements OrganisationService {
 
     private final OrganisationRepository repository;
 
     public OrganisationServiceImp(OrganisationRepository repository) {
         this.repository = repository;
-   }
+    }
 
     @Override
     public List<Organisation> findAll() {
@@ -27,6 +27,9 @@ public class OrganisationServiceImp implements OrganisationService{
 
     @Override
     public Optional<Organisation> findById(Long id) throws NoContentException {
+        // return repository.findById(id).orElseThrow(
+        // () -> new NoContentException("Organisation not found !" + id)
+        // );
         Optional<Organisation> optional = repository.findById(id);
         if (optional.isPresent()) {
             return optional;
@@ -35,26 +38,32 @@ public class OrganisationServiceImp implements OrganisationService{
         }
     }
 
-    @Override
-    public List<Organisation> findSectionByDeletedFalse() throws NoContentException {
-        return null;
+        @Override
+    public List<Organisation> findOrganisationByDeletedFalse() throws NoContentException {
+        return repository.findOrganisationByDeletedFalse();
     }
 
     @Override
-    public Optional<Organisation> findSectionByIdAndDeletedFalse(Long id) throws NoContentException {
-        return Optional.empty();
+    public Optional<Organisation> findOrganisationByIdAndDeletedFalse(Long id) throws NoContentException {
+        Optional<Organisation> optional = repository.findOrganisationByIdAndDeletedFalse(id);
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            throw new NoContentException("Organisation not found !");
+        }
     }
+
 
     @Transactional
     @Override
     public void logicalRemove(Long id) throws NoContentException {
-        Optional<Organisation> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
+        Optional<Organisation> optionalSection = repository.findOrganisationByIdAndDeletedFalse(id);
         if (optionalSection.isPresent()) {
             repository.logicalRemove(id);
         } else {
             throw new NoContentException("Organisation not found !");
         }
-        
+
     }
 
     @Override
@@ -63,7 +72,7 @@ public class OrganisationServiceImp implements OrganisationService{
     }
 
     @Override
-    public Organisation update(Organisation organisation) throws NoContentException{
+    public Organisation update(Organisation organisation) throws NoContentException {
         Optional<Organisation> optional = repository.findOrganisationByIdAndDeletedFalse(organisation.getId());
 
         if (optional.isPresent()) {
@@ -72,5 +81,7 @@ public class OrganisationServiceImp implements OrganisationService{
             throw new NoContentException("Organisation not found !");
         }
     }
-    
+
+
+
 }

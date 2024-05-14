@@ -20,8 +20,8 @@ public interface OrganisationService {
 
     Optional<Organisation> findById(Long id) throws NoContentException;
 
-    Optional<Organisation> findSectionByIdAndDeletedFalse(Long id) throws NoContentException;
+    Optional<Organisation> findOrganisationByIdAndDeletedFalse(Long id) throws NoContentException;
 
-    List<Organisation> findSectionByDeletedFalse() throws NoContentException;
+    List<Organisation> findOrganisationByDeletedFalse() throws NoContentException;
 
 }
