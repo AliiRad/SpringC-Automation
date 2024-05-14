@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public abstract class ContactServiceImpl implements ContactService {
+public class ContactServiceImpl implements ContactService {
 
 //TODO: ContactServiceImp Error
     private final ContactRepository contactRepository;
@@ -46,14 +46,20 @@ public abstract class ContactServiceImpl implements ContactService {
         return contactRepository.save(contact);
     }
 
-    @Transactional
+    //TODO: Fix ContactServiceImpl Remove
+    // @Transactional
+    // @Override
+    // public void remove(Contact contact) throws NoContentException {
+    //     log.info("Service-Contact-Remove");
+    //     contactRepository.findById(contact.getId()).orElseThrow(
+    //             () -> new NoContentException("No Contact with id : " + contact.getId())
+    //     );
+    //     contactRepository.delete(contact);
+    // }
+
     @Override
-    public void remove(Contact contact) throws NoContentException {
-        log.info("Service-Contact-Remove");
-        contactRepository.findById(contact.getId()).orElseThrow(
-                () -> new NoContentException("No Contact with id : " + contact.getId())
-        );
-        contactRepository.delete(contact);
+    public Contact remove(Contact contact) throws NoContentException {
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
     }
 
     @Override
@@ -79,5 +85,11 @@ public abstract class ContactServiceImpl implements ContactService {
         return contactRepository.findById(id).orElseThrow(
                 () -> new NoContentException("No Contact found with id " + id)
         );
+    }
+
+    @Override
+    public List<Contact> findAllDeletedFalse() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findAllDeletedFalse'");
     }
 }
