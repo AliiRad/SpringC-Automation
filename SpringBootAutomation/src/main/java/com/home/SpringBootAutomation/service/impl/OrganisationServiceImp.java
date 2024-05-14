@@ -3,6 +3,7 @@ package com.home.SpringBootAutomation.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
@@ -10,7 +11,7 @@ import com.home.SpringBootAutomation.model.Organisation;
 import com.home.SpringBootAutomation.repository.OrganisationRepository;
 import com.home.SpringBootAutomation.service.OrganisationService;
 
-
+@Service
 public class OrganisationServiceImp implements OrganisationService{
 
     private final OrganisationRepository repository;
