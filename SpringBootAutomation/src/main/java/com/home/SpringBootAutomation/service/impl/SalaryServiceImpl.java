@@ -13,67 +13,69 @@ import java.util.Optional;
 @Service
 public class SalaryServiceImpl implements SalaryService {
 
-    private final SalaryRepository repository;
+    private final SalaryRepository salaryRepository;
 
-    public SalaryServiceImpl(SalaryRepository repository) {
-        this.repository = repository;
+    public SalaryServiceImpl(SalaryRepository salaryRepository) {
+        this.salaryRepository = salaryRepository;
     }
 
     @Override
-    public void save(Salary salary) throws Exception {
-        repository.save(salary);
+    public Salary save(Salary salary) {
+        return salaryRepository.save(salary);
     }
 
     @Override
-    public void update(Salary salary) throws NoContentException {
-        Optional<Salary> optionalSalary = repository.findSalaryByIdAndDeletedFalse(salary.getId());
+    public Salary update(Salary salary) throws NoContentException {
+        salaryRepository.findById(salary.getId()).orElseThrow(
+                () -> new NoContentException("No Salary Found with id : " + salary.getId())
+        );
+        return salaryRepository.save(salary);
+    }
 
-        if (optionalSalary.isPresent()) {
-            repository.save(salary);
-        } else {
-            throw new NoContentException("Salary not found !");
-        }
+    @Override
+    public Salary remove(Long id) throws NoContentException {
+        Salary salary = salaryRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Salary Found with id : " + id)
+        );
+        salaryRepository.deleteById(id);
+        return salary;
     }
 
     @Transactional
     @Override
-    public void logicalRemove(Long id) throws NoContentException {
-        Optional<Salary> optionalSalary = repository.findSalaryByIdAndDeletedFalse(id);
-        if (optionalSalary.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Salary not found !");
-        }
+    public Salary logicalRemove(Long id) throws NoContentException {
+        Salary salary = salaryRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Salary Found with id : " + id)
+        );
+        salaryRepository.logicalRemove(id);
+        return salary;
     }
 
     @Override
-    public List<Salary> findAll() throws Exception {
-        return repository.findAll();
+    public List<Salary> findAll() {
+        return salaryRepository.findAll();
     }
 
     @Override
-    public Optional<Salary> findById(Long id) throws NoContentException {
-        Optional<Salary> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Salary not found !");
-        }
+    public Salary findById(Long id) throws NoContentException {
+        return salaryRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Salary Found with id : " + id)
+        );
     }
 
     @Override
     public Long getSalariesCount() {
-        return repository.count();
+        return salaryRepository.count();
     }
 
     @Override
     public Salary logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<Salary> optionalSalary = repository.findSalaryByIdAndDeletedFalse(id);
+        Optional<Salary> optionalSalary = salaryRepository.findSalaryByIdAndDeletedFalse(id);
 
         if (optionalSalary.isPresent()) {
             Salary oldSalary = optionalSalary.get();
             oldSalary.setDeleted(true);
-            return repository.save(oldSalary);
+            return salaryRepository.save(oldSalary);
 
         } else {
             throw new NoContentException("Salary not found !");
@@ -81,27 +83,21 @@ public class SalaryServiceImpl implements SalaryService {
     }
 
     @Override
-    public List<Salary> findSalaryByDeletedFalse() throws Exception {
-        return repository.findSalaryByDeletedFalse();
+    public List<Salary> findSalaryByDeletedFalse() {
+        return salaryRepository.findSalaryByDeletedFalse();
     }
 
     @Override
-    public Optional<Salary> findSalaryByIdAndDeletedFalse(Long id) throws NoContentException{
-        Optional<Salary> optional = repository.findSalaryByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Salary not found !");
-        }
+    public Salary findSalaryByIdAndDeletedFalse(Long id) throws NoContentException{
+        return salaryRepository.findSalaryByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Salary Found with id : " + id)
+        );
     }
 
     @Override
-    public Optional<Salary> findSalaryByYearAndDeletedFalse(Integer year) throws NoContentException {
-        Optional<Salary> optional = repository.findSalaryByYearAndDeletedFalse(year);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Salary not found !");
-        }
+    public Salary findSalaryByYearAndDeletedFalse(Integer year) throws NoContentException {
+        return salaryRepository.findSalaryByYearAndDeletedFalse(year).orElseThrow(
+                () -> new NoContentException("No Salary Found with year : " + year)
+        );
     }
 }
