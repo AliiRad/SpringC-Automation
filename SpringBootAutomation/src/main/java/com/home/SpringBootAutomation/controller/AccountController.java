@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Account;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.impl.AccountServiceImp;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
@@ -20,19 +21,19 @@ import java.util.List;
 public class AccountController {
     private final AccountServiceImp serviceImp;
 
-//    private final PersonServiceImpl personService;
+    private final PersonServiceImpl personService;
 
     public AccountController(AccountServiceImp serviceImp, PersonServiceImpl personService) {
         this.serviceImp = serviceImp;
-//        this.personService = personService;
+        this.personService = personService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String AccountForm(Model model) {
         model.addAttribute("accountList", serviceImp.findAll());
         model.addAttribute("account", new Account());
-//        List<Person> person = personService.findAll();
-//        model.addAttribute("person", person);
+        List<Person> person = personService.findAll();
+        model.addAttribute("person", person);
         return "account";
     }
 

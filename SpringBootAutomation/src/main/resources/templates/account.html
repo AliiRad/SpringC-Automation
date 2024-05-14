@@ -16,7 +16,7 @@
     <div id="save-modal">
         <div id="save-modal-content">
             <form id="save-form" th:object="${account}">
-                <div th:replace="~{/fragments/account-fragments :: accountFormContent('accountNumber', 'cardNumber', 'person', 'bankAndBranch', 'accountType', 'accountStatus')}"></div>
+                <div th:insert="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, persons, bankAndBranch, accountType, accountStatus)"></div>
             </form>
             <button onclick="save('/account', 'save-form')">Save</button>
             <button onclick="closeModal()">Close</button>
@@ -34,10 +34,10 @@
         <th>Id</th>
         <th>Account Number</th>
         <th>Card Number</th>
-<!--        <th>Person</th>-->
+        <th>Person</th>
         <th>Bank And Branch</th>
-<!--        <th>Account Type</th>-->
-<!--        <th>Account Status</th>-->
+        <th>Account Type</th>
+        <th>Account Status</th>
         <th>Operation</th>
         </thead>
 
@@ -46,10 +46,10 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-<!--            <td th:text="${account.person}"></td>-->
+            <td th:text="${account.person}"></td>
             <td th:text="${account.bankAndBranch}"></td>
-<!--            <td th:text="${account.accountType}"></td>-->
-<!--            <td th:text="${account.accountStatus}"></td>-->
+            <td th:text="${account.accountType}"></td>
+            <td th:text="${account.accountStatus}"></td>
             <td>
                 <button th:data-name="${account.id}"
                         th:onclick="|getDataForEdit('/account', this.getAttribute('data-name'))|"> Edit
@@ -66,7 +66,7 @@
         <div id="edit-modal-content">
             <form id="edit-form">
                 <label for="id"></label><input type="text" id="id" name="id" hidden="hidden">
-                <div th:replace="~{/fragments/account-fragments :: accountFormContent('edit-accountNumber', 'edit-cardNumber', 'edit-person', 'edit-bankAndBranch', 'edit-accountType', 'edit-accountStatus')}"></div>
+                <div th:replace="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
             </form>
             <button onclick="edit('/account', 'edit-form')">Edit</button>
             <button onclick="closeModal()">Close</button>
