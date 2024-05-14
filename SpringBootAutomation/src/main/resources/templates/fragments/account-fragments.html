@@ -15,14 +15,14 @@
     <input type="text" th:id="${cardNumber}" name="cardNumber" placeholder="Card Number">
     <!--    <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>-->
 
-<!--    <div>-->
-<!--        <label for="person">Select Person:</label>-->
-<!--        <select id="person" name="person">-->
-<!--            <option value="">Select</option>-->
+    <div>
+        <label for="person">Select Person:</label>
+        <select id="person" name="person">
+            <option>Select</option>
 <!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
-<!--        </select>-->
+        </select>
 <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
-<!--    </div>-->
+    </div>
 
     <!--    <label for="bankAndBranch">Bank And Branch:</label>-->
     <input type="text" th:id="${bankAndBranch}" name="bankAndBranch" placeholder="Bank And Branch">

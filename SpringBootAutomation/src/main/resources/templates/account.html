@@ -16,7 +16,7 @@
     <div id="save-modal">
         <div id="save-modal-content">
             <form id="save-form" th:object="${account}">
-                <div th:insert="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, persons, bankAndBranch, accountType, accountStatus)"></div>
+                <div th:insert="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
             </form>
             <button onclick="save('/account', 'save-form')">Save</button>
             <button onclick="closeModal()">Close</button>
