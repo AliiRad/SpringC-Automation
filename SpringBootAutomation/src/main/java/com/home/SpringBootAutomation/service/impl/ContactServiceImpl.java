@@ -17,6 +17,7 @@ import java.util.List;
 @Slf4j
 public abstract class ContactServiceImpl implements ContactService {
 
+//TODO: ContactServiceImp Error
     private final ContactRepository contactRepository;
 
     public ContactServiceImpl(ContactRepository contactRepository){
