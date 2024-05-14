@@ -12,13 +12,13 @@ import java.util.Optional;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long>{
 
-        @Modifying
-        @Query("update contactEntity oo set oo.deleted=true where oo.id=:id")
-        void logicalRemove(Long id);
-
-        List<Contact> findContactByDeletedFalse();
-
-        Optional<Contact> findContactByIdAndDeletedFalse(Long id);
-
-        Long countByDeletedFalse();
+//        @Modifying
+//        @Query("update contactEntity oo set oo.deleted=true where oo.id=:id")
+//        void logicalRemove(Long id);
+//
+//        List<Contact> findContactByDeletedFalse();
+//
+//        Optional<Contact> findContactByIdAndDeletedFalse(Long id);
+//
+//        Long countByDeletedFalse();
 }

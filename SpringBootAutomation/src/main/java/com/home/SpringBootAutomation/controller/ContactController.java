@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/contact")
 public class ContactController {
 
-    private final ContactService contactService;
+    private ContactService contactService;
 
     public ContactController(ContactService contactService) {
         this.contactService = contactService;
@@ -33,7 +33,7 @@ public class ContactController {
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Contact save(Model model, @Valid Contact contact, BindingResult bindingResult){
+    public Contact save(Model model, @Valid Contact contact, BindingResult bindingResult) throws NoContentException {
         if (bindingResult.hasErrors()){
             throw new ValidationException(
                     bindingResult

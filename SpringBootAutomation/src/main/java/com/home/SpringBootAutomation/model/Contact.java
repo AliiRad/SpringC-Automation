@@ -1,12 +1,15 @@
 package com.home.SpringBootAutomation.model;
 
 import com.home.SpringBootAutomation.Base;
+import com.home.SpringBootAutomation.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -57,6 +60,13 @@ public class Contact extends Base {
     @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid National ID")
     @NotBlank(message = "Should Not Be Null")
     private String phoneNumber;
+
+    @Column(name = "ticket_time_stamp" )
+    private LocalDateTime ticketTimeStamp;
+
+    @Column(name = "contact_status")
+    @Enumerated(EnumType.ORDINAL)
+    private Status status;
 
     @Column(name = "contact_deleted")
     private boolean deleted;
