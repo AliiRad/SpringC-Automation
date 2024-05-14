@@ -38,6 +38,14 @@ public class OrganisationServiceImp implements OrganisationService {
         }
     }
 
+    @Override
+    public Organisation edit(Organisation organisation) throws NoContentException {
+        repository.findById(organisation.getId()).orElseThrow(
+            () -> new NoContentException("No Organisation Found with id : " + organisation.getId())
+        );
+        return repository.save(organisation);
+    }
+
         @Override
     public List<Organisation> findOrganisationByDeletedFalse() throws NoContentException {
         return repository.findOrganisationByDeletedFalse();
@@ -81,7 +89,5 @@ public class OrganisationServiceImp implements OrganisationService {
             throw new NoContentException("Organisation not found !");
         }
     }
-
-
 
 }

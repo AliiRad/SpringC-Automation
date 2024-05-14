@@ -11,6 +11,8 @@ public interface OrganisationService {
 
     Organisation save(Organisation organisation);
 
+    Organisation edit(Organisation organisation) throws NoContentException;
+
     Organisation update(Organisation organisation) throws NoContentException;
 
     @Transactional
