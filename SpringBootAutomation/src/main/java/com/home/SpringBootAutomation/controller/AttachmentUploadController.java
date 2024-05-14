@@ -1,7 +1,9 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.model.Attachment;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +21,7 @@ public class AttachmentUploadController {
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
+                                   @ModelAttribute("attachment")Attachment attachment,
                                    RedirectAttributes redirectAttributes) {
 
         if (file.isEmpty()) {
@@ -26,7 +29,7 @@ public class AttachmentUploadController {
             return "redirect:/uploadStatus";
         }
 
-        String originalFilename = file.getOriginalFilename();
+        String originalFilename = attachment.getFileName();
         String extension = FilenameUtils.getExtension(originalFilename);
 
         if (!ALLOWED_EXTENSIONS.contains(extension.toLowerCase())) {
