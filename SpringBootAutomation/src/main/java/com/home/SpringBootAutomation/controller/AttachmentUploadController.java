@@ -1,6 +1,8 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.model.Attachment;
+import com.home.SpringBootAutomation.service.AttachmentService;
+import com.home.SpringBootAutomation.service.impl.AttachmentServiceImpl;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +20,12 @@ import java.util.List;
 public class AttachmentUploadController {
 
     private static final List<String> ALLOWED_EXTENSIONS = Arrays.asList("pdf", "jpg", "jpeg", "bmp");
+
+    private final AttachmentServiceImpl attachmentService;
+
+    public AttachmentUploadController(AttachmentServiceImpl attachmentService) {
+        this.attachmentService = attachmentService;
+    }
 
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,
@@ -41,7 +49,7 @@ public class AttachmentUploadController {
         try {
             // Specify the directory to save the file
             String uploadDir = "src/main/resources/attachment"; // Change this to your desired directory
-
+            attachment.setFilePath("/resources/attachment/"+originalFilename);
             // Create the directory if it doesn't exist
             File directory = new File(uploadDir);
             if (!directory.exists()) {
@@ -50,10 +58,13 @@ public class AttachmentUploadController {
 
             // Save the file
             File uploadedFile = new File(uploadDir, originalFilename);
-            file.transferTo(uploadedFile);
+            if (attachmentService.save(attachment)!=null) {
+                file.transferTo(uploadedFile);
+                redirectAttributes.addFlashAttribute("message",
+                        "You successfully uploaded " + originalFilename + "!");
+            }
 
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded " + originalFilename + "!");
+
         } catch (IOException e) {
             e.printStackTrace();
             redirectAttributes.addFlashAttribute("message",
