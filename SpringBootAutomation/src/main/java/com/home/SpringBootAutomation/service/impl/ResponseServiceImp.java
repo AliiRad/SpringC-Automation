@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.service.impl;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.repository.ResponseRepository;
 import com.home.SpringBootAutomation.service.ResponseService;
@@ -29,33 +30,29 @@ public class ResponseServiceImp implements ResponseService {
     }
 
     @Override
-    public Response edit(Response response) {
+    public Response edit(Response response) throws NoContentException {
         log.info("Service-Response-Edit");
-        response.setDeleted(true);
-        if (findById(response.getId()) != null) {
-            responseRepository.save(response);
-            return response;
-        } else return null;
+        responseRepository.findById(response.getId()).orElseThrow(
+                () -> new NoContentException("No Response Found With Id : " + response.getId()));
+        return responseRepository.save(response);
+
     }
 
     @Override
-    public Response remove(Response response) {
+    public void remove(Response response) throws NoContentException {
         log.info("Service-Response-Remove");
-        if (findById(response.getId()) != null) {
-            responseRepository.delete(response);
-            return response;
-        } else return null;
+        responseRepository.findById(response.getId()).orElseThrow(
+                () -> new NoContentException("No Response Found With Id : " + response.getId()));
+        responseRepository.delete(response);
     }
 
     @Override
-    public Response logicalRemove(Long id) {
+    public Response logicalRemove(Long id) throws NoContentException {
         log.info("Service-Response-LogicalRemove");
-        Response response = findById(id);
-        if (response != null) {
-            response.setDeleted(false);
-            responseRepository.save(response);
-            return response;
-        } else return null;
+        Response response = responseRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Response Found With Id : " + id));
+        response.setDeleted(false);
+        return responseRepository.save(response);
     }
 
     @Override
@@ -66,10 +63,10 @@ public class ResponseServiceImp implements ResponseService {
     }
 
     @Override
-    public Response findById(Long id) {
+    public Response findById(Long id) throws NoContentException {
         log.info("Service-Response-FindById");
-        Optional<Response> response = responseRepository.findById(id);
-        return (response.isPresent() ? response.get() : null);
+        return  responseRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Response Found With Id : " + id));
     }
 
     @Override
@@ -79,10 +76,16 @@ public class ResponseServiceImp implements ResponseService {
         return responseList;
     }
 
+//    @Override
+//    public List<Response> findByResponder(String responder) {
+//        log.info("Service-Response-FindByResponder");
+//        List<Response> responseList = responseRepository.findByResponder(responder);
+//        return responseList;
+//    }
+
     @Override
-    public List<Response> findByResponder(String responder) {
-        log.info("Service-Response-FindByResponder");
-        List<Response> responseList = responseRepository.findByResponder(responder);
-        return responseList;
+    public List<Response> findByTicketGroup(String title) {
+        log.info("Service-Response-FindByTicketGroup");
+        return responseRepository.findByTicketGroup(title);
     }
 }

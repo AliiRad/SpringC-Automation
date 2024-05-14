@@ -39,7 +39,6 @@ public class TicketServiceImp implements TicketService {
         ticket.setStatus(Status.postponed);
         ticket.setDeleted(false);
         ticket.setTicketTimeStamp(LocalDateTime.now());
-        log.info(ticket.toString());
         ticketRepository.save(ticket);
         return ticket;
     }
@@ -83,6 +82,20 @@ public class TicketServiceImp implements TicketService {
     public List<Ticket> findAllDeletedFalse() {
         log.info("Service-Ticket-FindAllDeletedFalse");
         List<Ticket> ticketList = ticketRepository.findAllDeletedFalse();
+        return ticketList;
+    }
+
+    @Override
+    public List<String> findAllTitle() {
+        log.info("Service-Ticket-FindAllTitle");
+        List<String> ticketList = ticketRepository.findAllTitle();
+        return ticketList;
+    }
+
+    @Override
+    public List<Ticket> findByTitle(String title) {
+        log.info("Service-Ticket-FindByTitle");
+        List<Ticket> ticketList = ticketRepository.findByTitle(title);
         return ticketList;
     }
 

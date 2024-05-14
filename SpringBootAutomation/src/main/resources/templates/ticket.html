@@ -70,7 +70,7 @@
             <form id="editFormTicket">
                 <label for="id__edit__ticket" >ID :</label>
                 <input type="text" id="id__edit__ticket" name="id" readonly>
-                <div th:replace="~{/fragments/ticket-fragments :: ticketEditFormContent('title','request','status','state','group')}"></div>
+                <div th:replace="~{/fragments/ticket-fragments :: ticketEditFormContent('title','request','ticketTimeStamp','status','state','group')}"></div>
             </form>
             <div class="modal-footer">
             <button onclick="edit()" class="edit-button">Edit</button>

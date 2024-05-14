@@ -95,12 +95,32 @@ public class TicketController {
 //                return ticketServiceImp.findByApplicant(applicant);
 //    }
 
-    @GetMapping(value = "/date")
+    @GetMapping(value = "/date/{date}")
     @ResponseBody
-    public List<Ticket> showTicketsByTimeStamp(Model model, @ModelAttribute("date") LocalDateTime timeStamp) throws NoContentException {
+    public List<Ticket> showTicketsByTimeStamp( @PathVariable("date") LocalDateTime timeStamp) throws NoContentException {
         log.info("Controller-Ticket-Get-FindByDate");
         List<Ticket> ticketList = ticketServiceImp.findByDate(timeStamp);
         return ((ticketList.isEmpty()) ? null : ticketList);
+    }
+
+    @GetMapping(value = "/title/{title}")
+    @ResponseBody
+    public List<Ticket> showTicketsByTitle( @PathVariable("title") String  title) throws NoContentException {
+        log.info("Controller-Ticket-Get-FindByTitle");
+        List<Ticket> ticketList = ticketServiceImp.findByTitle(title);
+        return ((ticketList.isEmpty()) ? null : ticketList);
+    }
+
+    @GetMapping(value = "/title")
+    @ResponseBody
+    public List<String> showTicketsByTitle() throws NoContentException {
+        log.info("Controller-Ticket-Get-FindAll");
+        try{List<String> ticketList = ticketServiceImp.findAllTitle();
+            return ((ticketList.isEmpty()) ? null : ticketList);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 

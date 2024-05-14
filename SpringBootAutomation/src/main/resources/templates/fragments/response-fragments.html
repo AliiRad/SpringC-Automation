@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div th:fragment="responseSaveFormContent(responseReponse,response)">
+    <label for="responseGroup__add__response">Field :</label>
+    <select id="responseGroup__add__response"
+            th:if="${#lists.size(ticketGroupList) > 0}"
+            onchange="handleSelectChange(event)">
+        <option selected disabled value="-1">Select The Relevant Group:</option>
+        <option th:each="responseGroup : ${ticketGroupList}"
+                th:value="${responseGroup}"
+                th:text="${responseGroup}"
+                th:data-name="${responseGroup}">
+        </option>
+    </select>
+
+    <label for="ticket__add__response"  style="display: none">Ticket :</label>
+    <select id="ticket__add__response" style="display: none">
+    </select>
+
+
+    <label for="ticketResponse__add__response">Response :</label>
+    <input type="textarea" name="ticketResponse" id="ticketResponse__add__response">
+
+
+</div>
+
+<!--<div th:fragment="responseEditFormContent(ticketReponse,timeStamp,status,ticket)">-->
+<!--    <label for="ticketResponse__edit__response">Response :</label>-->
+<!--    <input type="text" id="ticketResponse__edit__response" name="ticketResponse">-->
+
+
+<!--    <label for="responseTimeStamp__edit__response">Date :</label>-->
+<!--    <input type="datetime-local"  id="responseTimeStamp__edit__response"-->
+<!--           name="responseTimeStamp">-->
+
+
+<!--    <label for="deleted__edit__response">State:</label>-->
+<!--    <select id="deleted__edit__response"-->
+<!--            name="deleted">-->
+<!--        <option selected disabled value="-1">Choose Response State :</option>-->
+<!--        <option value="true">Not Active</option>-->
+<!--        <option value="false">Active</option>-->
+<!--    </select>-->
+
+
+<!--    <label for="parent__edit__response" >Field :</label>-->
+<!--    <select id="parent__edit__response"-->
+<!--            th:if="${#lists.size(responseGroupParents) > 0}"-->
+<!--            onchange="handleSelectChange(event , 'parent__edit__response')">-->
+<!--        <option selected disabled value="-1">Select The Relevant Group:</option>-->
+<!--        <option th:each="responseGroup : ${responseGroupParents}"-->
+<!--                th:value="${responseGroup.id}"-->
+<!--                th:text="${responseGroup.title}"-->
+<!--                th:data-name="${responseGroup.id}">-->
+<!--        </option>-->
+<!--    </select>-->
+
+<!--    <label for="child__edit__response"  style="display: none">Sub Group :</label>-->
+<!--    <select id="child__edit__response" style="display: none"-->
+<!--            aria-label="Default select example">-->
+<!--    </select>-->
+<!--</div>-->
+
+
+</body>
+</html>

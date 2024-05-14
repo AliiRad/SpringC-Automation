@@ -14,6 +14,8 @@ public interface TicketService {
     Ticket logicalRemove(Long id) throws NoContentException;
     List<Ticket> findAll();
     List<Ticket> findAllDeletedFalse();
+    List<String> findAllTitle();
+    List<Ticket> findByTitle(String title);
     Ticket findById(Long id) throws NoContentException;
 //    List<Ticket> findByApplicant(Person applicant);
     List<Ticket> findByDate(LocalDateTime timeStamp) throws NoContentException;
