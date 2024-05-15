@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.BankTransaction;
 import com.home.SpringBootAutomation.model.FinancialDocument;
 import com.home.SpringBootAutomation.model.Person;
@@ -7,17 +8,16 @@ import com.home.SpringBootAutomation.service.impl.BankTransactionServiceImp;
 import com.home.SpringBootAutomation.service.impl.FinancialDocumentServiceImp;
 import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import jakarta.validation.Valid;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import jakarta.validation.ValidationException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@Slf4j
 @Controller
 @RequestMapping("/bankTransaction")
 public class BankTransactionController {
@@ -33,101 +33,66 @@ public class BankTransactionController {
         this.financialDocumentService = financialDocumentService;
     }
 
-    @PostMapping("/save")
-    public String save(@Valid BankTransaction bankTransaction, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - BankTransaction Save Failed ! --->" + result.getAllErrors());
-                return "bankTransaction";
-            }
-            serviceImp.save(bankTransaction);
-            log.info("Controller - BankTransaction Saved - Post Method ---->" + "bankTransaction: " + bankTransaction.toString());
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "BankTransaction Saved successfully");
-            return "redirect:/bankTransaction";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/bankTransaction";
-        }
+    @RequestMapping(method = RequestMethod.GET)
+    public String BankTransactionForm(Model model) {
+        model.addAttribute("bankTransactionList", serviceImp.findAll());
+        model.addAttribute("bankTransaction", new BankTransaction());
+        List<Person> person = personService.findAll();
+        model.addAttribute("person", person);
+        List<FinancialDocument> financialDocument = financialDocumentService.findAll();
+        model.addAttribute("financialDocument", financialDocument);
+        return "bankTransaction";
     }
 
-    @PutMapping("/edit")
-    public String edit(@Valid @RequestBody BankTransaction bankTransaction, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - BankTransaction Edit Failed ! --->" + result.getAllErrors());
-                return "bankTransaction";
-            }
-            serviceImp.update(bankTransaction);
-            log.info("Controller - BankTransaction Edited - Put Method ---->" + " bankTransaction:" + bankTransaction);
-            model.addAttribute("bankTransaction", bankTransaction);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "BankTransaction Saved successfully");
-            return "redirect:/bankTransaction";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/bankTransaction";
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public BankTransaction save(Model model, @Valid BankTransaction bankTransaction, BindingResult bindingResult) throws NoContentException{
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage
+                            ).toList().toString()
+            );
         }
+        return serviceImp.save(bankTransaction);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            serviceImp.logicalRemove(id);
-            log.info("The BankTransaction With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "BankTransaction With Id : " + id + " Successfully Deleted .");
-            return "redirect:/bankTransaction";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public BankTransaction edit(Model model, @Valid BankTransaction bankTransaction, BindingResult bindingResult) throws NoContentException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage
+                            ).toList().toString()
+            );
         }
+        return serviceImp.edit(bankTransaction);
     }
 
-    @GetMapping
-    public String findAll(Model model) {
-        try {
-            List<BankTransaction> bankTransactionList = serviceImp.findBankTransactionByDeletedFalse();
-            log.info("Controller - Find BankTransactions With Deleted False - Get Method");
-            model.addAttribute("bankTransaction", new BankTransaction());
-            model.addAttribute("bankTransactionList", bankTransactionList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "BankTransaction List Is Not Empty");
-            List<Person> person = personService.findAll();
-            model.addAttribute("person", person);
-            List<FinancialDocument> financialDocument = financialDocumentService.findAll();
-            model.addAttribute("financialDocument", financialDocument);
-            return "bankTransaction";
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public BankTransaction remove(Model model, @PathVariable Long id) throws NoContentException {
+        return serviceImp.remove(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<BankTransaction>> findById(@PathVariable("id") Long id) {
-        try {
-            Optional<BankTransaction> bankTransaction = serviceImp.findBankTransactionByIdAndDeletedFalse(id);
-            if (bankTransaction.isPresent()) {
-                return ResponseEntity.ok(bankTransaction);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            return null;
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public BankTransaction findById(Model model, @PathVariable Long id) throws NoContentException {
+        return serviceImp.findById(id);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<BankTransaction> findAll(Model model) throws NoContentException {
+        return serviceImp.findAll();
     }
 }

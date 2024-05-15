@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="bankTransactionFormContent(balance, financialDocument, person)">
+
+    <div>
+        <label for="balance">Balance:</label>
+        <input type="text" id="balance" name="balance" th:value="${balance}" readonly />
+    </div>
+
+    <div>
+        <label for="financialDocument">Select Financial Document:</label>
+        <select id="financialDocument" name="financialDocument">
+            <option>Select</option>
+            <!--            <option th:each="doc : ${financialDocument}" th:value="${doc.id}" th:text="${doc.amount}"></option>-->
+        </select>
+        <!--        <span class="error" th:if="${#fields.hasErrors('financialDocument')}" th:errors="*{financialDocument}">Invalid Financial Document!</span>-->
+    </div>
+
+    <div>
+        <label for="person">Select Person:</label>
+        <select id="person" name="person">
+            <option>Select</option>
+<!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
+        </select>
+<!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
+    </div>
+
+</div>
+
+</body>
+</html>

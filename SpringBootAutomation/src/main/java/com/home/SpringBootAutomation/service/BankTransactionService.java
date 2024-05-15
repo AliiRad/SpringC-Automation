@@ -10,14 +10,14 @@ import java.util.Optional;
 public interface BankTransactionService {
     BankTransaction save(BankTransaction bankTransaction);
 
-    BankTransaction update(BankTransaction bankTransaction) throws NoContentException;
+    BankTransaction edit(BankTransaction bankTransaction) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
 
     List<BankTransaction> findAll();
 
-    Optional<BankTransaction> findById(Long id) throws NoContentException;
+    BankTransaction findById(Long id) throws NoContentException;
 
     Long getBankTransactionsCount();
 

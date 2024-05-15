@@ -4,7 +4,6 @@ import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.BankTransaction;
 import com.home.SpringBootAutomation.repository.BankTransactionRepository;
 import com.home.SpringBootAutomation.service.BankTransactionService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,25 +22,24 @@ public class BankTransactionServiceImp implements BankTransactionService {
         return repository.save(bankTransaction);
     }
 
-    public BankTransaction update(BankTransaction bankTransaction) throws NoContentException {
-        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(bankTransaction.getId());
-
-        if (optionalBankTransaction.isPresent()) {
-            return repository.save(bankTransaction);
-        } else {
-            throw new NoContentException("Bank Transaction not found!");
-        }
+    @Override
+    public BankTransaction edit(BankTransaction bankTransaction) throws NoContentException {
+        repository.findBankTransactionByIdAndDeletedFalse(bankTransaction.getId()).orElseThrow(
+                () -> new NoContentException("No BankTransaction Found with id : " + bankTransaction.getId())
+        );
+        return repository.save(bankTransaction);
     }
 
     @Override
-    @Transactional
-    public void logicalRemove(Long id) throws NoContentException{
-        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(id);
-        if (optionalBankTransaction.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Bank Transaction not found!");
-        }
+    public void logicalRemove(Long id) throws NoContentException {
+    }
+
+    public BankTransaction remove(Long id) throws NoContentException {
+        BankTransaction bankTransaction = repository.findById(id).orElseThrow(
+                () -> new NoContentException("No Bank Transaction Found with id : " + id)
+        );
+        repository.deleteById(id);
+        return bankTransaction;
     }
 
     @Override
@@ -50,50 +48,34 @@ public class BankTransactionServiceImp implements BankTransactionService {
     }
 
     @Override
-    public Optional<BankTransaction> findById(Long id) throws NoContentException {
-        Optional<BankTransaction> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("BankTransaction not found !");
-        }
+    public BankTransaction findById(Long id) throws NoContentException {
+        return repository.findById(id).orElseThrow(
+                () -> new NoContentException("No BankT ransaction Found with id : " + id)
+        );
     }
 
     @Override
     public Long getBankTransactionsCount() {
-        return repository.count();
+        return null;
     }
 
     @Override
     public BankTransaction logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<BankTransaction> optionalBankTransaction = repository.findBankTransactionByIdAndDeletedFalse(id);
-
-        if (optionalBankTransaction.isPresent()) {
-            BankTransaction oldBankTransaction = optionalBankTransaction.get();
-            oldBankTransaction.setDeleted(true);
-            return repository.save(oldBankTransaction);
-        } else {
-            throw new NoContentException("Bank Transaction not found!");
-        }
+        return null;
     }
 
     @Override
     public List<BankTransaction> findBankTransactionByDeletedFalse() {
-        return repository.findBankTransactionByDeletedFalse();
+        return null;
     }
 
     @Override
-    public Optional<BankTransaction> findBankTransactionByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<BankTransaction> optional = repository.findBankTransactionByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Bank Transaction not found!");
-        }
+    public Optional<BankTransaction> findBankTransactionByIdAndDeletedFalse(Long id) {
+        return Optional.empty();
     }
 
     @Override
     public Long countByDeletedFalse() {
-        return repository.countByDeletedFalse();
+        return null;
     }
 }

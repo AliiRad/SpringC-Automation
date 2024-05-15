@@ -1,44 +1,36 @@
-async function findById(id){
+function addNew() {
+    let modal = document.getElementById("save-modal");
+    modal.style.display = "block";
+}
 
-    let editModal = document.getElementById("editModalBankTransaction")
-    let modalBankTransaction = new bootstrap.Modal(editModal);
-    modalBankTransaction.show();
-
-    const resp = await fetch("/bankTransaction/findById/" + id ,{
-        method :"GET"
+async function getDataForEdit(url, id) {
+    const response = await fetch(url + "/" + id, {
+        method: "GET"
     });
+    if (!response.ok) {
+        alert("Error : " + response.status + "\n" + (await response.text()).toString());
+    } else {
+        let bankTransaction = JSON.parse(await response.text());
+        let modal = document.getElementById("edit-modal");
+        modal.style.display = "block";
 
-    const data = await resp.json();
-    let bankTransactionId =document.getElementById("id__edit__bankTransaction");
-    let bankTransactionBalance = document.getElementById("balance__edit__bankTransaction");
-    let bankTransactionFinancialDocument = document.getElementById("financialDocument__edit__bankTransaction")
-    let bankTransactionPerson = document.getElementById("person__edit__bankTransaction");
+        let idEdit = document.querySelector("#edit-form #id");
+        idEdit.setAttribute("value", bankTransaction.id);
 
-    bankTransactionId.value = data.id;
-    bankTransactionBalance.value = data.balance;
-    bankTransactionFinancialDocument.value = data.financialDocument;
-    bankTransactionPerson.value =data.person;
+        let balanceEdit = document.querySelector("#edit-form input[name='balance']");
+        balanceEdit.value = bankTransaction.balance;
+
+        let financialDocumentEdit = document.querySelector("#edit-form input[name='financialDocument']");
+        financialDocumentEdit.value = bankTransaction.financialDocument;
+
+        let personEdit = document.querySelector("#edit-form select[name='person']");
+        personEdit.value = bankTransaction.person;
+    }
 }
 
-function edit() {
-    document.getElementById("editFormBankTransaction").submit();
-}
-
-async function openDeleteModal(id){
-
-    let deleteIdInputBankTransaction =document.getElementById("id__delete__bankTransaction");
-
-    deleteIdInputBankTransaction.value = id;
-
-    let deleteModal = document.getElementById("deleteModalBankTransaction")
-    let modalBankTransaction = new bootstrap.Modal(deleteModal);
-    modalBankTransaction.show();
-}
-
-async function deleteById(id){
-    const resp= await fetch(`/bankTransaction/delete/` + id,{
-        method:"DELETE"
-    });
-    console.log(id)
-    window.location.replace("/bankTransaction")
+function closeModal() {
+    const saveModal = document.getElementById("save-modal");
+    const editModal = document.getElementById("edit-modal");
+    saveModal.style.display = "none";
+    editModal.style.display = "none";
 }

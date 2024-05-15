@@ -37,4 +37,8 @@ public class BankTransaction {
 
     @Column(name = "bank_transaction_deleted")
     private boolean deleted;
+
+    public Long getFinancialDocumentId() {
+        return null;
+    }
 }
