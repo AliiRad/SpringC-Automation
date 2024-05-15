@@ -38,6 +38,7 @@
                 th:text="${typeOfEmployment.getLabel()}"></option>
     </select>
     <!--                    <span class="error" th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid Type Of Employment !</span>-->
+    <br>
 
     <label th:for="organizationalUnit">Organizational Unit :</label>
     <input type="text" th:id="${organizationalUnit}" name="organizationalUnit">
@@ -96,6 +97,7 @@
                 th:text="${appointmentType.getLabel()}"></option>
     </select>
     <!--                    <span class="error" th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid Appointment Type !</span>-->
+    <br>
 
     <label th:for="appointmentDescription">Appointment Description :</label>
     <input type="text" th:id="${appointmentDescription}" name="appointmentDescription">

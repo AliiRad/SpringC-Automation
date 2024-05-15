@@ -105,9 +105,9 @@ public class AppointmentDecree {
     @NotBlank(message = "Should Not Be Null")
     private String appointmentDescription;                                                   //شرح حکم
 
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
-    @JoinColumn(name = "appointment_decree_attachment_list")
-    private List<Attachment> attachmentList;
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
+//    @JoinColumn(name = "appointment_decree_attachment_list")
+//    private List<Attachment> attachmentList;
 
     @Column(name = "appointment_decree_deleted")
     private boolean deleted;
