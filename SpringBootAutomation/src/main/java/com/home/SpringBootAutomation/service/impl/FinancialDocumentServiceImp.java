@@ -4,7 +4,6 @@ import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.FinancialDocument;
 import com.home.SpringBootAutomation.repository.FinancialDocumentRepository;
 import com.home.SpringBootAutomation.service.FinancialDocumentService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,25 +22,24 @@ public class FinancialDocumentServiceImp implements FinancialDocumentService {
         return repository.save(financialDocument);
     }
 
-    public FinancialDocument update(FinancialDocument financialDocument) throws NoContentException {
-        Optional<FinancialDocument> optionalFinancialDocument = repository.findFinancialDocumentByIdAndDeletedFalse(financialDocument.getId());
-
-        if (optionalFinancialDocument.isPresent()) {
-            return repository.save(financialDocument);
-        } else {
-            throw new NoContentException("Financial Document not found!");
-        }
+    @Override
+    public FinancialDocument edit(FinancialDocument financialDocument) throws NoContentException {
+        repository.findFinancialDocumentByIdAndDeletedFalse(financialDocument.getId()).orElseThrow(
+                () -> new NoContentException("No FinancialDocument Found with id : " + financialDocument.getId())
+        );
+        return repository.save(financialDocument);
     }
 
     @Override
-    @Transactional
-    public void logicalRemove(Long id) throws NoContentException{
-        Optional<FinancialDocument> optionalFinancialDocument = repository.findFinancialDocumentByIdAndDeletedFalse(id);
-        if (optionalFinancialDocument.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Financial Document not found!");
-        }
+    public void logicalRemove(Long id) throws NoContentException {
+    }
+
+    public FinancialDocument remove(Long id) throws NoContentException {
+        FinancialDocument financialDocument = repository.findById(id).orElseThrow(
+                () -> new NoContentException("No Financial Document Found with id : " + id)
+        );
+        repository.deleteById(id);
+        return financialDocument;
     }
 
     @Override
@@ -50,50 +48,34 @@ public class FinancialDocumentServiceImp implements FinancialDocumentService {
     }
 
     @Override
-    public Optional<FinancialDocument> findById(Long id) throws NoContentException {
-        Optional<FinancialDocument> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Financial Document not found !");
-        }
+    public FinancialDocument findById(Long id) throws NoContentException {
+        return repository.findById(id).orElseThrow(
+                () -> new NoContentException("No Financial Document Found with id : " + id)
+        );
     }
 
     @Override
     public Long getFinancialDocumentsCount() {
-        return repository.count();
+        return null;
     }
 
     @Override
     public FinancialDocument logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<FinancialDocument> optionalFinancialDocument = repository.findFinancialDocumentByIdAndDeletedFalse(id);
-
-        if (optionalFinancialDocument.isPresent()) {
-            FinancialDocument oldFinancialDocument = optionalFinancialDocument.get();
-            oldFinancialDocument.setDeleted(true);
-            return repository.save(oldFinancialDocument);
-        } else {
-            throw new NoContentException("Financial Document not found !");
-        }
+        return null;
     }
 
     @Override
     public List<FinancialDocument> findFinancialDocumentByDeletedFalse() {
-        return repository.findFinancialDocumentByDeletedFalse();
+        return null;
     }
 
     @Override
-    public Optional<FinancialDocument> findFinancialDocumentByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<FinancialDocument> optional = repository.findFinancialDocumentByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Financial Document not found!");
-        }
+    public Optional<FinancialDocument> findFinancialDocumentByIdAndDeletedFalse(Long id) {
+        return Optional.empty();
     }
 
     @Override
     public Long countByDeletedFalse() {
-        return repository.countByDeletedFalse();
+        return null;
     }
 }

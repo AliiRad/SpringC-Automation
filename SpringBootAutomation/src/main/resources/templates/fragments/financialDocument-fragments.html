@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="financialDocumentFormContent(documentDate, amount, behalf, account, transactionType, documentType, person)">
+
+    <!--        <label for="documentDate">Document Date:</label>-->
+    <input type="date" th:id="${documentDate}" name="documentDate" placeholder="Document Date">
+    <!--        <span class="error" th:if="${#fields.hasErrors('documentDate')}" th:errors="*{documentDate}">Invalid Document Date!</span>-->
+
+    <!--    <label for="amount">Amount:</label>-->
+    <input type="text" th:id="${amount}" name="amount" placeholder="Amount">
+    <!--    <span class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid Amount!</span>-->
+
+    <!--    <label for="behalf">Behalf:</label>-->
+    <input type="text" th:id="${behalf}" name="behalf" placeholder="Behalf">
+    <!--    <span class="error" th:if="${#fields.hasErrors('behalf')}" th:errors="*{behalf}">Invalid Behalf!</span>-->
+
+    <div>
+        <label for="account">Select Account:</label>
+        <select id="account" name="account">
+            <option>Select</option>
+<!--            <option th:each="account : ${account}" th:value="${account.id}" th:text="${account.accountNumber}"></option>-->
+        </select>
+<!--        <span class="error" th:if="${#fields.hasErrors('account')}" th:errors="*{account}">Invalid Account!</span>-->
+    </div>
+
+    <div>
+        <label for="transactionType">Transaction Type:</label>
+        <select id="transactionType" name="transactionType">
+            <option th:each="type : ${T(com.home.SpringBootAutomation.enums.TransactionType).values()}"
+                    th:value="${type.name()}"
+                    th:text="${type.getLabel()}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="documentType">Document Type:</label>
+        <select id="documentType" name="documentType">
+            <option th:each="documentType : ${T(com.home.SpringBootAutomation.enums.DocumentType).values()}"
+                    th:value="${documentType.name()}"
+                    th:text="${documentType.getLabel()}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="person">Select Person:</label>
+        <select id="person" name="person">
+            <option>Select</option>
+            <!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
+        </select>
+        <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -10,14 +10,14 @@ import java.util.Optional;
 public interface FinancialDocumentService {
     FinancialDocument save(FinancialDocument financialDocument);
 
-    FinancialDocument update(FinancialDocument financialDocument) throws NoContentException;
+    FinancialDocument edit(FinancialDocument financialDocument) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
 
     List<FinancialDocument> findAll();
 
-    Optional<FinancialDocument> findById(Long id) throws NoContentException;
+    FinancialDocument findById(Long id) throws NoContentException;
 
     Long getFinancialDocumentsCount();
 
