@@ -1,6 +1,5 @@
 package com.home.SpringBootAutomation.service.impl;
 
-import com.home.SpringBootAutomation.enums.Status;
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Contact;
 import com.home.SpringBootAutomation.repository.ContactRepository;
@@ -9,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -17,7 +15,6 @@ import java.util.List;
 @Slf4j
 public class ContactServiceImpl implements ContactService {
 
-//TODO: ContactServiceImp Error
     private final ContactRepository contactRepository;
 
     public ContactServiceImpl(ContactRepository contactRepository){
@@ -28,16 +25,9 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public Contact save(Contact contact) {
         log.info("Service-Contact-Save");
-
-        contact.setStatus(Status.postponed);
-        contact.setDeleted(false);
-        contact.setTicketTimeStamp(LocalDateTime.now());
-        log.info(contact.toString());
-        contactRepository.save(contact);
-        return contact;}
+        return contactRepository.save(contact);}
 
     @Override
-    @Transactional
     public Contact edit(Contact contact) throws NoContentException {
         log.info("Service-Contact-Edit");
         contactRepository.findById(contact.getId()).orElseThrow(
@@ -46,20 +36,14 @@ public class ContactServiceImpl implements ContactService {
         return contactRepository.save(contact);
     }
 
-    //TODO: Fix ContactServiceImpl Remove
-    // @Transactional
-    // @Override
-    // public void remove(Contact contact) throws NoContentException {
-    //     log.info("Service-Contact-Remove");
-    //     contactRepository.findById(contact.getId()).orElseThrow(
-    //             () -> new NoContentException("No Contact with id : " + contact.getId())
-    //     );
-    //     contactRepository.delete(contact);
-    // }
-
     @Override
-    public Contact remove(Contact contact) throws NoContentException {
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    public Contact remove(Long id) throws NoContentException {
+        log.info("Service-Contact-Remove");
+        Contact contact = contactRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Contact with id : " + id)
+        );
+        contactRepository.deleteById(id);
+        return contact;
     }
 
     @Override
@@ -68,8 +52,8 @@ public class ContactServiceImpl implements ContactService {
         log.info("Service-Contact-LogicalRemove");
         Contact contact = contactRepository.findById(id).orElseThrow(
                 () -> new NoContentException("No Contact found with id : " + id));
-        contact.setDeleted(true);
-        return contactRepository.save(contact);
+        contactRepository.logicalRemove(id);
+        return contact;
     }
 
     @Override
@@ -83,13 +67,13 @@ public class ContactServiceImpl implements ContactService {
     public Contact findById(Long id) throws NoContentException {
         log.info("Service-Contact-FindById");
         return contactRepository.findById(id).orElseThrow(
-                () -> new NoContentException("No Contact found with id " + id)
+                () -> new NoContentException("No Contact found with id : " + id)
         );
     }
 
     @Override
-    public List<Contact> findAllDeletedFalse() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAllDeletedFalse'");
+    public List<Contact> findContactByDeletedFalse() {
+        return contactRepository.findContactByDeletedFalse();
     }
+
 }

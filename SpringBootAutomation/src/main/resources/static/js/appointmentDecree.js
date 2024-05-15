@@ -20,58 +20,58 @@ async function getDataForEdit(url, id) {
         idEdit.value = appointmentDecree.id;
 
         let personEdit = document.querySelector("#edit-form #edit-person");
-        // personEdit.id = "person";
+        personEdit.id = "edit-person";
         personEdit.value = appointmentDecree.person.username;
 
-        // let typeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(2)");
-        // typeOfEmploymentEdit.id = "edit-typeOfEmployment";
-        // typeOfEmploymentEdit.value = appointmentDecree.typeOfEmployment;
+        let typeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(1)");
+        typeOfEmploymentEdit.id = "edit-typeOfEmployment";
+        typeOfEmploymentEdit.value = appointmentDecree.typeOfEmployment;
 
-        let organizationalUnitEdit = document.querySelector("#edit-form div :nth-child(1)");
+        let organizationalUnitEdit = document.querySelector("#edit-form div :nth-child(2)");
         organizationalUnitEdit.id = "edit-organizationalUnit";
         organizationalUnitEdit.value = appointmentDecree.organizationalUnit;
 
-        let jobTypeEdit = document.querySelector("#edit-form div :nth-child(2)");
+        let jobTypeEdit = document.querySelector("#edit-form div :nth-child(3)");
         jobTypeEdit.id = "edit-jobType";
         jobTypeEdit.value = appointmentDecree.jobType;
 
-        let professionalFieldEdit = document.querySelector("#edit-form div :nth-child(3)");
+        let professionalFieldEdit = document.querySelector("#edit-form div :nth-child(4)");
         professionalFieldEdit.id = "edit-professionalField";
         professionalFieldEdit.value = appointmentDecree.professionalField;
 
-        let jobCodeEdit = document.querySelector("#edit-form div :nth-child(4)");
+        let jobCodeEdit = document.querySelector("#edit-form div :nth-child(5)");
         jobCodeEdit.id = "edit-jobCode";
         jobCodeEdit.value = appointmentDecree.jobCode;
 
-        let jobTitleEdit = document.querySelector("#edit-form div :nth-child(5)");
+        let jobTitleEdit = document.querySelector("#edit-form div :nth-child(6)");
         jobTitleEdit.id = "edit-jobTitle";
         jobTitleEdit.value = appointmentDecree.jobTitle;
 
-        let startDateEdit = document.querySelector("#edit-form div :nth-child(6)");
+        let startDateEdit = document.querySelector("#edit-form div :nth-child(7)");
         startDateEdit.id = "edit-startDate";
         startDateEdit.value = appointmentDecree.startDate;
 
-        let endDateEdit = document.querySelector("#edit-form div :nth-child(7)");
+        let endDateEdit = document.querySelector("#edit-form div :nth-child(8)");
         endDateEdit.id = "edit-endDate";
         endDateEdit.value = appointmentDecree.endDate;
 
-        let placeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(8)");
+        let placeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(9)");
         placeOfEmploymentEdit.id = "edit-placeOfEmployment";
         placeOfEmploymentEdit.value = appointmentDecree.placeOfEmployment;
 
-        let workingHoursEdit = document.querySelector("#edit-form div :nth-child(9)");
+        let workingHoursEdit = document.querySelector("#edit-form div :nth-child(10)");
         workingHoursEdit.id = "edit-workingHours";
         workingHoursEdit.value = appointmentDecree.workingHours;
 
-        let workingDayEdit = document.querySelector("#edit-form div :nth-child(10)");
+        let workingDayEdit = document.querySelector("#edit-form div :nth-child(11)");
         workingDayEdit.id = "edit-workingDay";
         workingDayEdit.value = appointmentDecree.workingDay;
 
-        // let appointmentTypeEdit = document.querySelector("#edit-form div :nth-child(13)");
-        // appointmentTypeEdit.id = "edit-appointmentType";
-        // appointmentTypeEdit.value = appointmentDecree.appointmentType;
+        let appointmentTypeEdit = document.querySelector("#edit-form div :nth-child(12)");
+        appointmentTypeEdit.id = "edit-appointmentType";
+        appointmentTypeEdit.value = appointmentDecree.appointmentType;
 
-        let appointmentDescriptionEdit = document.querySelector("#edit-form div :nth-child(11)");
+        let appointmentDescriptionEdit = document.querySelector("#edit-form div :nth-child(13)");
         appointmentDescriptionEdit.id = "edit-appointmentDescription";
         appointmentDescriptionEdit.value = appointmentDecree.appointmentDescription;
 

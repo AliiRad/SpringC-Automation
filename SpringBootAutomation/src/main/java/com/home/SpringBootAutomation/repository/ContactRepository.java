@@ -18,7 +18,5 @@ public interface ContactRepository extends JpaRepository<Contact, Long>{
 
         List<Contact> findContactByDeletedFalse();
 
-        Optional<Contact> findContactByIdAndDeletedFalse(Long id);
-
         Long countByDeletedFalse();
 }

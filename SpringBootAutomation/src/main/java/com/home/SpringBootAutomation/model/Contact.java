@@ -1,6 +1,5 @@
 package com.home.SpringBootAutomation.model;
 
-import com.home.SpringBootAutomation.Base;
 import com.home.SpringBootAutomation.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 
 @Entity(name = "contactEntity")
 @Table(name = "contact_tbl")
-public class Contact extends Base {
+public class Contact {
 
     @Id
     @SequenceGenerator(name = "contactSeq", sequenceName = "contact_seq", allocationSize = 1)
