@@ -11,6 +11,8 @@ public interface SectionService {
 
     Section save(Section section);
 
+    Section edit(Section section) throws NoContentException;
+
     Section update(Section section) throws NoContentException;
 
     @Transactional

@@ -33,15 +33,24 @@ public class SectionServiceImp implements SectionService{
     }
 
     @Override
-    public List<Section> findSectionByDeletedFalse() throws NoContentException {
-        return null;
+    public Section edit(Section section) throws NoContentException {
+        repository.findById(section.getId()).orElseThrow(
+            () -> new NoContentException("No Section Found with id : " + section.getId())
+        );
+        return repository.save(section);
+    }
+    
+    @Override
+    public Section save(Section section) {
+        return repository.save(section);
     }
 
     @Override
-    public Optional<Section> findSectionByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Section> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
-        if (optionalSection.isPresent()) {
-            return optionalSection;
+    public Section update(Section section) throws NoContentException {
+        Optional<Section> optional = repository.findSectionByIdAndDeletedFalse(section.getId());
+
+        if (optional.isPresent()) {
+            return repository.save(section);
         } else {
             throw new NoContentException("Section not found !");
         }
@@ -59,19 +68,22 @@ public class SectionServiceImp implements SectionService{
     }
 
     @Override
-    public Section save(Section section) {
-        return repository.save(section);
+    public List<Section> findSectionByDeletedFalse() throws NoContentException {
+        return repository.findSectionByDeletedFalse();
     }
 
     @Override
-    public Section update(Section section) throws NoContentException {
-        Optional<Section> optional = repository.findPersonByIdAndDeletedFalse(section.getId());
-
-        if (optional.isPresent()) {
-            return repository.save(section);
+    public Optional<Section> findSectionByIdAndDeletedFalse(Long id) throws NoContentException {
+        Optional<Section> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
+        if (optionalSection.isPresent()) {
+            return optionalSection;
         } else {
             throw new NoContentException("Section not found !");
         }
     }
+
+
+
+
     
 }

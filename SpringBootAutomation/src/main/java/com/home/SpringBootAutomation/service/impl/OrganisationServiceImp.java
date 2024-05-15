@@ -27,15 +27,16 @@ public class OrganisationServiceImp implements OrganisationService {
 
     @Override
     public Optional<Organisation> findById(Long id) throws NoContentException {
-        // return repository.findById(id).orElseThrow(
-        // () -> new NoContentException("Organisation not found !" + id)
-        // );
-        Optional<Organisation> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Organisation not found !");
-        }
+        repository.findById(id).orElseThrow(
+        () -> new NoContentException("Organisation not found !" + id)
+        );
+        return repository.findById(id);
+        // Optional<Organisation> optional = repository.findById(id);
+        // if (optional.isPresent()) {
+        //     return optional;
+        // } else {
+        //     throw new NoContentException("Organisation not found !");
+        // }
     }
 
     @Override
@@ -46,7 +47,7 @@ public class OrganisationServiceImp implements OrganisationService {
         return repository.save(organisation);
     }
 
-        @Override
+    @Override
     public List<Organisation> findOrganisationByDeletedFalse() throws NoContentException {
         return repository.findOrganisationByDeletedFalse();
     }
