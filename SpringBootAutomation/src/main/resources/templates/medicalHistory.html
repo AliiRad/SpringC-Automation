@@ -1,35 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+  <link rel="stylesheet"  href="/css/medicalHistory.css">
+  <link rel="stylesheet"  href="/css/popup.css">
   <meta charset="UTF-8">
   <title>MedicalHistory</title>
 </head>
 <body>
 <h2>MedicalHistory Page</h2>
-<form th:action="@{/medicalHistory/save}" method="post" th:object="${medicalHistory}">
-  <input type="text" placeholder="Weight" th:value="${weight}" th:field="*{weight}">
-  <br>
-  <input type="text" placeholder="Height" th:value="${height}" th:field="*{height}">
-  <br>
-  <input type="text" placeholder="Blood Pressure" th:value="${bloodPressure}" th:field="*{bloodPressure}">
-  <br>
-  <input type="text" placeholder="Heart Rate" th:value="${heartRate}" th:field="*{heartRate}">
-  <br>
-  <input type="text" placeholder="Allergy" th:value="${allergy}" th:field="*{allergy}">
-  <br>
-  <input type="text" placeholder="Surgery" th:value="${surgery}" th:field="*{surgery}">
-  <br>
-  <input type="text" placeholder="Emergency Drug" th:value="${emergencyDrug}" th:field="*{emergencyDrug}">
-  <br>
-<!--  <input type="text" placeholder="Disease" th:value="${disease}" th:field="*{disease}">-->
-  <br>
-  <input type="text" placeholder="Emergency Phone Number" th:value="${emergencyPhoneNumber}" th:field="*{emergencyPhoneNumber}">
-  <br>
-  <input type="submit" value="Save">
-</form>
 
-<table >
-<!--  th:if="${#lists.size(medicalList) > 0}"-->
+<div class="container">
+  <div>
+    <button type="button" class="save-button" onclick="addMedicalHistory()">Add Your Medical History</button>
+  </div>
+
+<table th:if="${#lists.size(medicalHistoryList) > 0}">
   <thead>
   <th>Id</th>
   <th>Weight</th>
@@ -43,35 +28,61 @@
   <th>Emergency Phone Number</th>
   </thead>
   <tbody>
-  <tr th:each="m : ${medicalList}">
-    <td th:text="${m.id}"></td>
-    <td th:text="${m.weight}"></td>
-    <td th:text="${m.height}"></td>
-    <td th:text="${m.bloodPressure}"></td>
-    <td th:text="${m.heartRate}"></td>
-    <td th:text="${m.allergy}"></td>
-    <td th:text="${m.surgery}"></td>
-    <td th:text="${m.emergencyDrug}"></td>
-    <td th:text="${m.disease}"></td>
-    <td th:text="${m.emergencyPhoneNumber}"></td>
+  <tr th:each="medical : ${medicalHistoryList}">
+    <td th:text="${medical.id}"></td>
+    <td th:text="${medical.weight}"></td>
+    <td th:text="${medical.height}"></td>
+    <td th:text="${medical.bloodPressure}"></td>
+    <td th:text="${medical.heartRate}"></td>
+    <td th:text="${medical.allergy}"></td>
+    <td th:text="${medical.surgery}"></td>
+    <td th:text="${medical.emergencyDrug}"></td>
+<!--    <td th:text="${medical.disease}"></td>-->
+    <td th:text="${medical.emergencyPhoneNumber}"></td>
     <td>
-      <button th:onclick="'edit(\'' + ${t.id} + '\')'">Edit</button>
-      <form th:action="@{/medicalHistory/delete}" method="post">
-        <input type="text" name="id" th:value="${t.id}" hidden="hidden">
-        <button type="submit">Delete</button>
-      </form>
+      <button class="edit-button" th:data-name="${medical.id}"
+              th:onclick="findId(this.getAttribute('data-name'))">Edit
+      </button>
+      <button class="delete-button" th:data-name="${medical.id}"
+              th:onclick="deleted(this.getAttribute('data-name'))">Delete
+      </button>
     </td>
   </tr>
   </tbody>
+
 </table>
-<script>
-  async function edit(id){
-    const resp =await fetch("/medicalHistory/id/" +id , {
-      method:"get"
-    });
-    const data = resp.json();
-    console.log(data)
-  }
-</script>
+
+  <div id="saveModalMedicalHistory">
+    <div id="saveModalMedicalHistoryContent">
+      <form id="saveFormMedicalHistory">
+        <div th:replace="~{/fragments/medicalHistory-fragment :: medicalHistorySaveFormContent('weight','height','bloodPressure','heartRate','allergy','surgery','emergencyDrug','emergencyPhoneNumber') }"></div>
+      </form>
+      <div class="modal-footer">
+        <button onclick="save()" class="save-button">Save</button>
+        <button onclick="closeModal()" class="close-button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="editModalMedicalHistory">
+    <div id="editModalMedicalHistoryContent">
+      <form id="editFormMedicalHistory">
+        <label for="id__edit__medicalHistory" >ID :</label>
+        <input type="text" id="id__edit__medicalHistory" name="id" readonly>
+        <div th:replace="~{/fragments/medicalHistory-fragment :: medicalHistoryEditFormContent('weight','height','bloodPressure','heartRate','allergy','surgery','emergencyDrug','disease','emergencyPhoneNumber')}"></div>
+      </form>
+      <div class="modal-footer">
+        <button onclick="edit()" class="edit-button">Edit</button>
+        <button onclick="closeModal()" class="close-button">Close</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div th:replace="~{/fragments/popup-fragment}"></div>
+<script type="text/javascript" src="/js/popup.js"></script>
+<script type="text/javascript" th:src="@{js/ticket.js}" src="../static/js/medicalHistory.js"></script>
+<script type="text/javascript" src="/js/medicalHistory.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical</title>
+</head>
+<body>
+<div th:fragment="medicalHistorySaveFormContent(weight,height,bloodPressure,heartRate,allergy,surgery,emergencyDrug,emergencyPhoneNumber)">
+
+    <label for="weight__add__medicalHistory">Weigh :</label>
+    <input type="text" name="weight" id="weight__add__medicalHistory">
+
+    <label for="height__add__medicalHistory">Height :</label>
+    <input type="text" name="height" id="height__add__medicalHistory">
+
+    <label for="bloodPressure__add__medicalHistory">BloodPressure :</label>
+    <input type="text" name="bloodPressure" id="bloodPressure__add__medicalHistory">
+
+    <label for="heartRate__add__medicalHistory">HeatRate :</label>
+    <input type="text" name="heartRate" id="heartRate__add__medicalHistory">
+
+    <label for="allergy__add__medicalHistory">Allergy :</label>
+    <input type="text" name="allergy" id="allergy__add__medicalHistory">
+
+    <label for="surgery__add__medicalHistory">Surgery :</label>
+    <input type="text" name="surgery" id="surgery__add__medicalHistory">
+
+    <label for="emergencyDrug__add__medicalHistory">EmergencyDrug :</label>
+    <input type="text" name="emergencyDrug" id="emergencyDrug__add__medicalHistory">
+
+<!--    <label for="disease__add__medicalHistory">Disease :</label>-->
+<!--    <input type="text" name="disease" id="disease__add__medicalHistory">-->
+
+    <label for="emergencyPhoneNumber__add__medicalHistory">EmergencyPhoneNumber :</label>
+    <input type="text" name="emergencyPhoneNumber" id="emergencyPhoneNumber__add__medicalHistory">
+
+
+</div>
+<div th:fragment="medicalHistoryEditFormContent(weight,height,bloodPressure,heartRate,allergy,surgery,emergencyDrug,disease,emergencyPhoneNumber)">
+
+    <label for="weight__edit__medicalHistory">Weigh :</label>
+    <input type="text" name="weight" id="weight__edit__medicalHistory">
+
+    <label for="height__edit__medicalHistory">Height :</label>
+    <input type="text" name="height" id="height__edit__medicalHistory">
+
+    <label for="bloodPressure__edit__medicalHistory">BloodPressure :</label>
+    <input type="text" name="bloodPressure" id="bloodPressure__edit__medicalHistory">
+
+    <label for="heartRate__edit__medicalHistory">HeatRate :</label>
+    <input type="text" name="heartRate" id="heartRate__edit__medicalHistory">
+
+    <label for="allergy__edit__medicalHistory">Allergy :</label>
+    <input type="text" name="allergy" id="allergy__edit__medicalHistory">
+
+    <label for="surgery__edit__medicalHistory">Surgery :</label>
+    <input type="text" name="surgery" id="surgery__edit__medicalHistory">
+
+    <label for="emergencyDrug__edit__medicalHistory">EmergencyDrug :</label>
+    <input type="text" name="emergencyDrug" id="emergencyDrug__edit__medicalHistory">
+
+    <label for="disease__edit__medicalHistory">Disease :</label>
+    <input type="text" name="disease" id="disease__edit__medicalHistory">
+
+    <label for="emergencyPhoneNumber__add__medicalHistory">EmergencyPhoneNumber :</label>
+    <input type="text" name="emergencyPhoneNumber" id="emergencyPhoneNumber__edit__medicalHistory">
+
+
+    <label for="deleted__edit__medicalHistory">State:</label>
+    <select id="deleted__edit__medicalHistory"
+            name="deleted">
+    </select>
+</div>
+
+</body>
+</html>

@@ -2,7 +2,6 @@ package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Disease;
-import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.repository.DiseaseRepository;
 import com.home.SpringBootAutomation.repository.MedicalHistoryRepository;
 import com.home.SpringBootAutomation.service.DiseaseService;
@@ -10,10 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.lang.model.element.Name;
-import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -25,7 +21,7 @@ public class DiseaseServiceImp implements DiseaseService {
     }
 
     @Override
-    public Disease save(Disease disease) {
+    public Disease save(Disease disease) throws NoContentException {
         log.info("Disease_Save_Service");
         disease.setDeleted(false);
         diseaseRepository.save(disease);
@@ -81,21 +77,17 @@ public class DiseaseServiceImp implements DiseaseService {
     }
 
     @Override
-    public List<Disease> findDiseaseByName(Name name) throws NoContentException {
+    public List<Disease> findDiseaseByName(String name) {
         log.info("Disease_FindByName_Service");
         List<Disease> diseaseList = diseaseRepository.findDiseaseByName(name);
-        if (!diseaseList.isEmpty()) {
-            return diseaseList;
-        } else throw new NoContentException("Disease Not Found !");
-
+        return diseaseList;
     }
 
     @Override
-    public List<Disease> findDiseaseByType(Type type) throws NoContentException {
+    public List<Disease> findDiseaseByType(String type) {
         log.info("Disease_FindByType_Service");
         List<Disease> diseaseList = diseaseRepository.findDiseaseByType(type);
-        if (!diseaseList.isEmpty()) {
-            return diseaseList;
-        } else throw new NoContentException("Disease Not Found !");
+        return diseaseList;
+
     }
 }

@@ -17,8 +17,8 @@ public interface DiseaseRepository extends JpaRepository<Disease,Long> {
     List<Disease> findAllDeletedFalse();
 
     @Query("select oo from diseaseEntity oo where oo.name=: name")
-    List<Disease>findDiseaseByName(Name name);
+    List<Disease>findDiseaseByName(String name);
 
     @Query("select oo from diseaseEntity oo where oo.type=: type")
-    List<Disease>findDiseaseByType(Type type);
+    List<Disease>findDiseaseByType(String type);
 }

@@ -31,14 +31,14 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
 
     Long countByDeletedFalse();
 
-    @Query("select oo.allergy from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
-    Optional<MedicalHistory>findByAllergy(String name,String lastname);
+//    @Query("select oo.allergy from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
+//    Optional<MedicalHistory>findByAllergy(String name,String lastname);
 
-    @Query("select oo.emergencyDrug from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
-    Optional<MedicalHistory>findByEmergencyDrug(String name,String lastname);
-
-    @Query("select oo.emergencyPhoneNumber from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
-    Optional<MedicalHistory>findByEmergencyPhoneNumber(String name,String lastname);
-    @Query("select oo.diseaseList from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
-    List<MedicalHistory>findByDiseaseList(String name,String lastname);
+//    @Query("select oo.emergencyDrug from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
+//    Optional<MedicalHistory>findByEmergencyDrug(String name,String lastname);
+//
+//    @Query("select oo.emergencyPhoneNumber from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
+//    Optional<MedicalHistory>findByEmergencyPhoneNumber(String name,String lastname);
+//    @Query("select oo.diseaseList from medicalEntity oo where oo.person.name=:name and oo.person.lastname=:lastname")
+//    List<MedicalHistory>findByDiseaseList(String name,String lastname);
 }

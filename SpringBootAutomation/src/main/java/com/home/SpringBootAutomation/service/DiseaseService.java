@@ -2,11 +2,7 @@ package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Disease;
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
 
-import javax.lang.model.element.Name;
-import java.lang.reflect.Type;
 import java.util.List;
 
 public interface DiseaseService {
@@ -24,7 +20,7 @@ public interface DiseaseService {
 
     Disease findById(Long id) throws NoContentException;
 
-    List<Disease> findDiseaseByName(Name name) throws NoContentException;
+    List<Disease> findDiseaseByName(String name);
 
-    List<Disease> findDiseaseByType(Type type) throws NoContentException;
+    List<Disease> findDiseaseByType(String type) ;
 }
