@@ -1,141 +1,91 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Timesheet;
 import com.home.SpringBootAutomation.service.impl.TimesheetServiceImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/timesheet")
 @Slf4j
 public class TimesheetController {
 
-    private final TimesheetServiceImpl service;
+    private final TimesheetServiceImpl timesheetService;
 
-    public TimesheetController(TimesheetServiceImpl service) {
-        this.service = service;
+    public TimesheetController(TimesheetServiceImpl timesheetService) {
+        this.timesheetService = timesheetService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String timesheetForm(Model model) {
+        model.addAttribute("timesheetList", timesheetService.findTimesheetByDeletedFalse());
+        model.addAttribute("timesheet", new Timesheet());
+        return "timesheet";
     }
 
     //todo : employee and manager hasn't been set yet
     //todo : employee and manager signatures haven't been set yet
-    @PostMapping(value = "/save")
-    public String save(@Valid Timesheet timesheet, Model model, BindingResult result){
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Timesheet Save Failed ! --->" + result.getAllErrors());
-                return "timesheet";
-
-            }
-            service.save(timesheet);
-            log.info("Controller - Timesheet Saved - Post Method ---->" + " timesheet :" + timesheet.toString());
-
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Timesheet Saved successfully");
-            return "redirect:/timesheet";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/timesheet";
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Timesheet save(Model model, @Valid Timesheet timesheet, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return timesheetService.save(timesheet);
     }
 
-    @PostMapping("/edit") //TODO: PutMapping
-    public String edit(@Valid Timesheet timesheet, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Timesheet Edit Failed ! --->" + result.getAllErrors());
-                return "timesheet";
-
-            }
-            service.update(timesheet);
-            log.info("Controller - Timesheet Edited - Put Method ---->" + " timesheet :" + timesheet.toString());
-
-            model.addAttribute("timesheet", timesheet);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Timesheet Saved successfully");
-            return "redirect:/timesheet";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/timesheet";
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public Timesheet edit(Model model, @Valid Timesheet timesheet, BindingResult bindingResult) throws NoContentException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return timesheetService.update(timesheet);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            service.logicalRemove(id);
-
-            log.info("The Timesheet With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Timesheet With Id : " + id + " Successfully Deleted .");
-            return "redirect:/timesheet";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-            //TODO: Maybe a 500 error page ?
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Timesheet remove(Model model, @PathVariable Long id) throws NoContentException {
+        return timesheetService.logicalRemove(id);
     }
 
-    @GetMapping
-    public String findAll(Model model) {
-        try {
-            List<Timesheet> timesheetList = service.findTimesheetByDeletedFalse();
-            log.info("Controller - Find Timesheet With Deleted False - Get Method");
 
-            model.addAttribute("timesheet", new Timesheet());
-            model.addAttribute("timesheetList", timesheetList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Timesheet List Is Not Empty");
-
-            return "timesheet";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            return "error-page";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Timesheet findById(Model model, @PathVariable Long id) throws NoContentException {
+        return timesheetService.findById(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Timesheet>> findById(@PathVariable("id") Long id, Model model) {
-        try {
-            Optional<Timesheet> timesheet = service.findTimesheetByIdAndDeletedFalse(id);
-
-            return ResponseEntity.ok(timesheet);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
-            return null;
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Timesheet> findAll(Model model) {
+        return timesheetService.findAll();
     }
-
 
 }
