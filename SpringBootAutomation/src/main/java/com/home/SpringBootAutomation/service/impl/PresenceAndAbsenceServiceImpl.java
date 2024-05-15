@@ -13,66 +13,68 @@ import java.util.Optional;
 @Service
 public class PresenceAndAbsenceServiceImpl implements PresenceAndAbsenceService {
 
-    private final PresenceAndAbsenceRepository repository;
+    private final PresenceAndAbsenceRepository presenceAndAbsenceRepository;
 
-    public PresenceAndAbsenceServiceImpl(PresenceAndAbsenceRepository repository) {
-        this.repository = repository;
+    public PresenceAndAbsenceServiceImpl(PresenceAndAbsenceRepository presenceAndAbsenceRepository) {
+        this.presenceAndAbsenceRepository = presenceAndAbsenceRepository;
     }
 
     @Override
-    public void save(PresenceAndAbsence presenceAndAbsence) throws Exception {
-        repository.save(presenceAndAbsence);
+    public PresenceAndAbsence save(PresenceAndAbsence presenceAndAbsence){
+        return presenceAndAbsenceRepository.save(presenceAndAbsence);
     }
 
     @Override
-    public void update(PresenceAndAbsence presenceAndAbsence) throws NoContentException {
-        Optional<PresenceAndAbsence> optionalPresenceAndAbsence = repository.findPresenceAndAbsenceByIdAndDeletedFalse(presenceAndAbsence.getId());
-
-        if (optionalPresenceAndAbsence.isPresent()) {
-            repository.save(presenceAndAbsence);
-        } else {
-            throw new NoContentException("PresenceAndAbsence not found !");
-        }
+    public PresenceAndAbsence update(PresenceAndAbsence presenceAndAbsence) throws NoContentException {
+        presenceAndAbsenceRepository.findById(presenceAndAbsence.getId()).orElseThrow(
+                () -> new NoContentException("No PresenceAndAbsence Found with id : " + presenceAndAbsence.getId())
+        );
+        return presenceAndAbsenceRepository.save(presenceAndAbsence);
     }
 
     @Override
-    public void logicalRemove(Long id) throws NoContentException {
-        Optional<PresenceAndAbsence> optionalPresenceAndAbsence = repository.findPresenceAndAbsenceByIdAndDeletedFalse(id);
-        if (optionalPresenceAndAbsence.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("PresenceAndAbsence not found !");
-        }
+    public PresenceAndAbsence remove(Long id) throws NoContentException {
+        PresenceAndAbsence presenceAndAbsence = presenceAndAbsenceRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No PresenceAndAbsence Found with id : " + id)
+        );
+        presenceAndAbsenceRepository.deleteById(id);
+        return presenceAndAbsence;
     }
 
     @Override
-    public List<PresenceAndAbsence> findAll() throws Exception {
-        return repository.findAll();
+    public PresenceAndAbsence logicalRemove(Long id) throws NoContentException {
+        PresenceAndAbsence presenceAndAbsence = presenceAndAbsenceRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No PresenceAndAbsence Found with id : " + id)
+        );
+        presenceAndAbsenceRepository.logicalRemove(id);
+        return presenceAndAbsence;
     }
 
     @Override
-    public Optional<PresenceAndAbsence> findById(Long id) throws NoContentException {
-        Optional<PresenceAndAbsence> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("PresenceAndAbsence not found !");
-        }
+    public List<PresenceAndAbsence> findAll() {
+        return presenceAndAbsenceRepository.findAll();
+    }
+
+    @Override
+    public PresenceAndAbsence findById(Long id) throws NoContentException {
+        return presenceAndAbsenceRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No PresenceAndAbsence Found with id : " + id)
+        );
     }
 
     @Override
     public Long getPresenceAndAbsenceCount() {
-        return repository.count();
+        return presenceAndAbsenceRepository.count();
     }
 
     @Override
     public PresenceAndAbsence logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<PresenceAndAbsence> optionalPresenceAndAbsence = repository.findPresenceAndAbsenceByIdAndDeletedFalse(id);
+        Optional<PresenceAndAbsence> optionalPresenceAndAbsence = presenceAndAbsenceRepository.findPresenceAndAbsenceByIdAndDeletedFalse(id);
 
         if (optionalPresenceAndAbsence.isPresent()) {
             PresenceAndAbsence oldPresenceAndAbsence = optionalPresenceAndAbsence.get();
             oldPresenceAndAbsence.setDeleted(true);
-            return repository.save(oldPresenceAndAbsence);
+            return presenceAndAbsenceRepository.save(oldPresenceAndAbsence);
 
         } else {
             throw new NoContentException("PresenceAndAbsence not found !");
@@ -80,37 +82,34 @@ public class PresenceAndAbsenceServiceImpl implements PresenceAndAbsenceService 
     }
 
     @Override
-    public List<PresenceAndAbsence> findPresenceAndAbsenceByDeletedFalse() throws Exception {
-        return repository.findPresenceAndAbsenceByDeletedFalse();
+    public List<PresenceAndAbsence> findPresenceAndAbsenceByDeletedFalse() {
+        return presenceAndAbsenceRepository.findPresenceAndAbsenceByDeletedFalse();
     }
 
     @Override
-    public Optional<PresenceAndAbsence> findPresenceAndAbsenceByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<PresenceAndAbsence> optional = repository.findPresenceAndAbsenceByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("PresenceAndAbsence not found !");
-        }
+    public PresenceAndAbsence findPresenceAndAbsenceByIdAndDeletedFalse(Long id) throws NoContentException {
+        return presenceAndAbsenceRepository.findPresenceAndAbsenceByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No PresenceAndAbsence Found with id : " + id)
+        );
     }
 
     @Override
-    public List<PresenceAndAbsence> findPresenceAndAbsenceByEmployeeIdAndDateAndDeletedFalse(Long id, LocalDate date) throws NoContentException {
-        return repository.findPresenceAndAbsenceByEmployeeIdAndDateAndDeletedFalse(id,date);
+    public List<PresenceAndAbsence> findPresenceAndAbsenceByEmployeeIdAndDateAndDeletedFalse(Long id, LocalDate date) throws NoContentException{
+        return presenceAndAbsenceRepository.findPresenceAndAbsenceByEmployeeIdAndDateAndDeletedFalse(id,date);
     }
 
     @Override
     public List<PresenceAndAbsence> findPresenceAndAbsenceByEmployeeIdAndDeletedFalse(Long id) throws NoContentException {
-        return repository.findPresenceAndAbsenceByEmployeeIdAndDeletedFalse(id);
+        return presenceAndAbsenceRepository.findPresenceAndAbsenceByEmployeeIdAndDeletedFalse(id);
     }
 
     @Override
     public List<PresenceAndAbsence> findPresenceAndAbsenceByDateAndDeletedFalse(LocalDate date) throws NoContentException {
-        return repository.findPresenceAndAbsenceByDateAndDeletedFalse(date);
+        return presenceAndAbsenceRepository.findPresenceAndAbsenceByDateAndDeletedFalse(date);
     }
 
     @Override
     public Long countByDeletedFalse() {
-        return repository.countByDeletedFalse();
+        return presenceAndAbsenceRepository.countByDeletedFalse();
     }
 }
