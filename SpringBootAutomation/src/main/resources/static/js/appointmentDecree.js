@@ -1,76 +1,86 @@
-async function findById(id) {
-    let editModal = document.getElementById("editModalAppointmentDecree");
-    let modalAppointmentDecree = new bootstrap.Modal(editModal);
-    modalAppointmentDecree.show();
-
-    const resp = await fetch("/appointmentDecree/findById/" + id, {
-        method: "GET"
-    });
-
-    const data = await resp.json();
-    let appointmentDecreeId = document.getElementById("id__edit__appointmentDecree");
-    let appointmentDecreePerson = document.getElementById("person__edit__appointmentDecree");
-    let appointmentDecreeTypeOfEmployment = document.getElementById("typeOfEmployment__edit__appointmentDecree");
-    let appointmentDecreeOrganizationalUnit = document.getElementById("organizationalUnit__edit__appointmentDecree");
-    let appointmentDecreeJobType = document.getElementById("jobType__edit__appointmentDecree");
-    let appointmentDecreeProfessionalField = document.getElementById("professionalField__edit__appointmentDecree");
-    let appointmentDecreeJobCode = document.getElementById("jobCode__edit__appointmentDecree");
-    let appointmentDecreeJobTitle = document.getElementById("jobTitle__edit__appointmentDecree");
-    let appointmentDecreeStartDate = document.getElementById("startDate__edit__appointmentDecree");
-    let appointmentDecreeEndDate = document.getElementById("endDate__edit__appointmentDecree");
-    let appointmentDecreePlaceOfEmployment = document.getElementById("placeOfEmployment__edit__appointmentDecree");
-    let appointmentDecreeWorkingHours = document.getElementById("workingHours__edit__appointmentDecree");
-    let appointmentDecreeWorkingDay = document.getElementById("workingDay__edit__appointmentDecree");
-    let appointmentDecreeAppointmentType = document.getElementById("appointmentType__edit__appointmentDecree");
-    let appointmentDecreeAppointmentDescription = document.getElementById("appointmentDescription__edit__appointmentDecree");
-
-
-    appointmentDecreeId.value = data.id;
-    appointmentDecreePerson.value = data.person;
-    appointmentDecreeTypeOfEmployment.value = data.typeOfEmployment;
-    appointmentDecreeOrganizationalUnit.value = data.organizationalUnit;
-    appointmentDecreeJobType.value = data.jobType;
-    appointmentDecreeProfessionalField.value = data.professionalField;
-    appointmentDecreeJobCode.value = data.jobCode;
-    appointmentDecreeJobTitle.value = data.jobTitle;
-    appointmentDecreeStartDate.value = data.startDate;
-    appointmentDecreeEndDate.value = data.endDate;
-    appointmentDecreePlaceOfEmployment.value = data.placeOfEmployment;
-    appointmentDecreeWorkingHours.value = data.workingHours;
-    appointmentDecreeWorkingDay.value = data.workingDay;
-    appointmentDecreeAppointmentType.value = data.appointmentType;
-    appointmentDecreeAppointmentDescription.value = data.appointmentDescription;
-
+function addNew() {
+    let modal = document.getElementById("save-modal");
+    modal.style.display = "block";
 }
 
-// "Edit Functionality"
-async function edit() {
-    const formData = new FormData(document.getElementById("editFormAppointmentDecree"));
+async function getDataForEdit(url, id) {
+    const response = await fetch(url + "/" + id,
+        {
+            method: "GET"
+        }
+    );
+    if (!response.ok) {
+        alert("Error : " + response.status + "\n" + (await response.text()).toString());
+    } else {
+        let appointmentDecree = JSON.parse(await response.text());
+        let modal = document.getElementById("edit-modal");
+        modal.style.display = "block";
 
-    const resp = await fetch("/appointmentDecree/edit", {
-        method: "PUT",
-        body: formData
-    }).then(() => {
-        window.location.replace("/appointmentDecree");
+        let idEdit = document.querySelector("#edit-form #id");
+        idEdit.value = appointmentDecree.id;
 
-    });
+        let personEdit = document.querySelector("#edit-form #edit-person");
+        // personEdit.id = "person";
+        personEdit.value = appointmentDecree.person.username;
+
+        // let typeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(2)");
+        // typeOfEmploymentEdit.id = "edit-typeOfEmployment";
+        // typeOfEmploymentEdit.value = appointmentDecree.typeOfEmployment;
+
+        let organizationalUnitEdit = document.querySelector("#edit-form div :nth-child(1)");
+        organizationalUnitEdit.id = "edit-organizationalUnit";
+        organizationalUnitEdit.value = appointmentDecree.organizationalUnit;
+
+        let jobTypeEdit = document.querySelector("#edit-form div :nth-child(2)");
+        jobTypeEdit.id = "edit-jobType";
+        jobTypeEdit.value = appointmentDecree.jobType;
+
+        let professionalFieldEdit = document.querySelector("#edit-form div :nth-child(3)");
+        professionalFieldEdit.id = "edit-professionalField";
+        professionalFieldEdit.value = appointmentDecree.professionalField;
+
+        let jobCodeEdit = document.querySelector("#edit-form div :nth-child(4)");
+        jobCodeEdit.id = "edit-jobCode";
+        jobCodeEdit.value = appointmentDecree.jobCode;
+
+        let jobTitleEdit = document.querySelector("#edit-form div :nth-child(5)");
+        jobTitleEdit.id = "edit-jobTitle";
+        jobTitleEdit.value = appointmentDecree.jobTitle;
+
+        let startDateEdit = document.querySelector("#edit-form div :nth-child(6)");
+        startDateEdit.id = "edit-startDate";
+        startDateEdit.value = appointmentDecree.startDate;
+
+        let endDateEdit = document.querySelector("#edit-form div :nth-child(7)");
+        endDateEdit.id = "edit-endDate";
+        endDateEdit.value = appointmentDecree.endDate;
+
+        let placeOfEmploymentEdit = document.querySelector("#edit-form div :nth-child(8)");
+        placeOfEmploymentEdit.id = "edit-placeOfEmployment";
+        placeOfEmploymentEdit.value = appointmentDecree.placeOfEmployment;
+
+        let workingHoursEdit = document.querySelector("#edit-form div :nth-child(9)");
+        workingHoursEdit.id = "edit-workingHours";
+        workingHoursEdit.value = appointmentDecree.workingHours;
+
+        let workingDayEdit = document.querySelector("#edit-form div :nth-child(10)");
+        workingDayEdit.id = "edit-workingDay";
+        workingDayEdit.value = appointmentDecree.workingDay;
+
+        // let appointmentTypeEdit = document.querySelector("#edit-form div :nth-child(13)");
+        // appointmentTypeEdit.id = "edit-appointmentType";
+        // appointmentTypeEdit.value = appointmentDecree.appointmentType;
+
+        let appointmentDescriptionEdit = document.querySelector("#edit-form div :nth-child(11)");
+        appointmentDescriptionEdit.id = "edit-appointmentDescription";
+        appointmentDescriptionEdit.value = appointmentDecree.appointmentDescription;
+
+    }
 }
 
-async function openDeleteModal(id) {
-
-    let deleteIdInputAppointmentDecree = document.getElementById("id__delete__appointmentDecree");
-
-    deleteIdInputAppointmentDecree.value = id;
-
-    let deleteModal = document.getElementById("deleteModalAppointmentDecree")
-    let modalAppointmentDecree = new bootstrap.Modal(deleteModal);
-    modalAppointmentDecree.show();
-}
-
-async function deleteById(id) {
-    const resp = await fetch(`/appointmentDecree/delete/` + id, {
-        method: "DELETE"
-    });
-    console.log(id)
-    window.location.replace("/appointmentDecree")
+function closeModal() {
+    const saveModal = document.getElementById("save-modal");
+    const editModal = document.getElementById("edit-modal");
+    saveModal.style.display = "none";
+    editModal.style.display = "none";
 }

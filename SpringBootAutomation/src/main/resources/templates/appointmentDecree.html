@@ -3,21 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>AppointmentDecree</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/person.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
 </head>
 <body>
+<div>
 
-<div class="container">
+</div>
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#addModalAppointmentDecree">Add New AppointmentDecree
-        </button>
+<div id="save-modal">
+    <div id="save-modal-content">
+        <form id="save-form" th:object="${appointmentDecree}">
+            <label th:for="person">Select Person:</label>
+            <select id="person" th:field="*{person}" name="person" required>
+                <option value="">Select</option>
+                <option th:each="p : ${person}" th:value="${p.id}" th:utext="${p.username}"></option>
+            </select>
+            <br>
+
+            <div th:replace="~{/fragments/appointmentDecree-fragment :: appointmentDecreeFormContent(
+    'typeOfEmployment'
+    ,'organizationalUnit'
+    ,'jobType'
+    ,'professionalField'
+    ,'jobCode'
+    ,'jobTitle'
+    ,'startDate'
+    ,'endDate'
+    ,'placeOfEmployment'
+    ,'workingHours'
+    ,'workingDay'
+    ,'appointmentType'
+    ,'appointmentDescription'
+    )}"></div>
+        </form>
+        <button onclick="save('/appointmentDecree', 'save-form')">Save</button>
+        <button onclick="closeModal()">Close</button>
     </div>
+</div>
 
-    <table class="table table-striped" th:if="${#lists.size(appointmentDecreeList) > 0}">
+<br><br>
 
-        <thead>
+<button onclick="addNew()">Add New</button>
+
+<br><br>
+
+<table th:if="${#lists.size(appointmentDecreeList) > 0}">
+    <thead>
+    <tr>
         <th>Id</th>
         <th>Person</th>
         <th>Type Of Employment</th>
@@ -27,285 +64,105 @@
         <th>Job Code</th>
         <th>Job Title</th>
         <th>Start Date</th>
-        <th>Place Of Employment</th>
         <th>End Date</th>
+        <th>Place Of Employment</th>
         <th>Working Hours</th>
         <th>Working Day</th>
         <th>Appointment Type</th>
         <th>Appointment Description</th>
         <th>Operation</th>
-        </thead>
+    </tr>
+    </thead>
 
-        <tbody>
-        <tr th:each="a : ${appointmentDecreeList}">
-            <td th:text="${a.id}"></td>
-            <th th:text="${a.person.username}"></th>
-            <td th:text="${a.typeOfEmployment}"></td>
-            <td th:text="${a.organizationalUnit}"></td>
-            <td th:text="${a.jobType}"></td>
-            <td th:text="${a.professionalField}"></td>
-            <td th:text="${a.jobCode}"></td>
-            <td th:text="${a.jobTitle}"></td>
-            <td th:text="${a.startDate}"></td>
-            <td th:text="${a.endDate}"></td>
-            <td th:text="${a.workingHours}"></td>
-            <td th:text="${a.workingDay}"></td>
-            <td th:text="${a.appointmentType}"></td>
-            <td th:text="${a.appointmentDescription}"></td>
-            <td>
-                <a class="btn btn-warning editButtonAppointmentDecree" th:onclick="'findById(\'' + ${a.id} + '\')'">Edit</a>
-                <a class="btn btn-danger deleteButtonAppointmentDecree" th:onclick="'deleteById(\'' + ${a.id} + '\')'">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <tbody>
+    <tr th:each="a : ${appointmentDecreeList}">
+        <td th:text="${a.id}"></td>
+        <th th:text="${a.person.username}"></th>
+        <td th:text="${a.typeOfEmployment}"></td>
+        <td th:text="${a.organizationalUnit}"></td>
+        <td th:text="${a.jobType}"></td>
+        <td th:text="${a.professionalField}"></td>
+        <td th:text="${a.jobCode}"></td>
+        <td th:text="${a.jobTitle}"></td>
+        <td th:text="${a.startDate}"></td>
+        <td th:text="${a.endDate}"></td>
+        <td th:text="${a.workingHours}"></td>
+        <td th:text="${a.workingDay}"></td>
+        <td th:text="${a.appointmentType}"></td>
+        <td th:text="${a.appointmentDescription}"></td>
+        <td>
+            <button th:data-name="${a.id}"
+                    th:onclick="|getDataForEdit('/appointmentDecree', this.getAttribute('data-name'))|"> Edit
+            </button>
+            <button th:data-name="${a.id}"
+                    th:onclick="|remove('/appointmentDecree', this.getAttribute('data-name'))|">Remove
+            </button>
+        </td>
+    </tr>
+    </tbody>
+</table>
 
-    <div class="modal fade" id="addModalAppointmentDecree" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div id="edit-modal">
+    <div id="edit-modal-content">
+        <form id="edit-form">
+            <input type="text" id="id" name="id" hidden="hidden">
 
-        <form th:action="@{/appointmentDecree/save}" method="post" th:object="${appointmentDecree}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+            <label th:for="person">Select Person:</label>
+            <select id="edit-person" th:field="*{person}" name="person" required>
+                <option value="">Select</option>
+                <option th:each="p : ${person}" th:value="${p.id}" th:utext="${p.username}"></option>
+            </select>
+            <br>
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__appointmentDecree">Save New AppointmentDecree</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="person__add__appointmentDecree" class="col-form-label">Select Person:</label>
-                            <select id="person__add__appointmentDecree" th:field="*{person}" name="person">
-                                <option value="">Select</option>
-                                <option th:each="p : ${person}" th:value="${p.id}" th:utext="${p.username}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="typeOfEmployment__add__appointmentDecree" class="col-form-label">Type Of Employment :</label>
-                            <select id="typeOfEmployment__add__appointmentDecree" class="form-select" aria-label="Default select example" name="typeOfEmployment" th:field="*{typeOfEmployment}" required>
-                                <option th:each="typeOfEmployment : ${T(com.home.SpringBootAutomation.enums.TypeOfEmployment).values()}" th:value="${typeOfEmployment}" th:text="${typeOfEmployment}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid Type Of Employment !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="organizationalUnit__add__appointmentDecree" class="col-form-label">Organizational Unit :</label>
-                            <input type="text" class="form-control" id="organizationalUnit__add__appointmentDecree" name="organizationalUnit" th:value="${appointmentDecree.organizationalUnit}" th:field="*{organizationalUnit}">
-                            <span class="error" th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid Organizational Unit !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobType__add__appointmentDecree" class="col-form-label">Job Type :</label>
-                            <input type="text" class="form-control" id="jobType__add__appointmentDecree" name="jobType" th:value="${appointmentDecree.jobType}" th:field="*{jobType}">
-                            <span class="error" th:if="${#fields.hasErrors('jobType')}" th:errors="*{jobType}">Invalid Job Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="professionalField__add__appointmentDecree" class="col-form-label">Professional Field :</label>
-                            <input type="text" class="form-control" id="professionalField__add__appointmentDecree" name="professionalField" th:value="${appointmentDecree.professionalField}" th:field="*{professionalField}">
-                            <span class="error" th:if="${#fields.hasErrors('professionalField')}" th:errors="*{professionalField}">Invalid Professional Field !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobCode__add__appointmentDecree" class="col-form-label">Job Code :</label>
-                            <input type="text" class="form-control" id="jobCode__add__appointmentDecree" name="jobCode" th:value="${appointmentDecree.jobCode}" th:field="*{jobCode}">
-                            <span class="error" th:if="${#fields.hasErrors('jobCode')}" th:errors="*{jobCode}">Invalid Job Code !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobTitle__add__appointmentDecree" class="col-form-label">Job Title :</label>
-                            <input type="text" class="form-control" id="jobTitle__add__appointmentDecree" name="jobTitle" th:value="${appointmentDecree.jobTitle}" th:field="*{jobTitle}">
-                            <span class="error" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">Invalid Job Title !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="startDate__add__appointmentDecree" class="col-form-label">Start Date :</label>
-                            <input type="date" class="form-control" id="startDate__add__appointmentDecree" name="startDate" th:value="${appointmentDecree.startDate}" th:field="*{startDate}">
-                            <span class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid Start Date !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="endDate__add__appointmentDecree" class="col-form-label">End Date :</label>
-                            <input type="date" class="form-control" id="endDate__add__appointmentDecree" name="endDate" th:value="${appointmentDecree.endDate}" th:field="*{endDate}">
-                            <span class="error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid End Date !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="placeOfEmployment__add__appointmentDecree" class="col-form-label">Place Of Employment :</label>
-                            <input type="text" class="form-control" id="placeOfEmployment__add__appointmentDecree" name="placeOfEmployment" th:value="${appointmentDecree.placeOfEmployment}" th:field="*{placeOfEmployment}">
-                            <span class="error" th:if="${#fields.hasErrors('placeOfEmployment')}" th:errors="*{placeOfEmployment}">Invalid Place Of Employment !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingHours__add__appointmentDecree" class="col-form-label">Working Hours :</label>
-                            <input type="text" class="form-control" id="workingHours__add__appointmentDecree" name="workingHours" th:value="${appointmentDecree.workingHours}" th:field="*{workingHours}">
-                            <span class="error" th:if="${#fields.hasErrors('workingHours')}" th:errors="*{workingHours}">Invalid Working Hours !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingDay__add__appointmentDecree" class="col-form-label">Working Day :</label>
-                            <input type="number" class="form-control" id="workingDay__add__appointmentDecree" name="workingDay" th:value="${appointmentDecree.workingDay}" th:field="*{workingDay}">
-                            <span class="error" th:if="${#fields.hasErrors('workingDay')}" th:errors="*{workingDay}">Invalid Working Day !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="appointmentType__add__appointmentDecree" class="col-form-label">Appointment Type :</label>
-                            <select id="appointmentType__add__appointmentDecree" class="form-select" aria-label="Default select example" name="appointmentType" th:field="*{appointmentType}" required>
-                                <option th:each="appointmentType : ${T(com.home.SpringBootAutomation.enums.AppointmentType).values()}" th:value="${appointmentType}" th:text="${appointmentType}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid Appointment Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="appointmentDescription__add__appointmentDecree" class="col-form-label">Appointment Description :</label>
-                            <input type="text" class="form-control" id="appointmentDescription__add__appointmentDecree" name="appointmentDescription" th:value="${appointmentDecree.appointmentDescription}" th:field="*{appointmentDescription}">
-                            <span class="error" th:if="${#fields.hasErrors('appointmentDescription')}" th:errors="*{appointmentDescription}">Invalid Appointment Description !</span>
-                        </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
-            </div>
+            <div th:replace="~{/fragments/appointmentDecree-fragment :: appointmentDecreeFormContent(
+    'edit-typeOfEmployment'
+    ,'edit-organizationalUnit'
+    ,'edit-jobType'
+    ,'edit-professionalField'
+    ,'edit-jobCode'
+    ,'edit-jobTitle'
+    ,'edit-startDate'
+    ,'edit-endDate'
+    ,'edit-placeOfEmployment'
+    ,'edit-workingHours'
+    ,'edit-workingDay'
+    ,'edit-appointmentType'
+    ,'edit-appointmentDescription'
+    )}"></div>
         </form>
+        <button onclick="edit('/appointmentDecree', 'edit-form')">Edit</button>
+        <button onclick="closeModal()">Close</button>
     </div>
-    <!--Save Modal-->
-
-
-    <!--Edit Modal-->
-    <div class="modal fade" id="editModalAppointmentDecree" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="" th:object="${appointmentDecree}" id="editFormAppointmentDecree">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__appointmentDecree">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__appointmentDecree" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__appointmentDecree" name="id" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="person__edit__appointmentDecree" class="col-form-label">Select Person:</label>
-                            <select id="person__edit__appointmentDecree" th:field="*{person}" name="person">
-                                <option value="">Select</option>
-                                <option th:each="p : ${person}" th:value="${p.id}" th:utext="${p.username}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="typeOfEmployment__edit__appointmentDecree" class="col-form-label">Type Of Employment :</label>
-                            <select id="typeOfEmployment__edit__appointmentDecree" class="form-select" aria-label="Default select example" name="typeOfEmployment" th:field="*{typeOfEmployment}" required>
-                                <option th:each="typeOfEmployment : ${T(com.home.SpringBootAutomation.enums.TypeOfEmployment).values()}" th:value="${typeOfEmployment}" th:text="${typeOfEmployment}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid Type Of Employment !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="organizationalUnit__edit__appointmentDecree" class="col-form-label">Organizational Unit :</label>
-                            <input type="text" class="form-control" id="organizationalUnit__edit__appointmentDecree" name="organizationalUnit" th:value="${appointmentDecree.organizationalUnit}" th:field="*{organizationalUnit}">
-                            <span class="error" th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid Organizational Unit !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobType__edit__appointmentDecree" class="col-form-label">Job Type :</label>
-                            <input type="text" class="form-control" id="jobType__edit__appointmentDecree" name="jobType" th:value="${appointmentDecree.jobType}" th:field="*{jobType}">
-                            <span class="error" th:if="${#fields.hasErrors('jobType')}" th:errors="*{jobType}">Invalid Job Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="professionalField__edit__appointmentDecree" class="col-form-label">Professional Field :</label>
-                            <input type="text" class="form-control" id="professionalField__edit__appointmentDecree" name="professionalField" th:value="${appointmentDecree.professionalField}" th:field="*{professionalField}">
-                            <span class="error" th:if="${#fields.hasErrors('professionalField')}" th:errors="*{professionalField}">Invalid Professional Field !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobCode__edit__appointmentDecree" class="col-form-label">Job Code :</label>
-                            <input type="text" class="form-control" id="jobCode__edit__appointmentDecree" name="jobCode" th:value="${appointmentDecree.jobCode}" th:field="*{jobCode}">
-                            <span class="error" th:if="${#fields.hasErrors('jobCode')}" th:errors="*{jobCode}">Invalid Job Code !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="jobTitle__edit__appointmentDecree" class="col-form-label">Job Title :</label>
-                            <input type="text" class="form-control" id="jobTitle__edit__appointmentDecree" name="jobTitle" th:value="${appointmentDecree.jobTitle}" th:field="*{jobTitle}">
-                            <span class="error" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">Invalid Job Title !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="startDate__edit__appointmentDecree" class="col-form-label">Start Date :</label>
-                            <input type="date" class="form-control" id="startDate__edit__appointmentDecree" name="startDate" th:value="${appointmentDecree.startDate}" th:field="*{startDate}">
-                            <span class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid Start Date !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="endDate__edit__appointmentDecree" class="col-form-label">End Date :</label>
-                            <input type="date" class="form-control" id="endDate__edit__appointmentDecree" name="endDate" th:value="${appointmentDecree.endDate}" th:field="*{endDate}">
-                            <span class="error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid End Date !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="placeOfEmployment__edit__appointmentDecree" class="col-form-label">Place Of Employment :</label>
-                            <input type="text" class="form-control" id="placeOfEmployment__edit__appointmentDecree" name="placeOfEmployment" th:value="${appointmentDecree.placeOfEmployment}" th:field="*{placeOfEmployment}">
-                            <span class="error" th:if="${#fields.hasErrors('placeOfEmployment')}" th:errors="*{placeOfEmployment}">Invalid Place Of Employment !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingHours__edit__appointmentDecree" class="col-form-label">Working Hours :</label>
-                            <input type="text" class="form-control" id="workingHours__edit__appointmentDecree" name="workingHours" th:value="${appointmentDecree.workingHours}" th:field="*{workingHours}">
-                            <span class="error" th:if="${#fields.hasErrors('workingHours')}" th:errors="*{workingHours}">Invalid Working Hours !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingDay__edit__appointmentDecree" class="col-form-label">Working Day :</label>
-                            <input type="number" class="form-control" id="workingDay__edit__appointmentDecree" name="workingDay" th:value="${appointmentDecree.workingDay}" th:field="*{workingDay}">
-                            <span class="error" th:if="${#fields.hasErrors('workingDay')}" th:errors="*{workingDay}">Invalid Working Day !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="appointmentType__edit__appointmentDecree" class="col-form-label">Appointment Type :</label>
-                            <select id="appointmentType__edit__appointmentDecree" class="form-select" aria-label="Default select example" name="appointmentType" th:field="*{appointmentType}" required>
-                                <option th:each="appointmentType : ${T(com.home.SpringBootAutomation.enums.AppointmentType).values()}" th:value="${appointmentType}" th:text="${appointmentType}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid Appointment Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="appointmentDescription__edit__appointmentDecree" class="col-form-label">Appointment Description :</label>
-                            <input type="text" class="form-control" id="appointmentDescription__edit__appointmentDecree" name="appointmentDescription" th:value="${appointmentDecree.appointmentDescription}" th:field="*{appointmentDescription}">
-                            <span class="error" th:if="${#fields.hasErrors('appointmentDescription')}" th:errors="*{appointmentDescription}">Invalid Appointment Description !</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__appointmentDecree" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Edit Modal-->
-
 </div>
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/appointmentDecree.js}" src="../static/js/jobs.js"></script>
+<div class="popup" id="popup">
+    <div class="popup-content" id="popup-content">
+
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
+
+        <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+        </span>
+
+        <div class="popup-message" id="popup-message">
+            <span class="text text-1 popup-title" id="popup-title"></span>
+            <span class="text text-2 popup-text" id="popup-text"></span>
+        </div>
+
+    </div>
+
+    <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+
+    <div class="popup-progress" id="popup-progress"></div>
+</div>
+
+<script src="/js/appointmentDecree.js"></script>
+<script src="/js/js.js"></script>
+<script src="/js/popup.js"></script>
 
 </body>
 </html>

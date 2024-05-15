@@ -13,6 +13,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -31,7 +32,7 @@ public class AppointmentDecree {
     @Column(name = "appointment_decree_id")
     private Long id;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.EAGER)
     @JoinColumn(name = "appointment_decree_person")
     private Person person;
 
@@ -103,6 +104,10 @@ public class AppointmentDecree {
     @Size(min = 3, max = 20, message = "Appointment Description must be between 3 and 20 characters")
     @NotBlank(message = "Should Not Be Null")
     private String appointmentDescription;                                                   //شرح حکم
+
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
+    @JoinColumn(name = "appointment_decree_attachment_list")
+    private List<Attachment> attachmentList;
 
     @Column(name = "appointment_decree_deleted")
     private boolean deleted;
