@@ -15,7 +15,7 @@
     <label for="parent__add__ticket">Field :</label>
     <select id="parent__add__ticket"
             th:if="${#lists.size(ticketGroupParents) > 0}"
-            onchange="handleSelectChange(event , 'parent__add__ticket')">
+            onchange="handleSelectChangeTicket(event , 'parent__add__ticket')">
         <option selected disabled value="-1">Select The Relevant Group:</option>
         <option th:each="ticketGroup : ${ticketGroupParents}"
                 th:value="${ticketGroup.id}"
@@ -38,7 +38,7 @@
 
     <label for="ticketTimeStamp__edit__ticket">Date :</label>
     <input type="datetime-local"  id="ticketTimeStamp__edit__ticket"
-           name="ticketTimeStamp">
+           name="ticketTimeStamp" readonly>
 
     <label for="status__edit__ticket">Status :</label>
     <select id="status__edit__ticket"
@@ -63,7 +63,7 @@
     <label for="parent__edit__ticket" >Field :</label>
     <select id="parent__edit__ticket"
             th:if="${#lists.size(ticketGroupParents) > 0}"
-            onchange="handleSelectChange(event , 'parent__edit__ticket')">
+            onchange="handleSelectChangeTicket(event , 'parent__edit__ticket')">
         <option selected disabled value="-1">Select The Relevant Group:</option>
         <option th:each="ticketGroup : ${ticketGroupParents}"
                 th:value="${ticketGroup.id}"

@@ -1,4 +1,4 @@
-async function handleSelectChange(event) {
+async function handleSelectChangeResponse(event) {
     const selectedTitle = event.target.value;
     findTicket(selectedTitle)
 }
@@ -22,6 +22,8 @@ async function findTicket(title) {
         opt.innerHTML = item.group.title + " - " + item.title + " :\n " + item.request ;
         select.appendChild(opt);
     });
+
+
 }
 
 function addResponse() {
@@ -38,17 +40,21 @@ async function findId(id) {
     const data = await resp.json();
     let responseId = document.getElementById("id__edit__response");
     let responseDate = document.getElementById("responseTimeStamp__edit__response");
+    let responseGroup = document.getElementById("responseGroup__edit__response");
     // let responseResponder = document.getElementById("applicant__edit__response");
-    let ticketResponse = document.getElementById("request__edit__response");
-    let responseTicket = document.getElementById("group__edit__response");
+    let ticketResponse = document.getElementById("ticket__edit__response");
+    let ticketIdResponse = document.getElementById("ticketId__edit__response");
+    let responseTicket = document.getElementById("ticketResponse__edit__response");
     let responseDeleted = document.getElementById("deleted__edit__response");
 
 
     responseId.value = data.id;
     responseDate.value = new Date(data.responseTimeStamp).toISOString().slice(0, 16);
+    responseGroup.value = data.ticket.group.title;
     // responseResponder.value = data.responder.username;
-    ticketResponse.value = data.ticketResponse;
-    responseTicket.value = data.ticket.group.title;
+    ticketResponse.value = data.ticket.request;
+    ticketIdResponse.value = data.ticket.id;
+    responseTicket.value = data.ticketResponse;
     responseDeleted.value = data.deleted;
 
 }
