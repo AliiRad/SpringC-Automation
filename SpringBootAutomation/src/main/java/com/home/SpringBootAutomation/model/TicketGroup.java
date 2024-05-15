@@ -38,9 +38,6 @@ public class TicketGroup {
     @JoinColumn(name = "ticket_group_parent_id")
     private TicketGroup parent;
 
-//    @Column(name = "ticket_group_parent")
-//    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
-//    private String root;
 
 //    @OneToMany(mappedBy = "parent" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
 //    private List<TicketGroup> ticketGroupList;

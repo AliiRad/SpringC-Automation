@@ -44,6 +44,7 @@ async function findId(id) {
     // let responseResponder = document.getElementById("applicant__edit__response");
     let ticketResponse = document.getElementById("ticket__edit__response");
     let ticketIdResponse = document.getElementById("ticketId__edit__response");
+    let ticketStatusResponse = document.getElementById("ticketStatus__edit__response");
     let responseTicket = document.getElementById("ticketResponse__edit__response");
     let responseDeleted = document.getElementById("deleted__edit__response");
 
@@ -54,6 +55,7 @@ async function findId(id) {
     // responseResponder.value = data.responder.username;
     ticketResponse.value = data.ticket.request;
     ticketIdResponse.value = data.ticket.id;
+    ticketStatusResponse.value = data.ticket.status;
     responseTicket.value = data.ticketResponse;
     responseDeleted.value = data.deleted;
 
@@ -79,8 +81,10 @@ async function save() {
     let saveModal = document.getElementById("saveModalResponse")
     saveModal.style.display = 'none'
     const saveFormData = new FormData(saveFormResponse);
+    const editTicketForm = new FormData(saveFormResponse);
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
         const response = await fetch("/response", {method: "post", body: saveFormData});
+        // const ticketEdit = await fetch('/ticket' , {method  : 'put' , body : editTicketForm })
         if (!response.ok) {
             showErrorPopup('/response', response.status, (await response.text()).toString());
         } else {

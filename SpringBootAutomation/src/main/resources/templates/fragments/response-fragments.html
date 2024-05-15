@@ -7,6 +7,7 @@
 <body>
 
 <div th:fragment="responseSaveFormContent(responseReponse,response)">
+<!--    todo: edit ticket status  -->
     <label for="responseGroup__add__response">Field :</label>
     <select id="responseGroup__add__response"
             th:if="${#lists.size(ticketGroupList) > 0}"
@@ -26,6 +27,9 @@
 
     <label for="ticketResponse__add__response">Response :</label>
     <input type="textarea" name="ticketResponse" id="ticketResponse__add__response">
+
+
+</div>
 
 
 </div>
