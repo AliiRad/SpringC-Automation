@@ -23,44 +23,44 @@ import java.util.List;
 @Table(name = "medical_tbl")
 public class MedicalHistory {
     @Id
-    @SequenceGenerator(name="medicalSeq",sequenceName = "medical_seq",allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "medicalSeq")
+    @SequenceGenerator(name = "medicalSeq", sequenceName = "medical_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "medicalSeq")
     private Long id;
 
     @Column(name = "medical_weight", length = 5)
-    @Pattern(regexp = "^{40,200}$", message = "Invalid weight")
-    @NotBlank(message = "Should Not Be Null")
+    // @Pattern(regexp = "^{40,200}$", message = "Invalid weight")
+    // @NotBlank(message = "Should Not Be Null")
     private Integer weight;
 
     @Column(name = "medical_height", length = 5)
-    @Pattern(regexp = "^{140,300}$", message = "Invalid height")
-    @NotBlank(message = "Should Not Be Null")
+    //   @Pattern(regexp = "^{140,300}$", message = "Invalid height")
+    // @NotBlank(message = "Should Not Be Null")
     private Integer height;
 
     @Column(name = "medical_blood_pressure", columnDefinition = "NVARCHAR2(20)")
-    @Pattern(regexp = "^{10,20}$", message = "Invalid weight")
-    @Size(min = 10, max = 20, message = "Blood pressure is invalid")
-    @NotBlank(message = "Should Not Be Null")
+    //  @Pattern(regexp = "^{10,20}$", message = "Invalid weight")
+    //   @Size(min = 10, max = 20, message = "Blood pressure is invalid")
+    // @NotBlank(message = "Should Not Be Null")
     private String bloodPressure;
 
     @Column(name = "medical_heart_rate", length = 4)
-    @Pattern(regexp = "^{100,400}$", message = "Invalid weight")
-    @NotBlank(message = "Should Not Be Null")
+    // @Pattern(regexp = "^{100,400}$", message = "Invalid weight")
+    //  @NotBlank(message = "Should Not Be Null")
     private Integer heartRate;
 
     @Column(name = "medical_allergy", columnDefinition = "NVARCHAR2(100)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid allergy")
-    @Size(min = 3, max = 100, message = "Allergy is invalid")
+    //  @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid allergy")
+    // @Size(min = 3, max = 100, message = "Allergy is invalid")
     private String allergy;
 
     @Column(name = "medical_surgery", columnDefinition = "NVARCHAR2(100)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid surgery")
-    @Size(min = 3, max = 100, message = "Surgery is invalid")
+    // @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid surgery")
+    //   @Size(min = 3, max = 100, message = "Surgery is invalid")
     private String surgery;
 
     @Column(name = "medical_emergency_drug", length = 100, columnDefinition = "NVARCHAR2(100)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid surgery")
-    @Size(min = 3, max = 100, message = "Surgery is invalid")
+    //  @Pattern(regexp = "^[a-zA-Zآ-ی]{3,100}$", message = "Invalid surgery")
+    // @Size(min = 3, max = 100, message = "Surgery is invalid")
     private String emergencyDrug;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -68,8 +68,8 @@ public class MedicalHistory {
     private List<Disease> diseaseList;
 
     @Column(name = "medical_emergency_phone_number", length = 15)
-    @Pattern(regexp = "^[1-9]\\d{2}\\s\\d{3}\\s\\d{4}$", message = "Invalid emergency phone number")
-    @Size(min = 15, max = 15, message = "Emergency phone number is invalid")
+    //   @Pattern(regexp = "^[1-9]\\d{2}\\s\\d{3}\\s\\d{4}$", message = "Invalid emergency phone number")
+    // @Size(min = 15, max = 15, message = "Emergency phone number is invalid")
     private String emergencyPhoneNumber;
 
     @Column(name = "medical_active")

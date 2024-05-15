@@ -10,7 +10,7 @@ import java.util.List;
 public interface MedicalHistoryService {
     MedicalHistory save(MedicalHistory medicalHistory) throws NoContentException;
     MedicalHistory edit(MedicalHistory medicalHistory)throws NoContentException;
-    MedicalHistory remove(MedicalHistory medicalHistory)throws NoContentException;
+    void remove(MedicalHistory medicalHistory)throws NoContentException;
     MedicalHistory logicalRemove(Long id) throws NoContentException;
     List<MedicalHistory> findAll();
 

@@ -17,10 +17,11 @@ import java.util.Optional;
 public class MedicalHistoryServiceImp implements MedicalHistoryService {
     private final MedicalHistoryRepository medicalHistoryRepository;
     private final PersonService personService;
+    // TODO: 5/14/2024 injection disease
 
     public MedicalHistoryServiceImp(MedicalHistoryRepository medicalHistoryRepository, PersonService PersonService) {
         this.medicalHistoryRepository = medicalHistoryRepository;
-        this.personService=PersonService;
+        this.personService = PersonService;
     }
 
     @Override
@@ -33,36 +34,30 @@ public class MedicalHistoryServiceImp implements MedicalHistoryService {
 
     @Override
     @Transactional
-    public MedicalHistory edit(MedicalHistory medicalHistory) {
+    public MedicalHistory edit(MedicalHistory medicalHistory) throws NoContentException {
         log.info("Medical_Edit_Service");
-        if (findById(medicalHistory.getId()) != null) {
-            medicalHistoryRepository.save(medicalHistory);
-            return medicalHistory;
-        } else {
-            return null;
-        }
+        medicalHistoryRepository.findById(medicalHistory.getId()).orElseThrow(
+                () -> new NoContentException("No medicalHistory Found with id : " + medicalHistory.getId()));
+        return medicalHistoryRepository.save(medicalHistory);
+
     }
 
     @Override
-    public MedicalHistory remove(MedicalHistory medicalHistory) {
+    public void remove(MedicalHistory medicalHistory) throws NoContentException {
         log.info("Medical_Remove_Service");
-        if (findById(medicalHistory.getId()) != null) {
-            medicalHistoryRepository.delete(medicalHistory);
-            return medicalHistory;
-        } else {
-            return null;
-        }
+        medicalHistoryRepository.findById(medicalHistory.getId()).orElseThrow(
+                () -> new NoContentException("No medicalHistory Found with id : " + medicalHistory.getId()));
+        medicalHistoryRepository.delete(medicalHistory);
     }
+
     @Override
     @Transactional
     public MedicalHistory logicalRemove(Long id) throws NoContentException {
         log.info("Medical_LogicalRemove_Service");
-        MedicalHistory medicalHistory = findById(id);
-        if (medicalHistory != null) {
-            medicalHistoryRepository.save(medicalHistory);
-            medicalHistory.setDeleted(true);
-            return medicalHistory;
-        } else throw new NoContentException("medicalHistory Not Found !");
+        MedicalHistory medicalHistory = medicalHistoryRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No medicalHistory Found with id : " + id));
+        medicalHistory.setDeleted(true);
+        return medicalHistoryRepository.save(medicalHistory);
     }
 
     @Override
@@ -71,6 +66,7 @@ public class MedicalHistoryServiceImp implements MedicalHistoryService {
         List<MedicalHistory> medicalHistoryList = medicalHistoryRepository.findAll();
         return medicalHistoryList;
     }
+
     @Override
     public List<MedicalHistory> findAllDeletedFalse() {
         log.info("Medical_findAllDeletedFalse_Service");
@@ -79,9 +75,9 @@ public class MedicalHistoryServiceImp implements MedicalHistoryService {
     }
 
     @Override
-    public MedicalHistory findById(Long id) {
+    public MedicalHistory findById(Long id) throws NoContentException {
         log.info("Medical_findById_Service");
-        Optional<MedicalHistory> medicalHistory = medicalHistoryRepository.findById(id);
-        return (medicalHistory.isPresent() ? medicalHistory.get() : null);
+        return medicalHistoryRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No medicalHistory Found with id : " + id));
     }
 }
