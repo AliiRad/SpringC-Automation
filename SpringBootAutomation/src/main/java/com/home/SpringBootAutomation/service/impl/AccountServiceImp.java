@@ -32,7 +32,6 @@ public class AccountServiceImp implements AccountService {
 
     @Override
     public void logicalRemove(Long id) throws NoContentException {
-
     }
 
     public Account remove(Long id) throws NoContentException {
