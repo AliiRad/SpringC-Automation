@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th=http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>MedicalHistory</title>
@@ -21,14 +21,15 @@
   <br>
   <input type="text" placeholder="Emergency Drug" th:value="${emergencyDrug}" th:field="*{emergencyDrug}">
   <br>
-  <input type="text" placeholder="Disease" th:value="${disease}" th:field="*{disease}">
+<!--  <input type="text" placeholder="Disease" th:value="${disease}" th:field="*{disease}">-->
   <br>
   <input type="text" placeholder="Emergency Phone Number" th:value="${emergencyPhoneNumber}" th:field="*{emergencyPhoneNumber}">
   <br>
   <input type="submit" value="Save">
 </form>
 
-<table th:if="${#lists.size(medicalList) > 0}">
+<table >
+<!--  th:if="${#lists.size(medicalList) > 0}"-->
   <thead>
   <th>Id</th>
   <th>Weight</th>

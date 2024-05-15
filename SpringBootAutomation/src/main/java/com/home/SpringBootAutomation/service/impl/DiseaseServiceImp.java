@@ -2,12 +2,16 @@ package com.home.SpringBootAutomation.service.impl;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Disease;
+import com.home.SpringBootAutomation.model.Ticket;
 import com.home.SpringBootAutomation.repository.DiseaseRepository;
+import com.home.SpringBootAutomation.repository.MedicalHistoryRepository;
 import com.home.SpringBootAutomation.service.DiseaseService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.lang.model.element.Name;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,55 +20,43 @@ import java.util.Optional;
 public class DiseaseServiceImp implements DiseaseService {
     private final DiseaseRepository diseaseRepository;
 
-    public DiseaseServiceImp(DiseaseRepository diseaseRepository) {
+    public DiseaseServiceImp(DiseaseRepository diseaseRepository, MedicalHistoryRepository medicalHistoryRepository) {
         this.diseaseRepository = diseaseRepository;
     }
 
     @Override
     public Disease save(Disease disease) {
         log.info("Disease_Save_Service");
+        disease.setDeleted(false);
         diseaseRepository.save(disease);
         return disease;
     }
 
     @Override
     @Transactional
-    public Disease edit(Disease disease) {
+    public Disease edit(Disease disease) throws NoContentException {
         log.info("Disease_Edit_Service");
-        if (findById(disease.getId()) != null) {
-            diseaseRepository.save(disease);
-            return disease;
-        } else {
-            return null;
-        }
+        diseaseRepository.findById(disease.getId()).orElseThrow(
+                () -> new NoContentException("No Disease Found with id : " + disease.getId()));
+        return diseaseRepository.save(disease);
     }
 
     @Override
-    public Disease remove(Disease disease) {
+    public void remove(Disease disease) throws NoContentException {
         log.info("Disease_Remove_Service");
-        if (findById(disease.getId()) != null) {
-            diseaseRepository.delete(disease);
-            return disease;
-        } else {
-            return null;
-        }
-    }
-
-    @Override
-    public Disease logicalRemove(Disease disease) throws NoContentException {
-        return null;
+        diseaseRepository.findById(disease.getId()).orElseThrow(
+                () -> new NoContentException("No Disease Found with id : " + disease.getId()));
+        diseaseRepository.delete(disease);
     }
 
     @Override
     @Transactional
     public Disease logicalRemove(Long id) throws NoContentException {
         log.info("Disease_LogicalRemove_Service");
-        Disease disease = findById(id);
-        if (disease != null) {
-            diseaseRepository.save(disease);
-            disease.setDeleted(true);
-            return disease;
-        } else throw new NoContentException("Disease Not Found !");
+        Disease disease = diseaseRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Disease Found with id : " + id));
+        disease.setDeleted(true);
+        return diseaseRepository.save(disease);
     }
 
     @Override
@@ -82,9 +74,28 @@ public class DiseaseServiceImp implements DiseaseService {
     }
 
     @Override
-    public Disease findById(Long id) {
+    public Disease findById(Long id) throws NoContentException {
         log.info("Disease_FindById_Service");
-        Optional<Disease> disease = diseaseRepository.findById(id);
-        return (disease.isPresent() ? disease.get() : null);
+        return diseaseRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Disease Found with id : " + id));
+    }
+
+    @Override
+    public List<Disease> findDiseaseByName(Name name) throws NoContentException {
+        log.info("Disease_FindByName_Service");
+        List<Disease> diseaseList = diseaseRepository.findDiseaseByName(name);
+        if (!diseaseList.isEmpty()) {
+            return diseaseList;
+        } else throw new NoContentException("Disease Not Found !");
+
+    }
+
+    @Override
+    public List<Disease> findDiseaseByType(Type type) throws NoContentException {
+        log.info("Disease_FindByType_Service");
+        List<Disease> diseaseList = diseaseRepository.findDiseaseByType(type);
+        if (!diseaseList.isEmpty()) {
+            return diseaseList;
+        } else throw new NoContentException("Disease Not Found !");
     }
 }
