@@ -26,11 +26,11 @@ public class OrganisationServiceImp implements OrganisationService {
     }
 
     @Override
-    public Optional<Organisation> findById(Long id) throws NoContentException {
-        repository.findById(id).orElseThrow(
+    public Organisation findById(Long id) throws NoContentException {
+        return repository.findById(id).orElseThrow(
         () -> new NoContentException("Organisation not found !" + id)
         );
-        return repository.findById(id);
+        
         // Optional<Organisation> optional = repository.findById(id);
         // if (optional.isPresent()) {
         //     return optional;
@@ -52,26 +52,22 @@ public class OrganisationServiceImp implements OrganisationService {
         return repository.findOrganisationByDeletedFalse();
     }
 
-    @Override
-    public Optional<Organisation> findOrganisationByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Organisation> optional = repository.findOrganisationByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Organisation not found !");
-        }
-    }
-
-
     @Transactional
     @Override
-    public void logicalRemove(Long id) throws NoContentException {
-        Optional<Organisation> optionalSection = repository.findOrganisationByIdAndDeletedFalse(id);
-        if (optionalSection.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Organisation not found !");
-        }
+    public Organisation logicalRemove(Long id) throws NoContentException {
+
+        Organisation organisation = repository.findById(id).orElseThrow(
+            () -> new NoContentException("No Organisation Found With Id : " + id)
+            );
+        return repository.save(organisation);
+        
+
+        // Optional<Organisation> optionalSection = repository.findOrganisationByIdAndDeletedFalse(id);
+        // if (optionalSection.isPresent()) {
+        //     repository.logicalRemove(id);
+        // } else {
+        //     throw new NoContentException("Organisation not found !");
+        // }
 
     }
 
