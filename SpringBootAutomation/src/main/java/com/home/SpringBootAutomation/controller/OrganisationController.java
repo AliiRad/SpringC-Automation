@@ -30,9 +30,12 @@ public class OrganisationController {
 
     @GetMapping
     public String showOrganisation(Model model) {
-        log.info("Controller-Organisation-GetMapping");
-        model.addAttribute("organisation List",service.findAll());
-        model.addAttribute("organisation",new Organisation());
+        // log.info("Controller-Organisation-GetMapping");
+        // model.addAttribute("organisation List",service.findAll());
+        // model.addAttribute("organisation",new Organisation());
+        // return "organisation";
+
+        //TODO: Add Model Organisation
         return "organisation";
     }
 
@@ -68,6 +71,20 @@ public class OrganisationController {
         }
         return service.edit(organisation);
 
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public Organisation deleteOrganisation(@PathVariable Long id) throws NoContentException {
+        log.info("Controller-Organisation-Delete");
+        return service.logicalRemove(id);
+    }
+
+    @GetMapping("/{id}")
+    @ResponseBody
+    public Organisation showOrganisationById(@PathVariable Long id) throws NoContentException {
+        log.info("Controller-Organisation-Get-FindById");
+        return service.findById(id);
     }
     
 

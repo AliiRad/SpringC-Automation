@@ -3,6 +3,7 @@ package com.home.SpringBootAutomation.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
@@ -10,6 +11,7 @@ import com.home.SpringBootAutomation.model.Section;
 import com.home.SpringBootAutomation.repository.SectionRepository;
 import com.home.SpringBootAutomation.service.SectionService;
 
+@Service
 public class SectionServiceImp implements SectionService{
 
     private final SectionRepository repository;
@@ -23,13 +25,10 @@ public class SectionServiceImp implements SectionService{
     }
 
     @Override
-    public Optional<Section> findById(Long id) throws NoContentException {
-        Optional<Section> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Section not found !");
-        }
+    public Section findById(Long id) throws NoContentException {
+        return repository.findById(id).orElseThrow(
+            () -> new NoContentException("No Section Found with id : " + id)
+        );
     }
 
     @Override
@@ -58,31 +57,24 @@ public class SectionServiceImp implements SectionService{
 
     @Transactional
     @Override
-    public void logicalRemove(Long id) throws NoContentException {
-        Optional<Section> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
-        if (optionalSection.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Section not found !");
-        }
+    public Section logicalRemove(Long id) throws NoContentException {
+
+        Section section = repository.findById(id).orElseThrow(
+            () -> new NoContentException("No Section Found With Id : " + id));
+        return repository.save(section);
+
+        // Optional<Section> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
+        // if (optionalSection.isPresent()) {
+        //     repository.logicalRemove(id);
+        // } else {
+        //     throw new NoContentException("Section not found !");
+        // }
     }
 
     @Override
     public List<Section> findSectionByDeletedFalse() throws NoContentException {
         return repository.findSectionByDeletedFalse();
     }
-
-    @Override
-    public Optional<Section> findSectionByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Section> optionalSection = repository.findSectionByIdAndDeletedFalse(id);
-        if (optionalSection.isPresent()) {
-            return optionalSection;
-        } else {
-            throw new NoContentException("Section not found !");
-        }
-    }
-
-
 
 
     

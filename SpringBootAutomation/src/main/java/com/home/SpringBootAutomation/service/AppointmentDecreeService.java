@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface AppointmentDecreeService {
     AppointmentDecree save(AppointmentDecree appointmentDecree);
 
-    AppointmentDecree update(AppointmentDecree appointmentDecree) throws NoContentException;
+    AppointmentDecree edit(AppointmentDecree appointmentDecree) throws NoContentException;
 
     @Transactional
-    void logicalRemove(Long id) throws NoContentException;
+    AppointmentDecree logicalRemove(Long id) throws NoContentException;
 
     List<AppointmentDecree> findAll();
 

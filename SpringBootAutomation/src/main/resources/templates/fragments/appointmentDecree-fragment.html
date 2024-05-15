@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AppointmentDecree</title>
+</head>
+<body>
+
+<div th:fragment="appointmentDecreeFormContent(
+    typeOfEmployment
+    ,organizationalUnit
+    ,jobType
+    ,professionalField
+    ,jobCode
+    ,jobTitle
+    ,startDate
+    ,endDate
+    ,placeOfEmployment
+    ,workingHours
+    ,workingDay
+    ,appointmentType
+    ,appointmentDescription
+    )">
+
+
+    <!--    <label for="person">Select Person:</label>-->
+    <!--    <select th:id="${person}" name="person" required>-->
+    <!--        <option value="">Select</option>-->
+    <!--        <option th:each="p : ${personList}" th:value="${p.id}" th:utext="${p.username}"></option>-->
+    <!--    </select>-->
+    <!--    <br>-->
+    <!--                    <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person !</span>-->
+
+    <label for="typeOfEmployment">Type Of Employment :</label>
+    <select id="typeOfEmployment" name="typeOfEmployment">
+        <option th:each="typeOfEmployment : ${T(com.home.SpringBootAutomation.enums.TypeOfEmployment).values()}"
+                th:value="${typeOfEmployment.name()}"
+                th:text="${typeOfEmployment.getLabel()}"></option>
+    </select>
+    <!--                    <span class="error" th:if="${#fields.hasErrors('typeOfEmployment')}" th:errors="*{typeOfEmployment}">Invalid Type Of Employment !</span>-->
+    <br>
+
+    <label th:for="organizationalUnit">Organizational Unit :</label>
+    <input type="text" th:id="${organizationalUnit}" name="organizationalUnit">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('organizationalUnit')}" th:errors="*{organizationalUnit}">Invalid Organizational Unit !</span>-->
+    <br>
+
+    <label th:for="jobType">Job Type :</label>
+    <input type="text" th:id="${jobType}" name="jobType">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('jobType')}" th:errors="*{jobType}">Invalid Job Type !</span>-->
+    <br>
+
+    <label th:for="professionalField">Professional Field :</label>
+    <input type="text" th:id="${professionalField}" name="professionalField">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('professionalField')}" th:errors="*{professionalField}">Invalid Professional Field !</span>-->
+    <br>
+
+    <label th:for="jobCode">Job Code :</label>
+    <input type="text" th:id="${jobCode}" name="jobCode">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('jobCode')}" th:errors="*{jobCode}">Invalid Job Code !</span>-->
+    <br>
+
+    <label th:for="jobTitle">Job Title :</label>
+    <input type="text" th:id="${jobTitle}" name="jobTitle">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('jobTitle')}" th:errors="*{jobTitle}">Invalid Job Title !</span>-->
+    <br>
+
+    <label th:for="startDate">Start Date :</label>
+    <input type="date" th:id="${startDate}" name="startDate">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid Start Date !</span>-->
+    <br>
+
+    <label th:for="endDate">End Date :</label>
+    <input type="date" th:id="${endDate}" name="endDate">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid End Date !</span>-->
+    <br>
+
+    <label th:for="placeOfEmployment">Place Of Employment :</label>
+    <input type="text" th:id="${placeOfEmployment}" name="placeOfEmployment">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('placeOfEmployment')}" th:errors="*{placeOfEmployment}">Invalid Place Of Employment !</span>-->
+    <br>
+
+    <label th:for="workingHours">Working Hours :</label>
+    <input type="text" th:id="${workingHours}" name="workingHours">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('workingHours')}" th:errors="*{workingHours}">Invalid Working Hours !</span>-->
+    <br>
+
+    <label th:for="workingDay">Working Day :</label>
+    <input type="number" th:id="${workingDay}" name="workingDay">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('workingDay')}" th:errors="*{workingDay}">Invalid Working Day !</span>-->
+    <br>
+
+    <label for="appointmentType">Appointment Type :</label>
+    <select id="appointmentType" name="appointmentType">
+        <option th:each="appointmentType : ${T(com.home.SpringBootAutomation.enums.AppointmentType).values()}"
+                th:value="${appointmentType.name()}"
+                th:text="${appointmentType.getLabel()}"></option>
+    </select>
+    <!--                    <span class="error" th:if="${#fields.hasErrors('appointmentType')}" th:errors="*{appointmentType}">Invalid Appointment Type !</span>-->
+    <br>
+
+    <label th:for="appointmentDescription">Appointment Description :</label>
+    <input type="text" th:id="${appointmentDescription}" name="appointmentDescription">
+    <!--                    <span class="error" th:if="${#fields.hasErrors('appointmentDescription')}" th:errors="*{appointmentDescription}">Invalid Appointment Description !</span>-->
+</div>
+
+</body>
+</html>

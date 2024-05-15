@@ -15,14 +15,12 @@ public interface SectionService {
 
     Section update(Section section) throws NoContentException;
 
+    Section findById(Long id) throws NoContentException;
+
     @Transactional
-    void logicalRemove(Long id) throws NoContentException;
+    Section logicalRemove(Long id) throws NoContentException;
 
     List<Section> findAll();
-
-    Optional<Section> findById(Long id) throws NoContentException;
-
-    Optional<Section> findSectionByIdAndDeletedFalse(Long id) throws NoContentException;
 
     List<Section> findSectionByDeletedFalse() throws NoContentException;
     
