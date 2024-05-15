@@ -32,14 +32,14 @@ public class Ticket {
     private Long id;
 
     @Column(name = "ticket_title" , columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s\\d]{3,50}$", message = "Invalid Title")
     @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String title;
 
 
     @Column(name = "ticket_request" ,  columnDefinition = "NVARCHAR2(255)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Request")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s\\d]{3,255}$", message = "Invalid Request")
     @Size(min = 3, max = 50, message = "Request must be between 3 and 255 characters")
     @NotBlank(message = "Should Not Be Null")
     private String request;

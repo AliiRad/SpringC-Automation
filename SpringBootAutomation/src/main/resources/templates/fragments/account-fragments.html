@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)">
+
+    <!--        <label for="accountNumber">Account Number:</label>-->
+    <input type="text" th:id="${accountNumber}" name="accountNumber" placeholder="Account Number">
+    <!--        <span class="error" th:if="${#fields.hasErrors('accountNumber')}" th:errors="*{accountNumber}">Invalid Account Number!</span>-->
+
+    <!--    <label for="cardNumber">Card Number:</label>-->
+    <input type="text" th:id="${cardNumber}" name="cardNumber" placeholder="Card Number">
+    <!--    <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>-->
+
+    <div>
+        <label for="person">Select Person:</label>
+        <select id="person" name="person">
+            <option>Select</option>
+<!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
+        </select>
+<!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
+    </div>
+
+    <!--    <label for="bankAndBranch">Bank And Branch:</label>-->
+    <input type="text" th:id="${bankAndBranch}" name="bankAndBranch" placeholder="Bank And Branch">
+    <!--    <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}" th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>-->
+
+    <div>
+        <label for="accountType">Account Type:</label>
+        <select id="accountType" name="accountType">
+            <option th:each="type : ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"
+                    th:value="${type.name()}"
+                    th:text="${type.getLabel()}"></option>
+        </select>
+    </div>
+
+    <div>
+        <label for="accountStatus">Account Status:</label>
+        <select id="accountStatus" name="accountStatus">
+            <option th:each="status : ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"
+                    th:value="${status.name()}"
+                    th:text="${status.getLabel()}"></option>
+        </select>
+    </div>
+
+</div>
+
+</body>
+</html>

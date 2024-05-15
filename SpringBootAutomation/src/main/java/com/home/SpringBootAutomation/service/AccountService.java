@@ -10,14 +10,14 @@ import java.util.Optional;
 public interface AccountService {
     Account save(Account account);
 
-    Account update(Account account) throws NoContentException;
+    Account edit(Account account) throws NoContentException;
 
     @Transactional
     void logicalRemove(Long id) throws NoContentException;
 
     List<Account> findAll();
 
-    Optional<Account> findById(Long id) throws NoContentException;
+    Account findById(Long id) throws NoContentException;
 
     Long getAccountsCount();
 

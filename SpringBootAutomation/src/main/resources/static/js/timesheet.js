@@ -1,85 +1,55 @@
-
-async function findById(id){
-
-    let editModal = document.getElementById("editModalTimesheet")
-    let modalTimesheet = new bootstrap.Modal(editModal);
-    modalTimesheet.show();
-
-    const resp = await fetch("/timesheet/findById/" + id ,{
-        method :"GET"
-    });
-
-    const data = await resp.json();
-    let timesheetId =document.getElementById("id__edit__timesheet");
-    let timesheetEmployee = document.getElementById("employee__edit__timesheet");
-    let timesheetDate = document.getElementById("date__edit__timesheet")
-    let timesheetManager = document.getElementById("manager__edit__timesheet");
-    let timesheetRegularTimeIn = document.getElementById("regularTimeIn__edit__timesheet");
-    let timesheetRegularTimeOut = document.getElementById("regularTimeOut__edit__timesheet");
-    let timesheetOverTimeIn = document.getElementById("overTimeIn__edit__timesheet");
-    let timesheetOverTimeOut = document.getElementById("overTimeOut__edit__timesheet");
-    let timesheetEmployeeSignature = document.getElementById("employeeSignature__edit__timesheet");
-    let timesheetManagerSignature = document.getElementById("managerSignature__edit__timesheet");
-
-
-
-    timesheetId.value = data.id;
-    timesheetEmployee.value = data.employee;
-    timesheetDate.value = data.date;
-    timesheetManager.value =data.manager;
-    timesheetRegularTimeIn.value = data.regularTimeIn;
-    timesheetRegularTimeOut.value = data.regularTimeOut;
-    timesheetOverTimeIn.value = data.overTimeIn;
-    timesheetOverTimeOut.value = data.overTimeOut;
-    timesheetEmployeeSignature.value = data.employeeSignature;
-    timesheetManagerSignature.value = data.managerSignature;
-
-
+function addNew(){
+    let modal = document.getElementById("save-modal");
+    modal.style.display = "block";
 }
 
+// todo : is just for timesheet - its not generic
+async function getDataForEdit(url, id) {
+    const response = await fetch(url + "/" + id,
+        {
+            method: "GET"
+        }
+    );
+    if (!response.ok) {
+        alert("Error : " + response.status + "\n" + (await response.text()).toString());
+    } else {
+        // todo : make it automate
+        //todo : employee and manager
+        let timesheet = JSON.parse(await response.text());
+        let modal = document.getElementById("edit-modal");
+        modal.style.display = "block";
 
-// "Edit Functionality"
-async function edit(){
+        let idEdit = document.querySelector("#edit-form #id");
+        idEdit.value = timesheet.id;
 
-    const formData = new FormData(document.getElementById("editFormTimesheet"));
+        let dateEdit = document.querySelector("#edit-form div :nth-child(1)");
+        dateEdit.id = "edit-date";
+        dateEdit.value = timesheet.date;
 
-    const resp = await fetch("/timesheet/edit" ,{
-        method:"POST",
-        body: formData
-    });
-    // window.location.href = "/person"
-    // window.location.replace("/person")
-    // window.location.reload();
-    //
-    // if (resp.ok) {
-    //      console.log("ok")
-    //
-    // } else {
-    //     console.error("Failed to save edited person.");
-    // }
+        let regularTimeInEdit = document.querySelector("#edit-form div :nth-child(2)");
+        regularTimeInEdit.value = timesheet.regularTimeIn;
 
+        let regularTimeOutEdit = document.querySelector("#edit-form div :nth-child(3)");
+        regularTimeOutEdit.value = timesheet.regularTimeOut;
 
+        let overTimeInEdit = document.querySelector("#edit-form div :nth-child(4)");
+        overTimeInEdit.value = timesheet.overTimeIn;
+
+        let overTimeOutEdit = document.querySelector("#edit-form div :nth-child(5)");
+        overTimeOutEdit.value = timesheet.overTimeOut;
+
+        let employeeEdit = document.querySelector("#edit-form div :nth-child(6)");
+        employeeEdit.value = timesheet.employee;
+
+        let managerEdit = document.querySelector("#edit-form div :nth-child(7)");
+        managerEdit.value = timesheet.manager;
+
+    }
 }
 
-
-//"Delete Functionality"
-async function openDeleteModal(id){
-
-    let deleteIdInputTimesheet =document.getElementById("id__delete__timesheet");
-
-    deleteIdInputTimesheet.value = id;
-
-    let deleteModal = document.getElementById("deleteModalTimesheet")
-    let modalTimesheet = new bootstrap.Modal(deleteModal);
-    modalTimesheet.show();
-
-
-}
-
-async function deleteById(id){
-    const resp= await fetch(`/timesheet/delete/` + id,{
-        method:"DELETE"
-    });
-    console.log(id)
-    window.location.replace("/timesheet")
+function closeModal(){
+    const saveModal = document.getElementById("save-modal");
+    const editModal = document.getElementById("edit-modal");
+    saveModal.style.display = "none";
+    editModal.style.display = "none";
 }

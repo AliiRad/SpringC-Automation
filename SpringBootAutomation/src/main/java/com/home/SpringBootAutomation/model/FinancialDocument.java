@@ -43,7 +43,7 @@ public class FinancialDocument {
     @Size(min = 3, max = 50, message = "Behalf must be between 3 and 50 characters")
     private String behalf;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "financial_document_account")
     private Account account;
 
@@ -55,11 +55,11 @@ public class FinancialDocument {
     @Enumerated(EnumType.ORDINAL)
     private DocumentType documentType;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "financial_document_person")
     private Person person;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "financialDocument")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "financialDocument")
     private List<BankTransaction> bankTransactions;
 
     @Column(name = "financial_document_deleted")

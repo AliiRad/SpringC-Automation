@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="/css/salary.css">
     <title>Salary</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
+<h2>Salary Page</h2>
 
 <div class="container">
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalSalary">Add New Salary</button>
+    <div>
+        <button type="button" class="save-button" onclick="addNew()">Add New Salary</button>
     </div>
 
-
     <!--Salary Table-->
-    <table class="table table-striped" th:if="${#lists.size(salaryList) > 0}">
+    <table th:if="${not #lists.isEmpty(salaryList)}">
         <thead>
         <th>Id</th>
         <th>BasicHourlyPay</th>
@@ -28,8 +29,7 @@
         <th>MarriedPeopleRights</th>
         <th>Insurance</th>
         <th>Year</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Operation</th>
         </thead>
 
         <tbody>
@@ -45,9 +45,14 @@
             <td th:text="${salary.marriedPeopleRights}"></td>
             <td th:text="${salary.insurance}"></td>
             <td th:text="${salary.year}"></td>
-            <td><a class="btn btn-warning editButtonSalary" th:onclick="'findById(\'' + ${salary.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonSalary" th:onclick="'deleteById(\'' + ${salary.id} + '\')'">Delete</a></td>
-            <!--            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'openDeleteModal(\'' + ${person.id} + '\')'">Delete</a></td>-->
+            <td>
+                <button class="edit-button" th:data-name="${salary.id}"
+                        th:onclick="|getDataForEdit('/salary', this.getAttribute('data-name'))|"> Edit
+                </button>
+                <button class="delete-button" th:data-name="${salary.id}" th:onclick="|remove('/salary', this.getAttribute('data-name'))|">Remove
+                </button>
+                <!--todo : add delete confirmation-->
+            </td>
         </tr>
         </tbody>
     </table>
@@ -56,240 +61,39 @@
 
 
     <!--Save Modal-->
-    <div class="modal fade" id="addModalSalary" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/salary/save}" method="post" th:object="${salary}" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__salary">Save New Salary </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="basicHourlyPay__add__salary" class="col-form-label">BasicHourlyPay :</label>
-                            <input type="text" class="form-control" id="basicHourlyPay__add__salary"  th:value="${salary.basicHourlyPay}" th:field="*{basicHourlyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicHourlyPay')}" th:errors="*{basicHourlyPay}">Invalid BasicHourlyPay !</span>
-                        </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="basicDailyPay__add__salary" class="col-form-label">BasicDailyPay :</label>
-                            <input type="text" class="form-control" id="basicDailyPay__add__salary"  th:value="${salary.basicDailyPay}" th:field="*{basicDailyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicDailyPay')}" th:errors="*{basicDailyPay}">Invalid BasicDailyPay !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="basicMonthlyPay__add__salary" class="col-form-label">BasicMonthlyPay :</label>
-                            <input type="text" class="form-control" id="basicMonthlyPay__add__salary"  th:value="${salary.basicMonthlyPay}" th:field="*{basicMonthlyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicMonthlyPay')}" th:errors="*{basicMonthlyPay}">Invalid BasicMonthlyPay !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="workingCoupon__add__salary" class="col-form-label">WorkingCoupon :</label>
-                            <input type="text" class="form-control" id="workingCoupon__add__salary"  th:value="${salary.workingCoupon}" th:field="*{workingCoupon}">
-                            <span class="error" th:if="${#fields.hasErrors('workingCoupon')}" th:errors="*{workingCoupon}">Invalid WorkingCoupon !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="housingRight__add__salary" class="col-form-label">HousingRight :</label>
-                            <input type="text" class="form-control" id="housingRight__add__salary"  th:value="${salary.housingRight}" th:field="*{housingRight}">
-                            <span class="error" th:if="${#fields.hasErrors('housingRight')}" th:errors="*{housingRight}">Invalid HousingRight !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingYearPay__add__salary" class="col-form-label">WorkingYearPay :</label>
-                            <input type="text" class="form-control" id="workingYearPay__add__salary"  th:value="${salary.workingYearPay}" th:field="*{workingYearPay}">
-                            <span class="error" th:if="${#fields.hasErrors('workingYearPay')}" th:errors="*{workingYearPay}">Invalid WorkingYearPay !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="payForEachChild__add__salary" class="col-form-label">PayForEachChild :</label>
-                            <input type="text" class="form-control" id="payForEachChild__add__salary"  th:value="${salary.payForEachChild}" th:field="*{payForEachChild}">
-                            <span class="error" th:if="${#fields.hasErrors('payForEachChild')}" th:errors="*{payForEachChild}">Invalid PayForEachChild !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="marriedPeopleRights__add__salary" class="col-form-label">MarriedPeopleRights :</label>
-                            <input type="text" class="form-control" id="marriedPeopleRights__add__salary"  th:value="${salary.marriedPeopleRights}" th:field="*{marriedPeopleRights}">
-                            <span class="error" th:if="${#fields.hasErrors('marriedPeopleRights')}" th:errors="*{marriedPeopleRights}">Invalid MarriedPeopleRights !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="insurance__add__salary" class="col-form-label">Insurance :</label>
-                            <input type="text" class="form-control" id="insurance__add__salary"  th:value="${salary.insurance}" th:field="*{insurance}">
-                            <span class="error" th:if="${#fields.hasErrors('insurance')}" th:errors="*{insurance}">Invalid Insurance !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="year__add__salary" class="col-form-label">Year :</label>
-                            <input type="text" class="form-control" id="year__add__salary"  th:value="${salary.year}" th:field="*{year}">
-                            <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Invalid Year !</span>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
+    <div id="save-modal">
+        <div id="save-modal-content">
+            <form id="save-form" th:object="${salary}">
+                <div th:replace="~{/fragments/salary-fragments :: salaryFormContent('basicHourlyPay', 'basicDailyPay','basicMonthlyPay','workingCoupon','housingRight','workingYearPay','payForEachChild','marriedPeopleRights','insurance','year')}"></div>
+            </form>
+            <button class="save-button" onclick="save('/salary', 'save-form')">Save</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
     </div>
     <!--Save Modal-->
 
 
-
-
     <!--Edit Modal-->
-    <div   class="modal fade" id="editModalSalary" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${salary}" id="editFormSalary" th:action="@{/salary/edit}" method="post">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__salary">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__salary" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__salary" name="id" readonly>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="basicHourlyPay__edit__salary" class="col-form-label">BasicHourlyPay :</label>
-                            <input type="text" class="form-control" id="basicHourlyPay__edit__salary" name="basicHourlyPay"  th:value="${salary.basicHourlyPay}" th:field="*{basicHourlyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicHourlyPay')}" th:errors="*{basicHourlyPay}">Invalid BasicHourlyPay !</span>
-                        </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="basicDailyPay__edit__salary" class="col-form-label">BasicDailyPay :</label>
-                            <input type="text" class="form-control" id="basicDailyPay__edit__salary" name="basicDailyPay"  th:value="${salary.basicDailyPay}" th:field="*{basicDailyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicDailyPay')}" th:errors="*{basicDailyPay}">Invalid BasicDailyPay !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="basicMonthlyPay__edit__salary" class="col-form-label">BasicMonthlyPay :</label>
-                            <input type="text" class="form-control" id="basicMonthlyPay__edit__salary" name="basicMonthlyPay"  th:value="${salary.basicMonthlyPay}" th:field="*{basicMonthlyPay}">
-                            <span class="error" th:if="${#fields.hasErrors('basicMonthlyPay')}" th:errors="*{basicMonthlyPay}">Invalid BasicMonthlyPay !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="workingCoupon__edit__salary" class="col-form-label">WorkingCoupon :</label>
-                            <input type="text" class="form-control" id="workingCoupon__edit__salary" name="workingCoupon"  th:value="${salary.workingCoupon}" th:field="*{workingCoupon}">
-                            <span class="error" th:if="${#fields.hasErrors('workingCoupon')}" th:errors="*{workingCoupon}">Invalid WorkingCoupon !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="housingRight__edit__salary" class="col-form-label">HousingRight :</label>
-                            <input type="text" class="form-control" id="housingRight__edit__salary" name="housingRight"  th:value="${salary.housingRight}" th:field="*{housingRight}">
-                            <span class="error" th:if="${#fields.hasErrors('housingRight')}" th:errors="*{housingRight}">Invalid HousingRight !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="workingYearPay__edit__salary" class="col-form-label">WorkingYearPay :</label>
-                            <input type="text" class="form-control" id="workingYearPay__edit__salary" name="workingYearPay" th:value="${salary.workingYearPay}" th:field="*{workingYearPay}">
-                            <span class="error" th:if="${#fields.hasErrors('workingYearPay')}" th:errors="*{workingYearPay}">Invalid WorkingYearPay !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="payForEachChild__edit__salary" class="col-form-label">PayForEachChild :</label>
-                            <input type="text" class="form-control" id="payForEachChild__edit__salary" name="payForEachChild"  th:value="${salary.payForEachChild}" th:field="*{payForEachChild}">
-                            <span class="error" th:if="${#fields.hasErrors('payForEachChild')}" th:errors="*{payForEachChild}">Invalid PayForEachChild !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="marriedPeopleRights__edit__salary" class="col-form-label">MarriedPeopleRights :</label>
-                            <input type="text" class="form-control" id="marriedPeopleRights__edit__salary" name="marriedPeopleRights"  th:value="${salary.marriedPeopleRights}" th:field="*{marriedPeopleRights}">
-                            <span class="error" th:if="${#fields.hasErrors('marriedPeopleRights')}" th:errors="*{marriedPeopleRights}">Invalid MarriedPeopleRights !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="insurance__edit__salary" class="col-form-label">Insurance :</label>
-                            <input type="text" class="form-control" id="insurance__edit__salary" name="insurance"  th:value="${salary.insurance}" th:field="*{insurance}">
-                            <span class="error" th:if="${#fields.hasErrors('insurance')}" th:errors="*{insurance}">Invalid Insurance !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="year__edit__salary" class="col-form-label">Year :</label>
-                            <input type="text" class="form-control" id="year__edit__salary" name="year"  th:value="${salary.year}" th:field="*{year}">
-                            <span class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}">Invalid Year !</span>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__salary" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Edit Modal-->
-
-
-
-    <!--Delete Modal -->
-    <div class="modal fade" id="deleteModalSalary" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelSalary"> Confirm The Deletion !</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${salary}">
-                        <label for="id__delete__salary" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__salary" name="id" readonly  th:text="${salary.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonSalary"  th:onclick="'deleteById(\'' + ${salary.id} + '\')'">Delete</button>
-                </div>
-            </div>
+    <div id="edit-modal">
+        <div id="edit-modal-content">
+            <form id="edit-form">
+                <input type="text" id="id" name="id" hidden="hidden">
+                <div th:replace="~{/fragments/salary-fragments :: salaryFormContent('basicHourlyPay', 'basicDailyPay','basicMonthlyPay','workingCoupon','housingRight','workingYearPay','payForEachChild','marriedPeopleRights','insurance','year')}"></div>
+            </form>
+            <button class="save-button" onclick="edit('/salary', 'edit-form')">Edit</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
         </div>
-
     </div>
-    <!--Delete Modal -->
+    <!--Edit Modal-->
+
 
 </div>
 
+<div th:replace="~{/fragments/popup-fragment}"></div>
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript" src="/js/popup.js"></script>
+<script src="/js/js.js"></script>
 <script type="text/javascript" th:src="@{js/salary.js}" src="../static/js/salary.js" ></script>
 
 </body>

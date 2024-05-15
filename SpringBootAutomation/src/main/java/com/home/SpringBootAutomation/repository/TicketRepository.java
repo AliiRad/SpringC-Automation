@@ -23,8 +23,15 @@ public interface TicketRepository extends JpaRepository<Ticket,Long> {
     @Query("select oo from ticketEntity oo where oo.ticketTimeStamp=:ticketDate and oo.deleted=false")
     List<Ticket> findByDate(LocalDateTime ticketDate);
 
+    @Query("select oo from ticketEntity oo where oo.group.title=:title and oo.deleted=false")
+    List<Ticket> findByTitle(String title);
+
     @Query("select oo from ticketEntity oo where  oo.deleted=false ")
     List<Ticket> findAllDeletedFalse();
+
+    @Query("select distinct oo.group.title from ticketEntity oo ")
+    List<String> findAllTitle();
+
 
 
 }

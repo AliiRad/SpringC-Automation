@@ -23,15 +23,15 @@ public class BankTransaction {
     @Column(name = "bank_transaction_id",length = 20)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_transaction_balance")
     private FinancialDocument balance;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_transaction_f_d")
     private FinancialDocument financialDocument;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "bank_transaction_person")
     private Person person;
 

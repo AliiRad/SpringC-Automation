@@ -1,12 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html
+xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>File Upload</title>
 </head>
 <body>
 <h1>Upload File</h1>
-<form action="/upload" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.bmp" />
+<form th:fragment="attachmentUploadForm(name,caption)"  action="/upload" method="post" enctype="multipart/form-data" th:object="${Attachment}">
+    <input type="text" th:id="${name}" name="name" placeholder="Enter file name" th:field="*{fileName}">
+    <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.bmp" th:field="*{content}" />
+    <input type="text" th:id="${caption}" name="caption" placeholder="Enter Caption" th:field="*{caption}">
     <input type="submit" value="Upload" />
 </form>
 </body>

@@ -3,7 +3,6 @@ package com.home.SpringBootAutomation.model;
 import com.home.SpringBootAutomation.enums.AccountStatus;
 import com.home.SpringBootAutomation.enums.AccountType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -40,7 +39,7 @@ public class Account {
     @Size( min = 16 , max = 16, message = "Card Number must be Exactly 16")
     private String cardNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL , fetch = FetchType.LAZY )
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} ,fetch = FetchType.LAZY)
     @JoinColumn(name = "account_person")
     private Person person;
 

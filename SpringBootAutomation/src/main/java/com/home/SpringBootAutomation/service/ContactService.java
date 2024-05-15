@@ -2,30 +2,34 @@ package com.home.SpringBootAutomation.service;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Contact;
+import com.home.SpringBootAutomation.repository.ContactRepository;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public interface ContactService {
 
-    Contact save(Contact contact);
+    // ContactRepository contactRepository;
 
-    Contact update(Contact contact) throws NoContentException;
+    // public ContactService(ContactRepository contactRepository) { 
+    //     this.contactRepository = contactRepository; 
+    // }
+
+    public Contact save(Contact contact);
+
+    public Contact edit(@Valid Contact contact) throws NoContentException;
+
+    public Contact remove(Contact contact) throws NoContentException;
 
     @Transactional
-    void logicalRemove(Long id) throws NoContentException;
+    public abstract Contact logicalRemove(Long id) throws NoContentException;
 
-    List<Contact> findAll();
+    public List<Contact> findAll();
 
-    Optional<Contact> findById(Long id) throws NoContentException;
+    public abstract List<Contact> findAllDeletedFalse();
 
-    Long getContactCount();
-
-    Contact logicalRemoveWithReturn(Long id) throws NoContentException;
-
-    List<Contact> findContactByDeletedFalse();
-    Optional<Contact> findContactByIdAndDeletedFalse(Long id) throws NoContentException;
-
-    Long countByDeletedFalse();
+    public Contact findById(Long id) throws NoContentException;
 }

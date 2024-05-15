@@ -29,11 +29,14 @@ public class Attachment {
     private String fileName;
 
     @Column(name = "attachment_file_format")
-    @Enumerated(EnumType.STRING) //TODO: File Format Enum --> Ordinal
+    @Enumerated(EnumType.ORDINAL)
     private FileFormat fileFormat;
 
     @Column(name = "attachment_content")
     private byte[] content;
+
+    @Column(name = "attachment_file_path")
+    private String filePath;
 
     @Column(name = "attachment_file_caption", columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Caption")

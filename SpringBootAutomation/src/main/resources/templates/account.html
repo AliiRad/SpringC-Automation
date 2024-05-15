@@ -3,30 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>Account</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/person.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
 </head>
 <body>
 <div class="container">
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalAccount">Add New
-            Account
-        </button>
+    <div id="save-modal">
+        <div id="save-modal-content">
+            <form id="save-form" th:object="${account}">
+                <div th:insert="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
+            </form>
+            <button onclick="save('/account', 'save-form')">Save</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
     </div>
+
+    <br><br>
+
+    <button onclick="addNew()">Add New</button>
+
+    <br><br>
 
     <table class="table table-striped" th:if="${accountList != null and #lists.size(accountList) > 0}">
         <thead>
         <th>Id</th>
         <th>Account Number</th>
         <th>Card Number</th>
-        <th>Name</th>
-        <th>LastName</th>
+        <th>Person</th>
         <th>Bank And Branch</th>
         <th>Account Type</th>
         <th>Account Status</th>
-        <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Operation</th>
         </thead>
 
         <tbody>
@@ -34,213 +46,58 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-            <td th:text="${account.person.name}"></td>
-            <td th:text="${account.person.lastname}"></td>
+            <td th:text="${account.person}"></td>
             <td th:text="${account.bankAndBranch}"></td>
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>
-            <td>Active</td>
-            <td><a class="btn btn-warning editButtonAccount" th:onclick="'findById(\'' + ${account.id} + '\')'">Edit</a>
+            <td>
+                <button th:data-name="${account.id}"
+                        th:onclick="|getDataForEdit('/account', this.getAttribute('data-name'))|"> Edit
+                </button>
+                <button th:data-name="${account.id}" th:onclick="|remove('/account', this.getAttribute('data-name'))|">
+                    Remove
+                </button>
             </td>
-            <td><a class="btn btn-danger deleteButtonAccount"
-                   th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete</a></td>
         </tr>
         </tbody>
     </table>
 
-    <div class="modal fade" id="addModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/account/save}" method="post" th:object="${account}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__account">Save New Account </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="accountNumber__add__account" class="col-form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber__add__account"
-                                   th:value="${account.accountNumber}" th:field="*{accountNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}"
-                                  th:errors="*{accountNumber}">Invalid Account Number!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="cardNumber__add__account" class="col-form-label">Card Number:</label>
-                            <input type="text" class="form-control" id="cardNumber__add__account"
-                                   th:value="${account.cardNumber}" th:field="*{cardNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="person__add__account" class="col-form-label">Select Owner:</label>
-                            <select id="person__add__account" th:field="*{person}">
-                                <option value="">Select</option>
-                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bankAndBranch__add__account" class="col-form-label">Bank And Branch:</label>
-                            <input type="text" class="form-control" id="bankAndBranch__add__account"
-                                   th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
-                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}"
-                                  th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="accountType__add__account" class="col-form-label">Account Type:</label>
-                            <select class="form-select" aria-label="Default select example"
-                                    id="accountType__add__account" name="accountType" th:value="${account.accountType}"
-                                    th:field="*{accountType}">
-                                <option selected disabled value="-1">Choose Account Type</option>
-                                <option th:each="accountType: ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"
-                                        th:value="${accountType}" th:text="${accountType.label}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('accountType')}" th:errors="*{accountType}">Invalid Account Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="accountStatus__add__account" class="col-form-label">Account Status:</label>
-                            <select class="form-select" aria-label="Default select example"
-                                    id="accountStatus__add__account" name="accountStatus"
-                                    th:value="${account.accountStatus}" th:field="*{accountStatus}">
-                                <option selected disabled value="-1">Choose Account Status</option>
-                                <option th:each="accountStatus: ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"
-                                        th:value="${accountStatus}" th:text="${accountStatus.label}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('accountStatus')}"
-                                  th:errors="*{accountStatus}">Invalid Account Status!</span>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-                </div>
-            </div>
-        </form>
+    <div id="edit-modal">
+        <div id="edit-modal-content">
+            <form id="edit-form">
+                <label for="id"></label><input type="text" id="id" name="id" hidden="hidden">
+                <div th:replace="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
+            </form>
+            <button onclick="edit('/account', 'edit-form')">Edit</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
     </div>
 
-    <div class="modal fade" id="editModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${account}" id="editFormAccount" th:action="@{/account/edit}" method="put">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div class="popup" id="popup">
+        <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__account">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
+            <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
 
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__account" class="col-form-label">ID:</label>
-                            <input type="text" class="form-control" id="id__edit__account" name="id" readonly>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="accountNumber__edit__account" class="col-form-label">Account Number:</label>
-                            <input type="text" class="form-control" id="accountNumber__edit__account"
-                                   name="accountNumber" th:value="${account.accountNumber}" th:field="*{accountNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('accountNumber')}"
-                                  th:errors="*{accountNumber}">Invalid Account Number!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="cardNumber__edit__account" class="col-form-label">Card Number:</label>
-                            <input type="text" class="form-control" id="cardNumber__edit__account" name="cardNumber"
-                                   th:value="${account.cardNumber}" th:field="*{cardNumber}">
-                            <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="person__edit__account" class="col-form-label">Select Owner:</label>
-                            <select id="person__edit__account" th:field="*{person}">
-                                <option value="">Select</option>
-                                <option th:each="ac : ${person}" th:value="${ac.id}" th:utext="${ac.username}"></option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="bankAndBranch__edit__account" class="col-form-label">Bank And Branch:</label>
-                            <input type="text" class="form-control" id="bankAndBranch__edit__account"
-                                   name="bankAndBranch" th:value="${account.bankAndBranch}" th:field="*{bankAndBranch}">
-                            <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}"
-                                  th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="accountType__edit__account" class="col-form-label">Account Type:</label>
-                            <select class="form-select" aria-label="Default select example"
-                                    id="accountType__edit__account" name="accountType" th:value="${account.accountType}"
-                                    th:field="*{accountType}">
-                                <option selected disabled value="-1">Choose Account Type</option>
-                                <option th:each="accountType: ${T(com.home.SpringBootAutomation.enums.AccountType).values()}"
-                                        th:value="${accountType}" th:text="${accountType.label}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('accountType')}" th:errors="*{accountType}">Invalid Account Type !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="accountStatus__edit__account" class="col-form-label">Account Status:</label>
-                            <select class="form-select" aria-label="Default select example"
-                                    id="accountStatus__edit__account" name="accountStatus"
-                                    th:value="${account.accountStatus}" th:field="*{accountStatus}">
-                                <option selected disabled value="-1">Choose Account Status</option>
-                                <option th:each="accountStatus : ${T(com.home.SpringBootAutomation.enums.AccountStatus).values()}"
-                                        th:value="${accountStatus}" th:text="${accountStatus.label}"></option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('accountStatus')}"
-                                  th:errors="*{accountStatus}">Invalid Account Status!</span>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__account" onclick="edit()">
-                            Save Edited
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-
-    <div class="modal fade" id="deleteModalAccount" tabindex="-1" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelAccount"> Confirm The Deletion!</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${account}">
-                        <label for="id__delete__Account" class="col-form-label">ID:</label>
-                        <input type="text" class="form-control" id="id__delete__Account" name="id" readonly
-                               th:text="${account.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-danger" id="deleteConfirmButtonAccount"
-                            th:onclick="'deleteById(\'' + ${account.id} + '\')'">Delete
-                    </button>
-                </div>
+            <div class="popup-message" id="popup-message">
+                <span class="text text-1 popup-title" id="popup-title"></span>
+                <span class="text text-2 popup-text" id="popup-text"></span>
             </div>
         </div>
+        <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+        <div class="popup-progress" id="popup-progress"></div>
     </div>
 </div>
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/account.js}" src="../static/js/account.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="/js/account.js"></script>
+<script src="/js/js.js"></script>
+<script src="/js/popup.js"></script>
 
 </body>
 </html>

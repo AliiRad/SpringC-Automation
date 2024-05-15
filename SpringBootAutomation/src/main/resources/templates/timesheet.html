@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="/css/timesheet.css">
     <title>Timesheet</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
+<h2>Timesheet Page</h2>
 
 <div class="container">
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalTimesheet">Add New Timesheet</button>
+    <div>
+        <button type="button" class="save-button" onclick="addNew()">Add New Timesheet</button>
     </div>
 
     <!--Timesheet Table-->
 
-    <table class="table table-striped" th:if="${#lists.size(timesheetList) > 0}">
+    <table th:if="${not #lists.isEmpty(timesheetList)}">
         <thead>
         <th>Id</th>
         <th>employee</th>
@@ -26,256 +28,70 @@
         <th>overTimeIn</th>
         <th>overTimeOut</th>
         <th>employeeSignature</th>
-        <th>managerSignature</th>>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>managerSignature</th>
+        <th>Operation</th>
         </thead>
 
         <tbody>
         <tr th:each="timesheet :${timesheetList}">
             <td th:text="${timesheet.id}"></td>
-            <td th:text=noValueYet></td>
+            <td th:text="${timesheet.employee}"></td>
             <td th:text="${timesheet.date}"></td>
-            <td th:text=noValueYet></td>
+            <td th:text="${timesheet.manager}"></td>
             <td th:text="${timesheet.regularTimeIn}"></td>
             <td th:text="${timesheet.regularTimeOut}"></td>
             <td th:text="${timesheet.overTimeIn}"></td>
             <td th:text="${timesheet.overTimeOut}"></td>
             <td th:text=noValueYet></td>
             <td th:text=noValueYet></td>
-            <td><a class="btn btn-warning editButtonTimesheet" th:onclick="'findById(\'' + ${timesheet.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonTimesheet" th:onclick="'deleteById(\'' + ${timesheet.id} + '\')'">Delete</a></td>
+            <td>
+                <button class="edit-button" th:data-name="${timesheet.id}"
+                        th:onclick="|getDataForEdit('/timesheet', this.getAttribute('data-name'))|"> Edit
+                </button>
+                <button class="delete-button" th:data-name="${timesheet.id}" th:onclick="|remove('/timesheet', this.getAttribute('data-name'))|">Remove
+                </button>
+                <!--todo : add delete confirmation-->
+            </td>
         </tr>
         </tbody>
     </table>
     <!--Timesheet Table-->
 
 
-
     <!--Save Modal-->
-    <div class="modal fade" id="addModalTimesheet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/timesheet/save}" method="post" th:object="${timesheet}" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__timesheet">Save New Timesheet </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="employee__add__timesheet" class="col-form-label">Employee :</label>-->
-<!--                            <input type="text" class="form-control" id="employee__add__timesheet"  th:value="${timesheet.employee.id}" th:field="*{employee.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee.id}">Invalid Employee Id !</span>-->
-<!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="date__add__timesheet" class="col-form-label">Date :</label>
-                            <input type="date" class="form-control" id="date__add__timesheet"  th:value="${timesheet.date}" th:field="*{date}">
-                            <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>
-                        </div>
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="manager__add__timesheet" class="col-form-label">Manager :</label>-->
-<!--                            <input type="text" class="form-control" id="manager__add__timesheet"  th:value="${timesheet.manager.id}" th:field="*{manager.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('manager')}" th:errors="*{manager.id}">Invalid Manager !</span>-->
-<!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="regularTimeIn__add__timesheet" class="col-form-label">RegularTimeIn :</label>
-                            <input type="datetime-local" class="form-control" id="regularTimeIn__add__timesheet"  th:value="${timesheet.regularTimeIn}" th:field="*{regularTimeIn}">
-                            <span class="error" th:if="${#fields.hasErrors('regularTimeIn')}" th:errors="*{regularTimeIn}">Invalid RegularTimeIn !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="regularTimeOut__add__timesheet" class="col-form-label">RegularTimeOut :</label>
-                            <input type="datetime-local" class="form-control" id="regularTimeOut__add__timesheet"  th:value="${timesheet.regularTimeOut}" th:field="*{regularTimeOut}">
-                            <span class="error" th:if="${#fields.hasErrors('regularTimeOut')}" th:errors="*{regularTimeOut}">Invalid RegularTimeOut !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="overTimeIn__add__timesheet" class="col-form-label">OverTimeIn :</label>
-                            <input type="datetime-local" class="form-control" id="overTimeIn__add__timesheet"  th:value="${timesheet.overTimeIn}" th:field="*{overTimeIn}">
-                            <span class="error" th:if="${#fields.hasErrors('overTimeIn')}" th:errors="*{overTimeIn}">Invalid OverTimeIn !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="overTimeOut__add__timesheet" class="col-form-label">OverTimeOut :</label>
-                            <input type="datetime-local" class="form-control" id="overTimeOut__add__timesheet"  th:value="${timesheet.overTimeOut}" th:field="*{overTimeOut}">
-                            <span class="error" th:if="${#fields.hasErrors('overTimeOut')}" th:errors="*{overTimeOut}">Invalid OverTimeOut !</span>
-                        </div>
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="employeeSignature__add__timesheet" class="col-form-label">EmployeeSignature :</label>-->
-<!--                            <input type="text" class="form-control" id="employeeSignature__add__timesheet"  th:value="${timesheet.employeeSignature.id}" th:field="*{employeeSignature.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('employeeSignature')}" th:errors="*{employeeSignature.id}">Invalid EmployeeSignature !</span>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="managerSignature__add__timesheet" class="col-form-label">ManagerSignature :</label>-->
-<!--                            <input type="text" class="form-control" id="managerSignature__add__timesheet"  th:value="${timesheet.managerSignature.id}" th:field="*{managerSignature.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('managerSignature')}" th:errors="*{managerSignature.id}">Invalid ManagerSignature !</span>-->
-<!--                        </div>-->
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Save Modal-->
-
-
-
-
-    <!--Edit Modal-->
-    <div   class="modal fade" id="editModalTimesheet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${timesheet}" id="editFormTimehseet" th:action="@{/timesheet/edit}" method="post">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__timesheet">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__timesheet" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__timesheet" name="id" readonly>
-                        </div>
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="employee__edit__timesheet" class="col-form-label">Employee :</label>-->
-<!--                            <input type="text" class="form-control" id="employee__edit__timesheet" name="employee" th:value="${timesheet.employee.id}" th:field="*{employee.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee.id}">Invalid Employee Id !</span>-->
-<!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="date__edit__timesheet" class="col-form-label">Date :</label>
-                            <input type="date" class="form-control" id="date__edit__timesheet" name="date"  th:value="${timesheet.date}" th:field="*{date}">
-                            <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>
-                        </div>
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="manager__edit__timesheet" class="col-form-label">Manager :</label>-->
-<!--                            <input type="text" class="form-control" id="manager__edit__timesheet" name="manager"  th:value="${timesheet.manager.id}" th:field="*{manager.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('manager')}" th:errors="*{manager.id}">Invalid Manager !</span>-->
-<!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="regularTimeIn__edit__timesheet" class="col-form-label">RegularTimeIn :</label>
-                            <input type="datetime-local" class="form-control" id="regularTimeIn__edit__timesheet" name="regularTimeIn"  th:value="${timesheet.regularTimeIn}" th:field="*{regularTimeIn}">
-                            <span class="error" th:if="${#fields.hasErrors('regularTimeIn')}" th:errors="*{regularTimeIn}">Invalid RegularTimeIn !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="regularTimeOut__edit__timesheet" class="col-form-label">RegularTimeOut :</label>
-                            <input type="datetime-local" class="form-control" id="regularTimeOut__edit__timesheet" name="regularTimeOut"  th:value="${timesheet.regularTimeOut}" th:field="*{regularTimeOut}">
-                            <span class="error" th:if="${#fields.hasErrors('regularTimeOut')}" th:errors="*{regularTimeOut}">Invalid RegularTimeOut !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="overTimeIn__edit__timesheet" class="col-form-label">OverTimeIn :</label>
-                            <input type="datetime-local" class="form-control" id="overTimeIn__edit__timesheet" name="overTimeIn"  th:value="${timesheet.overTimeIn}" th:field="*{overTimeIn}">
-                            <span class="error" th:if="${#fields.hasErrors('overTimeIn')}" th:errors="*{overTimeIn}">Invalid OverTimeIn !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="overTimeOut__edit__timesheet" class="col-form-label">OverTimeOut :</label>
-                            <input type="datetime-local" class="form-control" id="overTimeOut__edit__timesheet" name="overTimeOut"  th:value="${timesheet.overTimeOut}" th:field="*{overTimeOut}">
-                            <span class="error" th:if="${#fields.hasErrors('overTimeOut')}" th:errors="*{overTimeOut}">Invalid OverTimeOut !</span>
-                        </div>
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="employeeSignature__edit__timesheet" class="col-form-label">EmployeeSignature :</label>-->
-<!--                            <input type="text" class="form-control" id="employeeSignature__edit__timesheet" name="employeeSignature"  th:value="${timesheet.employeeSignature.id}" th:field="*{employeeSignature.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('employeeSignature')}" th:errors="*{employeeSignature.id}">Invalid EmployeeSignature !</span>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="managerSignature__edit__timesheet" class="col-form-label">ManagerSignature :</label>-->
-<!--                            <input type="text" class="form-control" id="managerSignature__edit__timesheet" name="managerSignature"  th:value="${timesheet.managerSignature.id}" th:field="*{managerSignature.id}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('managerSignature')}" th:errors="*{managerSignature.id}">Invalid ManagerSignature !</span>-->
-<!--                        </div>-->
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__timesheet" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Edit Modal-->
-
-
-
-    <!--Delete Modal -->
-    <div class="modal fade" id="deleteModalTimesheet" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelTimesheet"> Confirm The Deletion !</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${timesheet}">
-                        <label for="id__delete__timesheet" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__timesheet" name="id" readonly  th:text="${timesheet.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonSalary"  th:onclick="'deleteById(\'' + ${timesheet.id} + '\')'">Delete</button>
-                </div>
-            </div>
+    <div id="save-modal">
+        <div id="save-modal-content">
+            <form id="save-form" th:object="${timesheet}">
+                <div th:replace="~{/fragments/timesheet-fragments :: timesheetFormContent('date', 'regularTimeIn', 'regularTimeOut', 'overTimeIn', 'overTimeOut', 'employee', 'manager')}"></div>
+            </form>
+            <button class="save-button" onclick="save('/timesheet', 'save-form')">Save</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
         </div>
-
     </div>
-    <!--Delete Modal -->
+    <!--Save Modal-->
+
+
+
+
+    <!--Edit Modal-->
+    <div id="edit-modal">
+        <div id="edit-modal-content">
+            <form id="edit-form">
+                <input type="text" id="id" name="id" hidden="hidden">
+                <div th:replace="~{/fragments/timesheet-fragments :: timesheetFormContent('date', 'regularTimeIn', 'regularTimeOut', 'overTimeIn', 'overTimeOut', 'employee', 'manager')}"></div>
+            </form>
+            <button class="save-button" onclick="edit('/timesheet', 'edit-form')">Edit</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    <!--Edit Modal-->
 
 </div>
 
+<div th:replace="~{/fragments/popup-fragment}"></div>
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/timesheet.js}" src="../static/js/timesheet.js" ></script>
+<script type="text/javascript" src="/js/popup.js"></script>
+<script src="/js/js.js"></script>
+<script type="text/javascript" th:src="@{js/timesheet.js}" src="../static/js/timesheet.js"></script>
 </body>
 </html>

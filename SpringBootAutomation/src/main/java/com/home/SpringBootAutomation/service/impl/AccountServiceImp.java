@@ -4,7 +4,6 @@ import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Account;
 import com.home.SpringBootAutomation.repository.AccountRepository;
 import com.home.SpringBootAutomation.service.AccountService;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,25 +22,25 @@ public class AccountServiceImp implements AccountService {
         return repository.save(account);
     }
 
-    public Account update(Account account) throws NoContentException {
-        Optional<Account> optionalAccount = repository.findAccountByIdAndDeletedFalse(account.getId());
-
-        if (optionalAccount.isPresent()) {
-            return repository.save(account);
-        } else {
-            throw new NoContentException("Account not found!");
-        }
+    @Override
+    public Account edit(Account account) throws NoContentException {
+        repository.findAccountByIdAndDeletedFalse(account.getId()).orElseThrow(
+                () -> new NoContentException("No Account Found with id : " + account.getId())
+        );
+        return repository.save(account);
     }
 
     @Override
-    @Transactional
-    public void logicalRemove(Long id) throws NoContentException{
-        Optional<Account> optionalAccount = repository.findAccountByIdAndDeletedFalse(id);
-        if (optionalAccount.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Account not found!");
-        }
+    public void logicalRemove(Long id) throws NoContentException {
+
+    }
+
+    public Account remove(Long id) throws NoContentException {
+        Account account = repository.findById(id).orElseThrow(
+                () -> new NoContentException("No Account Found with id : " + id)
+        );
+        repository.deleteById(id);
+        return account;
     }
 
     @Override
@@ -50,50 +49,34 @@ public class AccountServiceImp implements AccountService {
     }
 
     @Override
-    public Optional<Account> findById(Long id) throws NoContentException {
-        Optional<Account> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Account not found !");
-        }
+    public Account findById(Long id) throws NoContentException {
+        return repository.findById(id).orElseThrow(
+                () -> new NoContentException("No Account Found with id : " + id)
+        );
     }
 
     @Override
     public Long getAccountsCount() {
-        return repository.count();
+        return null;
     }
 
     @Override
     public Account logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<Account> optionalAccount = repository.findAccountByIdAndDeletedFalse(id);
-
-        if (optionalAccount.isPresent()) {
-            Account oldAccount = optionalAccount.get();
-            oldAccount.setDeleted(true);
-            return repository.save(oldAccount);
-        } else {
-            throw new NoContentException("Account not found !");
-        }
+        return null;
     }
 
     @Override
     public List<Account> findAccountByDeletedFalse() {
-        return repository.findAccountByDeletedFalse();
-        }
+        return null;
+    }
 
     @Override
-    public Optional<Account> findAccountByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Account> optional = repository.findAccountByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Account not found!");
-        }
+    public Optional<Account> findAccountByIdAndDeletedFalse(Long id) {
+        return Optional.empty();
     }
 
     @Override
     public Long countByDeletedFalse() {
-        return repository.countByDeletedFalse();
+        return null;
     }
 }

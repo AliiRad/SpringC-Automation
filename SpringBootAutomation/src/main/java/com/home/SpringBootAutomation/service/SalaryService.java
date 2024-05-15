@@ -5,22 +5,22 @@ import com.home.SpringBootAutomation.model.Salary;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SalaryService {
-    void save(Salary salary) throws Exception;
-    void update(Salary salary) throws NoContentException;
+    Salary save(Salary salary);
+    Salary update(Salary salary) throws NoContentException;
+    Salary remove(Long id) throws NoContentException;
 
     @Transactional
-    void logicalRemove(Long id) throws NoContentException;
+    Salary logicalRemove(Long id) throws NoContentException;
 
-    List<Salary> findAll() throws Exception;
-    Optional<Salary> findById(Long id) throws NoContentException;
+    List<Salary> findAll();
+    Salary findById(Long id) throws NoContentException;
     Long getSalariesCount();
 
     Salary logicalRemoveWithReturn(Long id) throws NoContentException;
 
-    List<Salary> findSalaryByDeletedFalse() throws Exception;
-    Optional<Salary> findSalaryByIdAndDeletedFalse(Long id) throws NoContentException;
-    Optional<Salary> findSalaryByYearAndDeletedFalse(Integer year) throws NoContentException;
+    List<Salary> findSalaryByDeletedFalse();
+    Salary findSalaryByIdAndDeletedFalse(Long id) throws NoContentException;
+    Salary findSalaryByYearAndDeletedFalse(Integer year) throws NoContentException;
 }

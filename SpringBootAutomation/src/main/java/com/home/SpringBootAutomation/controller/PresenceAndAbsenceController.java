@@ -1,139 +1,89 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.PresenceAndAbsence;
 import com.home.SpringBootAutomation.service.impl.PresenceAndAbsenceServiceImpl;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/presenceAndAbsence")
 @Slf4j
 public class PresenceAndAbsenceController {
 
-    private final PresenceAndAbsenceServiceImpl service;
+    private final PresenceAndAbsenceServiceImpl presenceAndAbsenceService;
 
-    public PresenceAndAbsenceController(PresenceAndAbsenceServiceImpl service) {
-        this.service = service;
+    public PresenceAndAbsenceController(PresenceAndAbsenceServiceImpl presenceAndAbsenceService) {
+        this.presenceAndAbsenceService = presenceAndAbsenceService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String presenceAndAbsenceForm(Model model) {
+        model.addAttribute("presenceList", presenceAndAbsenceService.findPresenceAndAbsenceByDeletedFalse());
+        model.addAttribute("presenceAndAbsence", new PresenceAndAbsence());
+        return "presenceAndAbsence";
     }
 
     //todo : employee hasn't been set yet
-    @PostMapping(value = "/save")
-    public String save(@Valid PresenceAndAbsence presenceAndAbsence, Model model, BindingResult result){
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - PresenceAndAbsence Save Failed ! --->" + result.getAllErrors());
-                return "presenceAndAbsence";
-
-            }
-            service.save(presenceAndAbsence);
-            log.info("Controller - PresenceAndAbsence Saved - Post Method ---->" + " presenceAndAbsence :" + presenceAndAbsence.toString());
-
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "PresenceAndAbsence Saved successfully");
-            return "redirect:/presenceAndAbsence";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/presenceAndAbsence";
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public PresenceAndAbsence save(Model model, @Valid PresenceAndAbsence presenceAndAbsence, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return presenceAndAbsenceService.save(presenceAndAbsence);
     }
 
-    @PostMapping("/edit") //TODO: PutMapping
-    public String edit(@Valid PresenceAndAbsence presenceAndAbsence, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - PresenceAndAbsence Edit Failed ! --->" + result.getAllErrors());
-                return "presenceAndAbsence";
-
-            }
-            service.update(presenceAndAbsence);
-            log.info("Controller - PresenceAndAbsence Edited - Put Method ---->" + " presenceAndAbsence :" + presenceAndAbsence.toString());
-
-            model.addAttribute("presenceAndAbsence", presenceAndAbsence);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "PresenceAndAbsence Saved successfully");
-            return "redirect:/presenceAndAbsence";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/presenceAndAbsence";
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public PresenceAndAbsence edit(Model model, @Valid PresenceAndAbsence presenceAndAbsence, BindingResult bindingResult) throws NoContentException {
+        if (bindingResult.hasErrors()) {
+            throw new ValidationException(
+                    bindingResult
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage()
+                            ).collect(Collectors.toList()).toString()
+            );
         }
+        return presenceAndAbsenceService.update(presenceAndAbsence);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-            service.logicalRemove(id);
-
-            log.info("The PresenceAndAbsence With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "PresenceAndAbsence With Id : " + id + " Successfully Deleted .");
-            return "redirect:/presenceAndAbsence";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-            //TODO: Maybe a 500 error page ?
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public PresenceAndAbsence remove(Model model, @PathVariable Long id) throws NoContentException {
+        return presenceAndAbsenceService.logicalRemove(id);
     }
 
-    @GetMapping
-    public String findAll(Model model) {
-        try {
-            List<PresenceAndAbsence> presenceAndAbsenceList = service.findPresenceAndAbsenceByDeletedFalse();
-            log.info("Controller - Find PresenceAndAbsence With Deleted False - Get Method");
-
-            model.addAttribute("presenceAndAbsence", new PresenceAndAbsence());
-            model.addAttribute("presenceAndAbsenceList", presenceAndAbsenceList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "PresenceAndAbsence List Is Not Empty");
-
-            return "presenceAndAbsence";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            return "error-page";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public PresenceAndAbsence findById(Model model, @PathVariable Long id) throws NoContentException {
+        return presenceAndAbsenceService.findById(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<PresenceAndAbsence>> findById(@PathVariable("id") Long id, Model model) {
-        try {
-            Optional<PresenceAndAbsence> presenceAndAbsence = service.findPresenceAndAbsenceByIdAndDeletedFalse(id);
-
-            return ResponseEntity.ok(presenceAndAbsence);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
-            return null;
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<PresenceAndAbsence> findAll(Model model) throws NoContentException {
+        return presenceAndAbsenceService.findAll();
     }
 
 }

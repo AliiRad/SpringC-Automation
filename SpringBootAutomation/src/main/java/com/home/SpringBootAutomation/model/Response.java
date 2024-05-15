@@ -27,9 +27,9 @@ public class Response {
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator ="responseSeq")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "response_responder_id" )
-    private Person responder;
+//    @ManyToOne
+//    @JoinColumn(name = "response_responder_id" )
+//    private Person responder;
 
     @Column(name = "response_response"  ,columnDefinition = "NVARCHAR2(255)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Ticket Response")
@@ -42,5 +42,9 @@ public class Response {
 
     @Column(name = "response_deleted")
     private boolean deleted;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "response_ticket_id")
+    private Ticket ticket;
 
 }

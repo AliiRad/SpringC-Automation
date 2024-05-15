@@ -11,8 +11,11 @@ public interface ResponseRepository extends JpaRepository<Response , Long> {
     @Query("select oo from responseEntity oo where oo.responseTimeStamp=:responseDate and oo.deleted=false ")
     List<Response> findByDate(LocalDateTime responseDate);
 
-    @Query("select oo from responseEntity oo where oo.responder=:responder and oo.deleted=false")
-    List<Response> findByResponder(String responder);
+//    @Query("select oo from responseEntity oo where oo.responder=:responder and oo.deleted=false")
+//    List<Response> findByResponder(String responder);
+
+    @Query("select oo from responseEntity oo where oo.ticket.group.title=:title")
+    List<Response> findByTicketGroup(String title);
 
 
 }

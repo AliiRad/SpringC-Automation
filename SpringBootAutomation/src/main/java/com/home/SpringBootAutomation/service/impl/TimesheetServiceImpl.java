@@ -14,67 +14,69 @@ import java.util.Optional;
 @Service
 public class TimesheetServiceImpl implements TimesheetService {
 
-    private final TimesheetRepository repository;
+    private final TimesheetRepository timesheetRepository;
 
-    public TimesheetServiceImpl(TimesheetRepository repository) {
-        this.repository = repository;
+    public TimesheetServiceImpl(TimesheetRepository timesheetRepository) {
+        this.timesheetRepository = timesheetRepository;
     }
 
     @Override
-    public void save(Timesheet timesheet) throws Exception {
-        repository.save(timesheet);
+    public Timesheet save(Timesheet timesheet) {
+        return timesheetRepository.save(timesheet);
     }
 
     @Override
-    public void update(Timesheet timesheet) throws NoContentException {
-        Optional<Timesheet> optionalTimesheet = repository.findTimesheetByIdAndDeletedFalse(timesheet.getId());
+    public Timesheet update(Timesheet timesheet) throws NoContentException {
+        timesheetRepository.findById(timesheet.getId()).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with id : " + timesheet.getId())
+        );
+        return timesheetRepository.save(timesheet);
+    }
 
-        if (optionalTimesheet.isPresent()) {
-            repository.save(timesheet);
-        } else {
-            throw new NoContentException("Timesheet not found !");
-        }
+    @Override
+    public Timesheet remove(Long id) throws NoContentException {
+        Timesheet timesheet = timesheetRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with id : " + id)
+        );
+        timesheetRepository.deleteById(id);
+        return timesheet;
     }
 
     @Transactional
     @Override
-    public void logicalRemove(Long id) throws NoContentException {
-        Optional<Timesheet> optionalTimesheet = repository.findTimesheetByIdAndDeletedFalse(id);
-        if (optionalTimesheet.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Timesheet not found !");
-        }
+    public Timesheet logicalRemove(Long id) throws NoContentException {
+        Timesheet timesheet = timesheetRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with id : " + id)
+        );
+        timesheetRepository.logicalRemove(id);
+        return timesheet;
     }
 
     @Override
-    public List<Timesheet> findAll() throws Exception {
-        return repository.findAll();
+    public List<Timesheet> findAll() {
+        return timesheetRepository.findAll();
     }
 
     @Override
-    public Optional<Timesheet> findById(Long id) throws NoContentException {
-        Optional<Timesheet> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Timesheet not found !");
-        }
+    public Timesheet findById(Long id) throws NoContentException {
+        return timesheetRepository.findById(id).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with id : " + id)
+        );
     }
 
     @Override
     public Long getTimesheetCount() {
-        return repository.count();
+        return timesheetRepository.count();
     }
 
     @Override
     public Timesheet logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<Timesheet> optionalTimesheet = repository.findTimesheetByIdAndDeletedFalse(id);
+        Optional<Timesheet> optionalTimesheet = timesheetRepository.findTimesheetByIdAndDeletedFalse(id);
 
         if (optionalTimesheet.isPresent()) {
             Timesheet oldTimesheet = optionalTimesheet.get();
             oldTimesheet.setDeleted(true);
-            return repository.save(oldTimesheet);
+            return timesheetRepository.save(oldTimesheet);
 
         } else {
             throw new NoContentException("Timesheet not found !");
@@ -82,42 +84,36 @@ public class TimesheetServiceImpl implements TimesheetService {
     }
 
     @Override
-    public List<Timesheet> findTimesheetByDeletedFalse() throws Exception {
-        return repository.findTimesheetByDeletedFalse();
+    public List<Timesheet> findTimesheetByDeletedFalse() {
+        return timesheetRepository.findTimesheetByDeletedFalse();
     }
 
     @Override
-    public Optional<Timesheet> findTimesheetByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Timesheet> optional = repository.findTimesheetByIdAndDeletedFalse(id);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Timesheet not found !");
-        }
+    public Timesheet findTimesheetByIdAndDeletedFalse(Long id) throws NoContentException {
+        return timesheetRepository.findTimesheetByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with id : " + id)
+        );
     }
 
     @Override
-    public Optional<Timesheet> findTimesheetByEmployeeIdAndDateAndDeletedFalse(Long id, LocalDate date) throws NoContentException{
-        Optional<Timesheet> optional = repository.findTimesheetByEmployeeIdAndDateAndDeletedFalse(id,date);
-        if (optional.isPresent()) {
-            return optional;
-        } else {
-            throw new NoContentException("Timesheet not found !");
-        }
+    public Timesheet findTimesheetByEmployeeIdAndDateAndDeletedFalse(Long id, LocalDate date) throws NoContentException{
+        return timesheetRepository.findTimesheetByEmployeeIdAndDateAndDeletedFalse(id,date).orElseThrow(
+                () -> new NoContentException("No Timesheet Found with employee id : " + id + " and date : " + date)
+        );
     }
 
     @Override
     public List<Timesheet> findTimesheetByEmployeeIdAndDeletedFalse(Long id) throws NoContentException{
-        return repository.findTimesheetByEmployeeIdAndDeletedFalse(id);
+        return timesheetRepository.findTimesheetByEmployeeIdAndDeletedFalse(id);
     }
 
     @Override
     public List<Timesheet> findTimesheetByManagerIdAndDeletedFalse(Long id) throws NoContentException{
-        return repository.findTimesheetByManagerIdAndDeletedFalse(id);
+        return timesheetRepository.findTimesheetByManagerIdAndDeletedFalse(id);
     }
 
     @Override
     public Long countByDeletedFalse() {
-        return repository.countByDeletedFalse();
+        return timesheetRepository.countByDeletedFalse();
     }
 }
