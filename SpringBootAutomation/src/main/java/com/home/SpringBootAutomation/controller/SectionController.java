@@ -37,7 +37,7 @@ public class SectionController {
     @GetMapping
     public String showSection(Model model) {
         //TODO: Add Model Section
-        return service.findAll().toString();
+        return "section";
     }
     
     @PostMapping

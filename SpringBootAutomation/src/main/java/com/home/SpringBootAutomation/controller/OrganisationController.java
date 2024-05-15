@@ -36,7 +36,7 @@ public class OrganisationController {
         // return "organisation";
 
         //TODO: Add Model Organisation
-        return service.findAll().toString();
+        return "organisation";
     }
 
     @PostMapping
