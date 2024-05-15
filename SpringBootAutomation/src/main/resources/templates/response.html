@@ -59,20 +59,23 @@
         </div>
     </div>
 
-<!--    <div id="editModalResponse">-->
-<!--        <div id="editModalResponseContent">-->
-<!--            <form id="editFormResponse">-->
-<!--                <label for="id__edit__response">ID :</label>-->
-<!--                <input type="text" id="id__edit__response" name="id" readonly>-->
-<!--                <div th:replace="~{/fragments/response-fragments :: responseEditFormContent('ticketReponse','timeStamp','status','ticket')}"></div>-->
-<!--            </form>-->
-<!--            <div class="modal-footer">-->
-<!--                <button onclick="edit()" class="edit-button">Edit</button>-->
-<!--                <button onclick="closeModal()" class="close-button">Close</button>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div id="editModalResponse">
+        <div id="editModalResponseContent">
+            <form id="editFormResponse">
+                <label for="id__edit__response">ID :</label>
+                <input type="text" id="id__edit__response" name="id" readonly>
+                <div th:replace="~{/fragments/response-fragments :: responseEditFormContent('ticketReponse','timeStamp','status','ticket')}"></div>
+            </form>
+            <div class="modal-footer">
+                <button onclick="edit()" class="edit-button">Edit</button>
+                <button onclick="closeModal()" class="close-button">Close</button>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+
 <!--todo : check popup body - Mahoor-->
 <div th:replace="~{/fragments/popup-fragment}"></div>
 

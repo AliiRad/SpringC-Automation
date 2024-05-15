@@ -1,202 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link rel="stylesheet" href="/css/presenceAndAbsence.css">
     <title>PresenceAndAbsence</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
 </head>
 <body>
+<h2>Presence And Absence Page</h2>
 
 <div class="container">
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalPresenceAndAbsence">Add New Presence And Absence</button>
+    <div>
+        <button type="button" class="save-button" onclick="addNew()">Add New PresenceAndAbsence</button>
     </div>
 
     <!--PresenceAndAbsence Table-->
 
-    <table class="table table-striped" th:if="${#lists.size(presenceAndAbsenceList) > 0}">
+    <table th:if="${not #lists.isEmpty(presenceList)}">
         <thead>
         <th>Id</th>
         <th>employee</th>
         <th>date</th>
         <th>EnterTime</th>
         <th>ExitTime</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th>Operation</th>
         </thead>
 
         <tbody>
-        <tr th:each="presenceAndAbsence :${presenceAndAbsenceList}">
+        <tr th:each="presenceAndAbsence :${presenceList}">
             <td th:text="${presenceAndAbsence.id}"></td>
-            <td th:text=noValueYet></td>
+            <td th:text="${presenceAndAbsence.employee}"></td>
             <td th:text="${presenceAndAbsence.date}"></td>
             <td th:text="${presenceAndAbsence.enterTime}"></td>
             <td th:text="${presenceAndAbsence.exitTime}"></td>
-            <td><a class="btn btn-warning editButtonPresence" th:onclick="'findById(\'' + ${presenceAndAbsence.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonPresence" th:onclick="'deleteById(\'' + ${presenceAndAbsence.id} + '\')'">Delete</a></td>
+            <td>
+                <button class="edit-button" th:data-name="${presenceAndAbsence.id}"
+                        th:onclick="|getDataForEdit('/presenceAndAbsence', this.getAttribute('data-name'))|"> Edit
+                </button>
+                <button class="delete-button" th:data-name="${presenceAndAbsence.id}" th:onclick="|remove('/presenceAndAbsence', this.getAttribute('data-name'))|">Remove
+                </button>
+                <!--todo : add delete confirmation-->
+            </td>
         </tr>
         </tbody>
     </table>
     <!--PresenceAndAbsence Table-->
 
 
-
     <!--Save Modal-->
-    <div class="modal fade" id="addModalPresenceAndAbsence" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/presenceAndAbsence/save}" method="post" th:object="${presenceAndAbsence}" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__presence">Save New Presence And Absence </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <!--                        <div class="mb-3">-->
-                        <!--                            <label for="employee__add__presence" class="col-form-label">Employee :</label>-->
-                        <!--                            <input type="text" class="form-control" id="employee__add__presence"  th:value="${presence.employee.id}" th:field="*{employee.id}">-->
-                        <!--                            <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee.id}">Invalid Employee Id !</span>-->
-                        <!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="date__add__presence" class="col-form-label">Date :</label>
-                            <input type="date" class="form-control" id="date__add__presence"  th:value="${presenceAndAbsence.date}" th:field="*{date}">
-                            <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="enterTime__add__presence" class="col-form-label">EnterTime :</label>
-                            <input type="datetime-local" class="form-control" id="enterTime__add__presence"  th:value="${presenceAndAbsence.enterTime}" th:field="*{enterTime}">
-                            <span class="error" th:if="${#fields.hasErrors('enterTime')}" th:errors="*{enterTime}">Invalid EnterTime !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="exitTime__add__presence" class="col-form-label">ExitTime :</label>
-                            <input type="datetime-local" class="form-control" id="exitTime__add__presence"  th:value="${presenceAndAbsence.exitTime}" th:field="*{exitTime}">
-                            <span class="error" th:if="${#fields.hasErrors('exitTime')}" th:errors="*{exitTime}">Invalid ExitTime !</span>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Save Modal-->
-
-
-
-
-    <!--Edit Modal-->
-    <div   class="modal fade" id="editModalPresence" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${presenceAndAbsence}" id="editFormPresence" th:action="@{/presenceAndAbsence/edit}" method="post">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__presence">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__presence" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__presence" name="id" readonly>
-                        </div>
-
-
-                        <!--                        <div class="mb-3">-->
-                        <!--                            <label for="employee__edit__presence" class="col-form-label">Employee :</label>-->
-                        <!--                            <input type="text" class="form-control" id="employee__edit__presence" name="employee" th:value="${presence.employee.id}" th:field="*{employee.id}">-->
-                        <!--                            <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee.id}">Invalid Employee Id !</span>-->
-                        <!--                        </div>-->
-
-
-                        <div class="mb-3">
-                            <label for="date__edit__presence" class="col-form-label">Date :</label>
-                            <input type="date" class="form-control" id="date__edit__presence" name="date"  th:value="${presenceAndAbsence.date}" th:field="*{date}">
-                            <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="enterTime__edit__presence" class="col-form-label">EnterTime :</label>
-                            <input type="datetime-local" class="form-control" id="enterTime__edit__presence" name="enterTime"  th:value="${presenceAndAbsence.enterTime}" th:field="*{enterTime}">
-                            <span class="error" th:if="${#fields.hasErrors('enterTime')}" th:errors="*{enterTime}">Invalid EnterTime !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="exitTime__edit__presence" class="col-form-label">ExitTime :</label>
-                            <input type="datetime-local" class="form-control" id="exitTime__edit__presence" name="exitTime"  th:value="${presenceAndAbsence.exitTime}" th:field="*{exitTime}">
-                            <span class="error" th:if="${#fields.hasErrors('exitTime')}" th:errors="*{exitTime}">Invalid ExitTime !</span>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__presence" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
-            </div>
-        </form>
-
-    </div>
-    <!--Edit Modal-->
-
-
-
-    <!--Delete Modal -->
-    <div class="modal fade" id="deleteModalPresence" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelPresence"> Confirm The Deletion !</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${presenceAndAbsence}">
-                        <label for="id__delete__presence" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__presence" name="id" readonly  th:text="${presenceAndAbsence.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonSalary"  th:onclick="'deleteById(\'' + ${presenceAndAbsence.id} + '\')'">Delete</button>
-                </div>
-            </div>
+    <div id="save-modal">
+        <div id="save-modal-content">
+            <form id="save-form" th:object="${presenceAndAbsence}">
+                <div th:replace="~{/fragments/presenceAndAbsence-fragments :: presenceAndAbsenceFormContent('employee', 'date', 'enterTime', 'exitTime')}"></div>
+            </form>
+            <button class="save-button" onclick="save('/presenceAndAbsence', 'save-form')">Save</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
         </div>
-
     </div>
-    <!--Delete Modal -->
+    <!--Save Modal-->
 
+
+
+
+    <!--Edit Modal-->
+    <div id="edit-modal">
+        <div id="edit-modal-content">
+            <form id="edit-form">
+                <input type="text" id="id" name="id" hidden="hidden">
+                <div th:replace="~{/fragments/presenceAndAbsence-fragments :: presenceAndAbsenceFormContent('employee', 'date', 'enterTime', 'exitTime')}"></div>
+            </form>
+            <button class="save-button" onclick="edit('/presenceAndAbsence', 'edit-form')">Edit</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+    <!--Edit Modal-->
 </div>
 
+<div th:replace="~{/fragments/popup-fragment}"></div>
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/presenceAndAbsence.js}" src="../static/js/presenceAndAbsence.js" ></script>
+
+<script type="text/javascript" src="/js/popup.js"></script>
+<script src="/js/js.js"></script>
+<script type="text/javascript" th:src="@{js/presenceAndAbsence.js}" src="../static/js/presenceAndAbsence.js"></script>
+
 </body>
 </html>

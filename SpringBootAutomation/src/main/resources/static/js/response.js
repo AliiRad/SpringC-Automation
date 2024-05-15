@@ -1,4 +1,4 @@
-async function handleSelectChange(event) {
+async function handleSelectChangeResponse(event) {
     const selectedTitle = event.target.value;
     findTicket(selectedTitle)
 }
@@ -22,6 +22,8 @@ async function findTicket(title) {
         opt.innerHTML = item.group.title + " - " + item.title + " :\n " + item.request ;
         select.appendChild(opt);
     });
+
+
 }
 
 function addResponse() {
@@ -38,17 +40,23 @@ async function findId(id) {
     const data = await resp.json();
     let responseId = document.getElementById("id__edit__response");
     let responseDate = document.getElementById("responseTimeStamp__edit__response");
+    let responseGroup = document.getElementById("responseGroup__edit__response");
     // let responseResponder = document.getElementById("applicant__edit__response");
-    let ticketResponse = document.getElementById("request__edit__response");
-    let responseTicket = document.getElementById("group__edit__response");
+    let ticketResponse = document.getElementById("ticket__edit__response");
+    let ticketIdResponse = document.getElementById("ticketId__edit__response");
+    let ticketStatusResponse = document.getElementById("ticketStatus__edit__response");
+    let responseTicket = document.getElementById("ticketResponse__edit__response");
     let responseDeleted = document.getElementById("deleted__edit__response");
 
 
     responseId.value = data.id;
     responseDate.value = new Date(data.responseTimeStamp).toISOString().slice(0, 16);
+    responseGroup.value = data.ticket.group.title;
     // responseResponder.value = data.responder.username;
-    ticketResponse.value = data.ticketResponse;
-    responseTicket.value = data.ticket.group.title;
+    ticketResponse.value = data.ticket.request;
+    ticketIdResponse.value = data.ticket.id;
+    ticketStatusResponse.value = data.ticket.status;
+    responseTicket.value = data.ticketResponse;
     responseDeleted.value = data.deleted;
 
 }
@@ -73,8 +81,10 @@ async function save() {
     let saveModal = document.getElementById("saveModalResponse")
     saveModal.style.display = 'none'
     const saveFormData = new FormData(saveFormResponse);
+    const editTicketForm = new FormData(saveFormResponse);
     if (confirm("از صحت اطلاعات وارد شده اطمینان دارید؟")) {
         const response = await fetch("/response", {method: "post", body: saveFormData});
+        // const ticketEdit = await fetch('/ticket' , {method  : 'put' , body : editTicketForm })
         if (!response.ok) {
             showErrorPopup('/response', response.status, (await response.text()).toString());
         } else {

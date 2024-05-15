@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="presenceAndAbsenceFormContent(employee, date, enterTime, exitTime)">
+    <!--    <label for="employee">Employee :</label>-->
+    <input type="text" th:id="${employee}" name="employee" placeholder="Employee">
+    <!--    <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}">Invalid Employee !</span>-->
+
+    <!--    <label for="date">Date :</label>-->
+    <input type="date" th:id="${date}" name="date" placeholder="Date">
+    <!--    <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>-->
+
+    <!--    <label for="enterTime">EnterTime :</label>-->
+    <input type="datetime-local" th:id="${enterTime}" name="enterTime" placeholder="EnterTime">
+    <!--    <span class="error" th:if="${#fields.hasErrors('enterTime')}" th:errors="*{enterTime}">Invalid EnterTime !</span>-->
+
+    <!--    <label for="overTimeIn">ExitTime :</label>-->
+    <input type="datetime-local" th:id="${exitTime}" name="exitTime" placeholder="ExitTime">
+    <!--    <span class="error" th:if="${#fields.hasErrors('exitTime')}" th:errors="*{exitTime}">Invalid ExitTime !</span>-->
+
+</div>
+</body>
+</html>

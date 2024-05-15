@@ -11,6 +11,8 @@ public interface OrganisationService {
 
     Organisation save(Organisation organisation);
 
+    Organisation edit(Organisation organisation) throws NoContentException;
+
     Organisation update(Organisation organisation) throws NoContentException;
 
     @Transactional
@@ -20,8 +22,8 @@ public interface OrganisationService {
 
     Optional<Organisation> findById(Long id) throws NoContentException;
 
-    Optional<Organisation> findSectionByIdAndDeletedFalse(Long id) throws NoContentException;
+    Optional<Organisation> findOrganisationByIdAndDeletedFalse(Long id) throws NoContentException;
 
-    List<Organisation> findSectionByDeletedFalse() throws NoContentException;
+    List<Organisation> findOrganisationByDeletedFalse() throws NoContentException;
 
 }

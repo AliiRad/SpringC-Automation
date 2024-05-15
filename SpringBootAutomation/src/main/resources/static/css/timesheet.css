@@ -2,6 +2,7 @@ h2{
     text-align: center;
     margin: 20px;
 }
+
 .container {
     width: 80%;
     margin: 0 auto;
@@ -57,6 +58,7 @@ input, textarea, select {
 .container table {
     width: 80%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 th {
     /*width: 80%;*/

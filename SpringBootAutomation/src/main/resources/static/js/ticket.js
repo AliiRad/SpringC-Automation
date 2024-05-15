@@ -31,7 +31,7 @@ async function findId(id) {
 
 }
 
-function handleSelectChange(event, selectTagId) {
+function handleSelectChangeTicket(event, selectTagId) {
     const selectedId = event.target.value;
     getSubGroups(selectedId, selectTagId);
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="timesheetFormContent(date, regularTimeIn, regularTimeOut, overTimeIn, overTimeOut, employee, manager)">
+    <!--    <label for="date">Date :</label>-->
+    <input type="date" th:id="${date}" name="date" placeholder="Date">
+    <!--    <span class="error" th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Invalid Date !</span>-->
+
+    <!--    <label for="regularTimeIn">RegularTimeIn :</label>-->
+    <input type="datetime-local" th:id="${regularTimeIn}" name="regularTimeIn" placeholder="RegularTimeIn">
+    <!--    <span class="error" th:if="${#fields.hasErrors('regularTimeIn')}" th:errors="*{regularTimeIn}">Invalid RegularTimeIn !</span>-->
+
+    <!--    <label for="regularTimeOut">RegularTimeOut :</label>-->
+    <input type="datetime-local" th:id="${regularTimeOut}" name="regularTimeOut" placeholder="RegularTimeOut">
+    <!--    <span class="error" th:if="${#fields.hasErrors('regularTimeOut')}" th:errors="*{regularTimeOut}">Invalid RegularTimeOut !</span>-->
+
+    <!--    <label for="overTimeIn">OverTimeIn :</label>-->
+    <input type="datetime-local" th:id="${overTimeIn}" name="overTimeIn" placeholder="OverTimeIn">
+    <!--    <span class="error" th:if="${#fields.hasErrors('overTimeIn')}" th:errors="*{overTimeIn}">Invalid OverTimeIn !</span>-->
+
+    <!--    <label for="overTimeOut">OverTimeOut :</label>-->
+    <input type="datetime-local" th:id="${overTimeOut}" name="overTimeOut" placeholder="OverTimeOut">
+    <!--    <span class="error" th:if="${#fields.hasErrors('overTimeOut')}" th:errors="*{overTimeOut}">Invalid OverTimeOut !</span>-->
+
+    <!--    <label for="employee">employee :</label>-->
+    <input type="text" th:id="${employee}" name="employee" placeholder="employee">
+    <!--    <span class="error" th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}">Invalid employee !</span>-->
+
+    <!--    <label for="manager">manager :</label>-->
+    <input type="text" th:id="${manager}" name="manager" placeholder="manager">
+    <!--    <span class="error" th:if="${#fields.hasErrors('manager')}" th:errors="*{manager}">Invalid manager !</span>-->
+
+</div>
+</body>
+</html>

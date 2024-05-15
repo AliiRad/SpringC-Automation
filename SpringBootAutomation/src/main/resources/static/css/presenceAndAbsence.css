@@ -3,13 +3,12 @@ h2{
     margin: 20px;
 }
 .container {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: scroll;
 }
 
 #save-modal, #edit-modal {
@@ -55,8 +54,9 @@ input, textarea, select {
 }
 
 .container table {
-    width: 80%;
+    width: 90%;
     border-collapse: collapse;
+    margin: 0 auto;
 }
 th {
     /*width: 80%;*/
