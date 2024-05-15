@@ -1,6 +1,9 @@
-
+h2{
+    text-align: center;
+    margin: 20px;
+}
 .container {
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f0f0f0;
@@ -56,9 +59,9 @@ input, textarea, select {
     border-collapse: collapse;
 }
 th {
-    width: 80%;
+    /*width: 80%;*/
     background-color: #f2f2f2;
-    text-align: left;
+    /*text-align: left;*/
     padding: 8px;
 }
 
