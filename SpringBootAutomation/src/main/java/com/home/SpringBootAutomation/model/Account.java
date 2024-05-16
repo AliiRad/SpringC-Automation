@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.google.gson.Gson;
 import com.home.SpringBootAutomation.enums.AccountStatus;
 import com.home.SpringBootAutomation.enums.AccountType;
 import jakarta.persistence.*;
@@ -61,4 +62,9 @@ public class Account {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
     private List<FinancialDocument> financialDocuments;
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

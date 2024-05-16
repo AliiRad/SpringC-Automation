@@ -33,7 +33,7 @@ public class AccountController {
         model.addAttribute("accountList", serviceImp.findAll());
         model.addAttribute("account", new Account());
         List<Person> person = personService.findAll();
-        model.addAttribute("person", person);
+        model.addAttribute("personList", person);
         return "account";
     }
 
@@ -41,6 +41,7 @@ public class AccountController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public Account save(Model model, @Valid Account account, BindingResult bindingResult) throws NoContentException{
+        System.out.println("Controller - Save" + account);
         if (bindingResult.hasErrors()) {
             throw new ValidationException(
                     bindingResult

@@ -129,3 +129,14 @@ tr:hover {
     border-top: 1px solid #ddd;
 }
 
+.danger{
+    color: #ff7782;
+
+}
+.success{
+    color: #41f1b6;
+}
+.warning{
+    color: #ffbb55;
+}
+

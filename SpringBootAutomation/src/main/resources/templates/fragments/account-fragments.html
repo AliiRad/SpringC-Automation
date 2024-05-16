@@ -16,10 +16,10 @@
     <!--    <span class="error" th:if="${#fields.hasErrors('cardNumber')}" th:errors="*{cardNumber}">Invalid Card Number!</span>-->
 
     <div>
-        <label for="person">Select Person:</label>
-        <select id="person" name="person">
+        <label for="account_person">Select Person:</label>
+        <select id="account_person" name="account_person">
             <option>Select</option>
-<!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
+            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.username}"></option>
         </select>
 <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
     </div>

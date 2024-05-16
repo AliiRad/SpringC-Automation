@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.controller;
 
 
+import com.home.SpringBootAutomation.enums.Status;
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Response;
 import com.home.SpringBootAutomation.service.impl.ResponseServiceImp;
@@ -42,7 +43,7 @@ public class ResponseController {
 
     @PostMapping
     @ResponseBody
-    public Response saveResponse(Response response , BindingResult bindingResult) {
+    public Response saveResponse(Response response , BindingResult bindingResult) throws NoContentException {
         if (bindingResult.hasErrors()) {
             log.error("Controller-Response-Post-Save-Error: " + response.toString());
             throw new ValidationException(
@@ -54,6 +55,7 @@ public class ResponseController {
             );
         }
         log.info("Controller-Response-Post-Save");
+        ticketServiceImp.editStatusById(response.getTicket().getId(), Status.answered);
         return responseServiceImp.save(response);
     }
 
