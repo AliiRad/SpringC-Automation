@@ -16,53 +16,34 @@ public class JobsServiceImpl implements JobsService {
 
     private final JobsRepository repository;
 
-    public JobsServiceImpl (JobsRepository repository) {
+    public JobsServiceImpl(JobsRepository repository) {
         this.repository = repository;
     }
 
 
     @Override
-    public Jobs save(Jobs jobs) {
+    public Jobs save(Jobs jobs)  {
         return repository.save(jobs);
     }
 
-
     @Override
     public Jobs update(Jobs jobs) throws NoContentException {
-
-        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(jobs.getId());
-
-        if (optionalJobs.isPresent()) {
-        //TODO: using this way to prevent edition of id and deleted .
-
-//            Jobs oldJobs = optionalJobs.get();
-//            oldJobs.setCompanyName(jobs.getCompanyName());
-//            oldJobs.setAddress(jobs.getAddress());
-//            oldJobs.setPositions(jobs.getPositions());
-//            oldJobs.setStartDate(jobs.getStartDate());
-//            oldJobs.setEndDate(jobs.getEndDate());
-
-            return repository.save(jobs);
-        } else {
-            throw new NoContentException("Job not found !");
-
-        }
+        repository.findJobsByIdAndDeletedFalse(jobs.getId()).orElseThrow(
+                () -> new NoContentException("No Active Job Was Found with id " + jobs.getId() + " To Update !" )
+        );
+        return repository.save(jobs);
     }
 
-    @Transactional
     @Override
     public void logicalRemove(Long id) throws NoContentException {
-        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
-        if (optionalJobs.isPresent()) {
-            repository.logicalRemove(id);
-        } else {
-            throw new NoContentException("Job not found !");
-        }
+        repository.findJobsByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Active Job Was Found with id " + id + " To Remove !" )
+        );
+        repository.logicalRemove(id);
     }
 
     @Override
     public List<Jobs> findAll() {
-        //TODO:Check list length
         return repository.findAll();
     }
 
@@ -71,9 +52,10 @@ public class JobsServiceImpl implements JobsService {
         Optional<Jobs> optional = repository.findById(id);
         if (optional.isPresent()) {
             return optional;
-        } else {
-            throw new NoContentException("Job not found !");
+        }else {
+            throw new NoContentException("No Job Was Found with id : " + id );
         }
+
     }
 
     @Override
@@ -83,16 +65,11 @@ public class JobsServiceImpl implements JobsService {
 
     @Override
     public Jobs logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<Jobs> optionalJobs = repository.findJobsByIdAndDeletedFalse(id);
-        if (optionalJobs.isPresent()) {
-            Jobs oldJobs = optionalJobs.get();
-            oldJobs.setDeleted(true);
-            return repository.save(oldJobs);
-        } else {
-            throw new NoContentException("Job not found !");
-
-        }
-
+        Jobs jobs = repository.findJobsByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Active Job Was Found with id  " + id  +" To Remove !")
+        );
+        jobs.setDeleted(true);
+        return repository.save(jobs);
     }
 
     @Override
@@ -103,16 +80,15 @@ public class JobsServiceImpl implements JobsService {
     @Override
     public Optional<Jobs> findJobsByIdAndDeletedFalse(Long id) throws NoContentException {
         Optional<Jobs> optional = repository.findJobsByIdAndDeletedFalse(id);
-        if(optional.isPresent()){
+        if (optional.isPresent()){
             return optional;
         }else {
-            throw new NoContentException("Job not found !");
-
+            throw new NoContentException("No Active Job Was Found with id : " + id );
         }
     }
 
     @Override
-    public List<Jobs> findJobsByCompanyNameAAndDeletedFalse(String companyName) {
+    public List<Jobs> findJobsByCompanyNameAndDeletedFalse(String companyName) {
         return repository.findJobsByCompanyNameAndDeletedFalse(companyName);
     }
 

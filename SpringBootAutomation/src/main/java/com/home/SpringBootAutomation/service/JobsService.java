@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface JobsService {
-
-    Jobs save(Jobs jobs) throws NoContentException;
+    Jobs save(Jobs jobs) ;
     Jobs update(Jobs jobs) throws NoContentException;
 
     @Transactional
@@ -29,10 +28,9 @@ public interface JobsService {
     Optional<Jobs> findJobsByIdAndDeletedFalse(Long id) throws NoContentException;
 
 
-    List<Jobs> findJobsByCompanyNameAAndDeletedFalse(String companyName);
+    List<Jobs> findJobsByCompanyNameAndDeletedFalse(String companyName);
     List<Jobs> findJobsByCompanyNameContainingIgnoreCaseAndDeletedFalse(String companyName);
     List<Jobs> findJobsByAddressAndDeletedFalse(String address);
 
     Long countByDeletedFalse();
-
 }
