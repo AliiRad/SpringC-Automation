@@ -1,10 +1,13 @@
 package com.home.SpringBootAutomation.controller;
 
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Skills;
 import com.home.SpringBootAutomation.service.SkillsService;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -20,128 +24,67 @@ import java.util.Optional;
 public class SkillsController {
 
     private final SkillsService service;
-
-    public SkillsController(SkillsService service) {
+    public SkillsController(SkillsService service){
         this.service = service;
     }
 
-    @PostMapping("/save")
-    public String save(@Valid Skills skills, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error(" Did Not Saved ! --->" + result.getAllErrors());
-                return "skills";
-
-            }
-            service.save(skills);
-            log.info("Skill Saved - Post Method ---->" + "skill :" + skills.toString());
-
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Skill Saved successfully");
-            return "redirect:/skills";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/skills";
-        }
-
+    @RequestMapping(method = RequestMethod.GET)
+    public String SkillsForm(Model model){
+        model.addAttribute("skillList" , service.findSkillsByDeletedFalse());
+        model.addAttribute("skills" , new Skills());
+        return "skills";
     }
 
-    @PutMapping("/edit")
-    public String edit(@Valid Skills skills, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error(" Did Not Edit ! --->" + result.getAllErrors());
-                return "skills";
-
-            }
-            service.update(skills);
-            log.info("Skill Edited - Put Method ---->" + "skill :" + skills.toString());
-
-            model.addAttribute("skills", skills);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Skill Edited Successfully .");
-            return "redirect:/skills";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/skills";
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Skills save(@Valid Skills skills , Model model , BindingResult result){
+        if (result.hasErrors()){
+            throw new ValidationException(
+                    result
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage())
+                            .collect(Collectors.toList()).toString()
+            );
         }
+        return service.save(skills);
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public Skills edit(@Valid Skills skills , BindingResult result , Model model) throws NoContentException {
+        if (result.hasErrors()){
+            throw new ValidationException(
+                    result
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage())
+                            .collect(Collectors.toList()).toString()
+            );
+        }
+        return service.update(skills);
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Skills remove(Model model, @PathVariable Long id) throws NoContentException {
+        return service.logicalRemoveWithReturn(id); //TODO: logicalRemove ---> void
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Optional<Skills> findById(Model model, @PathVariable Long id) throws NoContentException {
+        return service.findSkillsByIdAndDeletedFalse(id);
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-
-            service.logicalRemove(id);
-            log.info("The Skill With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Skill With Id : " + id + " Successfully Deleted .");
-            return "redirect:/skills";
-
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/skills";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Skills> findAll(Model model){
+        return service.findSkillsByDeletedFalse();
     }
-
-    @GetMapping
-    public String findAll(Model model) {
-
-        try {
-            List<Skills> skillsList = service.findSkillsByDeletedFalse();
-            log.info("Find Skills With Deleted False - Get Method");
-
-            model.addAttribute("skills", new Skills());
-            model.addAttribute("skillsList", skillsList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Skills List Is Not Empty");
-
-            return "skills";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/skills";
-        }
-    }
-
-
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Skills>> findById(@PathVariable("id") Long id, Model model){
-        try {
-
-            Optional<Skills> skills = service.findSkillsByIdAndDeletedFalse(id);
-            return ResponseEntity.ok(skills);
-        }catch (Exception e) {
-
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-//            return ResponseEntity.noContent();
-            return null;
-        }
-    }
-
-
-
-
-
-
 }

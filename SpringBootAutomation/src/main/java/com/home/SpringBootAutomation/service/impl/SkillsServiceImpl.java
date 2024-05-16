@@ -13,10 +13,9 @@ import java.util.Optional;
 @Service
 public class SkillsServiceImpl implements SkillsService {
 
-
     private final SkillsRepository repository;
 
-    public SkillsServiceImpl (SkillsRepository repository) {
+    public SkillsServiceImpl(SkillsRepository repository) {
         this.repository = repository;
     }
 
@@ -26,51 +25,34 @@ public class SkillsServiceImpl implements SkillsService {
         return repository.save(skills);
     }
 
-
     @Override
     public Skills update(Skills skills) throws NoContentException {
-        Optional<Skills> optionalSkills = repository.findSkillsByIdAndDeletedFalse(skills.getId());
-
-        if (optionalSkills.isPresent()){
-//            Skills oldSkills = optionalSkills.get();
-//            oldSkills.setSkillTitle(skills.getSkillTitle());
-//            oldSkills.setRate(skills.getRate());
-//            oldSkills.setTraining(skills.getTraining());
-//            oldSkills.setDescription(skills.getDescription());
-//            oldSkills.setCertification(skills.getCertification());
-
-
-            return repository.save(skills);
-        } else {
-            throw new NoContentException("Skill not found !");
-        }
+        repository.findSkillsByIdAndDeletedFalse(skills.getId()).orElseThrow(
+                () ->new NoContentException("No Active Skill Was Found with id "  + skills.getId() +" To Update !")
+        );
+        return repository.save(skills);
     }
 
-    @Transactional
     @Override
     public void logicalRemove(Long id) throws NoContentException {
-        Optional<Skills> optionalSkills = repository.findSkillsByIdAndDeletedFalse(id);
-        if (optionalSkills.isPresent()){
-            repository.logicalRemove(id);
-        }else {
-            throw new NoContentException("Skill not found !");
-        }
+        repository.findSkillsByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Active Skill Was Found with id " + id  +" To Remove !")
+        );
+        repository.logicalRemove(id);
     }
-
 
     @Override
     public List<Skills> findAll() {
         return repository.findAll();
     }
 
-
     @Override
     public Optional<Skills> findById(Long id) throws NoContentException {
         Optional<Skills> optional = repository.findById(id);
-        if (optional.isPresent()) {
+        if (optional.isPresent()){
             return optional;
-        } else {
-            throw new NoContentException("Skill not found !");
+        }else {
+            throw new NoContentException("No Skill Was Found with id : " + id );
         }
     }
 
@@ -79,20 +61,13 @@ public class SkillsServiceImpl implements SkillsService {
         return repository.count();
     }
 
-
     @Override
     public Skills logicalRemoveWithReturn(Long id) throws NoContentException {
-        Optional<Skills> optionalSkills = repository.findSkillsByIdAndDeletedFalse(id);
-
-        if (optionalSkills.isPresent()){
-            Skills oldSkills = optionalSkills.get();
-            oldSkills.setDeleted(true);
-            return repository.save(oldSkills);
-
-        } else {
-            throw new NoContentException("Skill not found !");
-
-        }
+        Skills Skills = repository.findSkillsByIdAndDeletedFalse(id).orElseThrow(
+                () -> new NoContentException("No Active Skill Was Found with id  " + id  +" To Remove !")
+        );
+        Skills.setDeleted(true);
+        return repository.save(Skills);
     }
 
     @Override
@@ -100,30 +75,25 @@ public class SkillsServiceImpl implements SkillsService {
         return repository.findSkillsByDeletedFalse();
     }
 
-
     @Override
     public Optional<Skills> findSkillsByIdAndDeletedFalse(Long id) throws NoContentException {
-        Optional<Skills> optional = repository.findSkillsByIdAndDeletedFalse(id);
-        if (optional.isPresent()){
+        Optional<Skills> optional =repository.findSkillsByIdAndDeletedFalse(id);
+        if (optional.isPresent()) {
             return optional;
-        }else {
-            throw new NoContentException("Skill not found !");
-
+        } else {
+            throw new NoContentException("No Active Skill Was Found with id : " + id );
         }
     }
-
 
     @Override
     public List<Skills> findSkillsBySkillTitleContainingIgnoreCaseAndDeletedFalse(String title) {
         return repository.findSkillsBySkillTitleContainingIgnoreCaseAndDeletedFalse(title);
     }
 
-
     @Override
     public List<Skills> findSkillsByRateAndDeletedFalse(SkillsGradeEn rate) {
         return repository.findSkillsByRateAndDeletedFalse(rate);
     }
-
 
     @Override
     public List<Skills> findSkillsByTrainingContainingIgnoreCaseAndDeletedFalse(String training) {

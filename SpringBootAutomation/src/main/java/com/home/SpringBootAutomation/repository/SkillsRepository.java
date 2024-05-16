@@ -16,7 +16,6 @@ import java.util.Optional;
 @Repository
 public interface SkillsRepository extends JpaRepository<Skills, Long> {
 
-
     @Modifying
     @Query("update skillsEntity  oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
@@ -30,8 +29,5 @@ public interface SkillsRepository extends JpaRepository<Skills, Long> {
     List<Skills> findSkillsByTrainingContainingIgnoreCaseAndDeletedFalse(String training);
 
     Long countByDeletedFalse();
-
-
-
 
 }

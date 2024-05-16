@@ -105,7 +105,7 @@ body{
 .main-container .add-new{
     border-radius: 6px;
     background: #fff;
-    border: 2px dashed #2b2b2b;
+    border: 2px dashed rgba(43, 43, 43, 0.4);
 }
 .main-container .add-new span{
     margin: 5px;

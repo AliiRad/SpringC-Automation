@@ -13,7 +13,7 @@ async function findById(url,id){
         let job = JSON.parse(await response.text());
         // const data = await response.json();
         let editModal = document.getElementById("edit-modal");
-        editModal.style.display="block";
+        editModal.style.display="flex";
 
         let idEdit= document.querySelector("#edit-modal #id");
         idEdit.value = job.id;

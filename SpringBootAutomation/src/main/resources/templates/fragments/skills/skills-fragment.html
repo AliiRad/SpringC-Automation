@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Skills Form Fragment</title>
+</head>
+<body>
+<div th:fragment="skillsFormContent(skillTitle ,rate,training ,description,certification)">
+
+    <label th:for="${skillTitle}">Skill Title :</label>
+    <input type="text" th:id="${skillTitle}" name="skillTitle" placeholder="Skill Title">
+    <!--    <span class="error" th:if="${#fields.hasErrors('skillTitle')}" th:errors="*{skillTitle}">Invalid Skill Title !</span>-->
+    <br>
+
+    <label th:for="${rate}">Rate :</label>
+    <select th:id="${rate}" name="rate">
+        <option selected disabled value="-1">What Is Your Skill Rate?</option>
+        <!--                                <option th:each="rate : ${T(com.mft.automationTemplate.enums.SkillsGradeEn).values()}"-->
+        <!--                                        th:value="${rate}" th:text="${rate}">-->
+        <!--                                </option>-->
+        <option value="Basic">Basic</option>
+        <option value="Intermediate">Intermediate</option>
+        <option value="Advanced">Advanced</option>
+    </select>
+    <!--    <span class="error" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}">Invalid Rate !</span>-->
+    <br>
+
+
+    <label th:for="${training}">Training :</label>
+    <input type="text" th:id="${training}" name="training" placeholder="Training">
+    <!--    <span class="error" th:if="${#fields.hasErrors('training')}" th:errors="*{training}">Invalid Training !</span>-->
+
+    <br>
+
+    <label th:for="${description}">Description :</label>
+    <input type="text" th:id="${description}" name="description" placeholder="Description">
+    <!--    <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Invalid Description !</span>-->
+    <br>
+
+
+    <label th:for="${certification}">Certification :</label>
+    <input type="text" th:id="${certification}" name="certification" placeholder="Certification">
+    <!--    <span class="error" th:if="${#fields.hasErrors('certification')}" th:errors="*{certification}">Invalid Certification !</span>-->
+
+
+</div>
+</body>
+</html>

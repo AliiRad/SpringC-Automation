@@ -17,7 +17,7 @@ public interface SkillsService {
     void logicalRemove(Long id) throws NoContentException;
 
     List<Skills> findAll();
-   Optional<Skills>findById(Long id)throws NoContentException;
+    Optional<Skills> findById(Long id)throws NoContentException;
     Long getSkillsCount();
 
     Skills logicalRemoveWithReturn(Long id) throws NoContentException;

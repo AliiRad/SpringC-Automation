@@ -1,245 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" >
-    <title>Skills CRUD Panel</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+    <meta charset="UTF-8">
+    <title>Skills CRUD System</title>
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
+
+
 </head>
 <body>
-
 <!--Main Container-->
-<div class="container">
-
+<div class="main-container">
     <!--Add New Button-->
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalSkills">Add New Skill</button>
-    </div>
+    <button  class="add-new" onclick="addNew()">
+     <span class="material-symbols-outlined">
+        add
+    </span>
+    </button>
     <!--Add New Button-->
 
-
-    <!--Table-->
-    <table class="table table-striped" th:if="${#lists.size(skillsList) > 0}">
-        <thead>
-        <th>Id</th>
-        <th>Skill Title</th>
-        <th>Rate</th>
-        <th>Training</th>
-        <th>Description</th>
-        <th>Certification</th>
-        <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        </thead>
-
-        <tbody>
-        <tr th:each="skill :${skillsList}">
-            <td th:text="${skill.id}"></td>
-            <td th:text="${skill.skillTitle}"></td>
-            <td th:text="${skill.rate}"></td>
-            <td th:text="${skill.training}"></td>
-            <td th:text="${skill.description}"></td>
-            <td th:text="${skill.certification}"></td>
-            <td >Active</td>
-            <td ><a class="btn btn-warning editButtonSkills" th:onclick="'findById(\'' + ${skill.id} + '\')'">Edit</a></td>
-            <td ><a class="btn btn-danger deleteButtonSkills" th:onclick="'deleteById(\'' + ${skill.id} + '\')'">Delete</a></td>
-            <!--            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'openDeleteModal(\'' + ${skill.id} + '\')'">Delete</a></td>-->
-
-        </tr>
-        </tbody>
-    </table>
-    <!--Table-->
+    <br><br>
 
     <!--Save Modal-->
-    <div class="modal fade" id="addModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/skills/save}" method="post" th:object="${skills}">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div id="save-modal" class="modal">
+        <div id="save-modal-content" class="modal-body">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__skills">Save New Skill </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="skillTitle__add__skills" class="col-form-label">Skill Title :</label>
-                            <input type="text" class="form-control" id="skillTitle__add__skills" name="skillTitle" th:value="${skills.skillTitle}" th:field="*{skillTitle}">
-                            <span class="error" th:if="${#fields.hasErrors('skillTitle')}" th:errors="*{skillTitle}">Invalid Skill Title !</span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="rate__add__skills" class="col-form-label">Rate :</label>
-                            <select class="form-select" aria-label="Default select example" id="rate__add__skills" name="rate" th:value="${skills.rate}" th:field="*{rate}">
-
-                                <option selected disabled value="-1">What Is Your Skill Rate?</option>
-                                <!--                                <option th:each="rate : ${T(com.mft.YoutueCrud.model.enums.SkillsGradeEn).values()}"-->
-                                <!--                                        th:value="${rate}" th:text="${rate}">-->
-                                <!--                                </option>-->
-                                <option value="Basic">Basic</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}">Invalid Rate !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="training__add__skills" class="col-form-label">Training :</label>
-                            <input type="text" class="form-control" id="training__add__skills" name="training" th:value="${skills.training}" th:field="*{training}">
-                            <span class="error" th:if="${#fields.hasErrors('training')}" th:errors="*{training}">Invalid Training !</span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="description__add__skills" class="col-form-label">Description :</label>
-                            <input type="text" class="form-control" id="description__add__skills" name="description" th:value="${skills.description}" th:field="*{description}">
-                            <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Invalid Description !</span>
-
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="Certification__add__skills" class="col-form-label">Certification :</label>
-                            <input type="text" class="form-control" id="Certification__add__skills" name="Certification" th:value="${skills.certification}" th:field="*{certification}">
-                            <span class="error" th:if="${#fields.hasErrors('certification')}" th:errors="*{certification}">Invalid Certification !</span>
-                        </div>
-
-
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
+            <div class="modal-form">
+                <form id="save-form" th:object="${skills}">
+                    <div th:replace="~{/fragments/skills/skills-fragment :: skillsFormContent('skillTitle' ,'rate','training' ,'description','certification')}"></div>
+                </form>
             </div>
-        </form>
 
+            <div class="modal-footer">
+                <button onclick="save('/skills' ,'save-form')">Save</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
     </div>
     <!--Save Modal-->
 
+    <!--Table-->
+    <div class="table" th:if="${skillList.size() > 0}">
+        <table >
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Skill Title</th>
+                <th>Rate</th>
+                <th>Training</th>
+                <th>Description</th>
+                <th>Certification</th>
+                <th>Status</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="skill :${skillList}">
+                <td th:text="${skill.id}"></td>
+                <td th:text="${skill.skillTitle}"></td>
+                <td th:text="${skill.rate}"></td>
+                <td th:text="${skill.training}"></td>
+                <td th:text="${skill.description}"></td>
+                <td th:text="${skill.certification}"></td>
+                <td>Active</td>
+                <td><a  th:data-name="${skill.id}" th:onclick="|findById('/skills', this.getAttribute('data-name'))|">
+              <span class="material-symbols-outlined edit" >
+                edit
+            </span>
+                </a></td>
+                <td><a  th:data-name="${skill.id}" th:onclick="|remove('/skills', this.getAttribute('data-name'))|">
+             <span class="material-symbols-outlined delete">
+                delete
+            </span>
+                </a></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--Table-->
+
     <!--Edit Modal-->
-    <div class="modal fade" id="editModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="" th:object="${skills}" id="editFormSkills">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div id="edit-modal" class="modal">
+        <div id="edit-modal-content" class="modal-body">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__skills">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__skills" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__skills" name="id" readonly>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="skillTitle__edit__skills" class="col-form-label">Skill Title :</label>
-                            <input type="text" class="form-control" id="skillTitle__edit__skills" name="skillTitle" th:value="${skills.skillTitle}" th:field="*{skillTitle}">
-                            <span class="error" th:if="${#fields.hasErrors('skillTitle')}" th:errors="*{skillTitle}">Invalid Skill Title !</span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="rate__edit__skills" class="col-form-label">Rate :</label>
-                            <select class="form-select" aria-label="Default select example" id="rate__edit__skills" name="rate" th:value="${skills.rate}" th:field="*{rate}">
-
-                                <option selected disabled value="-1">What Is Your Skill Rate?</option>
-
-                                <option value="Basic">Basic</option>
-                                <option value="Intermediate">Intermediate</option>
-                                <option value="Advanced">Advanced</option>
-
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('rate')}" th:errors="*{rate}">Invalid Rate !</span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="training__edit__skills" class="col-form-label">Training :</label>
-                            <input type="text" class="form-control" id="training__edit__skills" name="training" th:value="${skills.training}" th:field="*{training}">
-                            <span class="error" th:if="${#fields.hasErrors('training')}" th:errors="*{training}">Invalid Training !</span>
-
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="description__edit__skills" class="col-form-label">Description :</label>
-                            <input type="text" class="form-control" id="description__edit__skills" name="description" th:value="${skills.description}" th:field="*{description}">
-                            <span class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Invalid Description !</span>
-
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="Certification__edit__skills" class="col-form-label">Certification :</label>
-                            <input type="text" class="form-control" id="Certification__edit__skills" name="certification" th:value="${skills.certification}" th:field="*{certification}">
-                            <span class="error" th:if="${#fields.hasErrors('certification')}" th:errors="*{certification}">Invalid Certification !</span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__skills" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
+            <div class="modal-form">
+                <form id="edit-form">
+                    <input type="text" id="id" name="id" hidden="hidden">
+                    <div th:replace="~{/fragments/skills/skills-fragment :: skillsFormContent('edit-skillTitle' ,'edit-rate','edit-training' ,'edit-description','edit-certification')}"></div>
+                </form>
             </div>
-        </form>
 
+            <div class="modal-footer">
+                <button onclick="edit('/skills' , 'edit-form')">Edit</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
     </div>
     <!--Edit Modal-->
 
-    <!--Delete Modal -->
-    <div class="modal fade" id="deleteModalSkills" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <!--PopUp-->
+    <div class="popup" id="popup">
+        <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
 
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelSkills"> Confirm The Deletion !</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${skills}">
-                        <label for="id__delete__skills" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__skills" name="id" readonly th:text="${skills.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonSkills" th:onclick="'deleteById(\'' + ${skills.id} + '\')'">Delete</button>
-                </div>
+            <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
+
+            <div class="popup-message" id="popup-message">
+                <span class="text text-1 popup-title" id="popup-title"></span>
+                <span class="text text-2 popup-text" id="popup-text"></span>
             </div>
         </div>
-
+        <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+        <div class="popup-progress" id="popup-progress"></div>
     </div>
-    <!--Delete Modal -->
-
-
-
-
+    <!--PopUp-->
 </div>
 <!--Main Container-->
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/skills.js}" src="../static/js/skills.js" ></script>
-
+<script src="/js/skills.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/popup.js"></script>
 </body>
 </html>
-
-<!--TODO: Adding Pagination For Tables-->
