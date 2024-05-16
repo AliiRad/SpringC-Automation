@@ -18,7 +18,6 @@ public interface JobsRepository extends JpaRepository<Jobs, Long> {
     void logicalRemove(Long id);
 
 
-    //fetches all jobs that there deleted field is false.
     List<Jobs> findJobsByDeletedFalse();
     Optional<Jobs> findJobsByIdAndDeletedFalse(Long id);
 
@@ -34,9 +33,6 @@ public interface JobsRepository extends JpaRepository<Jobs, Long> {
     // i think this method should be written in personRepository to find people with a given years of work experience.
     //List<Jobs> findJobsByYearOfWorkExperience()
     //Jobs findJobsByPersonId(Long id);
-
-
-
 
 
 }
