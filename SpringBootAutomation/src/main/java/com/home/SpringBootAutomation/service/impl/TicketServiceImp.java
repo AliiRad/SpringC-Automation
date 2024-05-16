@@ -52,6 +52,18 @@ public class TicketServiceImp implements TicketService {
         return ticketRepository.save(ticket);
     }
 
+
+    @Override
+    @Transactional
+    public Ticket editStatusById(Long id, Status status) throws NoContentException {
+        log.info("Service-Ticket-Edit");
+        Optional<Ticket> ticket = ticketRepository.findById(id);
+        ticket.orElseThrow(
+                () -> new NoContentException("No Ticket Found with id : " + id));
+        ticket.get().setStatus(status);
+        return ticketRepository.save(ticket.get());
+    }
+
     @Override
     public void remove(Ticket ticket) throws NoContentException {
         log.info("Service-Ticket-Remove");

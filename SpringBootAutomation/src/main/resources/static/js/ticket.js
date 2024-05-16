@@ -31,6 +31,7 @@ async function findId(id) {
 
 }
 
+
 function handleSelectChangeTicket(event, selectTagId) {
     const selectedId = event.target.value;
     getSubGroups(selectedId, selectTagId);
@@ -132,5 +133,19 @@ function closeModal(){
     editModal.style.display = 'none';
     saveModal.style.display = "none"
 }
+
+
+const statusElements = document.querySelectorAll('td[id="status"]');
+statusElements.forEach(statusElement => {
+    const status = statusElement.textContent.trim();
+    if (status === 'answered') {
+        statusElement.classList.add('success');
+    } else if (status === 'closed') {
+        statusElement.classList.add('danger');
+    } else if (status === 'postponed') {
+        statusElement.classList.add('warning');
+    }
+    console.log("Classes applied:", statusElement.classList);
+});
 
 
