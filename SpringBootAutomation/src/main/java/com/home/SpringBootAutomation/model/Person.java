@@ -1,6 +1,7 @@
 package com.home.SpringBootAutomation.model;
 
 
+import com.google.gson.Gson;
 import com.home.SpringBootAutomation.enums.GenderEn;
 import com.home.SpringBootAutomation.enums.MarriageEn;
 import jakarta.persistence.*;
@@ -107,4 +108,9 @@ public class Person {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<BankTransaction> bankTransactions;
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }
