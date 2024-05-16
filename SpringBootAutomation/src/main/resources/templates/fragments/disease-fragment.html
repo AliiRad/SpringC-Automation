@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Disease</title>
+</head>
+<body>
+<div th:fragment="diseaseSaveFormContent(name,type,grade)">
+
+  <label for="name__add__disease">Name :</label>
+  <input type="text" name="name" id="name__add__disease">
+
+  <label for="type__add__disease">Type :</label>
+  <input type="text" name="type" id="type__add__disease">
+
+  <label for="grade__add__disease">Grade :</label>
+  <input type="text" name="grade" id="grade__add__disease">
+
+
+</div>
+<div th:fragment="diseaseEditFormContent(name,type,grade)">
+
+  <label for="name__edit__disease">Name :</label>
+  <input type="text" name="name" id="name__edit__disease">
+
+  <label for="type__edit__disease">Type :</label>
+  <input type="text" name="type" id="type__edit__disease">
+
+  <label for="grade__edit__disease">Grade :</label>
+  <input type="text" name="grade" id="grade__edit__disease">
+
+
+  <label for="deleted__edit__disease">Active:</label>
+  <select id="deleted__edit__disease"
+          name="deleted">
+  </select>
+</div>
+
+</body>
+</html>

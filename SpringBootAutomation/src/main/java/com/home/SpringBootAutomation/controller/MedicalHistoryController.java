@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 public class MedicalHistoryController {
     private MedicalHistoryServiceImp medicalHistoryServiceImp;
 
+
     public MedicalHistoryController(MedicalHistoryServiceImp medicalHistoryServiceImp) {
         this.medicalHistoryServiceImp = medicalHistoryServiceImp;
     }
