@@ -31,9 +31,9 @@ TODO:
 - [ ] Military
 - [ ] Driving Licence 
 ### melika :
-- [ ] Ticket Group
-- [ ] Response
-- [ ] Ticket
+- [ done] Ticket Group
+- [done ] Response
+- [ done] Ticket
 ### satyar :
 - [ ] Log
 - [ ] Profile DTO
@@ -41,7 +41,7 @@ TODO:
 - [ ] Attachment
 - [ ] Export 
 ### sara :
-- [ ] Medical History
+- [done without relation ] Medical History
 - [ ] Disease 
 ### vahid :
 - [ ] UI

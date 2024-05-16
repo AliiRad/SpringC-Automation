@@ -4,24 +4,24 @@ import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.MedicalHistory;
 import com.home.SpringBootAutomation.repository.MedicalHistoryRepository;
 import com.home.SpringBootAutomation.service.MedicalHistoryService;
-import com.home.SpringBootAutomation.service.PersonService;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 public class MedicalHistoryServiceImp implements MedicalHistoryService {
     private final MedicalHistoryRepository medicalHistoryRepository;
-    private final PersonService personService;
-    // TODO: 5/14/2024 injection disease
+    private final PersonServiceImpl personServiceImp;
+    private final DiseaseServiceImp diseaseServiceImp;
 
-    public MedicalHistoryServiceImp(MedicalHistoryRepository medicalHistoryRepository, PersonService PersonService) {
+
+    public MedicalHistoryServiceImp(MedicalHistoryRepository medicalHistoryRepository, PersonServiceImpl personServiceImp, DiseaseServiceImp diseaseServiceImp) {
         this.medicalHistoryRepository = medicalHistoryRepository;
-        this.personService = PersonService;
+        this.personServiceImp = personServiceImp;
+        this.diseaseServiceImp = diseaseServiceImp;
     }
 
     @Override
