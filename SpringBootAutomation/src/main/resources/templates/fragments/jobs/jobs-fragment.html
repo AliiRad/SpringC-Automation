@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jobs Form Fragment</title>
+</head>
+<body>
+<div th:fragment="jobsFormContent(companyName, address,positions ,startDate, endDate)">
+
+    <label th:for="${companyName}">Company Name :</label>
+    <input type="text" th:id="${companyName}" name="companyName" placeholder="Company Name">
+    <!--    <span class="error" th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Invalid Company Name !</span>-->
+    <br>
+
+    <label th:for="${address}">Address :</label>
+    <input type="text" th:id="${address}" name="address" placeholder="Address">
+    <!--    <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Invalid Address !</span>-->
+    <br>
+
+
+    <label th:for="${positions}">Positions :</label>
+    <input type="text" th:id="${positions}" name="positions" placeholder="Positions">
+    <!--    <span class="error" th:if="${#fields.hasErrors('positions')}" th:errors="*{positions}">Invalid Positions !</span>-->
+    <br>
+
+
+    <label th:for="${startDate}">Start Date :</label>
+    <input type="date" th:id="${startDate}" name="startDate" placeholder="startDate">
+    <!--    <span class="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Invalid Start Date !</span>-->
+
+    <br>
+
+    <label th:for="${endDate}">End Date :</label>
+    <input type="date" th:id="${endDate}" name="endDate" placeholder="endDate">
+    <!--    <span class="error" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Invalid End Date !</span>-->
+    <br>
+
+
+</div>
+
+</body>
+</html>

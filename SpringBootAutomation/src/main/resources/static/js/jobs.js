@@ -1,62 +1,40 @@
-// "Find Functionality"
-async function findById(id){
+// "Find By ID Functionality"
+async function findById(url,id){
+    console.log("find by id")
 
-    let editModal = document.getElementById("editModalJobs");
-    let modalJobs = new bootstrap.Modal(editModal);
-    modalJobs.show();
+    const response = await fetch(url + "/" + id,
+        {
+            method: "GET"
+        }
+    );
+    if (! response.ok){
+        showErrorPopup(url,response.status , (await response.text()).toString());
+    }else{
+        let job = JSON.parse(await response.text());
+        // const data = await response.json();
+        let editModal = document.getElementById("edit-modal");
+        editModal.style.display="block";
 
-    const resp = await fetch("/jobs/findById/" + id,{
-        method:"GET"
-    });
+        let idEdit= document.querySelector("#edit-modal #id");
+        idEdit.value = job.id;
+
+        let companyNameEdit = document.querySelector("#edit-form div :nth-child(2)");
+        companyNameEdit.value =job.companyName;
+
+        let addressEdit = document.querySelector("#edit-form div :nth-child(5)");
+        addressEdit.value = job.address;
+
+        let positionsEdit = document.querySelector("#edit-form div :nth-child(8)");
+        positionsEdit.value = job.positions;
+
+        let startDateEdit = document.querySelector("#edit-form div :nth-child(11)");
+        startDateEdit.value = job.startDate;
+
+        let endDateEdit = document.querySelector("#edit-form div :nth-child(14)");
+        endDateEdit.value = job.endDate;
 
 
-    const data = await resp.json()
-    let jobsId = document.getElementById("id__edit__jobs");
-    let jobsCompanyName = document.getElementById("companyName__edit__jobs");
-    let jobsAddress = document.getElementById("address__edit__jobs");
-    let jobsPositions = document.getElementById("positions__edit__jobs");
-    let jobsStartDate = document.getElementById("startDate__edit__jobs");
-    let jobsEndDate = document.getElementById("endDate__edit__jobs");
-
-
-    jobsId.value = data.id;
-    jobsCompanyName.value = data.companyName;
-    jobsAddress.value = data.address;
-    jobsPositions.value = data.positions;
-    jobsStartDate.value = data.startDate;
-    jobsEndDate.value = data.endDate;
+    }
 
 }
 
-// "Edit Functionality"
-async function edit(){
-    const formData = new FormData(document.getElementById("editFormJobs"));
-
-    const resp = await fetch("/jobs/edit",{
-        method:"PUT",
-        body: formData
-    }).then(() => {
-        window.location.replace("/jobs");
-
-    });
-}
-
-//"Delete Functionality"
-async function openDeleteModal(id){
-    let deleteIdInputJobs = document.getElementById("id__delete__jobs");
-
-    deleteIdInputJobs.value = id ;
-
-    let deleteModal = document.getElementById("deleteModalJobs");
-    let modalJobs =  new bootstrap.Modal(deleteModal);
-    modalJobs.show();
-}
-
-
-async function deleteById(id){
-    const resp= await fetch(`/jobs/delete/` + id,{
-        method:"DELETE"
-    });
-    console.log(id)
-    window.location.replace("/jobs")
-}

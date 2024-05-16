@@ -1,0 +1,125 @@
+body{
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f2f2f2;
+    overflow: hidden;
+}
+.modal{
+    display: none;
+    /*background-color: #2b2b2b;*/
+    /*opacity: 80%;*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    color: #2b2b2b;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-body{
+    background-color: #fff;
+    box-shadow:0 1px 2px rgba(132,139,200,0.18);
+    opacity: unset;
+    width: 400px;
+    top: 100px;
+    margin: 200px auto;
+    border-radius: 2rem;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+
+}
+.modal-form{
+    margin-top: 20px;
+}
+.modal-form form>div>input,
+.modal-form form>div>label,
+.modal-form form>div>select{
+    /*margin-left:5px ;*/
+    /*margin-right: 5px;*/
+    display: flex;
+    justify-content: space-between;
+    /*box-sizing: border-box;*/
+}
+.modal-form form>div>input,
+.modal-form form>div>select{
+    width: 100%;
+    border-radius: 5px;
+    border: 1px  rgba(132,139,200,0.18) solid;
+}
+.modal-footer{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: row;
+    gap: 15px;
+}
+.table{
+    width: 900px;
+}
+.table table{
+    margin-top: 2rem;
+    background: #fff;
+    width: 100%;
+    border-radius: 2rem;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow:0 2rem 3rem rgba(132,139,200,0.18);
+    /*border-spacing: 20px;*/
+}
+
+.table table tbody td{
+    height: 2.8rem;
+    border-bottom: 1px solid rgba(132,139,200,0.18);
+    color: #677483;
+}
+.table > tbody:nth-child(2) > tr:nth-child(1){
+    text-align: center;
+}
+.table table thead th,
+.table table tbody td{
+    padding: 10px;
+}
+.table table tbody tr:last-child td{
+    border: none;
+}
+
+.primary{
+    background: #7380ec;
+}
+.danger{
+    background: #ff7782;
+
+}
+.success{
+    background: #41f1b6;
+}
+.warning{
+    background: #ffbb55;
+}
+
+.main-container .add-new{
+    border-radius: 6px;
+    background: #fff;
+    border: 2px dashed #2b2b2b;
+}
+.main-container .add-new span{
+    margin: 5px;
+}
+.main-container a span {
+    margin: 2px;
+    cursor: pointer;
+}
+.main-container a span.edit{
+    color: #ffbb55;
+}
+.main-container a span.delete{
+    color: #ff7782;
+
+}
+
+
