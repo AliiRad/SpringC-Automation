@@ -10,7 +10,7 @@ public class PagesController {
 
     @RequestMapping("/attachment")
     public ModelAndView showAttachmentPage(ModelAndView modelAndView){
-        modelAndView.addObject("Attachment",new Attachment());
+        modelAndView.addObject("attachment",new Attachment());
         modelAndView.setViewName("attachment/attachmentUpload");
         return modelAndView;
     }

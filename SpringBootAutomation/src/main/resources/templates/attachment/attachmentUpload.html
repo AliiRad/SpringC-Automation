@@ -6,7 +6,7 @@ xmlns:th="http://www.thymeleaf.org">
 </head>
 <body>
 <h1>Upload File</h1>
-<form th:fragment="attachmentUploadForm(name,caption)"  action="/upload" method="post" enctype="multipart/form-data" th:object="${Attachment}">
+<form th:fragment="attachmentUploadForm(name,caption)"  action="/upload" method="post" enctype="multipart/form-data" th:object="${attachment}">
     <input type="text" th:id="${name}" name="name" placeholder="Enter file name" th:field="*{fileName}">
     <input type="file" name="file" accept=".pdf,.jpg,.jpeg,.bmp" th:field="*{content}" />
     <input type="text" th:id="${caption}" name="caption" placeholder="Enter Caption" th:field="*{caption}">
