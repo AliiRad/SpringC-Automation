@@ -63,219 +63,183 @@ this is contact html page
 
 
 
-<!--    &lt;!&ndash;Save Modal&ndash;&gt;-->
-<!--    <div class="modal fade" id="addModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--        <form th:action="@{/person/save}" method="post" th:object="${person}" >-->
-<!--            <div class="modal-dialog" role="document">-->
-<!--                <div class="modal-content">-->
-
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Person </h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-
-
-<!--                    <div class="modal-body">-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="firstName__add__person" class="col-form-label">Name :</label>-->
-<!--                            <input type="text" class="form-control" id="firstName__add__person"  th:value="${person.name}" th:field="*{name}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>-->
-<!--                        </div>-->
 
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="lastName__add__person" class="col-form-label">Family :</label>-->
-<!--                            <input type="text" class="form-control" id="lastName__add__person"  th:value="${person.lastname}" th:field="*{lastname}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Invalid Family !</span>-->
-<!--                        </div>-->
+    <!--Save Modal-->
+    <div class="modal fade" id="addModalContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:action="@{/contact/save}" method="post" th:object="${contact}" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Contact </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="fathersName__add__person" class="col-form-label">Father Name :</label>-->
-<!--                            <input type="text" class="form-control" id="fathersName__add__person"  th:value="${person.fathersName}" th:field="*{fathersName}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('fathersName')}" th:errors="*{fathersName}">Invalid Father Name !</span>-->
-<!--                        </div>-->
+                    <div class="modal-body">
 
-<!--                        `-->
-<!--                        <div class="mb-3">-->
-<!--                            <label for="username__add__person" class="col-form-label">Username :</label>-->
-<!--                            <input type="text" class="form-control" id="username__add__person"  th:value="${person.username}" th:field="*{username}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid Username !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="password__add__person" class="col-form-label">Password :</label>-->
-<!--                            <input type="password" class="form-control" id="password__add__person"  th:value="${person.password}" th:field="*{password}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid Password !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="certificateID__add__person" class="col-form-label">Certificate ID :</label>-->
-<!--                            <input type="text" class="form-control" id="certificateID__add__person"  th:value="${person.certificateID}" th:field="*{certificateID}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('certificateID')}" th:errors="*{certificateID}">Invalid Certificate ID !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="nationalId__add__person" class="col-form-label">National ID :</label>-->
-<!--                            <input type="text" class="form-control" id="nationalId__add__person"  th:value="${person.nationalId}" th:field="*{nationalId}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}">Invalid National ID !</span>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                            <label for="title__add__contact" class="col-form-label">Title :</label>
+                            <input type="text" class="form-control" id="title__add__contact"  th:value="${contact.title}" th:field="*{title}">
+                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid title !</span>
+                        </div>
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="birthdate__add__person" class="col-form-label">Birthdate :</label>-->
-<!--                            <input type="date" class="form-control" id="birthdate__add__person"  th:value="${person.birthdate}" th:field="*{birthdate}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Invalid Birthdate !</span>-->
-<!--                        </div>-->
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="gender__add__person" class="col-form-label">Gender :</label>-->
-<!--                            <select class="form-select" aria-label="Default select example" id="gender__add__person" name="gender" th:value="${person.gender}" th:field="*{gender}">-->
-<!--                                <option selected disabled value="-1">Choose Your Gender</option>-->
-<!--                                <option value="Male">Male</option>-->
-<!--                                <option value="Female">Female</option>-->
-<!--                            </select>-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Invalid gender !</span>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                            <label for="province__add__contact" class="col-form-label">province :</label>
+                            <input type="text" class="form-control" id="province__add__contact" th:value="${contact.province}" th:field="*{province}">
+                            <span class="error" th:if="${#fields.hasErrors('province')}" th:errors="*{province}">Invalid province !</span>
+                        </div>
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="marriageStatus__add__person" class="col-form-label">Marriage Status :</label>-->
-<!--                            <select class="form-select" aria-label="Default select example" id="marriageStatus__add__person" name="marriageStatus" th:value="${person.marriageStatus}" th:field="*{marriageStatus}">-->
-<!--                                <option selected disabled value="-1">Choose Your Marriage Status</option>-->
-<!--                                <option value="Single">Single</option>-->
-<!--                                <option value="Married">Married</option>-->
-<!--                            </select>-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                        <div class="mb-3">
+                            <label for="city__add__contact" class="col-form-label">city:</label>
+                            <input type="text" class="form-control" id="city__add__contact" th:value="${contact.city}" th:field="*{city}">
+                            <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{province}">Invalid city !</span>
+                        </div>
 
 
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                        <button type="submit" class="btn btn-primary">Save</button>-->
-<!--                    </div>-->
+                        <div class="mb-3">
+                            <label for="fullAddress__add__contact" class="col-form-label">fullAddress:</label>
+                            <input type="text" class="form-control" id="fullAddress__add__contact" th:value="${contact.city}" th:field="*{fullAddress}">
+                            <span class="error" th:if="${#fields.hasErrors('fullAddress')}" th:errors="*{fullAddress}">Invalid fullAddress !</span>
+                        </div>
 
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
 
-<!--    </div>-->
-<!--    &lt;!&ndash;Save Modal&ndash;&gt;-->
+
+                        <div class="mb-3">
+                            <label for="postalCode__add__contact" class="col-form-label">postalCode:</label>
+                            <input type="text" class="form-control" id="postalCode__add__contact" th:value="${contact.postalCode}" th:field="*{postalCode}">
+                            <span class="error" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">Invalid postalCode !</span>
+                        </div>
 
 
 
 
-<!--    &lt;!&ndash;Edit Modal&ndash;&gt;-->
-<!--    <div   class="modal fade" id="editModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--        <form th:object="${person}" id="editFormPerson" th:action="@{/person/edit}" method="post">-->
-<!--            <div class="modal-dialog" role="document">-->
-<!--                <div class="modal-content">-->
-
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="edit__modal__title__person">Edit Modal</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-
-
-<!--                    <div class="modal-body">-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="id__edit__person" class="col-form-label">ID :</label>-->
-<!--                            <input type="text" class="form-control" id="id__edit__person" name="id" readonly>-->
-<!--                        </div>-->
-
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="firstName__edit__person" class="col-form-label">Name :</label>-->
-<!--                            <input type="text" class="form-control" id="firstName__edit__person" name="name" th:value="${person.name}" th:field="*{name}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                            <label for="phoneNumber__add__contact" class="col-form-label">phoneNumber:</label>
+                            <input type="text" class="form-control" id="phoneNumber__add__contact" th:value="${contact.phoneNumber}" th:field="*{phoneNumber}">
+                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Invalid phoneNumber !</span>
+                        </div>
 
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="lastName__edit__person" class="col-form-label">Family :</label>-->
-<!--                            <input type="text" class="form-control" id="lastName__edit__person" name="lastname" th:value="${person.lastname}" th:field="*{lastname}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Invalid Family !</span>-->
-<!--                        </div>-->
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="fathersName__edit__person" class="col-form-label">Father Name :</label>-->
-<!--                            <input type="text" class="form-control" id="fathersName__edit__person" name="fathersName" th:value="${person.fathersName}" th:field="*{fathersName}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('fathersName')}" th:errors="*{fathersName}">Invalid Father Name !</span>-->
-<!--                        </div>-->
-
-<!--                        `-->
-<!--                        <div class="mb-3">-->
-<!--                            <label for="username__edit__person" class="col-form-label">Username :</label>-->
-<!--                            <input type="text" class="form-control" id="username__edit__person" name="username" th:value="${person.username}" th:field="*{username}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid Username !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="password__edit__person" class="col-form-label">Password :</label>-->
-<!--                            <input type="password" class="form-control" id="password__edit__person" name="password" th:value="${person.password}" th:field="*{password}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid Password !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="certificateID__edit__person" class="col-form-label">Certificate ID :</label>-->
-<!--                            <input type="text" class="form-control" id="certificateID__edit__person" name="certificateID" th:value="${person.certificateID}" th:field="*{certificateID}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('certificateID')}" th:errors="*{certificateID}">Invalid Certificate ID !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="nationalId__edit__person" class="col-form-label">National ID :</label>-->
-<!--                            <input type="text" class="form-control" id="nationalId__edit__person" name="nationalId" th:value="${person.nationalId}" th:field="*{nationalId}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}">Invalid National ID !</span>-->
-<!--                        </div>-->
+                        <div class="mb-3">
+                            <label for="ticketTimeStamp__add__contact" class="col-form-label">ticketTimeStamp:</label>
+                            <input type="text" class="form-control" id="ticketTimeStamp__add__contact" th:value="${contact.ticketTimeStamp}" th:field="*{ticketTimeStamp}">
+                            <span class="error" th:if="${#fields.hasErrors('ticketTimeStamp')}" th:errors="*{ticketTimeStamp}">Invalid ticketTimeStamp !</span>
+                        </div>
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="birthdate__edit__person" class="col-form-label">Birthdate :</label>-->
-<!--                            <input type="date" class="form-control" id="birthdate__edit__person" name="birthdate" th:value="${person.birthdate}" th:field="*{birthdate}">-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Invalid Birthdate !</span>-->
-<!--                        </div>-->
-
-<!--                        <div class="mb-3">-->
-<!--                            <label for="gender__edit__person" class="col-form-label">Gender :</label>-->
-<!--                            <select class="form-select" aria-label="Default select example" id="gender__edit__person" name="gender" th:value="${person.gender}" th:field="*{gender}">-->
-<!--                                <option selected disabled value="-1">Choose Your Gender</option>-->
-<!--                                <option value="Male">Male</option>-->
-<!--                                <option value="Female">Female</option>-->
-<!--                            </select>-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Invalid gender !</span>-->
-<!--                        </div>-->
+                    </div>
 
 
-<!--                        <div class="mb-3">-->
-<!--                            <label for="marriageStatus__edit__person" class="col-form-label">Marriage Status :</label>-->
-<!--                            <select class="form-select" aria-label="Default select example" id="marriageStatus__edit__person" name="marriageStatus" th:value="${person.marriageStatus}" th:field="*{marriageStatus}">-->
-<!--                                <option selected disabled value="-1">Choose Your Marriage Status</option>-->
-<!--                                <option value="Single">Single</option>-->
-<!--                                <option value="Married">Married</option>-->
-<!--                            </select>-->
-<!--                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>-->
-<!--                        </div>-->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
 
-<!--                    </div>-->
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Save Modal-->
 
 
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                        <button type="submit" class="btn btn-primary" id="submitEditModal__person" onclick="edit()">Save Edited</button>-->
-<!--                    </div>-->
 
-<!--                </div>-->
-<!--            </div>-->
-<!--        </form>-->
 
-<!--    </div>-->
-<!--    &lt;!&ndash;Edit Modal&ndash;&gt;-->
+
+
+        <!--Edit Modal-->
+    <div   class="modal fade" id="editModalContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form th:object="${contact}" id="editFormContact" th:action="@{/contact/edit}" method="post">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit__modal__title__jobs">edit New Contact </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body">
+
+                        <div class="mb-3">
+                            <label for="title__edit__contact" class="col-form-label">Title :</label>
+                            <input type="text" class="form-control" id="title__edit__contact"  th:value="${contact.title}" th:field="*{title}">
+                            <span class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Invalid title !</span>
+                        </div>
+
+
+
+                        <div class="mb-3">
+                            <label for="province__edit__contact" class="col-form-label">province :</label>
+                            <input type="text" class="form-control" id="province__edit__contact" th:value="${contact.province}" th:field="*{province}">
+                            <span class="error" th:if="${#fields.hasErrors('province')}" th:errors="*{province}">Invalid province !</span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="city__edit__contact" class="col-form-label">city:</label>
+                            <input type="text" class="form-control" id="city__edit__contact" th:value="${contact.city}" th:field="*{city}">
+                            <span class="error" th:if="${#fields.hasErrors('city')}" th:errors="*{province}">Invalid city !</span>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="fullAddress__edit__contact" class="col-form-label">fullAddress:</label>
+                            <input type="text" class="form-control" id="fullAddress__edit__contact" th:value="${contact.city}" th:field="*{fullAddress}">
+                            <span class="error" th:if="${#fields.hasErrors('fullAddress')}" th:errors="*{fullAddress}">Invalid fullAddress !</span>
+                        </div>
+
+
+
+                        <div class="mb-3">
+                            <label for="postalCode__edit__contact" class="col-form-label">postalCode:</label>
+                            <input type="text" class="form-control" id="postalCode__edit__contact" th:value="${contact.postalCode}" th:field="*{postalCode}">
+                            <span class="error" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">Invalid postalCode !</span>
+                        </div>
+
+
+
+
+                        <div class="mb-3">
+                            <label for="phoneNumber__edit__contact" class="col-form-label">phoneNumber:</label>
+                            <input type="text" class="form-control" id="phoneNumber__edit__contact" th:value="${contact.phoneNumber}" th:field="*{phoneNumber}">
+                            <span class="error" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Invalid phoneNumber !</span>
+                        </div>
+
+
+
+
+
+                        <div class="mb-3">
+                            <label for="ticketTimeStamp__edit__contact" class="col-form-label">ticketTimeStamp:</label>
+                            <input type="text" class="form-control" id="ticketTimeStamp__edit__contact" th:value="${contact.ticketTimeStamp}" th:field="*{ticketTimeStamp}">
+                            <span class="error" th:if="${#fields.hasErrors('ticketTimeStamp')}" th:errors="*{ticketTimeStamp}">Invalid ticketTimeStamp !</span>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="submitEditModal__person" onclick="edit()">Save Edited</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+    </div>
+    <!--Edit Modal-->
 
 
 
