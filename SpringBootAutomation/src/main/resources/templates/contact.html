@@ -61,11 +61,6 @@ this is contact html page
     </table>
     <!--Person Table-->
 
-
-
-
-
-
     <!--Save Modal-->
     <div class="modal fade" id="addModalContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form th:action="@{/contact/save}" method="post" th:object="${contact}" >
@@ -150,6 +145,22 @@ this is contact html page
 
     </div>
     <!--Save Modal-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -243,68 +254,39 @@ this is contact html page
 
 
 
-<!--    &lt;!&ndash;Delete Modal &ndash;&gt;-->
-<!--    <div class="modal fade" id="deleteModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >-->
+    <!--Delete Modal -->
+    <div class="modal fade" id="deleteModalContact" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
 
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title" id="exampleModalLabelPerson"> Confirm The Deletion !</h5>-->
-<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <div class="mb-3" th:object="${person}">-->
-<!--                        <label for="id__delete__person" class="col-form-label">ID :</label>-->
-<!--                        <input type="text" class="form-control" id="id__delete__person" name="id" readonly  th:text="${person.id}">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>-->
-<!--                    <button  class="btn btn-danger" id="deleteConfirmButtonPerson"  th:onclick="'deleteById(\'' + ${person.id} + '\')'">Delete</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabelContact"> Confirm The Deletion !</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" th:object="${Contact}">
+                        <label for="id__delete__person" class="col-form-label">ID :</label>
+                        <input type="text" class="form-control" id="id__delete__person" name="id" readonly  th:text="${contact.id}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
+                    <button  class="btn btn-danger" id="deleteConfirmButtonContact"  th:onclick="'deleteById(\'' + ${contact.id} + '\')'">Delete</button>
+                </div>
+            </div>
+        </div>
 
-<!--    </div>-->
-<!--    &lt;!&ndash;Delete Modal &ndash;&gt;-->
-
+    </div>
 
 
+</div>
 
 
-<!--    &lt;!&ndash;    &lt;!&ndash;Delete Modal &ndash;&gt;&ndash;&gt;-->
-<!--    &lt;!&ndash;    <div class="modal fade" id="deleteModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >&ndash;&gt;-->
-<!--    &lt;!&ndash;        <form th:object="${person}">&ndash;&gt;-->
-<!--    &lt;!&ndash;            <div class="modal-dialog">&ndash;&gt;-->
-<!--    &lt;!&ndash;                <div class="modal-content">&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <div class="modal-header">&ndash;&gt;-->
-<!--    &lt;!&ndash;                        <h5 class="modal-title" id="exampleModalLabelPerson"> Confirm The Deletion !</h5>&ndash;&gt;-->
-<!--    &lt;!&ndash;                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <div class="modal-body">&ndash;&gt;-->
-<!--    &lt;!&ndash;                        <div class="mb-3">&ndash;&gt;-->
-<!--    &lt;!&ndash;                            <label for="id__delete__person" class="col-form-label">ID :</label>&ndash;&gt;-->
-<!--    &lt;!&ndash;                            <input type="text" class="form-control" id="id__delete__person" name="id" readonly  th:value="${person.id}" th:field="*{id}">&ndash;&gt;-->
-<!--    &lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    <div class="modal-footer">&ndash;&gt;-->
-<!--    &lt;!&ndash;                        <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;                        <button  class="btn btn-danger" id="deleteConfirmButtonPerson"  th:onclick="'deleteById(\'' + ${person.id} + '\')'">Delete</button>&ndash;&gt;-->
-<!--    &lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </form>&ndash;&gt;-->
-<!--    &lt;!&ndash;    </div>&ndash;&gt;-->
-<!--    &lt;!&ndash;    &lt;!&ndash;Delete Modal &ndash;&gt;&ndash;&gt;-->
-
-<!--</div>-->
-
-
-<!--<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>-->
-<!--<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>-->
-<!--<script type="text/javascript" th:src="@{js/person.js}" src="/js/jobs.js" ></script>-->
-<!--<script type="text/javascript" th:src="@{js/person.js}" src="/js/account.js"></script>-->
-<!--<script type="text/javascript" th:src="@{js/person.js}" src="/js/salary.js"></script>-->
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" th:src="@{js/contact.js}" src="/js/jobs.js" ></script>
+<script type="text/javascript" th:src="@{js/contact.js}" src="/js/account.js"></script>
+<script type="text/javascript" th:src="@{js/contact.js}" src="/js/salary.js"></script>
 
 </body>
 </html>
