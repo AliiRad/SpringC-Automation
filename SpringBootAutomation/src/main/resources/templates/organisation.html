@@ -1,11 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organisation</title>
+    <link rel="stylesheet" href="/css/finance.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
 </head>
 <body>
-    Organisation Template
+<div class="container">
+
+    <div id="save-modal">
+        <div id="save-modal-content">
+            <form id="save-form" th:object="${organisation}">
+                <div th:insert="fragments/organisation-fragments :: organisationFormContent(organisationNumber, cardNumber, person, bankAndBranch, organisationType, organisationStatus)"></div>
+            </form>
+            <button onclick="save('/organisation', 'save-form')">Save</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <br><br>
+
+    <button onclick="addNew()">Add New</button>
+
+    <br><br>
+
+    <table class="table table-striped" th:if="${organisationList != null and #lists.size(organisationList) > 0}">
+        <thead>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+        <!-- <th>organisation Type</th>
+        <th>organisation Status</th> -->
+        <th>Description</th>
+        <th>SectionList</th>
+        </thead>
+
+        <tbody>
+        <tr th:each="organisation : ${organisationList}">
+            <td th:text="${organisation.id}"></td>
+            <td th:text="${organisation.title}"></td>
+            <td th:text="${organisation.name}"></td>
+            <td th:text="${organisation.address}"></td>
+            <td th:text="${organisation.phonenumber}"></td>
+            <td th:text="${organisation.description}"></td>
+            <td th:text="${organisation.sectionlist}"></td>
+            <td>
+                <button th:data-name="${organisation.id}"
+                        th:onclick="|getDataForEdit('/organisation', this.getAttribute('data-name'))|"> Edit
+                </button>
+                <button th:data-name="${organisation.id}" th:onclick="|remove('/organisation', this.getAttribute('data-name'))|">
+                    Remove
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="edit-modal">
+        <div id="edit-modal-content">
+            <form id="edit-form">
+                <label for="id"></label><input type="text" id="id" name="id" hidden="hidden">
+                <div th:replace="fragments/organisation-fragments :: organisationFormContent(organisationNumber, cardNumber, person, bankAndBranch, organisationType, organisationStatus)"></div>
+            </form>
+            <button onclick="edit('/organisation', 'edit-form')">Edit</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
+
+            <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
+
+            <div class="popup-message" id="popup-message">
+                <span class="text text-1 popup-title" id="popup-title"></span>
+                <span class="text text-2 popup-text" id="popup-text"></span>
+            </div>
+        </div>
+        <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+        <div class="popup-progress" id="popup-progress"></div>
+    </div>
+</div>
+
+<!-- <script src="/js/organisation.js"></script> -->
+<script src="/js/js.js"></script>
+<script src="/js/popup.js"></script>
+
 </body>
 </html>
