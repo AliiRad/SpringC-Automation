@@ -19,12 +19,12 @@
         <label th:for="${account_person}">Select Person:</label>
         <select th:id="${account_person}" name="account_person">
             <option>Select</option>
-            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.username}"></option>
+            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.user.username}"></option>
         </select>
         <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
     </div>
 
-    <label th:for="${bankAndBranch}">Select Person:</label>
+    <label th:for="${bankAndBranch}">Select Bank And Branch:</label>
     <input type="text" th:id="${bankAndBranch}" name="bankAndBranch" placeholder="Bank And Branch">
     <!--    <span class="error" th:if="${#fields.hasErrors('bankAndBranch')}" th:errors="*{bankAndBranch}">Invalid Bank And Branch!</span>-->
 

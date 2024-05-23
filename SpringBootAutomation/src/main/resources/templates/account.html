@@ -24,7 +24,7 @@
     <div id="save-modal" class="modal">
         <div id="save-modal-content" class="modal-body">
             <form id="save-form" th:object="${account}">
-                <div th:insert="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
+                <div th:replace="~{fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)}"></div>
             </form>
 
             <div class="modal-footer">
@@ -52,7 +52,7 @@
             <td th:text="${account.id}"></td>
             <td th:text="${account.accountNumber}"></td>
             <td th:text="${account.cardNumber}"></td>
-            <td th:text="${account.person.username}"></td>
+            <td th:text="${account.person.user.username}"></td>
             <td th:text="${account.bankAndBranch}"></td>
             <td th:text="${account.accountType}"></td>
             <td th:text="${account.accountStatus}"></td>
@@ -74,7 +74,7 @@
                 <form id="edit-form">
                     <label for="id"></label>
                     <input type="text" id="id" name="id" hidden="hidden">
-                    <div th:replace="fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)"></div>
+                    <div th:replace="~{fragments/account-fragments :: accountFormContent(accountNumber, cardNumber, person, bankAndBranch, accountType, accountStatus)}"></div>
                 </form>
             </div>
             <div class="modal-footer">

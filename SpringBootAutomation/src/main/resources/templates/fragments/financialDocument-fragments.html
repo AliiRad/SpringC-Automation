@@ -50,7 +50,7 @@
         <label for="financialDocument_person">Select Person:</label>
         <select id="financialDocument_person" name="financialDocument_person">
             <option>Select</option>
-            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.username}"></option>
+            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.user.username}"></option>
         </select>
         <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
     </div>

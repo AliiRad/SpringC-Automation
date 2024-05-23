@@ -5,6 +5,8 @@ import com.home.SpringBootAutomation.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDate;
+
 @SpringBootApplication
 public class SpringBootAutomationApplication {
     private static PersonRepository personRepository;
@@ -40,9 +42,9 @@ public class SpringBootAutomationApplication {
         ticketGroupRepository.save(ticketGroup2);
 
 
-        Person person1 = Person.builder().name("admin").lastname("admin").certificateId("1231231231").nationalId("1231231231").fathersName("admin").build();
+        Person person1 = Person.builder().name("admin").lastname("admin").certificateId("1231231231").nationalId("1231231231").fathersName("admin").birthdate(LocalDate.now()).build();
         personRepository.save(person1);
-        Person person2 = Person.builder().name("user").lastname("user").certificateId("1231231232").nationalId("1231231232").fathersName("user").build();
+        Person person2 = Person.builder().name("user").lastname("user").certificateId("1231231232").nationalId("1231231232").fathersName("user").birthdate(LocalDate.now()).build();
         personRepository.save(person2);
 
         User user1 = User.builder().username("admin").password("admin").build();

@@ -49,7 +49,7 @@
             <td th:text="${bankTransaction.id}"></td>
             <td th:text="${bankTransaction.financialDocument.amount}"></td>
             <td th:text="${bankTransaction.financialDocument.id}"></td>
-            <td th:text="${bankTransaction.person.username}"></td>
+            <td th:text="${bankTransaction.person.user.username}"></td>
             <td>
                 <button th:data-name="${bankTransaction.id}"
                         th:onclick="|getDataForEdit('/bankTransaction', this.getAttribute('data-name'))|"> Edit

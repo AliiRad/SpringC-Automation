@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.Gson;
 import com.home.SpringBootAutomation.enums.AccountStatus;
 import com.home.SpringBootAutomation.enums.AccountType;
@@ -60,7 +61,8 @@ public class Account {
     @Column(name = "account_deleted")
     private boolean deleted;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "account")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<FinancialDocument> financialDocuments;
 
     @Override

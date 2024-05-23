@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.home.SpringBootAutomation.enums.GenderEn;
 import com.home.SpringBootAutomation.enums.MarriageEn;
 import jakarta.persistence.*;
@@ -63,7 +64,7 @@ public class Person {
     private String nationalId;
 
     @Column(name = "person_birthdate")
-    @Past(message = "Invalid Birth Date")
+//    @Past(message = "Invalid Birth Date")
     private LocalDate birthdate;
 
     @Column(name = "person_gender")
@@ -106,4 +107,10 @@ public class Person {
     public String toString() {
         return new Gson().toJson(this);
     }
+
+//    Gson gson = new GsonBuilder().setPrettyPrinting()
+//            .excludeFieldsWithoutExposeAnnotation()
+//            .create();
+
+//    https://stackoverflow.com/questions/72769462/failed-making-field-property-accessible-either-change-its-visibility-or-write
 }
