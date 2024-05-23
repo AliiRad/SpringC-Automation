@@ -43,6 +43,4 @@ public class TicketGroup {
 //    @JsonIgnore
 //    @OneToMany( mappedBy = "group" , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY )
 //    private List<Ticket> ticketList;
-
-
 }

@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.home.SpringBootAutomation.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -68,8 +69,8 @@ public class Ticket {
     @JoinColumn(name = "ticket_group_id")
     private TicketGroup group;
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_response_id")
+    @JsonIgnore
+    @OneToOne(mappedBy = "ticket",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Response response;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
