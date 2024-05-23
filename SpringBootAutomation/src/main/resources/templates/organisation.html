@@ -13,21 +13,9 @@
 <body>
 <div class="container">
 
-    <div id="save-modal">
-        <div id="save-modal-content">
-            <form id="save-form" th:object="${organisation}">
-                <div th:insert="fragments/organisation-fragments :: organisationFormContent(organisationNumber, cardNumber, person, bankAndBranch, organisationType, organisationStatus)"></div>
-            </form>
-            <button onclick="save('/organisation', 'save-form')">Save</button>
-            <button onclick="closeModal()">Close</button>
-        </div>
-    </div>
-
     <br><br>
 
     <button onclick="addNew()">Add New</button>
-
-    <br><br>
 
     <table class="table table-striped" th:if="${organisationList != null and #lists.size(organisationList) > 0}">
         <thead>
@@ -63,42 +51,8 @@
         </tbody>
     </table>
 
-    <div id="edit-modal">
-        <div id="edit-modal-content">
-            <form id="edit-form">
-                <label for="id"></label><input type="text" id="id" name="id" hidden="hidden">
-                <div th:replace="fragments/organisation-fragments :: organisationFormContent(organisationNumber, cardNumber, person, bankAndBranch, organisationType, organisationStatus)"></div>
-            </form>
-            <button onclick="edit('/organisation', 'edit-form')">Edit</button>
-            <button onclick="closeModal()">Close</button>
-        </div>
-    </div>
+    <br><br>
 
-    <div class="popup" id="popup">
-        <div class="popup-content" id="popup-content">
-            <span class="material-symbols-outlined popup-info" id="popup-info">
-                check_circle
-            </span>
-
-            <span class="material-symbols-outlined popup-error" id="popup-error">
-                error
-            </span>
-
-            <div class="popup-message" id="popup-message">
-                <span class="text text-1 popup-title" id="popup-title"></span>
-                <span class="text text-2 popup-text" id="popup-text"></span>
-            </div>
-        </div>
-        <span class="material-symbols-outlined popup-close" id="popup-close">
-            close
-        </span>
-        <div class="popup-progress" id="popup-progress"></div>
-    </div>
-</div>
-
-<!-- <script src="/js/organisation.js"></script> -->
-<script src="/js/js.js"></script>
-<script src="/js/popup.js"></script>
 
 </body>
 </html>
