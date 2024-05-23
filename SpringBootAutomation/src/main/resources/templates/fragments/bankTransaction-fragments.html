@@ -8,13 +8,13 @@
 <div th:fragment="bankTransactionFormContent(balance, financialDocument, person)">
 
     <div>
-        <label for="balance">Balance:</label>
-        <input type="number" id="balance" name="balance" th:value="${balance}" readonly />
+        <label th:for="${balance}">Balance:</label>
+        <input type="number" th:id="${balance}" name="balance" th:value="${balance}" readonly />
     </div>
 
     <div>
-        <label for="bankTransaction_financialDocument">Select Person:</label>
-        <select id="bankTransaction_financialDocument" name="bankTransaction_financialDocument">
+        <label th:for="${bankTransaction_financialDocument}">Select Person:</label>
+        <select th:id="${bankTransaction_financialDocument}" name="bankTransaction_financialDocument">
             <option>Select</option>
             <option th:each="financialDocument : ${financialDocumentList}" th:value="${financialDocument.id}" th:text="${financialDocument.id}"></option>
         </select>
@@ -22,8 +22,8 @@
     </div>
 
     <div>
-        <label for="bankTransaction_person">Select Person:</label>
-        <select id="bankTransaction_person" name="bankTransaction_person">
+        <label th:for="${bankTransaction_person}">Select Person:</label>
+        <select th:id="${bankTransaction_person}" name="bankTransaction_person">
             <option>Select</option>
             <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.username}"></option>
         </select>

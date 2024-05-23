@@ -7,15 +7,15 @@
 <body>
 <div th:fragment="financialDocumentFormContent(documentDate, amount, behalf, account, transactionType, documentType, person)">
 
-    <!--        <label for="documentDate">Document Date:</label>-->
+            <label th:for="${documentDate}">Document Date:</label>
     <input type="date" th:id="${documentDate}" name="documentDate" placeholder="Document Date">
     <!--        <span class="error" th:if="${#fields.hasErrors('documentDate')}" th:errors="*{documentDate}">Invalid Document Date!</span>-->
 
-    <!--    <label for="amount">Amount:</label>-->
+        <label th:for="${amount}">Amount:</label>
     <input type="number" th:id="${amount}" name="amount" placeholder="Amount">
     <!--    <span class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid Amount!</span>-->
 
-    <!--    <label for="behalf">Behalf:</label>-->
+        <label th:for="${behalf}">Behalf:</label>
     <input type="text" th:id="${behalf}" name="behalf" placeholder="Behalf">
     <!--    <span class="error" th:if="${#fields.hasErrors('behalf')}" th:errors="*{behalf}">Invalid Behalf!</span>-->
 

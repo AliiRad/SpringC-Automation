@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>FinancialDocument</title>
-    <link rel="stylesheet" href="/css/finance.css">
+    <link rel="stylesheet" href="/css/form.css">
     <link rel="stylesheet" href="/css/popup.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
           rel="stylesheet">
@@ -13,21 +13,27 @@
 <body>
 <div class="container">
 
-    <div id="save-modal">
-        <div id="save-modal-content">
+    <button class="add-new" onclick="addNew()">
+     <span class="material-symbols-outlined">
+        add
+    </span>
+    </button>
+
+    <br><br>
+
+    <div id="save-modal" class="modal">
+        <div id="save-modal-content" class="modal-body">
             <form id="save-form" th:object="${financialDocument}">
                 <div th:insert="fragments/financialDocument-fragments :: financialDocumentFormContent(documentDate, amount, behalf, account, transactionType, documentType, person)"></div>
             </form>
-            <button onclick="save('/financialDocument', 'save-form')">Save</button>
-            <button onclick="closeModal()">Close</button>
+
+            <div class="modal-footer">
+                <button onclick="save('/financialDocument' ,'save-form')">Save</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
         </div>
     </div>
-
-    <br><br>
-
-    <button onclick="addNew()">Add New</button>
-
-    <br><br>
 
     <table class="table table-striped"
            th:if="${financialDocumentList != null and #lists.size(financialDocumentList) > 0}">
@@ -57,7 +63,8 @@
                 <button th:data-name="${financialDocument.id}"
                         th:onclick="|getDataForEdit('/financialDocument', this.getAttribute('data-name'))|"> Edit
                 </button>
-                <button th:data-name="${financialDocument.id}" th:onclick="|remove('/financialDocument', this.getAttribute('data-name'))|">
+                <button th:data-name="${financialDocument.id}"
+                        th:onclick="|remove('/financialDocument', this.getAttribute('data-name'))|">
                     Remove
                 </button>
             </td>
@@ -65,14 +72,19 @@
         </tbody>
     </table>
 
-    <div id="edit-modal">
-        <div id="edit-modal-content">
-            <form id="edit-form">
-                <label for="id"></label><input type="text" id="id" name="id" hidden="hidden">
-                <div th:replace="fragments/financialDocument-fragments :: financialDocumentFormContent(documentDate, amount, behalf, account, transactionType, documentType, person)"></div>
-            </form>
-            <button onclick="edit('/financialDocument', 'edit-form')">Edit</button>
-            <button onclick="closeModal()">Close</button>
+    <div id="edit-modal" class="modal">
+        <div id="edit-modal-content" class="modal-body">
+            <div class="modal-form">
+                <form id="edit-form">
+                    <label for="id"></label>
+                    <input type="text" id="id" name="id" hidden="hidden">
+                    <div th:replace="fragments/financialDocument-fragments :: financialDocumentFormContent(documentDate, amount, behalf, account, transactionType, documentType, person)"></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="edit('/financialDocument' , 'edit-form')">Edit</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
         </div>
     </div>
 
