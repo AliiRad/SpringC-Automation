@@ -68,6 +68,10 @@ public class SalaryController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Salary remove(Model model, @PathVariable Long id) throws NoContentException {
+        Salary salary = salaryService.findById(id);
+        salary.setYear(Integer.valueOf(salary.getYear() + id.toString()));
+        salaryService.update(salary);
+
         return salaryService.logicalRemove(id);
     }
 
@@ -91,5 +95,6 @@ public class SalaryController {
     public List<Salary> findAll(Model model) throws NoContentException {
         return salaryService.findAll();
     }
+
 
 }
