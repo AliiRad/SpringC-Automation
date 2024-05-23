@@ -2,343 +2,146 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Person</title>
-    <link rel="stylesheet" href="webjars/bootstrap/5.3.2/css/bootstrap.css">
+    <title>Person CRUD System</title>
+    <link rel="stylesheet" href="/css/form.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
+
 </head>
 <body>
+<!--Main Container-->
 
-<div class="container">
+<div class="main-container">
 
-    <div class="navBar">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModalPerson">Add New Person</button>
-    </div>
+    <!--Add New Button-->
+    <button class="add-new" onclick="addNew()">
+    <span class="material-symbols-outlined">
+        add
+    </span>
+    </button>
+    <!--Add New Button-->
 
-
-    <!--Person Table-->
-    <table class="table table-striped" th:if="${#lists.size(personList) > 0}">
-        <thead>
-        <!--        <tr>-->
-        <th>Id</th>
-        <th>Name</th>
-        <th>Family</th>
-        <th>Father Name</th>
-        <th>Username</th>
-        <th>Certificate ID</th>
-        <th>National Id</th>
-        <th>Birthdate</th>
-        <th>Gender</th>
-        <th>Marriage Status</th>
-        <!--        <th>Jobs</th>-->
-        <!--        <th>Skills</th>-->
-        <th>Status</th>
-        <th>Edit</th>
-        <th>Delete</th>
-        <!--        </tr>-->
-        </thead>
-
-        <tbody>
-        <tr th:each="person :${personList}">
-            <td th:text="${person.id}"></td>
-            <td th:text="${person.name}"></td>
-            <td th:text="${person.lastname}"></td>
-            <td th:text="${person.fathersName}"></td>
-            <td th:text="${person.username}"></td>
-            <td th:text="${person.certificateID}"></td>
-            <td th:text="${person.nationalId}"></td>
-            <td th:text="${person.birthdate}"></td>
-            <td th:text="${person.gender}"></td>
-            <td th:text="${person.marriageStatus}"></td>
-            <!--            <td th:text="${person.skills}"></td>-->
-            <!--            <td th:text="${person.jobs}"></td>-->
-            <td>Active</td>
-            <td><a class="btn btn-warning editButtonJobs" th:onclick="'findById(\'' + ${person.id} + '\')'">Edit</a></td>
-            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'deleteById(\'' + ${person.id} + '\')'">Delete</a></td>
-            <!--            <td><a class="btn btn-danger deleteButtonJobs" th:onclick="'openDeleteModal(\'' + ${person.id} + '\')'">Delete</a></td>-->
-        </tr>
-        </tbody>
-    </table>
-    <!--Person Table-->
-
-
+    <br><br>
 
     <!--Save Modal-->
-    <div class="modal fade" id="addModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:action="@{/person/save}" method="post" th:object="${person}" >
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div id="save-modal" class="modal">
+        <div id="save-modal-content" class="modal-body">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="save__modal__title__jobs">Save New Person </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="firstName__add__person" class="col-form-label">Name :</label>
-                            <input type="text" class="form-control" id="firstName__add__person"  th:value="${person.name}" th:field="*{name}">
-                            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>
-                        </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="lastName__add__person" class="col-form-label">Family :</label>
-                            <input type="text" class="form-control" id="lastName__add__person"  th:value="${person.lastname}" th:field="*{lastname}">
-                            <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Invalid Family !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="fathersName__add__person" class="col-form-label">Father Name :</label>
-                            <input type="text" class="form-control" id="fathersName__add__person"  th:value="${person.fathersName}" th:field="*{fathersName}">
-                            <span class="error" th:if="${#fields.hasErrors('fathersName')}" th:errors="*{fathersName}">Invalid Father Name !</span>
-                        </div>
-
-                        `
-                        <div class="mb-3">
-                            <label for="username__add__person" class="col-form-label">Username :</label>
-                            <input type="text" class="form-control" id="username__add__person"  th:value="${person.username}" th:field="*{username}">
-                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid Username !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password__add__person" class="col-form-label">Password :</label>
-                            <input type="password" class="form-control" id="password__add__person"  th:value="${person.password}" th:field="*{password}">
-                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid Password !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="certificateID__add__person" class="col-form-label">Certificate ID :</label>
-                            <input type="text" class="form-control" id="certificateID__add__person"  th:value="${person.certificateID}" th:field="*{certificateID}">
-                            <span class="error" th:if="${#fields.hasErrors('certificateID')}" th:errors="*{certificateID}">Invalid Certificate ID !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nationalId__add__person" class="col-form-label">National ID :</label>
-                            <input type="text" class="form-control" id="nationalId__add__person"  th:value="${person.nationalId}" th:field="*{nationalId}">
-                            <span class="error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}">Invalid National ID !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="birthdate__add__person" class="col-form-label">Birthdate :</label>
-                            <input type="date" class="form-control" id="birthdate__add__person"  th:value="${person.birthdate}" th:field="*{birthdate}">
-                            <span class="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Invalid Birthdate !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="gender__add__person" class="col-form-label">Gender :</label>
-                            <select class="form-select" aria-label="Default select example" id="gender__add__person" name="gender" th:value="${person.gender}" th:field="*{gender}">
-                                <option selected disabled value="-1">Choose Your Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Invalid gender !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="marriageStatus__add__person" class="col-form-label">Marriage Status :</label>
-                            <select class="form-select" aria-label="Default select example" id="marriageStatus__add__person" name="marriageStatus" th:value="${person.marriageStatus}" th:field="*{marriageStatus}">
-                                <option selected disabled value="-1">Choose Your Marriage Status</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>
-                        </div>
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
-                    </div>
-
-                </div>
+            <div class="modal-form">
+                <form id="save-form" th:object="${person}">
+                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('name' ,'lastname' ,'fathersName' , 'certificateId' , 'nationalId' ,'birthdate' ,'gender' ,'marriageStatus')}"></div>
+                </form>
             </div>
-        </form>
 
+            <div class="modal-footer">
+                <button onclick="save('/person' ,'save-form')">Save</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
     </div>
     <!--Save Modal-->
 
+    <!--Table-->
+    <div class="table" th:if="${personList.size() > 0}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Family</th>
+                <th>Fathers Name</th>
+                <th>Certification ID</th>
+                <th>National ID</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+                <th>Marriage Status</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
 
+            <tbody>
+            <tr th:each="person :${personList}">
+                <td th:text="${person.id}"></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.lastname}"></td>
+                <td th:text="${person.fathersName}"></td>
+                <td th:text="${person.certificateID}"></td>
+                <td th:text="${person.nationalID}"></td>
+                <td th:text="${person.birthdate}"></td>
+                <td th:text="${person.gender}"></td>
+                <td th:text="${person.marriageStatus}"></td>
+                <td>Active</td>
+                <td><a  th:data-name="${person.id}" th:onclick="|findById('/person', this.getAttribute('data-name'))|">
+                        <span class="material-symbols-outlined edit" >
+                            edit
+                        </span>
+                </a></td>
+                <td><a th:data-name="${person.id}" th:onclick="|remove('/person', this.getAttribute('data-name'))|">
+                        <span class="material-symbols-outlined delete">
+                            delete
+                        </span>
+                </a></td>
+            </tr>
 
+            </tbody>
+        </table>
+    </div>
+    <!--Table-->
 
     <!--Edit Modal-->
-    <div   class="modal fade" id="editModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form th:object="${person}" id="editFormPerson" th:action="@{/person/edit}" method="post">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div id="edit-modal" class="modal">
+        <div id="edit-modal-content" class="modal-body">
 
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit__modal__title__person">Edit Modal</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-
-                    <div class="modal-body">
-
-                        <div class="mb-3">
-                            <label for="id__edit__person" class="col-form-label">ID :</label>
-                            <input type="text" class="form-control" id="id__edit__person" name="id" readonly>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="firstName__edit__person" class="col-form-label">Name :</label>
-                            <input type="text" class="form-control" id="firstName__edit__person" name="name" th:value="${person.name}" th:field="*{name}">
-                            <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>
-                        </div>
-
-
-
-                        <div class="mb-3">
-                            <label for="lastName__edit__person" class="col-form-label">Family :</label>
-                            <input type="text" class="form-control" id="lastName__edit__person" name="lastname" th:value="${person.lastname}" th:field="*{lastname}">
-                            <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Invalid Family !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="fathersName__edit__person" class="col-form-label">Father Name :</label>
-                            <input type="text" class="form-control" id="fathersName__edit__person" name="fathersName" th:value="${person.fathersName}" th:field="*{fathersName}">
-                            <span class="error" th:if="${#fields.hasErrors('fathersName')}" th:errors="*{fathersName}">Invalid Father Name !</span>
-                        </div>
-
-                        `
-                        <div class="mb-3">
-                            <label for="username__edit__person" class="col-form-label">Username :</label>
-                            <input type="text" class="form-control" id="username__edit__person" name="username" th:value="${person.username}" th:field="*{username}">
-                            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Invalid Username !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password__edit__person" class="col-form-label">Password :</label>
-                            <input type="password" class="form-control" id="password__edit__person" name="password" th:value="${person.password}" th:field="*{password}">
-                            <span class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Invalid Password !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="certificateID__edit__person" class="col-form-label">Certificate ID :</label>
-                            <input type="text" class="form-control" id="certificateID__edit__person" name="certificateID" th:value="${person.certificateID}" th:field="*{certificateID}">
-                            <span class="error" th:if="${#fields.hasErrors('certificateID')}" th:errors="*{certificateID}">Invalid Certificate ID !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="nationalId__edit__person" class="col-form-label">National ID :</label>
-                            <input type="text" class="form-control" id="nationalId__edit__person" name="nationalId" th:value="${person.nationalId}" th:field="*{nationalId}">
-                            <span class="error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalId}">Invalid National ID !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="birthdate__edit__person" class="col-form-label">Birthdate :</label>
-                            <input type="date" class="form-control" id="birthdate__edit__person" name="birthdate" th:value="${person.birthdate}" th:field="*{birthdate}">
-                            <span class="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Invalid Birthdate !</span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="gender__edit__person" class="col-form-label">Gender :</label>
-                            <select class="form-select" aria-label="Default select example" id="gender__edit__person" name="gender" th:value="${person.gender}" th:field="*{gender}">
-                                <option selected disabled value="-1">Choose Your Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Invalid gender !</span>
-                        </div>
-
-
-                        <div class="mb-3">
-                            <label for="marriageStatus__edit__person" class="col-form-label">Marriage Status :</label>
-                            <select class="form-select" aria-label="Default select example" id="marriageStatus__edit__person" name="marriageStatus" th:value="${person.marriageStatus}" th:field="*{marriageStatus}">
-                                <option selected disabled value="-1">Choose Your Marriage Status</option>
-                                <option value="Single">Single</option>
-                                <option value="Married">Married</option>
-                            </select>
-                            <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>
-                        </div>
-
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="submitEditModal__person" onclick="edit()">Save Edited</button>
-                    </div>
-
-                </div>
+            <div class="modal-form">
+                <form id="edit-form">
+                    <input type="text" id="id" name="id" hidden="hidden">
+                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('edit-name' ,'edit-lastname' ,'edit-fathersName' , 'edit-certificateId' , 'edit-nationalId' ,'edit-birthdate' ,'edit-gender' ,'edit-marriageStatus')}"></div>
+                </form>
             </div>
-        </form>
 
+            <div class="modal-footer">
+                <button onclick="edit('/person' , 'edit-form')">Edit</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
     </div>
     <!--Edit Modal-->
 
+    <!--PopUp-->
+    <div class="popup" id="popup">
+        <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
 
+            <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
 
-    <!--Delete Modal -->
-    <div class="modal fade" id="deleteModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabelPerson"> Confirm The Deletion !</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-3" th:object="${person}">
-                        <label for="id__delete__person" class="col-form-label">ID :</label>
-                        <input type="text" class="form-control" id="id__delete__person" name="id" readonly  th:text="${person.id}">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>
-                    <button  class="btn btn-danger" id="deleteConfirmButtonPerson"  th:onclick="'deleteById(\'' + ${person.id} + '\')'">Delete</button>
-                </div>
+            <div class="popup-message" id="popup-message">
+                <span class="text text-1 popup-title" id="popup-title"></span>
+                <span class="text text-2 popup-text" id="popup-text"></span>
             </div>
         </div>
-
+        <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+        <div class="popup-progress" id="popup-progress"></div>
     </div>
-    <!--Delete Modal -->
-
-
-
-
-
-    <!--    &lt;!&ndash;Delete Modal &ndash;&gt;-->
-    <!--    <div class="modal fade" id="deleteModalPerson" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >-->
-    <!--        <form th:object="${person}">-->
-    <!--            <div class="modal-dialog">-->
-    <!--                <div class="modal-content">-->
-    <!--                    <div class="modal-header">-->
-    <!--                        <h5 class="modal-title" id="exampleModalLabelPerson"> Confirm The Deletion !</h5>-->
-    <!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-    <!--                    </div>-->
-    <!--                    <div class="modal-body">-->
-    <!--                        <div class="mb-3">-->
-    <!--                            <label for="id__delete__person" class="col-form-label">ID :</label>-->
-    <!--                            <input type="text" class="form-control" id="id__delete__person" name="id" readonly  th:value="${person.id}" th:field="*{id}">-->
-    <!--                        </div>-->
-    <!--                    </div>-->
-    <!--                    <div class="modal-footer">-->
-    <!--                        <button  type="button" class="btn btn-success" data-bs-dismiss="modal" >Cancel</button>-->
-    <!--                        <button  class="btn btn-danger" id="deleteConfirmButtonPerson"  th:onclick="'deleteById(\'' + ${person.id} + '\')'">Delete</button>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--        </form>-->
-    <!--    </div>-->
-    <!--    &lt;!&ndash;Delete Modal &ndash;&gt;-->
-
+    <!--PopUp-->
 </div>
+<!--Main Container-->
 
 
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{js/person.js}" src="/js/jobs.js" ></script>
-<script type="text/javascript" th:src="@{js/person.js}" src="/js/account.js"></script>
-<script type="text/javascript" th:src="@{js/person.js}" src="/js/salary.js"></script>
-
+<script src="/js/person.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/popup.js"></script>
 </body>
 </html>

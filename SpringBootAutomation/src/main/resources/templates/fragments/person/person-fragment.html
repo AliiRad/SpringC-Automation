@@ -1,147 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Person CRUD System</title>
-    <link rel="stylesheet" href="/css/jobs.css">
-    <link rel="stylesheet" href="/css/popup.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
-
+    <meta charset="UTF-8">
+    <title>Person Form Fragment</title>
 </head>
 <body>
-<!--Main Container-->
 
-<div class="main-container">
+<div th:fragment="personFormContent(name ,lastname ,fathersName , certificateId , nationalId ,birthdate ,gender ,marriageStatus) ">
 
-    <!--Add New Button-->
-    <button class="add-new" onclick="addNew()">
-    <span class="material-symbols-outlined">
-        add
-    </span>
-    </button>
-    <!--Add New Button-->
+    <label th:for="${name}">Name :</label>
+    <input type="text" th:id="${name}" name="name" placeholder="Name">
+    <!--    <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Invalid Name !</span>-->
+    <br>
+    <label th:for="${lastname}">Family :</label>
+    <input type="text" th:id="${lastname}" name="lastname" placeholder="Family">
+    <!--    <span class="error" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Invalid Family !</span>-->
+    <br>
 
-    <br><br>
 
-    <!--Save Modal-->
-    <div id="save-modal" class="modal">
-        <div id="save-modal-content" class="modal-body">
+    <label th:for="${fathersName}">Father Name :</label>
+    <input type="text" th:id="${fathersName}" name="fathersName" placeholder="Fathers Name">
+    <!--    <span class="error" th:if="${#fields.hasErrors('fathersName')}" th:errors="*{fathersName}">Invalid Father Name !</span>-->
+    <br>
 
-            <div class="modal-form">
-                <form id="save-form" th:object="${person}">
-                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('name' ,'lastname' ,'fathersName' , 'certificateID' , 'nationalID' ,'birthdate' ,'gender' ,'marriageStatus')}"></div>
-                </form>
-            </div>
 
-            <div class="modal-footer">
-                <button onclick="save('/person' ,'save-form')">Save</button>
-                <button onclick="closeModal()">Cancel</button>
-            </div>
+    <label th:for="${certificateId}">Certificate ID :</label>
+    <input type="text" th:id="${certificateId}" name="certificateID" placeholder="Certificate ID">
+    <!--    <span class="error" th:if="${#fields.hasErrors('certificateID')}" th:errors="*{certificateID}">Invalid Certificate ID !</span>-->
 
-        </div>
-    </div>
-    <!--Save Modal-->
+    <br>
 
-    <!--Table-->
-    <div class="table" th:if="${personList.size() > 0}">
-        <table>
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Family</th>
-                <th>Fathers Name</th>
-                <th>Certification ID</th>
-                <th>National ID</th>
-                <th>Birthdate</th>
-                <th>Gender</th>
-                <th>Marriage Status</th>
-                <th>Status</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
+    <label th:for="${nationalId}">National ID :</label>
+    <input type="text" th:id="${nationalId}" name="nationalID" placeholder="National ID">
+    <!--    <span class="error" th:if="${#fields.hasErrors('nationalId')}" th:errors="*{nationalID}">Invalid National ID !</span>-->
+    <br>
 
-            <tbody>
-            <tr th:each="person :${personList}">
-                <td th:text="${person.id}"></td>
-                <td th:text="${person.name}"></td>
-                <td th:text="${person.lastname}"></td>
-                <td th:text="${person.fathersName}"></td>
-                <td th:text="${person.certificateID}"></td>
-                <td th:text="${person.nationalID}"></td>
-                <td th:text="${person.birthdate}"></td>
-                <td th:text="${person.gender}"></td>
-                <td th:text="${person.marriageStatus}"></td>
-                <td>Active</td>
-                <td><a  th:data-name="${person.id}" th:onclick="|findById('/person', this.getAttribute('data-name'))|">
-                        <span class="material-symbols-outlined edit" >
-                            edit
-                        </span>
-                </a></td>
-                <td><a th:data-name="${person.id}" th:onclick="|remove('/person', this.getAttribute('data-name'))|">
-                        <span class="material-symbols-outlined delete">
-                            delete
-                        </span>
-                </a></td>
-            </tr>
 
-            </tbody>
-        </table>
-    </div>
-    <!--Table-->
+    <label th:for="${birthdate}">Birthdate :</label>
+    <input type="date" th:id="${birthdate}" name="birthdate" placeholder="Birthdate">
+    <!--    <span class="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}">Invalid Birthdate !</span>-->
+    <br>
 
-    <!--Edit Modal-->
-    <div id="edit-modal" class="modal">
-        <div id="edit-modal-content" class="modal-body">
 
-            <div class="modal-form">
-                <form id="edit-form">
-                    <input type="text" id="id" name="id" hidden="hidden">
-                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('edit-name' ,'edit-lastname' ,'edit-fathersName' , 'edit-certificateID' , 'edit-nationalID' ,'edit-birthdate' ,'edit-gender' ,'edit-marriageStatus')}"></div>
-                </form>
-            </div>
+    <label th:for="${gender}">Gender :</label>
+    <select th:id="${gender}" name="gender">
+        <option selected disabled value="-1">Choose Your Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+    </select>
+    <!--    <span class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Invalid gender !</span>-->
+    <br>
 
-            <div class="modal-footer">
-                <button onclick="edit('/person' , 'edit-form')">Edit</button>
-                <button onclick="closeModal()">Cancel</button>
-            </div>
 
-        </div>
-    </div>
-    <!--Edit Modal-->
+    <label th:for="${marriageStatus}">Marriage Status :</label>
+    <select th:id="${marriageStatus}" name="marriageStatus">
+        <option selected disabled value="-1">Choose Your Marriage Status</option>
+        <option value="Single">Single</option>
+        <option value="Married">Married</option>
+    </select>
+    <!--    <span class="error" th:if="${#fields.hasErrors('marriageStatus')}" th:errors="*{marriageStatus}">Invalid Marriage Status !</span>-->
+    <br>
 
-    <!--PopUp-->
-    <div class="popup" id="popup">
-        <div class="popup-content" id="popup-content">
-            <span class="material-symbols-outlined popup-info" id="popup-info">
-                check_circle
-            </span>
 
-            <span class="material-symbols-outlined popup-error" id="popup-error">
-                error
-            </span>
-
-            <div class="popup-message" id="popup-message">
-                <span class="text text-1 popup-title" id="popup-title"></span>
-                <span class="text text-2 popup-text" id="popup-text"></span>
-            </div>
-        </div>
-        <span class="material-symbols-outlined popup-close" id="popup-close">
-            close
-        </span>
-        <div class="popup-progress" id="popup-progress"></div>
-    </div>
-    <!--PopUp-->
 </div>
-<!--Main Container-->
 
-
-<script src="/js/person.js"></script>
-<script src="/js/template.js"></script>
-<script src="/js/popup.js"></script>
 </body>
 </html>
