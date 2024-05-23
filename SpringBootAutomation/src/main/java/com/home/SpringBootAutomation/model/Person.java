@@ -65,7 +65,7 @@ public class Person {
     @Pattern(regexp = "^[0-9]{1,12}$", message = "Invalid Certificate ID")
     @Size(min = 8, max = 12, message = " Certificate ID must be between 8 and 12 characters")
     @NotBlank(message = "Should Not Be Null")
-    private String certificateID;
+    private String certificateId;
 
     @Column(name = "person_national_id", length = 10, unique = true)
     @Pattern(regexp = "^[0-9]{1,10}$", message = "Invalid National ID")
