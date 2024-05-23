@@ -60,7 +60,7 @@ public class Person {
     @Pattern(regexp = "^[0-9]{1,10}$", message = "Invalid National ID")
     @Size(min = 1, max = 10, message = " National ID must be between 1 and 10 characters")
     @NotBlank(message = "Should Not Be Null")
-    private String nationalID;
+    private String nationalId;
 
     @Column(name = "person_birthdate")
     @Past(message = "Invalid Birth Date")
@@ -78,26 +78,26 @@ public class Person {
     @Column(name = "person_deleted")
     private boolean deleted;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-//    private List<Jobs> jobs;
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-//    private List<Skills> skills;
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-//    private List<DrivingLicence> drivingLicences;
-//
-//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-//    private Military military;
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-//    private List<Account> accounts;
-//
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-//    private List<FinancialDocument> financialDocuments;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-//    private List<BankTransaction> bankTransactions;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    private List<Jobs> jobs;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    private List<Skills> skills;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    private List<DrivingLicence> drivingLicences;
+
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
+    private Military military;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    private List<Account> accounts;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+    private List<FinancialDocument> financialDocuments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+    private List<BankTransaction> bankTransactions;
 
     @Override
     public String toString() {

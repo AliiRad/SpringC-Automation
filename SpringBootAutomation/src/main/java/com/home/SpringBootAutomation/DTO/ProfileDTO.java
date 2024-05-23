@@ -8,11 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * Every Other Model should be Implemented in here
- * Getters and Setters 
- * https://www.javatpoint.com/dto-java
- */
 
 @Component
 @NoArgsConstructor
@@ -23,9 +18,9 @@ public class ProfileDTO {
 	private String name;
 	private String lastname;
 	private String username;
-	private Long personID;
-	private String nationalID;
-	private String certificateID;
+	private Long personId;
+	private String nationalId;
+	private String certificateId;
 	private LocalDate birthdate;
 
 	
