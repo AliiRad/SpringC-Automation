@@ -114,6 +114,8 @@ public class TicketController {
     public List<Ticket> showTicketsByTitle( @PathVariable("title") String  title) throws NoContentException {
         log.info("Controller-Ticket-Get-FindByTitle");
         List<Ticket> ticketList = ticketServiceImp.findByTitle(title);
+        System.out.println("TicketList");
+        System.out.println(ticketList);
         return ((ticketList.isEmpty()) ? null : ticketList);
     }
 
@@ -131,11 +133,11 @@ public class TicketController {
 
     @PostMapping("/{id}")
     @ResponseBody
-    public Ticket setStatus(@PathVariable Long id) throws NoContentException{
+    public void setStatus(@PathVariable Long id) throws NoContentException{
         log.info("Controller-Ticket-Post-SetStatus");
         Ticket ticket = ticketServiceImp.findById(id);
         ticket.setStatus(Status.seen);
-        return ticketServiceImp.edit(ticket);
+        ticketServiceImp.edit(ticket);
     }
 
 

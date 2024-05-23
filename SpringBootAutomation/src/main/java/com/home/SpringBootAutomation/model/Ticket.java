@@ -65,6 +65,7 @@ public class Ticket {
 //    @JoinColumn(name = "ticket_applicant_id")
 //    private User applicant;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_group_id")
     private TicketGroup group;
@@ -73,6 +74,7 @@ public class Ticket {
     @OneToOne(mappedBy = "ticket",cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     private Response response;
 
+    @JsonIgnore
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_section_id")
     private Section section;

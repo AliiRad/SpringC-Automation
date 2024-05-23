@@ -3,6 +3,10 @@ async function handleSelectChangeResponse(event) {
     findTicket(selectedTitle)
 }
 
+async function handleSelectChangeResponseStatus(event) {
+    const selectedTitle = event.target.value;
+    setStatus(selectedTitle)
+}
 async function findTicket(title) {
     const response = await fetch("/ticket/title/" + title);
     let select = document.getElementById("ticket__add__response");
@@ -19,7 +23,7 @@ async function findTicket(title) {
     data.forEach(function (item) {
         let opt = document.createElement('option');
         opt.value = item.id;
-        opt.innerHTML = item.group.title + " - " + item.title + " :\n " + item.request ;
+        opt.innerHTML = item.title + " :\n " + item.request;
         select.appendChild(opt);
     });
 
@@ -115,13 +119,9 @@ function closeModal() {
     saveModal.style.display = "none"
 }
 
-async function setStatus(id){
-    const response =await fetch('/ticket/' + id  , {
-        method :"post"
+async function setStatus(id) {
+    const response = await fetch('/ticket/' + id, {
+        method: "post"
     });
-    if (!response.ok) {
-        showErrorPopup('/ticket', response.status, (await response.text()).toString());
-    } else {
-        showInfoPopup('/ticket', response.status, (await response.text()).toString());
-    }
+
 }
