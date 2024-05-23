@@ -26,6 +26,25 @@ public class Contact {
     @Column(name = "contact_id")
     private Long id;
 
+    @Column(name = "contact_email", columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}", message = "Invalid Email")
+    @Size(min = 3, message = "Email musst be between 3 and 50 characters")
+    @NotBlank(message = "should not Be Null")
+    private String email;
+
+    @Column(name = "contact_telegram", columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}", message = "Invalid telegram")
+    @Size(min = 3, message = "telegram musst be between 3 and 50 characters")
+    @NotBlank(message = "should not Be Null")
+    private String telegram;
+
+    @Column(name = "contact_instagram", columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Z\\s]{3,50}", message = "Invalid instagram")
+    @Size(min = 3, message = "instagram musst be between 3 and 50 characters")
+    @NotBlank(message = "should not Be Null")
+    private String instagram;
+
+
     @Column(name = "contact_title",columnDefinition = "NVARCHAR2(50)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
     @Size(min = 3, max = 50, message = "Title must be between 3 and 50 characters")
