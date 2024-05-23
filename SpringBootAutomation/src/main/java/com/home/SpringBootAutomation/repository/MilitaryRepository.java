@@ -33,7 +33,7 @@ public interface MilitaryRepository extends JpaRepository<Military,Long> {
     //:todo:Does it true?
     List<Military> findMilitaryByPersonNameAndPersonLastnameAndDeletedFalse(String name,String lastname);
 
-    Optional<Military>findMilitariesByPersonNationalIDAndDeletedFalse(String nationalId);
+    Optional<Military>findMilitariesByPersonNationalIdAndDeletedFalse(String nationalId);
 
 
     Long countByDeletedFalse();
