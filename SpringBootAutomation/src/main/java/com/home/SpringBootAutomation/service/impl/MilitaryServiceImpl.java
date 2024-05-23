@@ -118,7 +118,7 @@ public class MilitaryServiceImpl implements MilitaryService {
 
     public Military findByNationalId(String nationalId) throws NoContentException {
         log.info("Service-Military-findByNationalId : " + nationalId);
-        Optional<Person> person = personRepository.findPersonByNationalIDAndDeletedFalse(nationalId);
+        Optional<Person> person = personRepository.findPersonByNationalIdAndDeletedFalse(nationalId);
         if (person.isPresent()) {
             return person.get().getMilitary();
         } else {
