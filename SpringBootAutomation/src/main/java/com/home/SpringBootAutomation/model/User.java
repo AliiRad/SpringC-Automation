@@ -46,6 +46,9 @@ public class User {
     @Column(name = "user_deleted")
     private boolean deleted;
 
+    @OneToOne
+    private Person person;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY , mappedBy = "user")
     private Set<Role> roleSet ;
 }

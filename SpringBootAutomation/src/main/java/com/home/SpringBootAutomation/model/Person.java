@@ -99,6 +99,9 @@ public class Person {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
     private List<BankTransaction> bankTransactions;
 
+    @OneToOne(mappedBy = "person")
+    private User user;
+
     @Override
     public String toString() {
         return new Gson().toJson(this);
