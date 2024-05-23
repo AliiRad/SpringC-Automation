@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping(value = "/military")
 
 public class MilitaryController {
-    private MilitaryServiceImpl militaryService;
+    private final MilitaryServiceImpl militaryService;
 
     public MilitaryController(MilitaryServiceImpl militaryService) {
         this.militaryService = militaryService;
