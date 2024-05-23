@@ -23,6 +23,7 @@ public class SpringBootAutomationApplication {
         Person person1 = Person.builder().name("admin").lastname("admin").certificateId("1231231231").nationalId("1231231231").fathersName("admin").build();
         personRepository.save(person1);
         Person person2 = Person.builder().name("user").lastname("user").certificateId("1231231232").nationalId("1231231232").fathersName("user").build();
+        personRepository.save(person2);
 
         User user1 = User.builder().username("admin").password("admin").build();
         user1.setPerson(person1);
