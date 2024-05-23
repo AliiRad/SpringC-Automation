@@ -23,6 +23,7 @@
         <!--    <th>Applicant</th>-->
         <th>Request</th>
         <th>Group</th>
+        <th>Section</th>
         <th>Status</th>
         <th>Deleted</th>
         <th>Operation</th>
@@ -38,6 +39,7 @@
             <td th:if="${ticket.group.parent != null}"
                 th:text="${ticket.group.parent.title} + ' - ' + ${ticket.group.title}"></td>
             <td th:unless="${ticket.group.parent != null}" th:text="${ticket.group.title}"></td>
+            <td th:text="${ticket.section.title}"></td>
             <td th:text="${ticket.status}"  id="status"></td>
             <td th:text="${ticket.deleted}"></td>
             <td>
@@ -56,7 +58,7 @@
     <div id="saveModalTicket">
         <div id="saveModalTicketContent">
             <form id="saveFormTicket">
-                <div th:replace="~{/fragments/ticket-fragments :: ticketSaveFormContent('title','request','group') }"></div>
+                <div th:replace="~{/fragments/ticket-fragments :: ticketSaveFormContent('section','title','request','group') }"></div>
             </form>
             <div class="modal-footer">
             <button onclick="save()" class="save-button">Save</button>
@@ -70,7 +72,7 @@
             <form id="editFormTicket">
                 <label for="id__edit__ticket" >ID :</label>
                 <input type="text" id="id__edit__ticket" name="id" readonly>
-                <div th:replace="~{/fragments/ticket-fragments :: ticketEditFormContent('title','request','status','ticketTimeStamp','status','state','group')}"></div>
+                <div th:replace="~{/fragments/ticket-fragments :: ticketEditFormContent('section','title','request','status','ticketTimeStamp','status','state','group')}"></div>
             </form>
             <div class="modal-footer">
             <button onclick="edit()" class="edit-button">Edit</button>
