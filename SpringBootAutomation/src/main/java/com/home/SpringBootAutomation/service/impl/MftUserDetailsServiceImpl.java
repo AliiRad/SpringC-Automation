@@ -12,10 +12,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
-public class MftUserDetailsService implements UserDetailsService {
+public class MftUserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
-    public MftUserDetailsService(UserRepository userRepository) {
+    public MftUserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
