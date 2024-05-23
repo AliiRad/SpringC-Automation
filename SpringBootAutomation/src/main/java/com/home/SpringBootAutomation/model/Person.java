@@ -49,17 +49,6 @@ public class Person {
     @NotBlank(message = "Should Not Be Null")
     private String fathersName;
 
-    @Column(name = "person_user_name",  columnDefinition = "VARCHAR2(30)", unique = true)
-    @Pattern(regexp = "^[a-zA-Z1-9\\s]{3,30}$", message = "Invalid Username")
-    @Size(min = 3, max = 30, message = "Username must be between 3 and 30 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String username;
-
-    @Column(name = "person_password", columnDefinition = "VARCHAR2(30)")
-    @Pattern(regexp = "^[a-zA-Z1-9\\s]{8,30}$", message = "Invalid Password")
-    @Size(min = 8, max = 30, message = "Password must be between 8 and 30 characters")
-    @NotBlank(message = "Should Not Be Null")
-    private String password;
 
     @Column(name = "person_certificate_id", length = 12)
     @Pattern(regexp = "^[0-9]{1,12}$", message = "Invalid Certificate ID")
@@ -71,7 +60,7 @@ public class Person {
     @Pattern(regexp = "^[0-9]{1,10}$", message = "Invalid National ID")
     @Size(min = 1, max = 10, message = " National ID must be between 1 and 10 characters")
     @NotBlank(message = "Should Not Be Null")
-    private String nationalId;
+    private String nationalID;
 
     @Column(name = "person_birthdate")
     @Past(message = "Invalid Birth Date")
@@ -85,29 +74,30 @@ public class Person {
     @Enumerated(EnumType.ORDINAL)
     private MarriageEn marriageStatus;
 
+    //    @JsonIgnore
     @Column(name = "person_deleted")
     private boolean deleted;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Jobs> jobs;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Skills> skills;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-    private List<DrivingLicence> drivingLicences;
-
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
-    private Military military;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-    private List<Account> accounts;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
-    private List<FinancialDocument> financialDocuments;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
-    private List<BankTransaction> bankTransactions;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+//    private List<Jobs> jobs;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+//    private List<Skills> skills;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+//    private List<DrivingLicence> drivingLicences;
+//
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "person")
+//    private Military military;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+//    private List<Account> accounts;
+//
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "person")
+//    private List<FinancialDocument> financialDocuments;
+//
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "person")
+//    private List<BankTransaction> bankTransactions;
 
     @Override
     public String toString() {

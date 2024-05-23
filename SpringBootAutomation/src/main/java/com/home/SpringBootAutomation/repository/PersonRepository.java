@@ -17,7 +17,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     @Query("update personEntity oo set oo.deleted=true where oo.id=:id")
     void logicalRemove(Long id);
 
-    //fetches all active persons .
     List<Person> findPersonByDeletedFalse();
 
     Optional<Person> findPersonByIdAndDeletedFalse(Long id);
@@ -25,9 +24,6 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name, String lastName);
 
     Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId);
-
-    Optional<Person> findPersonByUsernameAndDeletedFalse(String UserName);
-
 
     Long countByDeletedFalse();
 

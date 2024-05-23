@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Person CRUD System</title>
+    <link rel="stylesheet" href="/css/jobs.css">
+    <link rel="stylesheet" href="/css/popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,1,200"/>
+
+</head>
+<body>
+<!--Main Container-->
+
+<div class="main-container">
+
+    <!--Add New Button-->
+    <button class="add-new" onclick="addNew()">
+    <span class="material-symbols-outlined">
+        add
+    </span>
+    </button>
+    <!--Add New Button-->
+
+    <br><br>
+
+    <!--Save Modal-->
+    <div id="save-modal" class="modal">
+        <div id="save-modal-content" class="modal-body">
+
+            <div class="modal-form">
+                <form id="save-form" th:object="${person}">
+                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('name' ,'lastname' ,'fathersName' , 'certificateID' , 'nationalID' ,'birthdate' ,'gender' ,'marriageStatus')}"></div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button onclick="save('/person' ,'save-form')">Save</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+    <!--Save Modal-->
+
+    <!--Table-->
+    <div class="table" th:if="${personList.size() > 0}">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Family</th>
+                <th>Fathers Name</th>
+                <th>Certification ID</th>
+                <th>National ID</th>
+                <th>Birthdate</th>
+                <th>Gender</th>
+                <th>Marriage Status</th>
+                <th>Status</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="person :${personList}">
+                <td th:text="${person.id}"></td>
+                <td th:text="${person.name}"></td>
+                <td th:text="${person.lastname}"></td>
+                <td th:text="${person.fathersName}"></td>
+                <td th:text="${person.certificateID}"></td>
+                <td th:text="${person.nationalID}"></td>
+                <td th:text="${person.birthdate}"></td>
+                <td th:text="${person.gender}"></td>
+                <td th:text="${person.marriageStatus}"></td>
+                <td>Active</td>
+                <td><a  th:data-name="${person.id}" th:onclick="|findById('/person', this.getAttribute('data-name'))|">
+                        <span class="material-symbols-outlined edit" >
+                            edit
+                        </span>
+                </a></td>
+                <td><a th:data-name="${person.id}" th:onclick="|remove('/person', this.getAttribute('data-name'))|">
+                        <span class="material-symbols-outlined delete">
+                            delete
+                        </span>
+                </a></td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--Table-->
+
+    <!--Edit Modal-->
+    <div id="edit-modal" class="modal">
+        <div id="edit-modal-content" class="modal-body">
+
+            <div class="modal-form">
+                <form id="edit-form">
+                    <input type="text" id="id" name="id" hidden="hidden">
+                    <div th:replace="~{/fragments/person/person-fragment :: personFormContent('edit-name' ,'edit-lastname' ,'edit-fathersName' , 'edit-certificateID' , 'edit-nationalID' ,'edit-birthdate' ,'edit-gender' ,'edit-marriageStatus')}"></div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button onclick="edit('/person' , 'edit-form')">Edit</button>
+                <button onclick="closeModal()">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+    <!--Edit Modal-->
+
+    <!--PopUp-->
+    <div class="popup" id="popup">
+        <div class="popup-content" id="popup-content">
+            <span class="material-symbols-outlined popup-info" id="popup-info">
+                check_circle
+            </span>
+
+            <span class="material-symbols-outlined popup-error" id="popup-error">
+                error
+            </span>
+
+            <div class="popup-message" id="popup-message">
+                <span class="text text-1 popup-title" id="popup-title"></span>
+                <span class="text text-2 popup-text" id="popup-text"></span>
+            </div>
+        </div>
+        <span class="material-symbols-outlined popup-close" id="popup-close">
+            close
+        </span>
+        <div class="popup-progress" id="popup-progress"></div>
+    </div>
+    <!--PopUp-->
+</div>
+<!--Main Container-->
+
+
+<script src="/js/person.js"></script>
+<script src="/js/template.js"></script>
+<script src="/js/popup.js"></script>
+</body>
+</html>

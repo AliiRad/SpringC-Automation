@@ -16,7 +16,8 @@ public interface PersonService {
     void logicalRemove(Long id) throws NoContentException;
 
     List<Person> findAll();
-   Optional<Person> findById(Long id) throws NoContentException;
+    Optional<Person> findById(Long id) throws NoContentException;
+
     Long getPersonsCount();
 
     Person logicalRemoveWithReturn(Long id) throws NoContentException;
@@ -26,8 +27,7 @@ public interface PersonService {
     List<Person> findPersonByDeletedFalse();
     Optional<Person> findPersonByIdAndDeletedFalse(Long id) throws NoContentException;
     List<Person> findPersonByNameAndLastnameAndDeletedFalse(String name , String lastName);
-    Optional<Person> findPersonByNationalIdAndDeletedFalse(String nationalId) throws NoContentException;
-    Optional<Person> findPersonByUserNameAndDeletedFalse(String UserName)throws NoContentException;
+    Optional<Person> findPersonByNationalIDAndDeletedFalse(String nationalId) throws NoContentException;
 
 
     Long countByDeletedFalse();

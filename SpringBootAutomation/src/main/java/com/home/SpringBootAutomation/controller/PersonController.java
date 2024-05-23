@@ -1,9 +1,12 @@
 package com.home.SpringBootAutomation.controller;
 
+import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.PersonService;
 import jakarta.validation.Valid;
+import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/person")
@@ -19,130 +23,73 @@ public class PersonController {
 
 
     private final PersonService service;
-
-    public PersonController(PersonService service) {
+    public PersonController(PersonService service){
         this.service = service;
     }
 
-    @PostMapping("/save")
-    public String save(@Valid Person person, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Person Save Failed ! --->" + result.getAllErrors());
-                return "person";
 
-            }
-            service.save(person);
-            log.info("Controller - Person Saved - Post Method ---->" + " person :" + person.toString());
-
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Person Saved successfully");
-            return "redirect:/person";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/person";
-        }
+    @RequestMapping(method = RequestMethod.GET)
+    public String personForm(Model model){
+        model.addAttribute("personList" , service.findPersonByDeletedFalse());
+        model.addAttribute("person" , new Person());
+        return "person";
     }
 
 
-    @PostMapping("/edit") //TODO: PutMapping
-    public String edit(@Valid Person person, BindingResult result, Model model) {
-        try {
-            if (result.hasErrors()) {
-                model.addAttribute("messageType", "error");
-                model.addAttribute("messageContent", result.getAllErrors().toString());
-                log.error("Controller - Person Edit Failed ! --->" + result.getAllErrors());
-                return "person";
-
-            }
-            service.update(person);
-            log.info("Controller - Person Edited - Put Method ---->" + " person :" + person.toString());
-
-            model.addAttribute("person", person);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Person Saved successfully");
-            return "redirect:/person";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "redirect:/person";
-
-
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Person save(Model model , @Valid Person person , BindingResult result){
+        if (result.hasErrors()){
+            throw new ValidationException(
+                    result
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage())
+                            .collect(Collectors.toList()).toString()
+            );
         }
+        return service.save(person);
     }
 
 
-    @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        try {
-//
-            service.logicalRemove(id);
-
-            log.info("The Person With Id :" + id + " Successfully Deleted");
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Person With Id : " + id + " Successfully Deleted .");
-            return "redirect:/person";
-
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-            //TODO: Maybe a 500 error page ?
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.PUT)
+    public Person edit(Model model , @Valid Person person , BindingResult result) throws NoContentException {
+        if (result.hasErrors()){
+            throw new ValidationException(
+                    result
+                            .getAllErrors()
+                            .stream()
+                            .map((event) -> event.getDefaultMessage())
+                            .collect(Collectors.toList()).toString()
+            );
         }
+        return service.update(person);
     }
 
-    @GetMapping
-    public String findAll(Model model) {
-        try {
-
-            List<Person> personList = service.findPersonByDeletedFalse();
-            log.info("Controller - Find Persons With Deleted False - Get Method");
-
-            model.addAttribute("person", new Person());
-            model.addAttribute("personList", personList);
-            model.addAttribute("messageType", "success");
-            model.addAttribute("messageContent", "Person List Is Not Empty");
-
-            return "person";
-
-
-        } catch (Exception e) {
-
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-            return "error-page";
-        }
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public Person remove(Model model, @PathVariable Long id) throws NoContentException {
+        return service.logicalRemoveWithReturn(id);
     }
 
-    @GetMapping("/findById/{id}")
-    public ResponseEntity<Optional<Person>> findById(@PathVariable("id") Long id, Model model) {
-        try {
 
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Optional<Person> findById(Model model, @PathVariable Long id) throws NoContentException {
 
-            Optional<Person> person = service.findPersonByIdAndDeletedFalse(id);
+        return service.findPersonByIdAndDeletedFalse(id);
+    }
 
-            return ResponseEntity.ok(person);
-        } catch (Exception e) {
+    @ResponseBody
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public List<Person> findAll(Model model){
 
-            log.error(e.getMessage());
-            model.addAttribute("messageType", "error");
-            model.addAttribute("messageContent", e.getMessage());
-
-            //TODO: return Error Page .
-
-            //return ResponseEntity.noContent();
-            return null;
-        }
-
+        return service.findPersonByDeletedFalse();
     }
 
 
