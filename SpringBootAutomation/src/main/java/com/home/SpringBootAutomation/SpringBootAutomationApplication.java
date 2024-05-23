@@ -1,13 +1,7 @@
 package com.home.SpringBootAutomation;
 
-import com.home.SpringBootAutomation.model.Organisation;
-import com.home.SpringBootAutomation.model.Person;
-import com.home.SpringBootAutomation.model.Section;
-import com.home.SpringBootAutomation.model.User;
-import com.home.SpringBootAutomation.repository.OrganisationRepository;
-import com.home.SpringBootAutomation.repository.PersonRepository;
-import com.home.SpringBootAutomation.repository.SectionRepository;
-import com.home.SpringBootAutomation.repository.UserRepository;
+import com.home.SpringBootAutomation.model.*;
+import com.home.SpringBootAutomation.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -18,17 +12,20 @@ public class SpringBootAutomationApplication {
     private static OrganisationRepository organisationRepository;
     private static SectionRepository sectionRepository;
 
-    public SpringBootAutomationApplication(PersonRepository personRepository,UserRepository userRepository, OrganisationRepository organisationRepository,SectionRepository sectionRepository) {
+    private static TicketGroupRepository ticketGroupRepository;
+
+    public SpringBootAutomationApplication(PersonRepository personRepository,UserRepository userRepository, OrganisationRepository organisationRepository,SectionRepository sectionRepository, TicketGroupRepository ticketGroupRepository) {
         this.personRepository = personRepository;
         this.userRepository = userRepository;
         this.organisationRepository = organisationRepository;
         this.sectionRepository = sectionRepository;
+        this.ticketGroupRepository = ticketGroupRepository;
     }
 
     public static void main(String[] args) {
         SpringApplication.run(SpringBootAutomationApplication.class, args);
 
-        Organisation organisation = Organisation.builder().name("mft").build();
+        Organisation organisation = Organisation.builder().name("mft").title("mft").build();
         organisationRepository.save(organisation);
 
         Section section1 = Section.builder().title("edari").organisation(organisation).build();
@@ -36,6 +33,11 @@ public class SpringBootAutomationApplication {
         sectionRepository.save(section1);
         sectionRepository.save(section2);
 
+        TicketGroup ticketGroup1 = TicketGroup.builder().title("mali").build();
+        ticketGroupRepository.save(ticketGroup1);
+
+        TicketGroup ticketGroup2 = TicketGroup.builder().title("hesabdari").parent(ticketGroup1).build();
+        ticketGroupRepository.save(ticketGroup2);
 
 
         Person person1 = Person.builder().name("admin").lastname("admin").certificateId("1231231231").nationalId("1231231231").fathersName("admin").build();

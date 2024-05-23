@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -44,6 +45,7 @@ public class Response {
     @Column(name = "response_deleted")
     private boolean deleted;
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "response_ticket_id")
     @NotNull
