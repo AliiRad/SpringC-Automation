@@ -3,6 +3,11 @@ function addNew(){
     modal.style.display = "block";
 }
 
+function findEmployee(){
+    let modal = document.getElementById("find-employee-modal");
+    modal.style.display = "block";
+}
+
 // todo : is just for timesheet - its not generic
 async function getDataForEdit(url, id) {
     const response = await fetch(url + "/" + id,
@@ -50,6 +55,24 @@ async function getDataForEdit(url, id) {
 function closeModal(){
     const saveModal = document.getElementById("save-modal");
     const editModal = document.getElementById("edit-modal");
+    const findEmployeeModal = document.getElementById("find-employee-modal");
     saveModal.style.display = "none";
     editModal.style.display = "none";
+    findEmployeeModal.style.display = "none";
 }
+
+// async function findByEmployee(url, formData) {
+//     const findEmployeeForm = document.getElementById(formData);
+//
+//     const response = await fetch(url,
+//         {
+//             method: "GET",
+//             body: new FormData(findEmployeeForm)
+//         }
+//     );
+//     if(!response.ok){
+//         showErrorPopup(url,response.status ,(await response.text()).toString());
+//     }else {
+//         showInfoPopup(url, response.status , (await response.text()).toString());
+//     }
+// }
