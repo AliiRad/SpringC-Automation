@@ -35,8 +35,8 @@ public class User {
     private String username;
 
     @Column(name = "user_password", columnDefinition = "VARCHAR2(30)")
-    @Pattern(regexp = "^[a-zA-Z1-9\\s]{8,30}$", message = "Invalid Password")
-    @Size(min = 8, max = 30, message = "Password must be between 8 and 30 characters")
+    @Pattern(regexp = "^[a-zA-Z1-9\\s]{4,30}$", message = "Invalid Password")
+    @Size(min = 4, max = 30, message = "Password must be between 8 and 30 characters")
     @NotBlank(message = "Should Not Be Null")
     private String password;
 
