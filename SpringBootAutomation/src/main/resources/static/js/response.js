@@ -114,3 +114,14 @@ function closeModal() {
     editModal.style.display = 'none';
     saveModal.style.display = "none"
 }
+
+async function setStatus(id){
+    const response =await fetch('/ticket/' + id  , {
+        method :"post"
+    });
+    if (!response.ok) {
+        showErrorPopup('/ticket', response.status, (await response.text()).toString());
+    } else {
+        showInfoPopup('/ticket', response.status, (await response.text()).toString());
+    }
+}

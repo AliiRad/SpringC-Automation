@@ -15,6 +15,7 @@ async function findId(id) {
     let ticketTitle = document.getElementById("title__edit__ticket");
     // let ticketApplicant = document.getElementById("applicant__edit__ticket");
     let ticketRequest = document.getElementById("request__edit__ticket");
+    let ticketSection = document.getElementById("section__edit__ticket");
     let ticketGroup = document.getElementById("group__edit__ticket");
     let ticketStatus = document.getElementById("status__edit__ticket");
     let ticketDeleted = document.getElementById("deleted__edit__ticket");
@@ -25,6 +26,7 @@ async function findId(id) {
     ticketTitle.value = data.title;
     // ticketApplicant.value = data.applicant.username;
     ticketRequest.value = data.request;
+    ticketSection.value = data.section.title;
     ticketGroup.value = data.group.title;
     ticketStatus.value = data.status;
     ticketDeleted.value = data.deleted;
@@ -39,7 +41,7 @@ function handleSelectChangeTicket(event, selectTagId) {
 
 async function getSubGroups(id, selectTagId) {
     const resp = await fetch("/ticketGroup/parent/" + id, {
-        method: "get"
+        method: "GET"
     });
 
     let childId;
@@ -127,6 +129,8 @@ async function deleted(id) {
 
 }
 
+
+
 function closeModal(){
     let saveModal = document.getElementById("saveModalTicket")
     let editModal = document.getElementById("editModalTicket")
@@ -144,6 +148,8 @@ statusElements.forEach(statusElement => {
         statusElement.classList.add('danger');
     } else if (status === 'postponed') {
         statusElement.classList.add('warning');
+    } else if (status === 'seen') {
+        statusElement.classList.add('seen');
     }
     console.log("Classes applied:", statusElement.classList);
 });

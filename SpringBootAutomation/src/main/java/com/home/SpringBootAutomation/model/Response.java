@@ -2,6 +2,7 @@ package com.home.SpringBootAutomation.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -27,9 +28,9 @@ public class Response {
     @GeneratedValue(strategy = GenerationType.SEQUENCE , generator ="responseSeq")
     private Long id;
 
-//    @ManyToOne
+//    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
 //    @JoinColumn(name = "response_responder_id" )
-//    private Person responder;
+//    private User responder;
 
     @Column(name = "response_response"  ,columnDefinition = "NVARCHAR2(255)")
     @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,255}$", message = "Invalid Ticket Response")
@@ -45,6 +46,7 @@ public class Response {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "response_ticket_id")
+    @NotNull
     private Ticket ticket;
 
 }

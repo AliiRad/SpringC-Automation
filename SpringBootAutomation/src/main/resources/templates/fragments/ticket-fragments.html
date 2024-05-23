@@ -6,6 +6,18 @@
 </head>
 <body>
 <div th:fragment="ticketSaveFormContent(title,request,group)">
+<!--    <label for="section__add__ticket">Field :</label>-->
+<!--    <select id="section__add__ticket"-->
+<!--            th:if="${#lists.size(sectionList) > 0}"-->
+<!--            name="section">-->
+<!--        <option selected disabled value="-1">Select The Relevant Section:</option>-->
+<!--        <option th:each="section : ${sectionList}"-->
+<!--                th:value="${section.id}"-->
+<!--                th:text="${section.title}"-->
+<!--                th:data-name="${section.id}">-->
+<!--        </option>-->
+<!--    </select>-->
+
     <label for="parent__add__ticket">Field :</label>
     <select id="parent__add__ticket"
             th:if="${#lists.size(ticketGroupParents) > 0}"
@@ -32,6 +44,18 @@
 </div>
 
 <div th:fragment="ticketEditFormContent(title,status,request,ticketTimeStamp,status,state,group)">
+<!--    <label for="section__edit__ticket">Field :</label>-->
+<!--    <select id="section__edit__ticket"-->
+<!--            th:if="${#lists.size(sectionList) > 0}"-->
+<!--            name="section">-->
+<!--&lt;!&ndash;        <option selected disabled value="-1">Select The Relevant Section:</option>&ndash;&gt;-->
+<!--        <option th:each="section : ${sectionList}"-->
+<!--                th:value="${section.id}"-->
+<!--                th:text="${section.title}"-->
+<!--                th:data-name="${section.id}">-->
+<!--        </option>-->
+<!--    </select>-->
+
     <label for="group__edit__ticket">Group :</label>
     <input type="text" id="group__edit__ticket"  readonly>
 

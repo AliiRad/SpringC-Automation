@@ -1,5 +1,6 @@
 package com.home.SpringBootAutomation.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -34,12 +35,14 @@ public class TicketGroup {
     @NotBlank(message = "Should Not Be Null")
     private String title;
 
-    @ManyToOne(cascade = CascadeType.PERSIST )
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "ticket_group_parent_id")
     private TicketGroup parent;
 
+//    @JsonIgnore
+//    @OneToMany( mappedBy = "group" , cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY )
+//    private List<Ticket> ticketList;
 
-//    @OneToMany(mappedBy = "parent" , cascade = CascadeType.ALL , fetch = FetchType.LAZY)
-//    private List<TicketGroup> ticketGroupList;
 
 }

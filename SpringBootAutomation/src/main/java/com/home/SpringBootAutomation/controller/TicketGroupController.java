@@ -92,6 +92,9 @@ public class TicketGroupController {
     @ResponseBody
     public List<TicketGroup> showTickets(@PathVariable("id") Long id) {
         List<TicketGroup> ticketGroups = ticketGroupServiceImp.findByParentId(id);
+//        System.out.println(ticketGroups);
+//        System.out.println(ticketGroups.get(0).getTitle());
+//        System.out.println(ticketGroups.get(0).getParent());
         log.info("Controller-TicketGroup-Get-FindByParentId-TicketGroup");
         return (ticketGroups.isEmpty() ? null : ticketGroups);
 

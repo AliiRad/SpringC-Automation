@@ -33,7 +33,8 @@
             <td th:text="${response.responseTimeStamp.toLocalTime()}"></td>
             <!--        <td th:text="${response.responder}"></td>-->
             <td th:text="${response.ticketResponse}"></td>
-            <td th:text="${response.ticket.group.title} + ' : ' + ${response.ticket.title}" ></td>
+            <td th:text="${response.ticket.group.title} + ' : ' + ${response.ticket.title}"
+                th:data-name="${response.ticket.id}" th:onclick="setStatus(this.getAttribute('data-name'))"></td>
             <td th:text="${response.deleted}"></td>
             <td>
                 <button class="edit-button" th:data-name="${response.id}"

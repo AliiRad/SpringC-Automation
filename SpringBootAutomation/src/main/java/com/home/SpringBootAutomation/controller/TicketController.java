@@ -1,9 +1,11 @@
 package com.home.SpringBootAutomation.controller;
 
 
+import com.home.SpringBootAutomation.enums.Status;
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Ticket;
+import com.home.SpringBootAutomation.service.impl.SectionServiceImp;
 import com.home.SpringBootAutomation.service.impl.TicketGroupServiceImp;
 import com.home.SpringBootAutomation.service.impl.TicketServiceImp;
 import jakarta.validation.Valid;
@@ -25,9 +27,12 @@ public class TicketController {
     private TicketServiceImp ticketServiceImp;
     private TicketGroupServiceImp ticketGroupServiceImp;
 
-    public TicketController(TicketServiceImp ticketServiceImp, TicketGroupServiceImp ticketGroupServiceImp) {
+    private SectionServiceImp sectionServiceImp;
+
+    public TicketController(TicketServiceImp ticketServiceImp, TicketGroupServiceImp ticketGroupServiceImp, SectionServiceImp sectionServiceImp) {
         this.ticketServiceImp = ticketServiceImp;
         this.ticketGroupServiceImp = ticketGroupServiceImp;
+        this.sectionServiceImp = sectionServiceImp;
     }
 
     @GetMapping
@@ -35,6 +40,7 @@ public class TicketController {
         log.info("Controller-Ticket-Get-FindAll");
         model.addAttribute("ticket", new Ticket());
         model.addAttribute("ticketList", ticketServiceImp.findAll());
+        model.addAttribute("sectionList", sectionServiceImp.findAll());
         model.addAttribute("ticketGroupParents", ticketGroupServiceImp.findByParentRoot());
         return "ticket" ;
     }
@@ -121,6 +127,15 @@ public class TicketController {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @PostMapping("/{id}")
+    @ResponseBody
+    public Ticket setStatus(@PathVariable Long id) throws NoContentException{
+        log.info("Controller-Ticket-Post-SetStatus");
+        Ticket ticket = ticketServiceImp.findById(id);
+        ticket.setStatus(Status.seen);
+        return ticketServiceImp.edit(ticket);
     }
 
 
