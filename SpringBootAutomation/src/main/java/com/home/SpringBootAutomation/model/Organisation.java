@@ -32,20 +32,20 @@ public class Organisation {
     private String title;
 
     @Column(name = "organisation_name" , length = 30)
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
-    @NotBlank(message = "Should Not Be Null")
+//    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
+//    @NotBlank(message = "Should Not Be Null")
     private String name;
 
 //    @OneToMany
 //    private Attachment logo;
 
     @Column(name = "organisation_address" , length = 100)
-    @NotBlank(message = "Should Not Be Null")
+//    @NotBlank(message = "Should Not Be Null")
     private String address;
 
     @Column(name = "organisation_phone_number" , length = 11)
-    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
-    @NotBlank(message = "Should Not Be Null")
+//    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
+//    @NotBlank(message = "Should Not Be Null")
     private String phoneNumber;
 
     @Column(name = "organisation_description")
