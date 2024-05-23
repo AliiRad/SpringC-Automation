@@ -51,4 +51,7 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY , mappedBy = "user")
     private Set<Role> roleSet ;
+
+    @ManyToOne
+    private Section section;
 }

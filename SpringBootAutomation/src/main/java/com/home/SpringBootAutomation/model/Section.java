@@ -1,7 +1,9 @@
 package com.home.SpringBootAutomation.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -40,7 +42,7 @@ public class Section {
     @Column(name = "section_phone_number", length = 11)
     private String phoneNumber;
 
-    //this was users in Automation EE Project
+
     //@OneToMany(mappedBy = "section")
 //    private List<Person> Person;
 
@@ -52,6 +54,9 @@ public class Section {
 
     @OneToMany
     private List<Section> sectionsPart;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER , mappedBy = "section")
+    private Set<User> userSet = new HashSet<>() ; ;
 
     public List<Section> getSectionsPart() {
         if (sectionsPart == null) {
