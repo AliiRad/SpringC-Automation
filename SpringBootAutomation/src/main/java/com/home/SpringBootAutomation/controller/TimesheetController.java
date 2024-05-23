@@ -1,7 +1,9 @@
 package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
+import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.model.Timesheet;
+import com.home.SpringBootAutomation.service.impl.PersonServiceImpl;
 import com.home.SpringBootAutomation.service.impl.TimesheetServiceImpl;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -22,14 +25,18 @@ public class TimesheetController {
 
     private final TimesheetServiceImpl timesheetService;
 
-    public TimesheetController(TimesheetServiceImpl timesheetService) {
+    private final PersonServiceImpl personService;
+
+    public TimesheetController(TimesheetServiceImpl timesheetService, PersonServiceImpl personService) {
         this.timesheetService = timesheetService;
+        this.personService = personService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String timesheetForm(Model model) {
         model.addAttribute("timesheetList", timesheetService.findTimesheetByDeletedFalse());
         model.addAttribute("timesheet", new Timesheet());
+        model.addAttribute("person", new Person());
         return "timesheet";
     }
 
@@ -86,6 +93,37 @@ public class TimesheetController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<Timesheet> findAll(Model model) {
         return timesheetService.findAll();
+    }
+
+
+    @RequestMapping(value = "/findEmployee", method = RequestMethod.GET)
+    public String findEmployeeByNameAndFamily(Model model,@ModelAttribute("name") String name,@ModelAttribute("lastname") String lastname) {
+        try {
+            model.addAttribute("person",new Person());
+            model.addAttribute("timesheet",new Timesheet());
+            List<Person> personList = personService.findPersonByNameAndLastnameAndDeletedFalse(name,lastname);
+            if (personList != null){
+                model.addAttribute("personList",personList);
+            }
+            return "timesheet";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    //todo : needs work doesnt work
+    @GetMapping(value = "/selectPerson/{id}")
+    public String selectPerson(@PathVariable Long id, Model model,BindingResult result) {
+        log.info("Timesheet Form - Select person");
+        try {
+            Optional<Person> person = personService.findById(id);
+            model.addAttribute("person",person);
+            return "timesheet";
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
 }
