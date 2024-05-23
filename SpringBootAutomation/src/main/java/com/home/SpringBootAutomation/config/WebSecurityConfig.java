@@ -28,11 +28,11 @@ public class WebSecurityConfig {
 //        private DataSource dataSource;
 
         http
-                .csrf(
-                        csrf -> csrf
-                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+//                .csrf(
+//                        csrf -> csrf
+//                                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/", "/*").permitAll()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/user/**").hasRole("USER")
 //                        .requestMatchers("/user/edit").hasRole("USER1")
