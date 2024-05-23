@@ -12,7 +12,7 @@
     <!--        <span class="error" th:if="${#fields.hasErrors('documentDate')}" th:errors="*{documentDate}">Invalid Document Date!</span>-->
 
     <!--    <label for="amount">Amount:</label>-->
-    <input type="text" th:id="${amount}" name="amount" placeholder="Amount">
+    <input type="number" th:id="${amount}" name="amount" placeholder="Amount">
     <!--    <span class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Invalid Amount!</span>-->
 
     <!--    <label for="behalf">Behalf:</label>-->
@@ -20,10 +20,10 @@
     <!--    <span class="error" th:if="${#fields.hasErrors('behalf')}" th:errors="*{behalf}">Invalid Behalf!</span>-->
 
     <div>
-        <label for="account">Select Account:</label>
-        <select id="account" name="account">
+        <label for="financialDocument-account">Select Account:</label>
+        <select id="financialDocument-account" name="financialDocument-account">
             <option>Select</option>
-<!--            <option th:each="account : ${account}" th:value="${account.id}" th:text="${account.accountNumber}"></option>-->
+            <option th:each="account : ${accountList}" th:value="${account.id}" th:text="${account.accountNumber}"></option>
         </select>
 <!--        <span class="error" th:if="${#fields.hasErrors('account')}" th:errors="*{account}">Invalid Account!</span>-->
     </div>
@@ -47,10 +47,10 @@
     </div>
 
     <div>
-        <label for="person">Select Person:</label>
-        <select id="person" name="person">
+        <label for="financialDocument_person">Select Person:</label>
+        <select id="financialDocument_person" name="financialDocument_person">
             <option>Select</option>
-            <!--            <option th:each="person : ${person}" th:value="${person.id}" th:text="${person.username}"></option>-->
+            <option th:each="person : ${personList}" th:value="${person.id}" th:text="${person.username}"></option>
         </select>
         <!--        <span class="error" th:if="${#fields.hasErrors('person')}" th:errors="*{person}">Invalid Person!</span>-->
     </div>

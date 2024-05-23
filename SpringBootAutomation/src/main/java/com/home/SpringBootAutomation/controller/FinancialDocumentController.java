@@ -48,6 +48,7 @@ public class FinancialDocumentController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public FinancialDocument save(Model model, @Valid FinancialDocument financialDocument, BindingResult bindingResult) throws NoContentException {
+        System.out.println("Controller - Save" + financialDocument);
         if (bindingResult.hasErrors()) {
             throw new ValidationException(
                     bindingResult

@@ -48,6 +48,7 @@ public class BankTransactionController {
     @ResponseBody
     @ResponseStatus(HttpStatus.ACCEPTED)
     public BankTransaction save(Model model, @Valid BankTransaction bankTransaction, BindingResult bindingResult) throws NoContentException{
+        System.out.println("Controller - Save" + bankTransaction);
         if (bindingResult.hasErrors()) {
             throw new ValidationException(
                     bindingResult

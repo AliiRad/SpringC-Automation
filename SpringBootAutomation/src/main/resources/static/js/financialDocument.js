@@ -23,13 +23,13 @@ async function getDataForEdit(url, id) {
         let amountEdit = document.querySelector("#edit-form input[name='amount']");
         amountEdit.value = financialDocument.amount;
 
-        let behalfEdit = document.querySelector("#edit-form select[name='behalf']");
+        let behalfEdit = document.querySelector("#edit-form input[name='behalf']");
         behalfEdit.value = financialDocument.behalf;
 
         let accountEdit = document.querySelector("#edit-form select[name='account']");
         accountEdit.value = financialDocument.account;
 
-        let transactionTypeEdit = document.querySelector("#edit-form input[name='transactionType']");
+        let transactionTypeEdit = document.querySelector("#edit-form select[name='transactionType']");
         transactionTypeEdit.value = financialDocument.transactionType;
 
         let documentTypeEdit = document.querySelector("#edit-form select[name='documentType']");

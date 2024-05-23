@@ -50,7 +50,7 @@ public class BankTransactionServiceImp implements BankTransactionService {
     @Override
     public BankTransaction findById(Long id) throws NoContentException {
         return repository.findById(id).orElseThrow(
-                () -> new NoContentException("No BankT ransaction Found with id : " + id)
+                () -> new NoContentException("No Bank Transaction Found with id : " + id)
         );
     }
 

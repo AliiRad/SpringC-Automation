@@ -20,7 +20,7 @@ async function getDataForEdit(url, id) {
         let balanceEdit = document.querySelector("#edit-form input[name='balance']");
         balanceEdit.value = bankTransaction.balance;
 
-        let financialDocumentEdit = document.querySelector("#edit-form input[name='financialDocument']");
+        let financialDocumentEdit = document.querySelector("#edit-form select[name='financialDocument']");
         financialDocumentEdit.value = bankTransaction.financialDocument;
 
         let personEdit = document.querySelector("#edit-form select[name='person']");
