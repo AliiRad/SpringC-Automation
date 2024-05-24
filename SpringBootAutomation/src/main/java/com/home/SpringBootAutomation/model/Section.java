@@ -29,17 +29,24 @@ public class Section {
     @Column(name = "section_id")
     private Long id;
 
-    @Column(name = "section_title", length = 40)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "section_title")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
+    @Size(min = 3, max = 50, message = "title must be between 3 and 50 characters")
+    @NotBlank(message = "title Should Not Be Null")
     private String title;
 
     @ManyToOne
     private Organisation organisation;
 
-    @Column(name = "section_duty", length = 100)
+    @Column(name = "section_duty")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Duty")
+    @Size(min = 3, max = 50, message = "duty must be between 3 and 50 characters")
+    @NotBlank(message = "duty Should Not Be Null")
     private String duty;
 
-    @Column(name = "section_phone_number", length = 11)
+    @Column(name = "section_phoneNumber")
+    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
+    @NotBlank(message = "phoneNumber Should Not Be Null")
     private String phoneNumber;
 
 
@@ -56,7 +63,7 @@ public class Section {
     private List<Section> sectionsPart;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER , mappedBy = "section")
-    private Set<User> userSet = new HashSet<>() ; ;
+    private Set<User> userSet = new HashSet<>() ;
 
     public List<Section> getSectionsPart() {
         if (sectionsPart == null) {

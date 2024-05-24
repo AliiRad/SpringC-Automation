@@ -27,28 +27,36 @@ public class Organisation {
     @Column(name = "organisation_id")
     private Long id;
 
-    @Column(name = "organisation_title" , length = 40)
-    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "organisation_title")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
+    @Size(min = 3, max = 50, message = "title must be between 3 and 50 characters")
+    @NotBlank(message = "title Should Not Be Null")
     private String title;
 
-    @Column(name = "organisation_name" , length = 30)
-//    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
-//    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "organisation_name",  columnDefinition = "NVARCHAR2(50)")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
+    @NotBlank(message = "name Should Not Be Null")
     private String name;
 
 //    @OneToMany
 //    private Attachment logo;
 
-    @Column(name = "organisation_address" , length = 100)
-//    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "organisation_address")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Address")
+    @Size(min = 3, max = 100, message = "address must be between 3 and 100 characters")
+    @NotBlank(message = "address Should Not Be Null")
     private String address;
 
-    @Column(name = "organisation_phone_number" , length = 11)
-//    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
-//    @NotBlank(message = "Should Not Be Null")
+    @Column(name = "organisation_phoneNumber")
+    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid Phone Number")
+    @NotBlank(message = "phoneNumber Should Not Be Null")
     private String phoneNumber;
 
     @Column(name = "organisation_description")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Description")
+    @Size(min = 3, max = 100, message = "description must be between 3 and 100 characters")
+    @NotBlank(message = "description Should Not Be Null")
     private String description;
     
     @OneToMany

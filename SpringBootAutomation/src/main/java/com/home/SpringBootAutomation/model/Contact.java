@@ -75,7 +75,7 @@ public class Contact {
     private Long postalCode;
 
     @Column(name = "contact_phoneNumber", columnDefinition = "NVARCHAR2(11)")
-    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid National ID")
+    @Pattern(regexp = "^[0-9]{3,11}$", message = "Invalid phoneNumber")
     @NotBlank(message = "Should Not Be Null")
     private String phoneNumber;
 
