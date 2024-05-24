@@ -30,7 +30,7 @@ public class Jobs {
 
 
     @Column(name = "job_company_name", columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Name")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Company Name")
     @Size(min = 3, max = 50, message = "Company Name must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String companyName;

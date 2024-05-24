@@ -28,7 +28,7 @@ public class Skills {
     private Long id;
 
     @Column(name = "skill_title" , columnDefinition = "NVARCHAR2(50)")
-    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Title")
+    @Pattern(regexp = "^[a-zA-Zآ-ی\\s]{3,50}$", message = "Invalid Skill Title")
     @Size(min = 3, max = 50, message = "Skill Title must be between 3 and 50 characters")
     @NotBlank(message = "Should Not Be Null")
     private String skillTitle;
