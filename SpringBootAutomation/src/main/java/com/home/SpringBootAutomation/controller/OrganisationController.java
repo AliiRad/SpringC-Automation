@@ -2,14 +2,11 @@ package com.home.SpringBootAutomation.controller;
 
 import com.home.SpringBootAutomation.exceptions.NoContentException;
 import com.home.SpringBootAutomation.model.Organisation;
-import com.home.SpringBootAutomation.model.Person;
 import com.home.SpringBootAutomation.service.impl.OrganisationServiceImp;
 import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
-
 import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,13 +27,15 @@ public class OrganisationController {
 
     @GetMapping
     public String showOrganisation(Model model) {
-        // log.info("Controller-Organisation-GetMapping");
-        // model.addAttribute("organisation List",service.findAll());
-        // model.addAttribute("organisation",new Organisation());
-        // return "organisation";
 
-        //TODO: Add Model Organisation
-        return "organisation";
+        if (service.findAll().isEmpty()) {
+            log.info("----------------" + "Organisation Service.findAll() is Empty" + "----------------");
+            return "organisation";
+        } else {
+            //TODO: Return JSON Instead of String
+            log.info("----------------" + service.findAll().toString() + "----------------");
+            return service.findAll().toString();
+        }
     }
 
     @PostMapping
