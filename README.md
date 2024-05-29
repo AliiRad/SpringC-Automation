@@ -58,8 +58,8 @@ TODO:
 ### haniyeh :
 - [ ] Appointment Decree
 ### mahoor :
-- [ ] Skills
-- [ ] Jobs
+- [x] Skills
+- [x] Jobs
 
 
 
