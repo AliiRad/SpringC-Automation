@@ -7,7 +7,7 @@ This is a simple Automation-Project base on Spring-Boot technology
 TODO:
 </span>
 
-### 1.Using ResponseEntity and MVC for handling response code and the related template.
+### 1. Using ResponseEntity and MVC for handling response code and the related template.
 
 ### 2. Add User Entity.
 
@@ -35,6 +35,8 @@ TODO:
 - [done ] Response
 - [ done] Ticket
 ### satyar :
+- [x] Section
+- [x] Organisation
 - [ ] Log
 - [ ] Profile DTO
 ### ali :
