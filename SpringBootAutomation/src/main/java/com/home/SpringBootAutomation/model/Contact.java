@@ -72,6 +72,7 @@ public class Contact {
     @Column(name = "contact_postalCode", length = 10)
     @Pattern(regexp = "\\d{10}", message = "Postal Code !")
     @NotBlank(message = "Should Not Be Null")
+    //TODO: Postal Code Should Be String
     private Long postalCode;
 
     @Column(name = "contact_phoneNumber", columnDefinition = "NVARCHAR2(11)")
