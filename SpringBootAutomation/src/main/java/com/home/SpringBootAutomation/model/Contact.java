@@ -83,6 +83,8 @@ public class Contact {
     @Column(name = "ticket_time_stamp" )
     private LocalDateTime ticketTimeStamp;
 
+
+    //todo: wrong enum !!!!
     @Column(name = "contact_status")
     @Enumerated(EnumType.ORDINAL)
     private Status status;
