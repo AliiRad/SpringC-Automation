@@ -70,7 +70,7 @@
                 <td th:text="${skill.description}"></td>
                 <td th:text="${skill.certification}"></td>
                 <td>Active</td>
-                <td><a  th:data-name="${skill.id}" th:onclick="|findById('/skills', this.getAttribute('data-name'))|">
+                <td><a  th:data-name="${skill.id}" th:onclick="|findById('/skills', this.getAttribute('data-name') , 'edit-form')|">
               <span class="material-symbols-outlined edit" >
                 edit
             </span>
@@ -132,7 +132,7 @@
 </div>
 <!--Main Container-->
 
-<script src="/js/skills.js"></script>
+<!--<script src="/js/skills.js"></script>-->
 <script src="/js/template.js"></script>
 <script src="/js/popup.js"></script>
 </body>

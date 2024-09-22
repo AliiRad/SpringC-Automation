@@ -68,7 +68,7 @@
                 <td th:text="${job.startDate}"></td>
                 <td th:text="${job.endDate}"></td>
                 <td>Active</td>
-                <td><a  th:data-name="${job.id}" th:onclick="|findById('/jobs', this.getAttribute('data-name'))|">
+                <td><a  th:data-name="${job.id}" th:onclick="|findById('/jobs', this.getAttribute('data-name') , 'edit-form')|">
             <span class="material-symbols-outlined edit" >
                 edit
             </span>
@@ -130,7 +130,7 @@
 </div>
 <!--Main Container-->
 
-<script src="/js/jobs.js"></script>
+<!--<script src="/js/jobs.js"></script>-->
 <script src="/js/template.js"></script>
 <script src="/js/popup.js"></script>
 </body>
